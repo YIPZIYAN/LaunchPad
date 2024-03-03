@@ -56,9 +56,12 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     //nav
-    val nav_version = "2.5.2"
-    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
-    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+    val navVersion = "2.5.2"
+    implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
+    implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
+
+    //splash screen
+    implementation("androidx.core:core-splashscreen:1.0.0")
 
     //swipe to refresh
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
