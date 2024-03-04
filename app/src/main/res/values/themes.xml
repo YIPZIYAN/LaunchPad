@@ -29,8 +29,7 @@
     </style>
     
     <style name="Theme.LaunchPad.Starting" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">#73B6DA</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/launchpad</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/launchpadlogo_whitebg</item>
         <item name="windowSplashScreenAnimationDuration">2000</item>
         <item name="postSplashScreenTheme">@style/Theme.LaunchPad</item>
     </style>
