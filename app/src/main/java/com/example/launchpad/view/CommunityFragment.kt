@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.launchpad.CommunityViewModel
+import com.example.launchpad.viewmodel.CommunityViewModel
 import com.example.launchpad.R
 
 class CommunityFragment : Fragment() {

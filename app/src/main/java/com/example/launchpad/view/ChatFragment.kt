@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.launchpad.ChatViewModel
+import com.example.launchpad.viewmodel.ChatViewModel
 import com.example.launchpad.R
 
 class ChatFragment : Fragment() {
