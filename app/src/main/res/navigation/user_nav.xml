@@ -7,27 +7,27 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.launchpad.HomeFragment"
+        android:name="com.example.launchpad.view.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/communityFragment"
-        android:name="com.example.launchpad.CommunityFragment"
+        android:name="com.example.launchpad.view.CommunityFragment"
         android:label="fragment_community"
         tools:layout="@layout/fragment_community" />
     <fragment
         android:id="@+id/eventFragment"
-        android:name="com.example.launchpad.EventFragment"
+        android:name="com.example.launchpad.view.EventFragment"
         android:label="fragment_event"
         tools:layout="@layout/fragment_event" />
     <fragment
         android:id="@+id/chatFragment"
-        android:name="com.example.launchpad.ChatFragment"
+        android:name="com.example.launchpad.view.ChatFragment"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.launchpad.ProfileFragment"
+        android:name="com.example.launchpad.view.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

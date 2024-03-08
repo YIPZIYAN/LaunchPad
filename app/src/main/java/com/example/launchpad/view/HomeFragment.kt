@@ -1,4 +1,4 @@
-package com.example.launchpad
+package com.example.launchpad.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.launchpad.HomeViewModel
+import com.example.launchpad.R
 
 class HomeFragment : Fragment() {
 
