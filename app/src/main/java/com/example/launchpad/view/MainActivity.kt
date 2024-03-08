@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
-        setContentView(R.layout.activity_user) //change accordingly for testing
-        startActivity(Intent(this,UserActivity::class.java))
+        setContentView(R.layout.activity_main) //change accordingly for testing
+        startActivity(Intent(this,UserActivity::class.java)) //testing
     }
 }
