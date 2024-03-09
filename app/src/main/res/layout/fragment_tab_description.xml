@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TabDescriptionFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Job Description"
+                android:textAppearance="?attr/textAppearanceLabelLarge"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/lbl_job_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem"
+                android:textAlignment="textStart"
+                android:textAppearance="?attr/textAppearanceLabelMedium"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@id/title1"
+                app:layout_constraintTop_toBottomOf="@id/title1" />
+
+            <TextView
+                android:id="@+id/title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Requirements"
+                android:textAppearance="?attr/textAppearanceLabelLarge"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/title1"
+                app:layout_constraintTop_toBottomOf="@id/lbl_job_desc" />
+
+            <TextView
+                android:id="@+id/lbl_requirements"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem"
+                android:textAlignment="textStart"
+                android:textAppearance="?attr/textAppearanceLabelMedium"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@id/title1"
+                app:layout_constraintTop_toBottomOf="@id/title2" />
+
+            <TextView
+                android:id="@+id/title3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Position"
+                android:textAppearance="?attr/textAppearanceLabelLarge"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/title1"
+                app:layout_constraintTop_toBottomOf="@id/lbl_requirements" />
+
+            <TextView
+                android:id="@+id/lbl_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Senior"
+                android:textAlignment="textStart"
+                android:textAppearance="?attr/textAppearanceLabelMedium"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@id/title1"
+                app:layout_constraintTop_toBottomOf="@id/title3" />
+
+            <TextView
+                android:id="@+id/title4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Job Type"
+                android:textAppearance="?attr/textAppearanceLabelLarge"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/title1"
+                app:layout_constraintTop_toBottomOf="@id/lbl_position" />
+
+            <TextView
+                android:id="@+id/lbl_job_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Full Time"
+                android:textAlignment="textStart"
+                android:textAppearance="?attr/textAppearanceLabelMedium"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@id/title1"
+                app:layout_constraintTop_toBottomOf="@id/title4" />
+
+            <TextView
+                android:id="@+id/title5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Workplace"
+                android:textAppearance="?attr/textAppearanceLabelLarge"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/title1"
+                app:layout_constraintTop_toBottomOf="@id/lbl_job_type" />
+
+            <TextView
+                android:id="@+id/lbl_workplace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Remote"
+                android:textAlignment="textStart"
+                android:textAppearance="?attr/textAppearanceLabelMedium"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@id/title1"
+                app:layout_constraintTop_toBottomOf="@id/title5" />
+
+            <TextView
+                android:id="@+id/title6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Qualification"
+                android:textAppearance="?attr/textAppearanceLabelLarge"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/title1"
+                app:layout_constraintTop_toBottomOf="@id/lbl_workplace" />
+
+            <TextView
+                android:id="@+id/lbl_qualification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Bachelor Degree"
+                android:textAlignment="textStart"
+                android:textAppearance="?attr/textAppearanceLabelMedium"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@id/title1"
+                app:layout_constraintTop_toBottomOf="@id/title6" />
+
+            <TextView
+                android:id="@+id/title7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Experience"
+                android:textAppearance="?attr/textAppearanceLabelLarge"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/title1"
+                app:layout_constraintTop_toBottomOf="@id/lbl_qualification" />
+
+            <TextView
+                android:id="@+id/lbl_experience"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="2 years"
+                android:textAlignment="textStart"
+                android:textAppearance="?attr/textAppearanceLabelMedium"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@id/title1"
+                app:layout_constraintTop_toBottomOf="@id/title7" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
