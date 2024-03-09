@@ -6,4 +6,6 @@
     <string name="post">Post</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="setting">Setting</string>
+    <string name="searchbar_hint">Search</string>
+
 </resources>
