@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">LaunchPad</string>
     <string name="email">Email</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="history">History</string>
+    <string name="post">Post</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="setting">Setting</string>
 </resources>

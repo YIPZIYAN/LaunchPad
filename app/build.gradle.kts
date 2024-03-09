@@ -64,6 +64,9 @@ dependencies {
     //splash screen
     implementation("androidx.core:core-splashscreen:1.0.0")
 
+    //avatar
+    implementation("io.getstream:avatarview-coil:1.0.4")
+
     //swipe to refresh
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
+    //implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
 }

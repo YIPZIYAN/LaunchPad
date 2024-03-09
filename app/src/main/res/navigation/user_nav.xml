@@ -27,7 +27,7 @@
         tools:layout="@layout/fragment_chat" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.launchpad.view.ProfileFragment"
+        android:name="com.example.launchpad.view.MyProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_my_profile" />
 </navigation>
