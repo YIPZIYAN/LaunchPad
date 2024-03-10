@@ -136,11 +136,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Qualification"
+                android:text="Salary"
                 android:textAppearance="?attr/textAppearanceLabelLarge"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/title1"
                 app:layout_constraintTop_toBottomOf="@id/lbl_workplace" />
+
+            <TextView
+                android:id="@+id/lbl_salary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="RM 5000 - RM 6000 per month"
+                android:textAlignment="textStart"
+                android:textAppearance="?attr/textAppearanceLabelMedium"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@id/title1"
+                app:layout_constraintTop_toBottomOf="@id/title6" />
+
+            <TextView
+                android:id="@+id/title7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Qualification"
+                android:textAppearance="?attr/textAppearanceLabelLarge"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/title1"
+                app:layout_constraintTop_toBottomOf="@id/lbl_salary" />
 
             <TextView
                 android:id="@+id/lbl_qualification"
@@ -152,10 +175,10 @@
                 android:textAppearance="?attr/textAppearanceLabelMedium"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@id/title1"
-                app:layout_constraintTop_toBottomOf="@id/title6" />
+                app:layout_constraintTop_toBottomOf="@id/title7" />
 
             <TextView
-                android:id="@+id/title7"
+                android:id="@+id/title8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -175,7 +198,7 @@
                 android:textAppearance="?attr/textAppearanceLabelMedium"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@id/title1"
-                app:layout_constraintTop_toBottomOf="@id/title7" />
+                app:layout_constraintTop_toBottomOf="@id/title8" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
