@@ -12,6 +12,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         setContentView(R.layout.activity_main) //change accordingly for testing
-        startActivity(Intent(this,UserActivity::class.java)) //testing
+
+
     }
 }
