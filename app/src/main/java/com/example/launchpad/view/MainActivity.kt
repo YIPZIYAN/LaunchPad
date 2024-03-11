@@ -13,6 +13,5 @@ class MainActivity : AppCompatActivity() {
         installSplashScreen()
         setContentView(R.layout.activity_main) //change accordingly for testing
 
-
     }
 }
