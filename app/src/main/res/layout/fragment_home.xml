@@ -8,23 +8,69 @@
     tools:context=".view.HomeFragment">
 
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/welcome_card"
+        style="?attr/materialCardViewFilledStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/md_theme_light_primary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="50dp"
+            android:orientation="vertical">
+
+            <!-- Title, secondary and supporting text -->
+            <TextView
+                android:id="@+id/lbl_greeting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="Good Morning,"
+                android:textAppearance="?attr/textAppearanceTitleLarge"
+                android:textColor="@color/md_theme_dark_onBackground"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Username123"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textColor="@color/md_theme_dark_onBackground"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lbl_greeting" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/searchbar_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="90dp"
+            android:background="#00FFFFFF">
 
             <com.google.android.material.search.SearchBar
                 android:id="@+id/search_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/searchbar_hint" />
+
         </com.google.android.material.appbar.AppBarLayout>
 
         <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
@@ -73,10 +119,10 @@
                     android:id="@+id/bookmark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="235dp"
+                    android:layout_marginEnd="-8dp"
                     android:button="@drawable/sl_bookmark_30dp"
                     app:buttonTint="@color/bookmark_yellow"
-                    app:layout_constraintStart_toEndOf="@+id/company_avatar_container"
+                    app:layout_constraintEnd_toEndOf="@+id/chipGroup"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -132,8 +178,7 @@
                     android:layout_marginTop="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/company_avatar_container"
-                    app:layout_constraintTop_toBottomOf="@id/lbl_salary"
-                    >
+                    app:layout_constraintTop_toBottomOf="@id/lbl_salary">
 
                     <!-- Chips can be declared here, or added dynamically. -->
                     <com.google.android.material.chip.Chip
@@ -156,18 +201,17 @@
                         android:id="@+id/chip_workplace"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="14dp"
                         android:text="Remote"
                         android:textAlignment="center"
                         android:textSize="12sp"
                         app:chipBackgroundColor="@color/md_theme_dark_inverseSurface"
                         app:chipStrokeWidth="0dp"
-                        app:textEndPadding="4dp"
-                        app:textStartPadding="4dp"
+                        app:layout_constraintEnd_toStartOf="@id/chip_position"
                         app:layout_constraintStart_toEndOf="@id/chip_job_type"
                         app:layout_constraintTop_toTopOf="@id/chip_job_type"
-                        app:layout_constraintEnd_toStartOf="@id/chip_position"
-                        android:layout_marginEnd="14dp"
-                        />
+                        app:textEndPadding="4dp"
+                        app:textStartPadding="4dp" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_position"
