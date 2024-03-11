@@ -10,5 +10,38 @@
     <string name="password_and_security">Password and security</string>
     <string name="personal_information">Personal information</string>
     <string name="logout">Logout</string>
+    <array name="job_position">
+        <item>Director</item>
+        <item>Manager</item>
+        <item>Senior</item>
+        <item>Junior</item>
+    </array>
+    <array name="job_type">
+        <item>Full Time</item>
+        <item>Part Time</item>
+        <item>Contract</item>
+        <item>Temporary</item>
+        <item>Internship</item>
+        <item>Volunteer</item>
+    </array>
+    <array name="workplace">
+        <item>Remote</item>
+        <item>On Site</item>
+        <item>Hybrid</item>
+    </array>
+    <array name="qualification">
+        <item>Doctor of Philosophy</item>
+        <item>Master Degree</item>
+        <item>Bachelor Degree</item>
+        <item>Diploma</item>
+        <item>Foundation / SPTM or equivalent</item>
+        <item>SPM or equivalent</item>
+        <item>None</item>
+    </array>
+    <string name="salary_prefix">RM </string>
+    <string name="salary_suffix">.00</string>
+    <string name="experience_suffix">year(s)</string>
+
+
 
 </resources>
