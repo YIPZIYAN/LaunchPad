@@ -2,6 +2,6 @@ package com.example.launchpad.viewmodel
 
 import androidx.lifecycle.ViewModel
 
-class ProfileViewModel : ViewModel() {
+class MyProfileViewModel : ViewModel() {
     // TODO: Implement the ViewModel
 }

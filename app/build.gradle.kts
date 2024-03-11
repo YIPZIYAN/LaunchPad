@@ -47,9 +47,10 @@ dependencies {
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.fragment:fragment-ktx:1.5.6")
-    implementation("androidx.activity:activity:1.8.0")
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
 
+
+    implementation("androidx.activity:activity:1.8.0")
     val lifecycle_version = "2.6.1"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
@@ -66,6 +67,9 @@ dependencies {
     //splash screen
     implementation("androidx.core:core-splashscreen:1.0.0")
 
+    //avatar
+    implementation("io.getstream:avatarview-coil:1.0.4")
+
     //swipe to refresh
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
+    //implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
 }
