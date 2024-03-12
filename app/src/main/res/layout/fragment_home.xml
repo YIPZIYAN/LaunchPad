@@ -69,7 +69,8 @@
                 android:layout_marginTop="90dp"
                 android:background="#00FFFFFF"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+               >
 
                 <com.google.android.material.search.SearchBar
                     android:id="@+id/search_bar"
@@ -79,13 +80,28 @@
 
             </com.google.android.material.appbar.AppBarLayout>
 
+            <TextView
+                android:id="@+id/home_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:text="Recent Job List"
+                android:textAppearance="?attr/textAppearanceTitleLarge"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/searchbar_container"
+                android:paddingBottom="12dp"
+                />
+
+            <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
             <androidx.core.widget.NestedScrollView
+                android:id="@+id/scroll_view"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/searchbar_container">
+                app:layout_constraintTop_toBottomOf="@id/home_title">
                 <!-- Screen content goes here. -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -97,7 +113,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="24dp"
-                        android:layout_marginVertical="16dp"
+                        android:layout_marginTop="16dp"
                         app:cardElevation="2dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -203,13 +219,13 @@
                                     android:text="Full Time"
                                     android:textAlignment="center"
                                     android:textSize="12sp"
-                                    app:chipBackgroundColor="@color/md_theme_dark_inverseSurface"
-                                    app:chipStrokeWidth="0dp"
+                                    style="@style/Widget.Material3.Chip.Assist"
                                     app:layout_constraintEnd_toStartOf="@id/chip_workplace"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:textEndPadding="4dp"
-                                    app:textStartPadding="4dp" />
+                                    app:textStartPadding="4dp"
+                                    android:checkable="false" />
 
                                 <com.google.android.material.chip.Chip
                                     android:id="@+id/chip_workplace"
@@ -219,13 +235,12 @@
                                     android:text="Remote"
                                     android:textAlignment="center"
                                     android:textSize="12sp"
-                                    app:chipBackgroundColor="@color/md_theme_dark_inverseSurface"
-                                    app:chipStrokeWidth="0dp"
-                                    app:layout_constraintEnd_toStartOf="@id/chip_position"
+                                    style="@style/Widget.Material3.Chip.Suggestion"                                    app:layout_constraintEnd_toStartOf="@id/chip_position"
                                     app:layout_constraintStart_toEndOf="@id/chip_job_type"
                                     app:layout_constraintTop_toTopOf="@id/chip_job_type"
                                     app:textEndPadding="4dp"
-                                    app:textStartPadding="4dp" />
+                                    app:textStartPadding="4dp"
+                                    android:checkable="false" />
 
                                 <com.google.android.material.chip.Chip
                                     android:id="@+id/chip_position"
@@ -234,13 +249,13 @@
                                     android:text="Senior"
                                     android:textAlignment="center"
                                     android:textSize="12sp"
-                                    app:chipBackgroundColor="@color/md_theme_dark_inverseSurface"
-                                    app:chipStrokeWidth="0dp"
+                                    style="@style/Widget.Material3.Chip.Suggestion"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toEndOf="@id/chip_workplace"
                                     app:layout_constraintTop_toTopOf="@id/chip_job_type"
                                     app:textEndPadding="4dp"
-                                    app:textStartPadding="4dp" />
+                                    app:textStartPadding="4dp"
+                                    android:checkable="false" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -266,7 +281,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="24dp"
-                        android:layout_marginVertical="16dp"
+                        android:layout_marginTop="16dp"
                         app:cardElevation="2dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/job_card">
@@ -370,13 +385,13 @@
                                     android:text="Full Time"
                                     android:textAlignment="center"
                                     android:textSize="12sp"
-                                    app:chipBackgroundColor="@color/md_theme_dark_inverseSurface"
-                                    app:chipStrokeWidth="0dp"
+                                    style="@style/Widget.Material3.Chip.Suggestion"
                                     app:layout_constraintEnd_toStartOf="@id/chip_workplace2"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:textEndPadding="4dp"
-                                    app:textStartPadding="4dp" />
+                                    app:textStartPadding="4dp"
+                                    android:checkable="false" />
 
                                 <com.google.android.material.chip.Chip
                                     android:id="@+id/chip_workplace2"
@@ -386,13 +401,13 @@
                                     android:text="Remote"
                                     android:textAlignment="center"
                                     android:textSize="12sp"
-                                    app:chipBackgroundColor="@color/md_theme_dark_inverseSurface"
-                                    app:chipStrokeWidth="0dp"
+                                    style="@style/Widget.Material3.Chip.Suggestion"
                                     app:layout_constraintEnd_toStartOf="@id/chip_position2"
                                     app:layout_constraintStart_toEndOf="@id/chip_job_type2"
                                     app:layout_constraintTop_toTopOf="@id/chip_job_type2"
                                     app:textEndPadding="4dp"
-                                    app:textStartPadding="4dp" />
+                                    app:textStartPadding="4dp"
+                                    android:checkable="false" />
 
                                 <com.google.android.material.chip.Chip
                                     android:id="@+id/chip_position2"
@@ -401,13 +416,13 @@
                                     android:text="Senior"
                                     android:textAlignment="center"
                                     android:textSize="12sp"
-                                    app:chipBackgroundColor="@color/md_theme_dark_inverseSurface"
-                                    app:chipStrokeWidth="0dp"
+                                    style="@style/Widget.Material3.Chip.Suggestion"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toEndOf="@id/chip_workplace2"
                                     app:layout_constraintTop_toTopOf="@id/chip_job_type2"
                                     app:textEndPadding="4dp"
-                                    app:textStartPadding="4dp" />
+                                    app:textStartPadding="4dp"
+                                    android:checkable="false" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -431,7 +446,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="24dp"
-                        android:layout_marginVertical="16dp"
+                        android:layout_marginTop="16dp"
                         app:cardElevation="2dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/job_card2">
@@ -535,13 +550,13 @@
                                     android:text="Full Time"
                                     android:textAlignment="center"
                                     android:textSize="12sp"
-                                    app:chipBackgroundColor="@color/md_theme_dark_inverseSurface"
-                                    app:chipStrokeWidth="0dp"
+                                    style="@style/Widget.Material3.Chip.Suggestion"
                                     app:layout_constraintEnd_toStartOf="@id/chip_workplace3"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:textEndPadding="4dp"
-                                    app:textStartPadding="4dp" />
+                                    app:textStartPadding="4dp"
+                                    android:checkable="false" />
 
                                 <com.google.android.material.chip.Chip
                                     android:id="@+id/chip_workplace3"
@@ -551,13 +566,13 @@
                                     android:text="Remote"
                                     android:textAlignment="center"
                                     android:textSize="12sp"
-                                    app:chipBackgroundColor="@color/md_theme_dark_inverseSurface"
-                                    app:chipStrokeWidth="0dp"
+                                    style="@style/Widget.Material3.Chip.Suggestion"
                                     app:layout_constraintEnd_toStartOf="@id/chip_position3"
                                     app:layout_constraintStart_toEndOf="@id/chip_job_type3"
                                     app:layout_constraintTop_toTopOf="@id/chip_job_type3"
                                     app:textEndPadding="4dp"
-                                    app:textStartPadding="4dp" />
+                                    app:textStartPadding="4dp"
+                                    android:checkable="false" />
 
                                 <com.google.android.material.chip.Chip
                                     android:id="@+id/chip_position3"
@@ -566,13 +581,13 @@
                                     android:text="Senior"
                                     android:textAlignment="center"
                                     android:textSize="12sp"
-                                    app:chipBackgroundColor="@color/md_theme_dark_inverseSurface"
-                                    app:chipStrokeWidth="0dp"
+                                    style="@style/Widget.Material3.Chip.Suggestion"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toEndOf="@id/chip_workplace3"
                                     app:layout_constraintTop_toTopOf="@id/chip_job_type3"
                                     app:textEndPadding="4dp"
-                                    app:textStartPadding="4dp" />
+                                    app:textStartPadding="4dp"
+                                    android:checkable="false" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -603,13 +618,9 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             </androidx.core.widget.NestedScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
-
 
         <com.google.android.material.search.SearchView
             android:layout_width="match_parent"
