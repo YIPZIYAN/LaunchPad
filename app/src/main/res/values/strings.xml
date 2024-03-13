@@ -1,14 +1,26 @@
 <resources>
     <string name="app_name">LaunchPad</string>
+    <string name="full_name">Full name</string>
     <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="create_account">Create an Account</string>
+    <string name="sign_in_with_google">SIGN IN WITH GOOGLE</string>
     <string name="upcoming">Upcoming</string>
     <string name="history">History</string>
     <string name="post">Post</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="setting">Setting</string>
     <string name="searchbar_hint">Search</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="got_account_sentence">Already have an account ?</string>
+    <string name="no_account_sentence">You don\'t have an account yet?</string>
     <string name="password_and_security">Password and security</string>
     <string name="personal_information">Personal information</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up_1">Sign Up</string>
+    <string name="sign_up_2">SIGN UP</string>
+    <string name="login">LOGIN</string>
     <string name="logout">Logout</string>
     <array name="job_position">
         <item>Director</item>

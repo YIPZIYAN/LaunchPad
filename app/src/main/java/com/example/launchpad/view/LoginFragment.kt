@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.launchpad.viewmodel.LoginViewModel
 import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentLoginBinding
@@ -18,7 +19,8 @@ class LoginFragment : Fragment() {
     }
 
     private lateinit var viewModel: LoginViewModel
-private lateinit var binding: FragmentLoginBinding
+    private lateinit var binding: FragmentLoginBinding
+    private val nav by lazy { findNavController() }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,6 +29,11 @@ private lateinit var binding: FragmentLoginBinding
 
         binding.btnLogin.setOnClickListener {
             startActivity(Intent(requireActivity(),UserActivity::class.java)) //testing
+
+        }
+
+        binding.txtSignUp.setOnClickListener {
+            nav.navigate(R.id.signUpFragment)
 
         }
 
