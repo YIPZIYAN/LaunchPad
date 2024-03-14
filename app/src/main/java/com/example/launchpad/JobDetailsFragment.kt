@@ -46,8 +46,8 @@ class JobDetailsFragment : Fragment() {
 
         override fun getItem(position: Int): Fragment {
             return when (position) {
-                0 -> TabDescriptionFragment()
-                1 -> TabCompanyFragment()
+                0 -> TabJobDetailsFragment.newInstance(0)
+                1 -> TabJobDetailsFragment.newInstance(1)
                 else -> throw IllegalArgumentException("Invalid position: $position")
             }
         }
