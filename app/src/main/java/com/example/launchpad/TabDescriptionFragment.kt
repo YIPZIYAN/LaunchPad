@@ -5,13 +5,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 
 
 class TabDescriptionFragment : Fragment() {
 
+    companion object {
+        fun newInstance() = TabDescriptionFragment()
+    }
+
+    private val viewModel: TabDescriptionViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // TODO: Use the ViewModel
     }
 
     override fun onCreateView(
