@@ -9,16 +9,16 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.example.launchpad.databinding.FragmentJobDetailsBinding
+import com.example.launchpad.databinding.FragmentViewApplicantBinding
 
-class JobDetailsFragment : Fragment() {
+class ViewApplicantFragment : Fragment() {
 
     companion object {
-        fun newInstance() = JobDetailsFragment()
+        fun newInstance() = ViewApplicantFragment()
     }
 
-    private val viewModel: JobDetailsViewModel by viewModels()
-    private lateinit var binding: FragmentJobDetailsBinding
+    private val viewModel: ViewApplicantViewModel by viewModels()
+    private lateinit var binding: FragmentViewApplicantBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,15 +28,15 @@ class JobDetailsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_job_details, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_view_applicant, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = MyPagerAdapter(childFragmentManager)
+        val adapter = ViewApplicantFragment.MyPagerAdapter(childFragmentManager)
         binding.tabContent.adapter = adapter
         binding.tab.setupWithViewPager(binding.tabContent)
     }
@@ -45,24 +45,24 @@ class JobDetailsFragment : Fragment() {
 
         override fun getItem(position: Int): Fragment {
             return when (position) {
-                0 -> TabJobDetailsFragment.newInstance(0)
-                1 -> TabJobDetailsFragment.newInstance(1)
+                0 -> TabApplicantFragment.newInstance(0)
+                1 -> TabApplicantFragment.newInstance(1)
+                2 -> TabApplicantFragment.newInstance(2)
                 else -> throw IllegalArgumentException("Invalid position: $position")
             }
         }
 
         override fun getCount(): Int {
-            return 2  // Number of tabs
+            return 3  // Number of tabs
         }
 
         override fun getPageTitle(position: Int): CharSequence? {
             return when (position) {
-                0 -> "Description"
-                1 -> "Company"
+                0 -> "New"
+                1 -> "Accepted"
+                2 -> "Rejected"
                 else -> null
             }
         }
     }
-
 }
-

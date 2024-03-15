@@ -79,6 +79,9 @@
     <string name="txt_new">New</string>
     <string name="accepted">Accepted</string>
     <string name="rejected">Rejected</string>
+    <string name="no_accept_applicant">You have not accepted any job seekers yet.</string>
+    <string name="no_reject_applicant">You are kind as you have not rejected any job seeker.</string>
+    <string name="no_applicant">Oops! Your job does not have any applicants yet.</string>
 
 
 
