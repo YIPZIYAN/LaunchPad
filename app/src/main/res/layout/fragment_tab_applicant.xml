@@ -85,7 +85,7 @@
                         android:layout_marginEnd="16dp"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="Bachelor of Information Technology (Honours), Software System"
+                        android:text="Bachelor of Information Technology (Honours), Software System Development"
                         android:textAppearance="?attr/textAppearanceBodySmall"
                         app:layout_constraintStart_toStartOf="@id/applicant_name"
                         app:layout_constraintEnd_toEndOf="parent"
