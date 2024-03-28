@@ -1,4 +1,4 @@
-package com.example.launchpad
+package com.example.launchpad.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentTabJobDetailsBinding
+import com.example.launchpad.viewmodel.TabJobDetailsViewModel
 
 
 class TabJobDetailsFragment : Fragment() {
@@ -37,7 +39,8 @@ class TabJobDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab_job_details, container, false)
+        binding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_tab_job_details, container, false)
         return binding.root
     }
 

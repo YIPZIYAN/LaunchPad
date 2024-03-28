@@ -1,4 +1,4 @@
-package com.example.launchpad
+package com.example.launchpad.view
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentTabApplicantBinding
+import com.example.launchpad.viewmodel.TabApplicantViewModel
 
 class TabApplicantFragment : Fragment() {
 
@@ -36,13 +38,14 @@ class TabApplicantFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab_applicant, container, false)
+        binding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_tab_applicant, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val position = arguments?.getInt(TabApplicantFragment.ARG_POSITION, 0) ?: 0
+        val position = arguments?.getInt(ARG_POSITION, 0) ?: 0
         when (position) {
             0 -> {
                 //"IF NEW APPLICANT >= 1"
