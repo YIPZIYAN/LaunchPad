@@ -20,7 +20,6 @@ class LoginFragment : Fragment() {
 
     private lateinit var viewModel: LoginViewModel
     private lateinit var binding: FragmentLoginBinding
-    private val nav by lazy { findNavController() }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,7 +32,7 @@ class LoginFragment : Fragment() {
         }
 
         binding.txtSignUp.setOnClickListener {
-            nav.navigate(R.id.signUpFragment)
+            findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
 
         }
 

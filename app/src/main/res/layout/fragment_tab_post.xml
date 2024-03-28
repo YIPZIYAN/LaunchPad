@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TabPostFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/job_card"
+                style="?attr/materialCardViewElevatedStyle"
+                android:layout_width="356dp"
+                android:layout_height="445dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginVertical="12dp"
+                app:cardBackgroundColor="@color/md_theme_light_onPrimary"
+
+                app:cardElevation="2dp"
+                app:layout_anchorGravity="bottom"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="18dp">
+
+                    <ImageView
+                        android:id="@+id/imageThumbUp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+                        app:srcCompat="@drawable/baseline_thumb_up_off_alt_24_blue" />
+
+                    <ImageView
+                        android:id="@+id/imageMore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="160dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/txtUsername"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/baseline_more_horiz_24"
+                        app:tint="?attr/colorControlNormal" />
+
+                    <ImageView
+                        android:id="@+id/imagePublic"
+                        android:layout_width="16dp"
+                        android:layout_height="14dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="4dp"
+                        app:layout_constraintStart_toEndOf="@+id/textView11"
+                        app:layout_constraintTop_toBottomOf="@+id/txtUsername"
+                        app:srcCompat="@drawable/baseline_public_24"
+                        app:tint="?attr/colorControlNormal" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/company_avatar_container"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        app:cardCornerRadius="28dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/imageView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            tools:src="@drawable/round_account_circle_24" />
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:id="@+id/txtUsername"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="Carolyn Ting"
+                        android:textSize="15sp"
+                        app:layout_constraintStart_toEndOf="@+id/company_avatar_container"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="4dp"
+                        android:text="1d"
+                        android:textSize="11sp"
+                        app:layout_constraintStart_toEndOf="@+id/company_avatar_container"
+                        app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="5dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="1dp"
+                        android:text="•"
+                        app:layout_constraintStart_toEndOf="@+id/txtTime"
+                        app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
+
+                    <TextView
+                        android:id="@+id/textView10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="4dp"
+                        android:text="Edited"
+                        android:textSize="11sp"
+                        app:layout_constraintStart_toEndOf="@+id/textView9"
+                        app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
+
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="5dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="1dp"
+                        android:text="•"
+                        app:layout_constraintStart_toEndOf="@+id/textView10"
+                        app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
+
+                    <TextView
+                        android:id="@+id/textView14"
+                        android:layout_width="322dp"
+                        android:layout_height="39dp"
+                        android:layout_marginTop="12dp"
+                        android:text="Feeling great to be teaching again, it is a good action to enhance your self confidence "
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/company_avatar_container" />
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="243dp"
+                        android:layout_marginTop="17dp"
+                        android:text="...see more"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/textView14"
+                        app:layout_constraintTop_toTopOf="@+id/textView14" />
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="317dp"
+                        android:layout_height="261dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/img_tarumt"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="19dp"
+                        android:text="666"
+                        android:textSize="13sp"
+                        app:layout_constraintStart_toEndOf="@+id/imageThumbUp"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="108dp"
+                        android:layout_marginTop="19dp"
+                        android:text="111 Comments"
+                        android:textSize="13sp"
+                        app:layout_constraintStart_toEndOf="@+id/textView4"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="5dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="19dp"
+                        android:text="•"
+                        app:layout_constraintStart_toEndOf="@+id/textView5"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+                    <TextView
+                        android:id="@+id/textView16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="19dp"
+                        android:text="1 Share"
+                        android:textSize="13sp"
+                        app:layout_constraintStart_toEndOf="@+id/textView15"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+
+                    <!-- Title, secondary and supporting text -->
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
