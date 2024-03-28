@@ -1,5 +1,6 @@
 package com.example.launchpad.view
 
+import android.content.res.ColorStateList
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import com.example.launchpad.viewmodel.HomeViewModel
 import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentHomeBinding
 import com.example.launchpad.databinding.FragmentMyProfileBinding
+import com.example.launchpad.view.LoginFragment.Companion.userType
 
 class HomeFragment : Fragment() {
 
@@ -20,6 +22,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var binding: FragmentHomeBinding
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +34,12 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_homeFragment_to_jobDetailsFragment)
         }
 
+        if (userType == 0) {
+            binding.homeTitle.text = resources.getString(R.string.your_posted_job)
+            binding.bookmark.visibility = View.GONE
+            binding.jobCard2.visibility = View.GONE
+            binding.jobCard3.visibility = View.GONE
+        }
 
         return binding.root
     }

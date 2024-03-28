@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentViewApplicantBinding
 import com.example.launchpad.viewmodel.ViewApplicantViewModel
@@ -22,18 +23,16 @@ class ViewApplicantFragment : Fragment() {
     private val viewModel: ViewApplicantViewModel by viewModels()
     private lateinit var binding: FragmentViewApplicantBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_view_applicant, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_view_applicant, container, false)
+
+        binding.topAppBar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+
         return binding.root
     }
 

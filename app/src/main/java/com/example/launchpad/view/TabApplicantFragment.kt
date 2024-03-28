@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentTabApplicantBinding
 import com.example.launchpad.viewmodel.TabApplicantViewModel
@@ -38,8 +39,10 @@ class TabApplicantFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_tab_applicant, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab_applicant, container, false)
+        binding.applicant.setOnClickListener {
+            findNavController().navigate(R.id.action_viewApplicantFragment_to_applicantDetailsFragment)
+        }
         return binding.root
     }
 

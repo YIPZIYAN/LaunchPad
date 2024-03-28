@@ -30,7 +30,9 @@ class UserActivity : AppCompatActivity() {
                 when (destination.id) {
                     R.id.jobDetailsFragment,
                     R.id.applyJobFragment,
-                    R.id.postJobFragment -> {
+                    R.id.postJobFragment,
+                    R.id.viewApplicantFragment,
+                    R.id.applicantDetailsFragment -> {
                         binding.bottomNavigation.visibility = View.GONE
                     }
                     else -> {

@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentJobDetailsBinding
+import com.example.launchpad.view.LoginFragment.Companion.userType
 import com.example.launchpad.viewmodel.JobDetailsViewModel
 
 class JobDetailsFragment : Fragment() {
@@ -23,17 +24,26 @@ class JobDetailsFragment : Fragment() {
     private val viewModel: JobDetailsViewModel by viewModels()
     private lateinit var binding: FragmentJobDetailsBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_job_details, container, false)
+
+        if (userType == 0) {
+            binding.topAppBar.menu.findItem(R.id.edit).setVisible(true)
+            binding.topAppBar.menu.findItem(R.id.archive).setVisible(true)
+            binding.btnApply.text = resources.getString(R.string.VIEW_APPLICANT)
+            binding.btnApply.setOnClickListener {
+                findNavController().navigate(R.id.action_jobDetailsFragment_to_viewApplicantFragment)
+            }
+        }
+        else {
+            binding.btnApply.setOnClickListener {
+                findNavController().navigate(R.id.action_jobDetailsFragment_to_applyJobFragment)
+            }
+        }
+
         return binding.root
     }
 
@@ -52,14 +62,11 @@ class JobDetailsFragment : Fragment() {
                     true
                 }
                 R.id.archive -> {
-                    // Handle favorite icon press
+
                     true
                 }
                 else -> false
             }
-        }
-        binding.btnApply.setOnClickListener {
-            findNavController().navigate(R.id.action_jobDetailsFragment_to_applyJobFragment)
         }
 
     }
