@@ -6,8 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.launchpad.viewmodel.HomeViewModel
 import com.example.launchpad.R
+import com.example.launchpad.databinding.FragmentHomeBinding
+import com.example.launchpad.databinding.FragmentMyProfileBinding
 
 class HomeFragment : Fragment() {
 
@@ -16,12 +19,20 @@ class HomeFragment : Fragment() {
     }
 
     private lateinit var viewModel: HomeViewModel
+    private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        binding.jobCard.setOnClickListener{
+            findNavController().navigate(R.id.action_homeFragment_to_jobDetailsFragment)
+        }
+
+
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

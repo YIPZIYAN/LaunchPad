@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentJobDetailsBinding
 import com.example.launchpad.viewmodel.JobDetailsViewModel
@@ -41,6 +42,26 @@ class JobDetailsFragment : Fragment() {
         val adapter = MyPagerAdapter(childFragmentManager)
         binding.tabContent.adapter = adapter
         binding.tab.setupWithViewPager(binding.tabContent)
+        binding.topAppBar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+        binding.topAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.edit -> {
+                    findNavController().navigate(R.id.action_jobDetailsFragment_to_postJobFragment)
+                    true
+                }
+                R.id.archive -> {
+                    // Handle favorite icon press
+                    true
+                }
+                else -> false
+            }
+        }
+        binding.btnApply.setOnClickListener {
+            findNavController().navigate(R.id.action_jobDetailsFragment_to_applyJobFragment)
+        }
+
     }
 
     class MyPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {

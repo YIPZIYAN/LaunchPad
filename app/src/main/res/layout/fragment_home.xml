@@ -1,637 +1,637 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/homeFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.HomeFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/coordinatorLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/homeFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".view.HomeFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinatorLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/welcome_card"
-                style="?attr/materialCardViewFilledStyle"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/md_theme_light_primary"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/welcome_card"
+                    style="?attr/materialCardViewFilledStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="24dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginBottom="50dp"
-                    android:orientation="vertical">
+                    app:cardBackgroundColor="@color/md_theme_light_primary"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <!-- Title, secondary and supporting text -->
-                    <TextView
-                        android:id="@+id/lbl_greeting"
-                        android:layout_width="wrap_content"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto"
-                        android:text="@string/morning"
-                        android:textAppearance="?attr/textAppearanceTitleLarge"
-                        android:textColor="@color/md_theme_dark_onBackground"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:layout_marginHorizontal="24dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="50dp"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Username123"
-                        android:textAppearance="?attr/textAppearanceTitleMedium"
-                        android:textColor="@color/md_theme_dark_onBackground"
-                        android:textSize="16sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/lbl_greeting" />
+                        <!-- Title, secondary and supporting text -->
+                        <TextView
+                            android:id="@+id/lbl_greeting"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto"
+                            android:text="@string/morning"
+                            android:textAppearance="?attr/textAppearanceTitleLarge"
+                            android:textColor="@color/md_theme_dark_onBackground"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Username123"
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
+                            android:textColor="@color/md_theme_dark_onBackground"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/lbl_greeting" />
 
-            </androidx.cardview.widget.CardView>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/searchbar_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="90dp"
-                android:background="#00FFFFFF"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-               >
+                </androidx.cardview.widget.CardView>
 
-                <com.google.android.material.search.SearchBar
-                    android:id="@+id/search_bar"
+                <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/searchbar_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/searchbar_hint" />
+                    android:layout_marginTop="90dp"
+                    android:background="#00FFFFFF"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            </com.google.android.material.appbar.AppBarLayout>
+                    <com.google.android.material.search.SearchBar
+                        android:id="@+id/search_bar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/searchbar_hint" />
 
-            <TextView
-                android:id="@+id/home_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="28dp"
-                android:text="@string/recent_job_list"
-                android:textAppearance="?attr/textAppearanceTitleLarge"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/searchbar_container"
-                android:paddingBottom="12dp"
-                />
+                </com.google.android.material.appbar.AppBarLayout>
 
-            <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/scroll_view"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/home_title">
-                <!-- Screen content goes here. -->
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <TextView
+                    android:id="@+id/home_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:paddingBottom="12dp"
+                    android:text="@string/recent_job_list"
+                    android:textAppearance="?attr/textAppearanceTitleLarge"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/searchbar_container" />
+
+                <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
+                <androidx.core.widget.NestedScrollView
+                    android:id="@+id/scroll_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/job_card"
-                        style="?attr/materialCardViewElevatedStyle"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/home_title">
+                    <!-- Screen content goes here. -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="24dp"
-                        android:layout_marginTop="16dp"
-                        app:cardElevation="2dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        android:layout_height="match_parent">
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/job_card"
+                            style="?attr/materialCardViewElevatedStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingHorizontal="20dp"
-                            android:paddingVertical="18dp">
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/company_avatar_container"
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                app:cardCornerRadius="28dp"
-                                app:cardElevation="0dp"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent">
-
-                                <ImageView
-                                    android:id="@+id/company_avatar"
-                                    android:layout_width="48dp"
-                                    android:layout_height="48dp"
-                                    android:contentDescription="sample"
-                                    android:scaleType="centerCrop"
-                                    app:srcCompat="@drawable/ic_launcher_background" />
-                            </androidx.cardview.widget.CardView>
-
-
-                            <!-- Title, secondary and supporting text -->
-
-                            <CheckBox
-                                android:id="@+id/bookmark"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="-8dp"
-                                android:button="@drawable/sl_bookmark_30dp"
-                                app:buttonTint="@color/bookmark_yellow"
-                                app:layout_constraintEnd_toEndOf="@+id/chipGroup"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/job_name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="12dp"
-                                android:text="Software Engineer"
-                                android:textAppearance="?attr/textAppearanceTitleMedium"
-                                app:layout_constraintStart_toStartOf="@id/company_avatar_container"
-                                app:layout_constraintTop_toBottomOf="@id/company_avatar_container" />
-
-                            <TextView
-                                android:id="@+id/company_name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="Google Inc"
-                                android:textAppearance="?attr/textAppearanceBodyMedium"
-                                android:textColor="?android:attr/textColorSecondary"
-                                app:layout_constraintStart_toStartOf="@id/company_avatar_container"
-                                app:layout_constraintTop_toBottomOf="@id/job_name" />
-
-                            <TextView
-                                android:id="@+id/company_location"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:text="Kuala Lumpur"
-                                android:textAppearance="?attr/textAppearanceBodyMedium"
-                                android:textColor="?android:attr/textColorSecondary"
-                                app:layout_constraintStart_toStartOf="@id/company_avatar_container"
-                                app:layout_constraintTop_toBottomOf="@id/company_name" />
-
-                            <TextView
-                                android:id="@+id/lbl_salary"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:text="RM 5000 - RM 6000 per month"
-                                android:textAppearance="?attr/textAppearanceBodyMedium"
-                                android:textColor="?android:attr/textColorSecondary"
-                                android:textSize="14sp"
-                                android:textStyle="italic"
-                                app:layout_constraintStart_toStartOf="@id/company_avatar_container"
-                                app:layout_constraintTop_toBottomOf="@id/company_location" />
-
+                            android:layout_marginHorizontal="24dp"
+                            android:layout_marginTop="16dp"
+                            app:cardElevation="2dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
-                                android:id="@+id/chipGroup"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="@id/company_avatar_container"
-                                app:layout_constraintTop_toBottomOf="@id/lbl_salary">
+                                android:paddingHorizontal="20dp"
+                                android:paddingVertical="18dp">
 
-                                <!-- Chips can be declared here, or added dynamically. -->
-                                <com.google.android.material.chip.Chip
-                                    android:id="@+id/chip_job_type"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginEnd="14dp"
-                                    android:text="Full Time"
-                                    android:textAlignment="center"
-                                    android:textSize="12sp"
-                                    style="@style/Widget.Material3.Chip.Assist"
-                                    app:layout_constraintEnd_toStartOf="@id/chip_workplace"
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/company_avatar_container"
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    app:cardCornerRadius="28dp"
+                                    app:cardElevation="0dp"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:textEndPadding="4dp"
-                                    app:textStartPadding="4dp"
-                                    android:checkable="false" />
+                                    app:layout_constraintTop_toTopOf="parent">
 
-                                <com.google.android.material.chip.Chip
-                                    android:id="@+id/chip_workplace"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginEnd="14dp"
-                                    android:text="Remote"
-                                    android:textAlignment="center"
-                                    android:textSize="12sp"
-                                    style="@style/Widget.Material3.Chip.Suggestion"                                    app:layout_constraintEnd_toStartOf="@id/chip_position"
-                                    app:layout_constraintStart_toEndOf="@id/chip_job_type"
-                                    app:layout_constraintTop_toTopOf="@id/chip_job_type"
-                                    app:textEndPadding="4dp"
-                                    app:textStartPadding="4dp"
-                                    android:checkable="false" />
+                                    <ImageView
+                                        android:id="@+id/company_avatar"
+                                        android:layout_width="48dp"
+                                        android:layout_height="48dp"
+                                        android:contentDescription="sample"
+                                        android:scaleType="centerCrop"
+                                        app:srcCompat="@drawable/ic_launcher_background" />
+                                </androidx.cardview.widget.CardView>
 
-                                <com.google.android.material.chip.Chip
-                                    android:id="@+id/chip_position"
-                                    android:layout_width="0dp"
+
+                                <!-- Title, secondary and supporting text -->
+
+                                <CheckBox
+                                    android:id="@+id/bookmark"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Senior"
-                                    android:textAlignment="center"
-                                    android:textSize="12sp"
-                                    style="@style/Widget.Material3.Chip.Suggestion"
+                                    android:layout_marginEnd="-8dp"
+                                    android:button="@drawable/sl_bookmark_30dp"
+                                    app:buttonTint="@color/bookmark_yellow"
+                                    app:layout_constraintEnd_toEndOf="@+id/chipGroup"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/job_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="12dp"
+                                    android:text="Software Engineer"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                                    app:layout_constraintStart_toStartOf="@id/company_avatar_container"
+                                    app:layout_constraintTop_toBottomOf="@id/company_avatar_container" />
+
+                                <TextView
+                                    android:id="@+id/company_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="Google Inc"
+                                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                                    android:textColor="?android:attr/textColorSecondary"
+                                    app:layout_constraintStart_toStartOf="@id/company_avatar_container"
+                                    app:layout_constraintTop_toBottomOf="@id/job_name" />
+
+                                <TextView
+                                    android:id="@+id/company_location"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="Kuala Lumpur"
+                                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                                    android:textColor="?android:attr/textColorSecondary"
+                                    app:layout_constraintStart_toStartOf="@id/company_avatar_container"
+                                    app:layout_constraintTop_toBottomOf="@id/company_name" />
+
+                                <TextView
+                                    android:id="@+id/lbl_salary"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:text="RM 5000 - RM 6000 per month"
+                                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                                    android:textColor="?android:attr/textColorSecondary"
+                                    android:textSize="14sp"
+                                    android:textStyle="italic"
+                                    app:layout_constraintStart_toStartOf="@id/company_avatar_container"
+                                    app:layout_constraintTop_toBottomOf="@id/company_location" />
+
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/chipGroup"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
                                     app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toEndOf="@id/chip_workplace"
-                                    app:layout_constraintTop_toTopOf="@id/chip_job_type"
-                                    app:textEndPadding="4dp"
-                                    app:textStartPadding="4dp"
-                                    android:checkable="false" />
+                                    app:layout_constraintStart_toStartOf="@id/company_avatar_container"
+                                    app:layout_constraintTop_toBottomOf="@id/lbl_salary">
+
+                                    <!-- Chips can be declared here, or added dynamically. -->
+                                    <com.google.android.material.chip.Chip
+                                        android:id="@+id/chip_job_type"
+                                        style="@style/Widget.Material3.Chip.Assist"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="14dp"
+                                        android:checkable="false"
+                                        android:text="Full Time"
+                                        android:textAlignment="center"
+                                        android:textSize="12sp"
+                                        app:layout_constraintEnd_toStartOf="@id/chip_workplace"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:textEndPadding="4dp"
+                                        app:textStartPadding="4dp" />
+
+                                    <com.google.android.material.chip.Chip
+                                        android:id="@+id/chip_workplace"
+                                        style="@style/Widget.Material3.Chip.Suggestion"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="14dp"
+                                        android:checkable="false"
+                                        android:text="Remote"
+                                        android:textAlignment="center"
+                                        android:textSize="12sp"
+                                        app:layout_constraintEnd_toStartOf="@id/chip_position"
+                                        app:layout_constraintStart_toEndOf="@id/chip_job_type"
+                                        app:layout_constraintTop_toTopOf="@id/chip_job_type"
+                                        app:textEndPadding="4dp"
+                                        app:textStartPadding="4dp" />
+
+                                    <com.google.android.material.chip.Chip
+                                        android:id="@+id/chip_position"
+                                        style="@style/Widget.Material3.Chip.Suggestion"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:checkable="false"
+                                        android:text="Senior"
+                                        android:textAlignment="center"
+                                        android:textSize="12sp"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintStart_toEndOf="@id/chip_workplace"
+                                        app:layout_constraintTop_toTopOf="@id/chip_job_type"
+                                        app:textEndPadding="4dp"
+                                        app:textStartPadding="4dp" />
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                <TextView
+                                    android:id="@+id/time_posted"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:fontFamily="sans-serif-condensed"
+                                    android:text="5h ago"
+                                    android:textSize="14sp"
+                                    app:layout_constraintStart_toStartOf="@id/company_avatar_container"
+                                    app:layout_constraintTop_toBottomOf="@id/chipGroup" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
-                            <TextView
-                                android:id="@+id/time_posted"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:fontFamily="sans-serif-condensed"
-                                android:text="5h ago"
-                                android:textSize="14sp"
-                                app:layout_constraintStart_toStartOf="@id/company_avatar_container"
-                                app:layout_constraintTop_toBottomOf="@id/chipGroup" />
 
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                        </com.google.android.material.card.MaterialCardView>
 
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/job_card2"
-                        style="?attr/materialCardViewElevatedStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="24dp"
-                        android:layout_marginTop="16dp"
-                        app:cardElevation="2dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/job_card">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/job_card2"
+                            style="?attr/materialCardViewElevatedStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingHorizontal="20dp"
-                            android:paddingVertical="18dp">
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/company_avatar_container2"
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                app:cardCornerRadius="28dp"
-                                app:cardElevation="0dp"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent">
-
-                                <ImageView
-                                    android:id="@+id/company_avatar2"
-                                    android:layout_width="48dp"
-                                    android:layout_height="48dp"
-                                    android:contentDescription="sample"
-                                    android:scaleType="centerCrop"
-                                    app:srcCompat="@drawable/ic_launcher_background" />
-                            </androidx.cardview.widget.CardView>
-
-                            <!-- Title, secondary and supporting text -->
-
-                            <CheckBox
-                                android:id="@+id/bookmark2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="-8dp"
-                                android:button="@drawable/sl_bookmark_30dp"
-                                app:buttonTint="@color/bookmark_yellow"
-                                app:layout_constraintEnd_toEndOf="@+id/chipGroup2"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/job_name2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="12dp"
-                                android:text="Software Engineer"
-                                android:textAppearance="?attr/textAppearanceTitleMedium"
-                                app:layout_constraintStart_toStartOf="@id/company_avatar_container2"
-                                app:layout_constraintTop_toBottomOf="@id/company_avatar_container2" />
-
-                            <TextView
-                                android:id="@+id/company_name2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="Google Inc"
-                                android:textAppearance="?attr/textAppearanceBodyMedium"
-                                android:textColor="?android:attr/textColorSecondary"
-                                app:layout_constraintStart_toStartOf="@id/company_avatar_container2"
-                                app:layout_constraintTop_toBottomOf="@id/job_name2" />
-
-                            <TextView
-                                android:id="@+id/company_location2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:text="Kuala Lumpur"
-                                android:textAppearance="?attr/textAppearanceBodyMedium"
-                                android:textColor="?android:attr/textColorSecondary"
-                                app:layout_constraintStart_toStartOf="@id/company_avatar_container2"
-                                app:layout_constraintTop_toBottomOf="@id/company_name2" />
-
-                            <TextView
-                                android:id="@+id/lbl_salary2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:text="RM 5000 - RM 6000 per month"
-                                android:textAppearance="?attr/textAppearanceBodyMedium"
-                                android:textColor="?android:attr/textColorSecondary"
-                                android:textSize="14sp"
-                                android:textStyle="italic"
-                                app:layout_constraintStart_toStartOf="@id/company_avatar_container2"
-                                app:layout_constraintTop_toBottomOf="@id/company_location2" />
+                            android:layout_marginHorizontal="24dp"
+                            android:layout_marginTop="16dp"
+                            app:cardElevation="2dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/job_card">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
-                                android:id="@+id/chipGroup2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="@id/company_avatar_container2"
-                                app:layout_constraintTop_toBottomOf="@id/lbl_salary2">
+                                android:paddingHorizontal="20dp"
+                                android:paddingVertical="18dp">
 
-                                <!-- Chips can be declared here, or added dynamically. -->
-                                <com.google.android.material.chip.Chip
-                                    android:id="@+id/chip_job_type2"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginEnd="14dp"
-                                    android:text="Full Time"
-                                    android:textAlignment="center"
-                                    android:textSize="12sp"
-                                    style="@style/Widget.Material3.Chip.Suggestion"
-                                    app:layout_constraintEnd_toStartOf="@id/chip_workplace2"
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/company_avatar_container2"
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    app:cardCornerRadius="28dp"
+                                    app:cardElevation="0dp"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:textEndPadding="4dp"
-                                    app:textStartPadding="4dp"
-                                    android:checkable="false" />
+                                    app:layout_constraintTop_toTopOf="parent">
 
-                                <com.google.android.material.chip.Chip
-                                    android:id="@+id/chip_workplace2"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginEnd="14dp"
-                                    android:text="Remote"
-                                    android:textAlignment="center"
-                                    android:textSize="12sp"
-                                    style="@style/Widget.Material3.Chip.Suggestion"
-                                    app:layout_constraintEnd_toStartOf="@id/chip_position2"
-                                    app:layout_constraintStart_toEndOf="@id/chip_job_type2"
-                                    app:layout_constraintTop_toTopOf="@id/chip_job_type2"
-                                    app:textEndPadding="4dp"
-                                    app:textStartPadding="4dp"
-                                    android:checkable="false" />
+                                    <ImageView
+                                        android:id="@+id/company_avatar2"
+                                        android:layout_width="48dp"
+                                        android:layout_height="48dp"
+                                        android:contentDescription="sample"
+                                        android:scaleType="centerCrop"
+                                        app:srcCompat="@drawable/ic_launcher_background" />
+                                </androidx.cardview.widget.CardView>
 
-                                <com.google.android.material.chip.Chip
-                                    android:id="@+id/chip_position2"
-                                    android:layout_width="0dp"
+                                <!-- Title, secondary and supporting text -->
+
+                                <CheckBox
+                                    android:id="@+id/bookmark2"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Senior"
-                                    android:textAlignment="center"
-                                    android:textSize="12sp"
-                                    style="@style/Widget.Material3.Chip.Suggestion"
+                                    android:layout_marginEnd="-8dp"
+                                    android:button="@drawable/sl_bookmark_30dp"
+                                    app:buttonTint="@color/bookmark_yellow"
+                                    app:layout_constraintEnd_toEndOf="@+id/chipGroup2"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/job_name2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="12dp"
+                                    android:text="Software Engineer"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                                    app:layout_constraintStart_toStartOf="@id/company_avatar_container2"
+                                    app:layout_constraintTop_toBottomOf="@id/company_avatar_container2" />
+
+                                <TextView
+                                    android:id="@+id/company_name2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="Google Inc"
+                                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                                    android:textColor="?android:attr/textColorSecondary"
+                                    app:layout_constraintStart_toStartOf="@id/company_avatar_container2"
+                                    app:layout_constraintTop_toBottomOf="@id/job_name2" />
+
+                                <TextView
+                                    android:id="@+id/company_location2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="Kuala Lumpur"
+                                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                                    android:textColor="?android:attr/textColorSecondary"
+                                    app:layout_constraintStart_toStartOf="@id/company_avatar_container2"
+                                    app:layout_constraintTop_toBottomOf="@id/company_name2" />
+
+                                <TextView
+                                    android:id="@+id/lbl_salary2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:text="RM 5000 - RM 6000 per month"
+                                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                                    android:textColor="?android:attr/textColorSecondary"
+                                    android:textSize="14sp"
+                                    android:textStyle="italic"
+                                    app:layout_constraintStart_toStartOf="@id/company_avatar_container2"
+                                    app:layout_constraintTop_toBottomOf="@id/company_location2" />
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/chipGroup2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
                                     app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toEndOf="@id/chip_workplace2"
-                                    app:layout_constraintTop_toTopOf="@id/chip_job_type2"
-                                    app:textEndPadding="4dp"
-                                    app:textStartPadding="4dp"
-                                    android:checkable="false" />
+                                    app:layout_constraintStart_toStartOf="@id/company_avatar_container2"
+                                    app:layout_constraintTop_toBottomOf="@id/lbl_salary2">
+
+                                    <!-- Chips can be declared here, or added dynamically. -->
+                                    <com.google.android.material.chip.Chip
+                                        android:id="@+id/chip_job_type2"
+                                        style="@style/Widget.Material3.Chip.Suggestion"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="14dp"
+                                        android:checkable="false"
+                                        android:text="Full Time"
+                                        android:textAlignment="center"
+                                        android:textSize="12sp"
+                                        app:layout_constraintEnd_toStartOf="@id/chip_workplace2"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:textEndPadding="4dp"
+                                        app:textStartPadding="4dp" />
+
+                                    <com.google.android.material.chip.Chip
+                                        android:id="@+id/chip_workplace2"
+                                        style="@style/Widget.Material3.Chip.Suggestion"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="14dp"
+                                        android:checkable="false"
+                                        android:text="Remote"
+                                        android:textAlignment="center"
+                                        android:textSize="12sp"
+                                        app:layout_constraintEnd_toStartOf="@id/chip_position2"
+                                        app:layout_constraintStart_toEndOf="@id/chip_job_type2"
+                                        app:layout_constraintTop_toTopOf="@id/chip_job_type2"
+                                        app:textEndPadding="4dp"
+                                        app:textStartPadding="4dp" />
+
+                                    <com.google.android.material.chip.Chip
+                                        android:id="@+id/chip_position2"
+                                        style="@style/Widget.Material3.Chip.Suggestion"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:checkable="false"
+                                        android:text="Senior"
+                                        android:textAlignment="center"
+                                        android:textSize="12sp"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintStart_toEndOf="@id/chip_workplace2"
+                                        app:layout_constraintTop_toTopOf="@id/chip_job_type2"
+                                        app:textEndPadding="4dp"
+                                        app:textStartPadding="4dp" />
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                <TextView
+                                    android:id="@+id/time_posted2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:fontFamily="sans-serif-condensed"
+                                    android:text="5h ago"
+                                    android:textSize="14sp"
+                                    app:layout_constraintStart_toStartOf="@id/company_avatar_container2"
+                                    app:layout_constraintTop_toBottomOf="@id/chipGroup2" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
+                        </com.google.android.material.card.MaterialCardView>
 
-                            <TextView
-                                android:id="@+id/time_posted2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:fontFamily="sans-serif-condensed"
-                                android:text="5h ago"
-                                android:textSize="14sp"
-                                app:layout_constraintStart_toStartOf="@id/company_avatar_container2"
-                                app:layout_constraintTop_toBottomOf="@id/chipGroup2" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/job_card3"
-                        style="?attr/materialCardViewElevatedStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="24dp"
-                        android:layout_marginTop="16dp"
-                        app:cardElevation="2dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/job_card2">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/job_card3"
+                            style="?attr/materialCardViewElevatedStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingHorizontal="20dp"
-                            android:paddingVertical="18dp">
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/company_avatar_container3"
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                app:cardCornerRadius="28dp"
-                                app:cardElevation="0dp"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent">
-
-                                <ImageView
-                                    android:id="@+id/company_avatar3"
-                                    android:layout_width="48dp"
-                                    android:layout_height="48dp"
-                                    android:contentDescription="sample"
-                                    android:scaleType="centerCrop"
-                                    app:srcCompat="@drawable/ic_launcher_background" />
-                            </androidx.cardview.widget.CardView>
-
-                            <!-- Title, secondary and supporting text -->
-
-                            <CheckBox
-                                android:id="@+id/bookmark3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="-8dp"
-                                android:button="@drawable/sl_bookmark_30dp"
-                                app:buttonTint="@color/bookmark_yellow"
-                                app:layout_constraintEnd_toEndOf="@+id/chipGroup3"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/job_name3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="12dp"
-                                android:text="Software Engineer"
-                                android:textAppearance="?attr/textAppearanceTitleMedium"
-                                app:layout_constraintStart_toStartOf="@id/company_avatar_container3"
-                                app:layout_constraintTop_toBottomOf="@id/company_avatar_container3" />
-
-                            <TextView
-                                android:id="@+id/company_name3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="Google Inc"
-                                android:textAppearance="?attr/textAppearanceBodyMedium"
-                                android:textColor="?android:attr/textColorSecondary"
-                                app:layout_constraintStart_toStartOf="@id/company_avatar_container3"
-                                app:layout_constraintTop_toBottomOf="@id/job_name3" />
-
-                            <TextView
-                                android:id="@+id/company_location3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:text="Kuala Lumpur"
-                                android:textAppearance="?attr/textAppearanceBodyMedium"
-                                android:textColor="?android:attr/textColorSecondary"
-                                app:layout_constraintStart_toStartOf="@id/company_avatar_container3"
-                                app:layout_constraintTop_toBottomOf="@id/company_name3" />
-
-                            <TextView
-                                android:id="@+id/lbl_salary3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:text="RM 5000 - RM 6000 per month"
-                                android:textAppearance="?attr/textAppearanceBodyMedium"
-                                android:textColor="?android:attr/textColorSecondary"
-                                android:textSize="14sp"
-                                android:textStyle="italic"
-                                app:layout_constraintStart_toStartOf="@id/company_avatar_container3"
-                                app:layout_constraintTop_toBottomOf="@id/company_location3" />
+                            android:layout_marginHorizontal="24dp"
+                            android:layout_marginTop="16dp"
+                            app:cardElevation="2dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/job_card2">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
-                                android:id="@+id/chipGroup3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="@id/company_avatar_container3"
-                                app:layout_constraintTop_toBottomOf="@id/lbl_salary3">
+                                android:paddingHorizontal="20dp"
+                                android:paddingVertical="18dp">
 
-                                <!-- Chips can be declared here, or added dynamically. -->
-                                <com.google.android.material.chip.Chip
-                                    android:id="@+id/chip_job_type3"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginEnd="14dp"
-                                    android:text="Full Time"
-                                    android:textAlignment="center"
-                                    android:textSize="12sp"
-                                    style="@style/Widget.Material3.Chip.Suggestion"
-                                    app:layout_constraintEnd_toStartOf="@id/chip_workplace3"
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/company_avatar_container3"
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    app:cardCornerRadius="28dp"
+                                    app:cardElevation="0dp"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:textEndPadding="4dp"
-                                    app:textStartPadding="4dp"
-                                    android:checkable="false" />
+                                    app:layout_constraintTop_toTopOf="parent">
 
-                                <com.google.android.material.chip.Chip
-                                    android:id="@+id/chip_workplace3"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginEnd="14dp"
-                                    android:text="Remote"
-                                    android:textAlignment="center"
-                                    android:textSize="12sp"
-                                    style="@style/Widget.Material3.Chip.Suggestion"
-                                    app:layout_constraintEnd_toStartOf="@id/chip_position3"
-                                    app:layout_constraintStart_toEndOf="@id/chip_job_type3"
-                                    app:layout_constraintTop_toTopOf="@id/chip_job_type3"
-                                    app:textEndPadding="4dp"
-                                    app:textStartPadding="4dp"
-                                    android:checkable="false" />
+                                    <ImageView
+                                        android:id="@+id/company_avatar3"
+                                        android:layout_width="48dp"
+                                        android:layout_height="48dp"
+                                        android:contentDescription="sample"
+                                        android:scaleType="centerCrop"
+                                        app:srcCompat="@drawable/ic_launcher_background" />
+                                </androidx.cardview.widget.CardView>
 
-                                <com.google.android.material.chip.Chip
-                                    android:id="@+id/chip_position3"
-                                    android:layout_width="0dp"
+                                <!-- Title, secondary and supporting text -->
+
+                                <CheckBox
+                                    android:id="@+id/bookmark3"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Senior"
-                                    android:textAlignment="center"
-                                    android:textSize="12sp"
-                                    style="@style/Widget.Material3.Chip.Suggestion"
+                                    android:layout_marginEnd="-8dp"
+                                    android:button="@drawable/sl_bookmark_30dp"
+                                    app:buttonTint="@color/bookmark_yellow"
+                                    app:layout_constraintEnd_toEndOf="@+id/chipGroup3"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/job_name3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="12dp"
+                                    android:text="Software Engineer"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                                    app:layout_constraintStart_toStartOf="@id/company_avatar_container3"
+                                    app:layout_constraintTop_toBottomOf="@id/company_avatar_container3" />
+
+                                <TextView
+                                    android:id="@+id/company_name3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="Google Inc"
+                                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                                    android:textColor="?android:attr/textColorSecondary"
+                                    app:layout_constraintStart_toStartOf="@id/company_avatar_container3"
+                                    app:layout_constraintTop_toBottomOf="@id/job_name3" />
+
+                                <TextView
+                                    android:id="@+id/company_location3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="Kuala Lumpur"
+                                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                                    android:textColor="?android:attr/textColorSecondary"
+                                    app:layout_constraintStart_toStartOf="@id/company_avatar_container3"
+                                    app:layout_constraintTop_toBottomOf="@id/company_name3" />
+
+                                <TextView
+                                    android:id="@+id/lbl_salary3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:text="RM 5000 - RM 6000 per month"
+                                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                                    android:textColor="?android:attr/textColorSecondary"
+                                    android:textSize="14sp"
+                                    android:textStyle="italic"
+                                    app:layout_constraintStart_toStartOf="@id/company_avatar_container3"
+                                    app:layout_constraintTop_toBottomOf="@id/company_location3" />
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/chipGroup3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
                                     app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toEndOf="@id/chip_workplace3"
-                                    app:layout_constraintTop_toTopOf="@id/chip_job_type3"
-                                    app:textEndPadding="4dp"
-                                    app:textStartPadding="4dp"
-                                    android:checkable="false" />
+                                    app:layout_constraintStart_toStartOf="@id/company_avatar_container3"
+                                    app:layout_constraintTop_toBottomOf="@id/lbl_salary3">
+
+                                    <!-- Chips can be declared here, or added dynamically. -->
+                                    <com.google.android.material.chip.Chip
+                                        android:id="@+id/chip_job_type3"
+                                        style="@style/Widget.Material3.Chip.Suggestion"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="14dp"
+                                        android:checkable="false"
+                                        android:text="Full Time"
+                                        android:textAlignment="center"
+                                        android:textSize="12sp"
+                                        app:layout_constraintEnd_toStartOf="@id/chip_workplace3"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:textEndPadding="4dp"
+                                        app:textStartPadding="4dp" />
+
+                                    <com.google.android.material.chip.Chip
+                                        android:id="@+id/chip_workplace3"
+                                        style="@style/Widget.Material3.Chip.Suggestion"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="14dp"
+                                        android:checkable="false"
+                                        android:text="Remote"
+                                        android:textAlignment="center"
+                                        android:textSize="12sp"
+                                        app:layout_constraintEnd_toStartOf="@id/chip_position3"
+                                        app:layout_constraintStart_toEndOf="@id/chip_job_type3"
+                                        app:layout_constraintTop_toTopOf="@id/chip_job_type3"
+                                        app:textEndPadding="4dp"
+                                        app:textStartPadding="4dp" />
+
+                                    <com.google.android.material.chip.Chip
+                                        android:id="@+id/chip_position3"
+                                        style="@style/Widget.Material3.Chip.Suggestion"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:checkable="false"
+                                        android:text="Senior"
+                                        android:textAlignment="center"
+                                        android:textSize="12sp"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintStart_toEndOf="@id/chip_workplace3"
+                                        app:layout_constraintTop_toTopOf="@id/chip_job_type3"
+                                        app:textEndPadding="4dp"
+                                        app:textStartPadding="4dp" />
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                <TextView
+                                    android:id="@+id/time_posted3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:fontFamily="sans-serif-condensed"
+                                    android:text="5h ago"
+                                    android:textSize="14sp"
+                                    app:layout_constraintStart_toStartOf="@id/company_avatar_container3"
+                                    app:layout_constraintTop_toBottomOf="@id/chipGroup3" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
+                        </com.google.android.material.card.MaterialCardView>
 
-                            <TextView
-                                android:id="@+id/time_posted3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:fontFamily="sans-serif-condensed"
-                                android:text="5h ago"
-                                android:textSize="14sp"
-                                app:layout_constraintStart_toStartOf="@id/company_avatar_container3"
-                                app:layout_constraintTop_toBottomOf="@id/chipGroup3" />
+                        <!--This TextView is used to solve layout problem, don't delete-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text=""
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/job_card3" />
 
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </com.google.android.material.card.MaterialCardView>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <!--This TextView is used to solve layout problem, don't delete-->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/job_card3"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:text=""
-                        />
+                </androidx.core.widget.NestedScrollView>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.core.widget.NestedScrollView>
+            <com.google.android.material.search.SearchView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/searchbar_hint"
+                app:layout_anchor="@id/search_bar">
+                <!-- Search suggestions/results go here (ScrollView, RecyclerView, etc.). -->
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.search.SearchView>
 
-        <com.google.android.material.search.SearchView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/searchbar_hint"
-            app:layout_anchor="@id/search_bar">
-            <!-- Search suggestions/results go here (ScrollView, RecyclerView, etc.). -->
-
-        </com.google.android.material.search.SearchView>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

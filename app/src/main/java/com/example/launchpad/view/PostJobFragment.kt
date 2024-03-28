@@ -1,12 +1,16 @@
 package com.example.launchpad.view
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
+import com.example.launchpad.databinding.FragmentMyProfileBinding
+import com.example.launchpad.databinding.FragmentPostJobBinding
+import com.example.launchpad.viewmodel.MyProfileViewModel
 import com.example.launchpad.viewmodel.PostJobViewModel
 
 class PostJobFragment : Fragment() {
@@ -15,18 +19,23 @@ class PostJobFragment : Fragment() {
         fun newInstance() = PostJobFragment()
     }
 
-    private val viewModel: PostJobViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
+    private lateinit var viewModel: PostJobViewModel
+    private lateinit var binding: FragmentPostJobBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        return inflater.inflate(R.layout.fragment_post_job, container, false)
+        binding = FragmentPostJobBinding.inflate(inflater, container, false)
+        binding.topAppBar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+        return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(PostJobViewModel::class.java)
+        // TODO: Use the ViewModel
     }
 }
