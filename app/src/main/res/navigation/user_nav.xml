@@ -32,7 +32,15 @@
         android:id="@+id/chatFragment"
         android:name="com.example.launchpad.view.ChatFragment"
         android:label="fragment_chat"
-        tools:layout="@layout/fragment_chat" />
+        tools:layout="@layout/fragment_chat" >
+        <action
+            android:id="@+id/action_chatFragment_to_chatTextFragment"
+            app:destination="@id/chatTextFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.launchpad.view.MyProfileFragment"
@@ -106,4 +114,9 @@
         android:name="com.example.launchpad.view.ApplicantDetailsFragment"
         android:label="ApplicantDetailsFragment"
         tools:layout="@layout/fragment_applicant_details"/>
+    <fragment
+        android:id="@+id/chatTextFragment"
+        android:name="com.example.launchpad.ChatTextFragment"
+        android:label="ChatTextFragment"
+        tools:layout="@layout/fragment_chat_text"/>
 </navigation>

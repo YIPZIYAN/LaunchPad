@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.example.launchpad.databinding.FragmentChatTextBinding
+import com.example.launchpad.databinding.FragmentSettingBinding
 
 class ChatTextFragment : Fragment() {
 
@@ -14,6 +17,7 @@ class ChatTextFragment : Fragment() {
     }
 
     private val viewModel: ChatTextViewModel by viewModels()
+    private lateinit var binding: FragmentChatTextBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +29,12 @@ class ChatTextFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_chat_text, container, false)
+        binding = FragmentChatTextBinding.inflate(inflater, container, false)
+
+        binding.topAppBar.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        return binding.root
     }
 }
