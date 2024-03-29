@@ -2,6 +2,6 @@ package com.example.launchpad
 
 import androidx.lifecycle.ViewModel
 
-class ApplyJobViewModel : ViewModel() {
+class ChatTextViewModel : ViewModel() {
     // TODO: Implement the ViewModel
 }
