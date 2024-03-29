@@ -34,9 +34,14 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_homeFragment_to_jobDetailsFragment)
         }
 
+        binding.btnPostJob.setOnClickListener{
+            findNavController().navigate(R.id.action_homeFragment_to_postJobFragment)
+        }
+
         if (userType == 0) {
             binding.homeTitle.text = resources.getString(R.string.your_posted_job)
             binding.bookmark.visibility = View.GONE
+            binding.btnPostJob.visibility = View.VISIBLE
             binding.jobCard2.visibility = View.GONE
             binding.jobCard3.visibility = View.GONE
         }

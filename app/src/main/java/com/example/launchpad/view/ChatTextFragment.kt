@@ -1,4 +1,4 @@
-package com.example.launchpad
+package com.example.launchpad.view
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.example.launchpad.viewmodel.ChatTextViewModel
 import com.example.launchpad.databinding.FragmentChatTextBinding
-import com.example.launchpad.databinding.FragmentSettingBinding
 
 class ChatTextFragment : Fragment() {
 
