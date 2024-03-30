@@ -27,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
                 app:navigationIcon="@drawable/baseline_close_24"
+                app:navigationIconTint="?attr/colorControlNormal"
                 app:title="@string/post_job" />
 
             <com.google.android.material.divider.MaterialDivider

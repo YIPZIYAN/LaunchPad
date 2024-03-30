@@ -22,6 +22,7 @@
                 android:minHeight="?attr/actionBarSize"
                 app:title="@string/job_details"
                 app:menu="@menu/job_details_menu"
+                app:navigationIconTint="?attr/colorControlNormal"
                 app:navigationIcon="@drawable/round_arrow_back_24" />
 
             <com.google.android.material.divider.MaterialDivider

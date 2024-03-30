@@ -20,7 +20,9 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             app:title="Apply To Google Inc"
-            app:navigationIcon="@drawable/baseline_close_24" />
+            app:navigationIcon="@drawable/baseline_close_24"
+            app:navigationIconTint="?attr/colorControlNormal"
+            />
 
     </com.google.android.material.appbar.AppBarLayout>
 
