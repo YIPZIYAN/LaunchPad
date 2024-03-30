@@ -82,7 +82,7 @@
         android:id="@+id/userProfileFragment"
         android:name="com.example.launchpad.UserProfileFragment"
         android:label="UserProfileFragment" />
-<fragemnt
+    <fragemnt
         android:id="@+id/jobDetailsFragment"
         android:name="com.example.launchpad.view.JobDetailsFragment"
         android:label="fragment_job_details"
@@ -108,7 +108,7 @@
             app:exitAnim="@anim/exit"
             app:popEnterAnim="@anim/pop_enter"
             app:popExitAnim="@anim/pop_exit" />
-    </fragment>
+    </fragemnt>>
     <fragment
         android:id="@+id/applyJobFragment"
         android:name="com.example.launchpad.view.ApplyJobFragment"
