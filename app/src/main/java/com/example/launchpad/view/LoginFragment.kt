@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.launchpad.viewmodel.LoginViewModel
 import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentLoginBinding
@@ -28,6 +29,11 @@ class LoginFragment : Fragment() {
 
         binding.btnLogin.setOnClickListener {
             startActivity(Intent(requireActivity(),UserActivity::class.java)) //testing
+
+        }
+
+        binding.txtSignUp.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
 
         }
 

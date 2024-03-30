@@ -6,8 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.launchpad.viewmodel.CommunityViewModel
 import com.example.launchpad.R
+import com.example.launchpad.databinding.FragmentCommunityBinding
+import com.example.launchpad.databinding.FragmentMyProfileBinding
+import io.getstream.avatarview.coil.loadImage
+
 
 class CommunityFragment : Fragment() {
 
@@ -16,14 +21,25 @@ class CommunityFragment : Fragment() {
     }
 
     private lateinit var viewModel: CommunityViewModel
+    private lateinit var binding: FragmentCommunityBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_community, container, false)
-    }
+        binding = FragmentCommunityBinding.inflate(inflater, container, false)
 
+
+        binding.floatingActionButton.setOnClickListener{
+            findNavController().navigate(R.id.action_communityFragment_to_addPostFragment)
+        }
+
+        binding.imageView.setOnClickListener{
+            findNavController().navigate(R.id.action_communityFragment_to_userProfileFragment)
+        }
+
+        return binding.root
+    }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(CommunityViewModel::class.java)

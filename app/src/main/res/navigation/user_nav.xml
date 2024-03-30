@@ -29,7 +29,14 @@
         android:id="@+id/communityFragment"
         android:name="com.example.launchpad.view.CommunityFragment"
         android:label="fragment_community"
-        tools:layout="@layout/fragment_community" />
+        tools:layout="@layout/fragment_community" >
+        <action
+            android:id="@+id/action_communityFragment_to_addPostFragment"
+            app:destination="@id/addPostFragment" />
+        <action
+            android:id="@+id/action_communityFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/eventFragment"
         android:name="com.example.launchpad.view.EventFragment"
@@ -67,6 +74,15 @@
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
     <fragment
+        android:id="@+id/addPostFragment"
+        android:name="com.example.launchpad.AddPostFragment"
+        android:label="fragment_add_post"
+        tools:layout="@layout/fragment_add_post" />
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.example.launchpad.UserProfileFragment"
+        android:label="UserProfileFragment" />
+<fragemnt
         android:id="@+id/jobDetailsFragment"
         android:name="com.example.launchpad.view.JobDetailsFragment"
         android:label="fragment_job_details"
@@ -126,4 +142,5 @@
         android:name="com.example.launchpad.view.ChatTextFragment"
         android:label="ChatTextFragment"
         tools:layout="@layout/fragment_chat_text"/>
+
 </navigation>
