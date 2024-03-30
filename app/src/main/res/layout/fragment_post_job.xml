@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+<androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PostJobFragment">
+    tools:context=".view.PostJobFragment">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -26,7 +27,8 @@
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
                 app:navigationIcon="@drawable/baseline_close_24"
-                app:title="Post Job" />
+                app:navigationIconTint="?attr/colorControlNormal"
+                app:title="@string/post_job" />
 
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/materialDivider"
@@ -53,9 +55,9 @@
                     android:id="@+id/txt_job_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Job Name"
+                    android:hint="@string/job_name"
                     app:errorEnabled="true"
-                    app:helperText="* Required"
+                    app:helperText="@string/required"
                     app:helperTextTextColor="@color/md_theme_light_error"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -73,9 +75,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:hint="Position"
+                    android:hint="@string/position"
                     app:errorEnabled="true"
-                    app:helperText="* Required"
+                    app:helperText="@string/required"
                     app:helperTextTextColor="@color/md_theme_light_error"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/txt_job_name">
@@ -94,9 +96,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:hint="Job Type"
+                    android:hint="@string/job_type"
                     app:errorEnabled="true"
-                    app:helperText="* Required"
+                    app:helperText="@string/required"
                     app:helperTextTextColor="@color/md_theme_light_error"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/txt_position">
@@ -116,9 +118,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:hint="Workplace"
+                    android:hint="@string/workplace"
                     app:errorEnabled="true"
-                    app:helperText="* Required"
+                    app:helperText="@string/required"
                     app:helperTextTextColor="@color/md_theme_light_error"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/txt_job_type">
@@ -137,9 +139,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:hint="Min Salary"
+                    android:hint="@string/min_salary"
                     app:errorEnabled="true"
-                    app:helperText="* Required"
+                    app:helperText="@string/required"
                     app:helperTextTextColor="@color/md_theme_light_error"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -159,9 +161,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:hint="Max Salary"
+                    android:hint="@string/max_salary"
                     app:errorEnabled="true"
-                    app:helperText="* Required"
+                    app:helperText="@string/required"
                     app:helperTextTextColor="@color/md_theme_light_error"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -182,9 +184,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:hint="Qualification"
+                    android:hint="@string/qualification"
                     app:errorEnabled="true"
-                    app:helperText="* Required"
+                    app:helperText="@string/required"
                     app:helperTextTextColor="@color/md_theme_light_error"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/txt_max_salary">
@@ -203,9 +205,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:hint="Experience"
+                    android:hint="@string/experience"
                     app:errorEnabled="true"
-                    app:helperText="* Required"
+                    app:helperText="@string/required"
                     app:helperTextTextColor="@color/md_theme_light_error"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -226,9 +228,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:hint="Description"
+                    android:hint="@string/description"
                     app:errorEnabled="true"
-                    app:helperText="* Required"
+                    app:helperText="@string/required"
                     app:helperTextTextColor="@color/md_theme_light_error"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -251,9 +253,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:hint="Requirement"
+                    android:hint="@string/requirement"
                     app:errorEnabled="true"
-                    app:helperText="* Optional"
+                    app:helperText="@string/optional"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/txt_job_desc"
@@ -284,12 +286,13 @@
         android:layout_height="58dp"
         android:layout_marginHorizontal="64dp"
         android:layout_marginBottom="16dp"
-        android:text="POST"
+        android:text="@string/POST"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:shapeAppearance="?attr/shapeAppearanceSmallComponent" />
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

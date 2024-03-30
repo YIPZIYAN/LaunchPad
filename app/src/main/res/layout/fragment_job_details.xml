@@ -6,7 +6,31 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".JobDetailsFragment">
+        tools:context=".view.JobDetailsFragment">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                app:title="@string/job_details"
+                app:menu="@menu/job_details_menu"
+                app:navigationIconTint="?attr/colorControlNormal"
+                app:navigationIcon="@drawable/round_arrow_back_24" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/materialDivider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.appbar.AppBarLayout>
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,13 +40,13 @@
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toTopOf="@+id/btn_apply"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/appBar">
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/title_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/md_theme_dark_onBackground"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -72,6 +96,12 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/job_name" />
 
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/materialDivider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                   app:layout_constraintBottom_toBottomOf="parent"/>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.tabs.TabLayout
@@ -84,12 +114,12 @@
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Description" />
+                    android:text="@string/description" />
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Company" />
+                    android:text="@string/company" />
 
             </com.google.android.material.tabs.TabLayout>
 
@@ -103,13 +133,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tab" />
-
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 
         <Button
             android:id="@+id/btn_apply"
@@ -117,13 +141,12 @@
             android:layout_height="58dp"
             android:layout_marginHorizontal="64dp"
             android:layout_marginBottom="16dp"
-            android:text="APPLY NOW"
+            android:text="@string/APPLY_NOW"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:shapeAppearance="?attr/shapeAppearanceSmallComponent" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

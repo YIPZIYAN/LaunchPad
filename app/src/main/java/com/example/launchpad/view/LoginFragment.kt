@@ -16,6 +16,7 @@ class LoginFragment : Fragment() {
 
     companion object {
         fun newInstance() = LoginFragment()
+        var userType = 0; // 1 = employee, 0 = company, testing only
     }
 
     private lateinit var viewModel: LoginViewModel
