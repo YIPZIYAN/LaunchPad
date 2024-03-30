@@ -1,4 +1,4 @@
-package com.example.launchpad.view
+package com.example.launchpad
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

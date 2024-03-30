@@ -25,16 +25,18 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentLoginBinding.inflate(inflater,container,false)
+        binding = FragmentLoginBinding.inflate(inflater, container, false)
 
         binding.btnLogin.setOnClickListener {
-            startActivity(Intent(requireActivity(),UserActivity::class.java)) //testing
-
+            findNavController().navigate(R.id.action_loginFragment_to_userActivity)
         }
 
         binding.txtSignUp.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
+        }
 
+        binding.txtForgotPassword.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
         }
 
         return binding.root

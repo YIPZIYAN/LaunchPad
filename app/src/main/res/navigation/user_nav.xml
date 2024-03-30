@@ -75,12 +75,12 @@
         tools:layout="@layout/fragment_setting" />
     <fragment
         android:id="@+id/addPostFragment"
-        android:name="com.example.launchpad.AddPostFragment"
+        android:name="com.example.launchpad.view.AddPostFragment"
         android:label="fragment_add_post"
         tools:layout="@layout/fragment_add_post" />
     <fragment
         android:id="@+id/userProfileFragment"
-        android:name="com.example.launchpad.UserProfileFragment"
+        android:name="com.example.launchpad.view.UserProfileFragment"
         android:label="UserProfileFragment" />
     <fragemnt
         android:id="@+id/jobDetailsFragment"

@@ -1,4 +1,4 @@
-package com.example.launchpad
+package com.example.launchpad.view
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -6,14 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.launchpad.R
+import com.example.launchpad.viewmodel.TabPostViewModel
 
-class EditPostFragment : Fragment() {
+class TabPostFragment : Fragment() {
 
     companion object {
-        fun newInstance() = EditPostFragment()
+        fun newInstance() = TabPostFragment()
     }
 
-    private val viewModel: EditPostViewModel by viewModels()
+    private val viewModel: TabPostViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +27,6 @@ class EditPostFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_edit_post, container, false)
+        return inflater.inflate(R.layout.fragment_tab_post, container, false)
     }
 }
