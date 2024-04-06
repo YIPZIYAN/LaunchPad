@@ -1,4 +1,4 @@
-package com.example.launchpad.view
+package com.example.launchpad
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,7 +16,10 @@ import com.example.launchpad.databinding.ActivityUserBinding
 
 class UserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserBinding
-    private val nav by lazy { supportFragmentManager.findFragmentById(R.id.user_nav_host)!!.findNavController() }
+    private val nav by lazy {
+        supportFragmentManager.findFragmentById(R.id.user_nav_host)!!.findNavController()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserBinding.inflate(layoutInflater)
@@ -33,15 +36,19 @@ class UserActivity : AppCompatActivity() {
                     R.id.postJobFragment,
                     R.id.viewApplicantFragment,
                     R.id.applicantDetailsFragment,
-                    R.id.chatTextFragment
+                    R.id.chatTextFragment,
+                    R.id.settingFragment,
+                    R.id.addPostFragment,
+                    R.id.userProfileFragment,
                     -> {
                         binding.bottomNavigation.visibility = View.GONE
                     }
+
                     else -> {
                         binding.bottomNavigation.visibility = View.VISIBLE
                     }
                 }
-            },200)
+            }, 200)
         }
         binding.bottomNavigation.setupWithNavController(nav)
     }
