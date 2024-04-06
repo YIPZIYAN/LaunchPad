@@ -72,7 +72,6 @@
     <string name="max_salary">Max Salary</string>
     <string name="qualification">Qualification</string>
     <string name="experience">Experience</string>
-    <string name="description">Description</string>
     <string name="requirement">Requirement</string>
     <string name="required">* Required</string>
     <string name="optional">* Optional</string>
@@ -104,7 +103,11 @@
     <string name="basic_info">Basic Info</string>
     <string name="your_posted_job">Your Posted Job</string>
     <string name="messages">Messages</string>
-
+    <string name="forgot_password_desc">To reset your password, you need your email or mobile number that can be authenticated</string>
+    <string name="slogan">Navigate the stars, in the job-seeking sea, Let LaunchPad guide you, to where you\'re meant to be.</string>
+    <string name="select_image">Select Image</string>
+    <string name="my_profile">My Profile</string>
+    <string name="job">Job</string>
 
 
 </resources>

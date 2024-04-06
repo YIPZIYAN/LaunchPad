@@ -28,8 +28,14 @@ class MyProfileFragment : Fragment() {
         binding = FragmentMyProfileBinding.inflate(inflater, container, false)
         binding.avatarView.loadImage("https://avatars.githubusercontent.com/u/103913961?v=4")
 
-        binding.btnSetting.setOnClickListener {
-            findNavController().navigate(R.id.action_profileFragment_to_settingFragment)
+        binding.topAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.setting -> {
+                    findNavController().navigate(R.id.action_profileFragment_to_settingFragment)
+                    true
+                }
+                else -> false
+            }
         }
 
         return binding.root
