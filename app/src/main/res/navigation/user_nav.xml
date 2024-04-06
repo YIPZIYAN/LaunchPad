@@ -32,10 +32,18 @@
         tools:layout="@layout/fragment_community" >
         <action
             android:id="@+id/action_communityFragment_to_addPostFragment"
-            app:destination="@id/addPostFragment" />
+            app:destination="@id/addPostFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit" />
         <action
             android:id="@+id/action_communityFragment_to_userProfileFragment"
-            app:destination="@id/userProfileFragment" />
+            app:destination="@id/userProfileFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit" />
     </fragment>
     <fragment
         android:id="@+id/eventFragment"
@@ -81,7 +89,8 @@
     <fragment
         android:id="@+id/userProfileFragment"
         android:name="com.example.launchpad.view.UserProfileFragment"
-        android:label="UserProfileFragment" />
+        android:label="UserProfileFragment"
+        tools:layout="@layout/fragment_user_profile"/>
     <fragment
         android:id="@+id/jobDetailsFragment"
         android:name="com.example.launchpad.view.JobDetailsFragment"

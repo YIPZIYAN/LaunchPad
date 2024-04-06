@@ -105,6 +105,7 @@
     <string name="messages">Messages</string>
     <string name="forgot_password_desc">To reset your password, you need your email or mobile number that can be authenticated</string>
     <string name="slogan">Navigate the stars, in the job-seeking sea, Let LaunchPad guide you, to where you\'re meant to be.</string>
+    <string name="select_image">Select Image</string>
 
 
 </resources>
