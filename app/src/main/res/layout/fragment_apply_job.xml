@@ -26,8 +26,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
-
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/materialDivider"
         android:layout_width="match_parent"

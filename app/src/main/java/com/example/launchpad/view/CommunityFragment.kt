@@ -30,7 +30,7 @@ class CommunityFragment : Fragment() {
         binding = FragmentCommunityBinding.inflate(inflater, container, false)
 
 
-        binding.floatingActionButton.setOnClickListener{
+        binding.btnAddPost.setOnClickListener{
             findNavController().navigate(R.id.action_communityFragment_to_addPostFragment)
         }
 

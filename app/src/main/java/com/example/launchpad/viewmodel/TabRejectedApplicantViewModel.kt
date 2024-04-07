@@ -2,6 +2,6 @@ package com.example.launchpad.viewmodel
 
 import androidx.lifecycle.ViewModel
 
-class TabPostViewModel : ViewModel() {
+class TabRejectedApplicantViewModel : ViewModel() {
     // TODO: Implement the ViewModel
 }

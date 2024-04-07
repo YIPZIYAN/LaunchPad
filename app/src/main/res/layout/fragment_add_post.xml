@@ -66,17 +66,18 @@
                         app:layout_constraintTop_toBottomOf="@id/imageView2"
                         app:strokeColor="@color/m3_text_button_foreground_color_selector" />
 
+
                     <ImageView
                         android:id="@+id/imageView2"
-                        android:layout_width="274dp"
-                        android:layout_height="192dp"
-                        android:layout_marginTop="8dp"
-
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.494"
-                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/tarumt"
                         app:layout_constraintTop_toBottomOf="@+id/textView18"
-                        app:srcCompat="@drawable/img_tarumt" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:scaleType="centerInside"
+                        android:adjustViewBounds="true"/>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/txt_post_desc"
