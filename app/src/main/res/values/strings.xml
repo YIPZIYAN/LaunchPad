@@ -108,5 +108,8 @@
     <string name="select_image">Select Image</string>
     <string name="community">Community</string>
     <string name="confirm_password">Confirm Password</string>
-
+    <string name="saved_job">Saved Job</string>
+    <string name="like">Like</string>
+    <string name="comment">Comment</string>
+    <string name="share">Share</string>
 </resources>

@@ -85,12 +85,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="28dp"
-                    android:paddingBottom="12dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="20dp"
                     android:text="@string/recent_job_list"
                     android:textAppearance="?attr/textAppearanceTitleLarge"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/searchbar_container" />
+                    app:layout_constraintTop_toBottomOf="@+id/searchbar_container"
+                    app:layout_constraintBottom_toTopOf="@id/scroll_view"/>
+
+                <Button
+                    android:id="@+id/btn_saved_job"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_marginEnd="24dp"
+                    android:text="@string/saved_job"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/home_title"
+                    app:layout_constraintBottom_toBottomOf="@id/home_title"
+                    app:strokeColor="@color/m3_text_button_foreground_color_selector" />
 
                 <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
                 <androidx.core.widget.NestedScrollView
