@@ -112,4 +112,6 @@
     <string name="like">Like</string>
     <string name="comment">Comment</string>
     <string name="share">Share</string>
+    <string name="interview">Interview</string>
+    <string name="pending">Pending</string>
 </resources>

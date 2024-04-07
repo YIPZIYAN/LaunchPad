@@ -47,10 +47,10 @@ class ViewApplicantFragment : Fragment() {
 
         override fun getItem(position: Int): Fragment {
             return when (position) {
-                0 -> TabApplicantFragment.newInstance(0)
-                1 -> TabApplicantFragment.newInstance(1)
-                2 -> TabApplicantFragment.newInstance(2)
-                else -> throw IllegalArgumentException("Invalid position: $position")
+                0 -> TabApplicantFragment()
+                1 -> TabAcceptedApplicantFragment()
+                2 -> TabRejectedApplicantFragment()
+                else -> throw Exception()
             }
         }
 
