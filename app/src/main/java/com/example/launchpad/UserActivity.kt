@@ -40,6 +40,7 @@ class UserActivity : AppCompatActivity() {
                     R.id.settingFragment,
                     R.id.addPostFragment,
                     R.id.userProfileFragment,
+                    R.id.scheduleInterviewFragment,
                     -> {
                         binding.bottomNavigation.visibility = View.GONE
                     }

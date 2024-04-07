@@ -49,7 +49,15 @@
         android:id="@+id/eventFragment"
         android:name="com.example.launchpad.view.EventFragment"
         android:label="fragment_event"
-        tools:layout="@layout/fragment_event" />
+        tools:layout="@layout/fragment_event" >
+        <action
+            android:id="@+id/action_eventFragment_to_scheduleInterviewFragment"
+            app:destination="@id/scheduleInterviewFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit" />
+    </fragment>
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.example.launchpad.view.ChatFragment"
@@ -151,5 +159,10 @@
         android:name="com.example.launchpad.view.ChatTextFragment"
         android:label="ChatTextFragment"
         tools:layout="@layout/fragment_chat_text"/>
+    <fragment
+        android:id="@+id/scheduleInterviewFragment"
+        android:name="com.example.launchpad.ScheduleInterviewFragment"
+        android:label="ScheduleInterviewFragment"
+        tools:layout="@layout/fragment_schedule_interview"/>
 
 </navigation>

@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.launchpad.viewmodel.EventViewModel
 import com.example.launchpad.R
+import com.example.launchpad.TabUpcomingInterviewFragment
 import com.example.launchpad.databinding.FragmentEventBinding
 
 class EventFragment : Fragment() {
@@ -42,7 +43,7 @@ class EventFragment : Fragment() {
         override fun getItem(position: Int): Fragment {
             return when (position) {
                 0 -> TabPendingInterviewFragment()
-                1 -> TabPendingInterviewFragment()
+                1 -> TabUpcomingInterviewFragment()
                 2 -> TabPendingInterviewFragment()
                 else -> throw Exception()
             }
