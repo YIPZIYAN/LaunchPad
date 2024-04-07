@@ -15,6 +15,7 @@ import com.example.launchpad.viewmodel.TabApplicantViewModel
 class TabApplicantFragment : Fragment() {
 
     companion object {
+        fun newInstance() = TabApplicantFragment()
     }
 
     private val viewModel: TabApplicantViewModel by viewModels()
