@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.TabApplicantFragment">
+        tools:context=".view.TabPendingInterviewFragment">
 
         <ScrollView
             android:id="@+id/tabApplicant"
@@ -23,7 +23,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="12dp"
-                    android:text="2 applicants"
+                    android:text="2 accepted applicant"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/materialDivider"
-                   >
+                    >
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/applicant_avatar_container"
@@ -105,6 +105,20 @@
                         app:layout_constraintTop_toBottomOf="@id/education" />
 
                     <TextView
+                        android:id="@+id/applied_job"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="Applied Job: Marketing Manager"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        app:layout_constraintStart_toStartOf="@id/applicant_name"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/experience" />
+
+                    <TextView
                         android:id="@+id/applied_date"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -112,12 +126,12 @@
                         android:layout_marginEnd="16dp"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="Applied 3d ago"
+                        android:text="* Pending Schedule Interview"
                         android:textAppearance="?attr/textAppearanceBodySmall"
-                        app:layout_constraintStart_toStartOf="@id/applicant_name"
+                        android:textColor="@color/md_theme_light_error"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/experience"
-                        />
+                        app:layout_constraintStart_toStartOf="@id/applicant_name"
+                        app:layout_constraintTop_toBottomOf="@id/applied_job" />
 
                     <com.google.android.material.divider.MaterialDivider
                         android:id="@+id/materialDivider2"
@@ -163,7 +177,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="12dp"
-                        android:text="GOH CHUN YEN"
+                        android:text="YIP ZI YAN"
                         android:textAppearance="?attr/textAppearanceBodyMedium"
                         app:layout_constraintStart_toEndOf="@id/applicant_avatar_container2"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -197,6 +211,20 @@
                         app:layout_constraintTop_toBottomOf="@id/education2" />
 
                     <TextView
+                        android:id="@+id/applied_job2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="Applied Job: Software Engineer"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        app:layout_constraintStart_toStartOf="@id/applicant_name2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/experience2" />
+
+                    <TextView
                         android:id="@+id/applied_date2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -204,11 +232,13 @@
                         android:layout_marginEnd="16dp"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="Applied 3d ago"
+                        android:text="* Pending Schedule Interview"
                         android:textAppearance="?attr/textAppearanceBodySmall"
-                        app:layout_constraintStart_toStartOf="@id/applicant_name2"
+
+                        android:textColor="@color/md_theme_light_error"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/experience2" />
+                        app:layout_constraintStart_toStartOf="@id/applicant_name2"
+                        app:layout_constraintTop_toBottomOf="@id/applied_job2" />
 
                     <com.google.android.material.divider.MaterialDivider
                         android:id="@+id/materialDivider3"
@@ -227,45 +257,6 @@
 
         </ScrollView>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/tab_no_applicant"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/img_no_applicant"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/no_applicant"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/lbl_no_applicant"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="32dp"
-                    android:text="@string/no_applicant"
-                    android:textAlignment="center"
-                    android:textAppearance="?attr/textAppearanceTitleLarge"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/img_no_applicant" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

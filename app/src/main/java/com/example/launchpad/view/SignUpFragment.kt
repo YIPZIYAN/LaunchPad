@@ -31,11 +31,8 @@ class SignUpFragment : Fragment() {
 
         binding = FragmentSignUpBinding.inflate(inflater,container,false)
 
-
-
         binding.txtSignIn.setOnClickListener {
-            nav.navigate(R.id.loginFragment)
-
+            findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
         }
 
         return binding.root

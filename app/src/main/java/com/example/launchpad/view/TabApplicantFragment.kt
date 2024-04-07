@@ -15,19 +15,11 @@ import com.example.launchpad.viewmodel.TabApplicantViewModel
 class TabApplicantFragment : Fragment() {
 
     companion object {
-        private const val ARG_POSITION = "position"
-
-        fun newInstance(position: Int): TabApplicantFragment {
-            val fragment = TabApplicantFragment()
-            val args = Bundle()
-            args.putInt(ARG_POSITION, position)
-            fragment.arguments = args
-            return fragment
-        }
+        fun newInstance() = TabApplicantFragment()
     }
 
     private val viewModel: TabApplicantViewModel by viewModels()
-    private lateinit var binding : FragmentTabApplicantBinding
+    private lateinit var binding: FragmentTabApplicantBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +31,8 @@ class TabApplicantFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab_applicant, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_tab_applicant, container, false)
         binding.applicant.setOnClickListener {
             findNavController().navigate(R.id.action_viewApplicantFragment_to_applicantDetailsFragment)
         }
@@ -48,31 +41,10 @@ class TabApplicantFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val position = arguments?.getInt(ARG_POSITION, 0) ?: 0
-        when (position) {
-            0 -> {
-                //"IF NEW APPLICANT >= 1"
-                binding.tabApplicant.visibility = View.VISIBLE
-                binding.tabNoApplicant.visibility = View.GONE
-                binding.tabNoAcceptApplicant.visibility = View.GONE
-                binding.tabNoRejectApplicant.visibility = View.GONE
-            }
-            1 -> {
-                //"IF ACCEPTED APPLICANT >= 1 ELSE DISPLAY NO APPLICANT"
-                binding.tabApplicant.visibility = View.GONE
-                binding.tabNoApplicant.visibility = View.GONE
-                binding.tabNoAcceptApplicant.visibility = View.VISIBLE
-                binding.tabNoRejectApplicant.visibility = View.GONE
+
+        binding.tabApplicant.visibility = View.VISIBLE
+        binding.tabNoApplicant.visibility = View.GONE
 
 
-            }
-            2 -> {
-                //"IF REJECTED APPLICANT >= 1 ELSE DISPLAY NO APPLICANT"
-                binding.tabApplicant.visibility = View.GONE
-                binding.tabNoApplicant.visibility = View.GONE
-                binding.tabNoAcceptApplicant.visibility = View.GONE
-                binding.tabNoRejectApplicant.visibility = View.VISIBLE
-            }
-        }
     }
 }

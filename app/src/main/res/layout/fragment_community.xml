@@ -4,306 +4,331 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".view.CommunityFragment">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/communityFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/coordinatorLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/communityFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/searchbar_container"
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinatorLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.search.SearchBar
-                android:id="@+id/search_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/searchbar_hint" />
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/job_card"
-            style="?attr/materialCardViewElevatedStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginVertical="12dp"
-            app:cardElevation="2dp"
-            app:layout_anchorGravity="bottom"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="20dp"
-                android:paddingVertical="18dp">
+                android:layout_height="match_parent">
 
-
-                <ImageView
-                    android:id="@+id/imageThumbUp"
-                    android:layout_width="wrap_content"
+                <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/searchbar_container"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView3"
-                    app:srcCompat="@drawable/baseline_thumb_up_off_alt_24_blue" />
-
-                <ImageView
-                    android:id="@+id/imageMore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="160dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/txtUsername"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/baseline_more_horiz_24"
-                    app:tint="?attr/colorControlNormal" />
+                    app:layout_constraintStart_toStartOf="parent">
 
-                <ImageView
-                    android:id="@+id/imagePublic"
-                    android:layout_width="16dp"
-                    android:layout_height="14dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="4dp"
-                    app:layout_constraintStart_toEndOf="@+id/textView11"
-                    app:layout_constraintTop_toBottomOf="@+id/txtUsername"
-                    app:srcCompat="@drawable/baseline_public_24"
-                    app:tint="?attr/colorControlNormal" />
+                    <com.google.android.material.appbar.MaterialToolbar
+                        android:id="@+id/topAppBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/md_theme_light_primary"
+                        android:minHeight="?attr/actionBarSize"
+                        app:title="@string/community"
+                        app:titleTextColor="@color/md_theme_light_onPrimary" />
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="4dp"
-                    android:clickable="true"
-                    android:contentDescription="Profile Picture"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/round_account_circle_24"
-                    tools:src="@drawable/round_account_circle_24" />
+                    <com.google.android.material.search.SearchBar
+                        android:id="@+id/search_bar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/searchbar_hint" />
 
-                <TextView
-                    android:id="@+id/txtUsername"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="Carolyn Ting"
-                    android:textSize="15sp"
-                    app:layout_constraintStart_toEndOf="@+id/imageView"
-                    app:layout_constraintTop_toTopOf="parent" />
+                </com.google.android.material.appbar.AppBarLayout>
 
-                <TextView
-                    android:id="@+id/txtTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
-                    android:text="1d"
-                    android:textSize="11sp"
-                    app:layout_constraintStart_toEndOf="@+id/imageView"
-                    app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
 
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="5dp"
-                    android:layout_height="12dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="1dp"
-                    android:text="•"
-                    app:layout_constraintStart_toEndOf="@+id/txtTime"
-                    app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
-
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="4dp"
-                    android:text="Edited"
-                    android:textSize="11sp"
-                    app:layout_constraintStart_toEndOf="@+id/textView9"
-                    app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
-
-                <TextView
-                    android:id="@+id/textView11"
-                    android:layout_width="5dp"
-                    android:layout_height="12dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="1dp"
-                    android:text="•"
-                    app:layout_constraintStart_toEndOf="@+id/textView10"
-                    app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
-
-                <TextView
-                    android:id="@+id/textView14"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/job_card"
+                    style="?attr/materialCardViewElevatedStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="Feeling great to be teaching again, it is a good action to enhance your self confidence "
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintTop_toBottomOf="@id/searchbar_container"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                    app:cardCornerRadius="0dp">
 
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="243dp"
-                    android:layout_marginTop="17dp"
-                    android:text="...see more"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/textView14"
-                    app:layout_constraintTop_toTopOf="@+id/textView14" />
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="330dp"
-                    android:layout_height="261dp"
-                    android:layout_marginTop="10dp"
-                    android:src="@drawable/img_tarumt"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView14" />
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="666"
-                    android:textSize="13sp"
-                    app:layout_constraintStart_toEndOf="@+id/imageThumbUp"
-                    app:layout_constraintTop_toTopOf="@+id/imageThumbUp"
-                    app:layout_constraintBottom_toBottomOf="@id/imageThumbUp"/>
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="19dp"
-                    android:layout_marginEnd="5dp"
-                    android:text="111 Comments"
-                    android:textSize="13sp"
-                    app:layout_constraintEnd_toStartOf="@id/textView15"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView3" />
-
-                <TextView
-                    android:id="@+id/textView15"
-                    android:layout_width="5dp"
-                    android:layout_height="12dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginTop="19dp"
-                    android:text="•"
-                    app:layout_constraintEnd_toStartOf="@id/textView16"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView3" />
-
-                <TextView
-                    android:id="@+id/textView16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="19dp"
-                    android:text="1 Share"
-                    android:textSize="13sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView3" />
-
-
-                <!-- Title, secondary and supporting text -->
-
-                <View
-                    android:id="@+id/view"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="56dp"
-                    android:background="@android:color/black"
-                    android:backgroundTint="?attr/colorControlNormal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView3" />
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/view"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="16dp"
-                    >
-
-
-                    <ImageView
-                        android:id="@+id/ImgBtnLike"
-                        android:layout_width="0dp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:src="@drawable/round_thumb_up_24"
-                        app:tint="?attr/colorControlNormal"
-                        />
+                        android:layout_marginTop="16dp">
 
-                    <ImageView
-                        android:id="@+id/imgBtnComment"
-                        android:layout_width="0dp"
+                        <ImageView
+                            android:id="@+id/imageMore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginEnd="16dp"
+                            app:srcCompat="@drawable/baseline_more_horiz_24"
+                            app:tint="?attr/colorControlNormal" />
+
+
+                        <ImageView
+                            android:id="@+id/imageView"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_marginStart="12dp"
+                            android:clickable="true"
+                            android:contentDescription="Profile Picture"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/round_account_circle_24"
+                            tools:src="@drawable/round_account_circle_24" />
+
+                        <TextView
+                            android:id="@+id/txtUsername"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Carolyn Ting"
+                            android:textSize="15sp"
+                            app:layout_constraintStart_toEndOf="@+id/imageView"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/txtTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="4dp"
+                            android:text="1d"
+                            android:textSize="11sp"
+                            app:layout_constraintStart_toEndOf="@+id/imageView"
+                            app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
+
+                        <TextView
+                            android:id="@+id/textView9"
+                            android:layout_width="5dp"
+                            android:layout_height="12dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginTop="1dp"
+                            android:text="•"
+                            app:layout_constraintStart_toEndOf="@+id/txtTime"
+                            app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
+
+                        <TextView
+                            android:id="@+id/textView10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginTop="4dp"
+                            android:text="Edited"
+                            android:textSize="11sp"
+                            app:layout_constraintStart_toEndOf="@+id/textView9"
+                            app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
+
+                        <TextView
+                            android:id="@+id/textView11"
+                            android:layout_width="5dp"
+                            android:layout_height="12dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginTop="1dp"
+                            android:text="•"
+                            app:layout_constraintStart_toEndOf="@+id/textView10"
+                            app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
+
+                        <ImageView
+                            android:id="@+id/imagePublic"
+                            android:layout_width="16dp"
+                            android:layout_height="14dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginTop="4dp"
+                            app:layout_constraintStart_toEndOf="@+id/textView11"
+                            app:layout_constraintTop_toBottomOf="@+id/txtUsername"
+                            app:srcCompat="@drawable/baseline_public_24"
+                            app:tint="?attr/colorControlNormal" />
+                        <TextView
+                            android:id="@+id/textView14"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginHorizontal="12dp"
+                            android:text="Feeling great to be teaching again, it is a good action to enhae your self confidence."
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:src="@drawable/tarumt"
+                            app:layout_constraintTop_toBottomOf="@+id/textView14"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:scaleType="centerInside"
+                            android:adjustViewBounds="true"/>
+
+
+                        <ImageView
+                            android:id="@+id/imageThumbUp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="12dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/imageView3"
+                            app:srcCompat="@drawable/baseline_thumb_up_off_alt_24_blue" />
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:text="666"
+                            android:textSize="13sp"
+                            app:layout_constraintBottom_toBottomOf="@id/imageThumbUp"
+                            app:layout_constraintTop_toTopOf="@+id/imageThumbUp"
+                            app:layout_constraintStart_toEndOf="@+id/imageThumbUp"/>
+
+                        <TextView
+                            android:id="@+id/textView5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:text="111 Comments"
+                            android:textSize="13sp"
+                            app:layout_constraintEnd_toStartOf="@id/textView15"
+                            app:layout_constraintBottom_toBottomOf="@id/imageThumbUp"
+                            app:layout_constraintTop_toTopOf="@+id/imageThumbUp" />
+
+                        <TextView
+                            android:id="@+id/textView15"
+                            android:layout_width="5dp"
+                            android:layout_height="12dp"
+                            android:layout_marginEnd="5dp"
+                            android:text="•"
+                            app:layout_constraintEnd_toStartOf="@id/textView16"
+                            app:layout_constraintTop_toTopOf="@id/textView5"/>
+
+                        <TextView
+                            android:id="@+id/textView16"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:text="1 Share"
+                            android:textSize="13sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="@id/imageThumbUp"
+                            app:layout_constraintTop_toTopOf="@+id/imageThumbUp" />
+
+
+                        <!-- Title, secondary and supporting text -->
+
+
+                        <com.google.android.material.divider.MaterialDivider
+                            android:id="@+id/materialDivider"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/imageThumbUp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:src="@drawable/round_comment_24"
-                      app:tint="?attr/colorControlNormal" />
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/materialDivider">
 
-                    <ImageView
-                        android:id="@+id/imgBtnShare"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:src="@drawable/baseline_share_24"
-                        app:tint="?attr/colorControlNormal" />
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
 
-                </LinearLayout>
+                            <Button
+                                android:id="@+id/btn_like"
+                                style="@style/Widget.Material3.Button.TextButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/like"
+                                app:icon="@drawable/round_thumb_up_24"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <Button
+                                android:id="@+id/btn_comment"
+                                style="@style/Widget.Material3.Button.TextButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/comment"
+                                app:icon="@drawable/round_comment_24"
+                                app:iconPadding="8dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <Button
+                                android:id="@+id/btn_share"
+                                style="@style/Widget.Material3.Button.TextButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/share"
+                                app:icon="@drawable/baseline_share_24"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </LinearLayout>
+
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btn_add_post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/baseline_add_24" />
 
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floating_action_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="16dp"
-            app:srcCompat="@drawable/round_add_24" />
-
-        <com.google.android.material.search.SearchView
-            android:id="@+id/searchView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/searchbar_hint"
-            app:layout_anchor="@+id/searchView"
-            app:layout_anchorGravity="center" />
+            <com.google.android.material.search.SearchView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/searchbar_hint"
+                app:layout_anchor="@+id/search_bar" />
 
 
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
