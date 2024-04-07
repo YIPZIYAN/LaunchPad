@@ -1,6 +1,5 @@
 package com.example.launchpad.view
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,7 +10,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.launchpad.viewmodel.EventViewModel
 import com.example.launchpad.R
-import com.example.launchpad.TabUpcomingInterviewFragment
 import com.example.launchpad.databinding.FragmentEventBinding
 
 class EventFragment : Fragment() {

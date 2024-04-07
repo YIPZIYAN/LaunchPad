@@ -1,21 +1,18 @@
-package com.example.launchpad
+package com.example.launchpad.view
 
-import android.app.DatePickerDialog
-import android.app.Dialog
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.DatePicker
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
+import com.example.launchpad.R
+import com.example.launchpad.viewmodel.ScheduleInterviewViewModel
 import com.example.launchpad.databinding.FragmentScheduleInterviewBinding
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import java.util.Calendar
 
 class ScheduleInterviewFragment : Fragment() {
 
