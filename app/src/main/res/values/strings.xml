@@ -13,7 +13,7 @@
     <string name="setting">Setting</string>
     <string name="searchbar_hint">Search</string>
     <string name="description">Description</string>
-    <string name="forgot_password">Forgot Password?</string>
+    <string name="forget_password">Forget Password</string>
     <string name="got_account_sentence">Already have an account ?</string>
     <string name="no_account_sentence">You don\'t have an account yet?</string>
     <string name="password_and_security">Password and security</string>
@@ -106,6 +106,7 @@
     <string name="forgot_password_desc">To reset your password, you need your email or mobile number that can be authenticated</string>
     <string name="slogan">Navigate the stars, in the job-seeking sea, Let LaunchPad guide you, to where you\'re meant to be.</string>
     <string name="select_image">Select Image</string>
-
+    <string name="community">Community</string>
+    <string name="confirm_password">Confirm Password</string>
 
 </resources>
