@@ -116,4 +116,6 @@
     <string name="share">Share</string>
     <string name="interview">Interview</string>
     <string name="pending">Pending</string>
+    <string name="schedule_interview">Schedule Interview</string>
+    <string name="save">SAVE</string>
 </resources>
