@@ -7,7 +7,7 @@
         android:id="@+id/settingFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.SettingFragment">
+        tools:context=".profile.view.SettingFragment">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -44,9 +44,10 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.cardview.widget.CardView
-                        android:clickable="true"
+                        android:id="@+id/cardPassword"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:clickable="true">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -63,7 +64,7 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:srcCompat="@drawable/round_lock_24"
-                                app:tint="?attr/colorControlNormal"/>
+                                app:tint="?attr/colorControlNormal" />
 
                             <TextView
                                 android:id="@+id/txtPassword"
@@ -85,12 +86,13 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:tint="?attr/colorControlNormal"
-                                app:srcCompat="@drawable/round_arrow_forward_ios_24" />
+                                app:srcCompat="@drawable/round_arrow_forward_ios_24"
+                                app:tint="?attr/colorControlNormal" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/cardPersonalInfo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
@@ -108,8 +110,8 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:tint="?attr/colorControlNormal"
-                                app:srcCompat="@drawable/round_manage_accounts_24" />
+                                app:srcCompat="@drawable/round_manage_accounts_24"
+                                app:tint="?attr/colorControlNormal" />
 
                             <TextView
                                 android:id="@+id/txtAccount"
@@ -128,17 +130,19 @@
                                 android:layout_marginTop="16dp"
                                 android:layout_marginEnd="24dp"
                                 android:layout_marginBottom="16dp"
-                                app:tint="?attr/colorControlNormal"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/round_arrow_forward_ios_24" />
+                                app:srcCompat="@drawable/round_arrow_forward_ios_24"
+                                app:tint="?attr/colorControlNormal" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/cardLogout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:clickable="true">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -154,8 +158,8 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:tint="?attr/colorError"
-                                app:srcCompat="@drawable/round_logout_24" />
+                                app:srcCompat="@drawable/round_logout_24"
+                                app:tint="?attr/colorError" />
 
                             <TextView
                                 android:id="@+id/textView6"
@@ -175,11 +179,11 @@
                                 android:layout_marginTop="16dp"
                                 android:layout_marginEnd="24dp"
                                 android:layout_marginBottom="16dp"
-                                app:tint="?attr/colorError"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/round_arrow_forward_ios_24" />
+                                app:srcCompat="@drawable/round_arrow_forward_ios_24"
+                                app:tint="?attr/colorError" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
 

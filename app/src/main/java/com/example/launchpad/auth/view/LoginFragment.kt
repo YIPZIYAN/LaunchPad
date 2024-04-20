@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.auth.viewmodel.LoginViewModel
 import com.example.launchpad.databinding.FragmentLoginBinding
-import com.example.launchpad.view.MyProfileFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -86,7 +85,6 @@ class LoginFragment : Fragment() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     findNavController().navigate(R.id.action_loginFragment_to_userActivity)
-                    requireActivity().finish()
                 } else {
                 }
             }

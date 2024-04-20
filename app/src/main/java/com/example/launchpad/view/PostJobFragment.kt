@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentMyProfileBinding
 import com.example.launchpad.databinding.FragmentPostJobBinding
-import com.example.launchpad.viewmodel.MyProfileViewModel
+import com.example.launchpad.profile.viewmodel.MyProfileViewModel
 import com.example.launchpad.viewmodel.PostJobViewModel
 
 class PostJobFragment : Fragment() {

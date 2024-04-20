@@ -73,7 +73,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.launchpad.view.MyProfileFragment"
+        android:name="com.example.launchpad.profile.view.MyProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_my_profile" >
         <action
@@ -86,9 +86,13 @@
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
-        android:name="com.example.launchpad.view.SettingFragment"
+        android:name="com.example.launchpad.profile.view.SettingFragment"
         android:label="fragment_setting"
-        tools:layout="@layout/fragment_setting" />
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/action_settingFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
     <fragment
         android:id="@+id/addPostFragment"
         android:name="com.example.launchpad.view.AddPostFragment"
@@ -96,7 +100,7 @@
         tools:layout="@layout/fragment_add_post" />
     <fragment
         android:id="@+id/userProfileFragment"
-        android:name="com.example.launchpad.view.UserProfileFragment"
+        android:name="com.example.launchpad.profile.view.UserProfileFragment"
         android:label="UserProfileFragment"
         tools:layout="@layout/fragment_user_profile"/>
     <fragment
@@ -164,5 +168,10 @@
         android:name="com.example.launchpad.view.ScheduleInterviewFragment"
         android:label="ScheduleInterviewFragment"
         tools:layout="@layout/fragment_schedule_interview"/>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.launchpad.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
 
 </navigation>
