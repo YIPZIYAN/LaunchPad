@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -72,4 +73,8 @@ dependencies {
 
     //swipe to refresh
     //implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
+
+    //firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
+    implementation("com.google.firebase:firebase-analytics")
 }
