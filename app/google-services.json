@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "402844892969",
+    "project_id": "launchpad-1d2dd",
+    "storage_bucket": "launchpad-1d2dd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:402844892969:android:bbcf737807ed6f7618c138",
+        "android_client_info": {
+          "package_name": "com.example.launchpad"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMYJGcx23hoKzl8zYc_vJuMqspYS08GD4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
