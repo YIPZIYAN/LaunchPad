@@ -1,6 +1,5 @@
-package com.example.launchpad.view
+package com.example.launchpad.auth.view
 
-import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
