@@ -35,7 +35,6 @@ class MyProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMyProfileBinding.inflate(inflater, container, false)
-        binding.avatarView.loadImage("https://avatars.githubusercontent.com/u/103913961?v=4")
 
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
@@ -77,8 +76,13 @@ class MyProfileFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MyProfileViewModel::class.java)
-        // TODO: Use the ViewModel
+        viewModel = ViewModelProvider(this)[MyProfileViewModel::class.java]
+        viewModel.fetchUser()
+
+        viewModel.getUserLD().observe(viewLifecycleOwner){
+            binding.txtName.text = it?.name
+            binding.avatarView.loadImage(it?.avatar)
+        }
     }
 
 }

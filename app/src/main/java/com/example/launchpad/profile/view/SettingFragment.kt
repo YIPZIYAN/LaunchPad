@@ -2,6 +2,7 @@ package com.example.launchpad.profile.view
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -45,6 +46,7 @@ class SettingFragment : Fragment() {
 
         binding.cardLogout.setOnClickListener {
             signOut()
+            true
         }
 
         return binding.root
@@ -61,8 +63,9 @@ class SettingFragment : Fragment() {
 
         auth.signOut()
 
-        googleSignInClient.signOut().addOnCanceledListener {
+        googleSignInClient.signOut().addOnSuccessListener {
             // Optional: Update UI or show a message to the user
+            Log.d("UI", "signOut: navigate to login")
             findNavController().navigate(R.id.action_settingFragment_to_mainActivity)
 
         }

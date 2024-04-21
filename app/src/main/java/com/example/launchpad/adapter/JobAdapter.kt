@@ -6,10 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.launchpad.R
 import com.example.launchpad.data.Job
 import com.example.launchpad.databinding.ItemJobCardBinding
-import com.example.launchpad.view.LoginFragment
+import com.example.launchpad.auth.view.LoginFragment
 
 class JobAdapter (
     val fn: (ViewHolder, Job) -> Unit = { _, _ -> }
