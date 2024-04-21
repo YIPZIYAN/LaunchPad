@@ -2,24 +2,22 @@ package com.example.launchpad.auth.view
 
 import android.app.Activity
 import android.content.Intent
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
+import com.example.launchpad.UserActivity
 import com.example.launchpad.auth.viewmodel.LoginViewModel
 import com.example.launchpad.databinding.FragmentLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.Firebase
-import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.auth
+import com.google.firebase.firestore.auth.User
 
 class LoginFragment : Fragment() {
 
@@ -28,7 +26,7 @@ class LoginFragment : Fragment() {
         var userType = 0; // 1 = employee, 0 = company, testing only
     }
 
-    private lateinit var viewModel: LoginViewModel
+    private  val viewModel: LoginViewModel by viewModels()
     private lateinit var binding: FragmentLoginBinding
 
     override fun onCreateView(
@@ -36,6 +34,11 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
+
+        if (viewModel.isLoggedIn()){
+            Log.d("status", "onCreateView: logged in")
+            intentToUserActivity()
+        }
 
         binding.btnLogin.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_userActivity)
@@ -82,14 +85,6 @@ class LoginFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
-
-        viewModel.checkLoggedIn()
-        viewModel.isSignedIn.observe(viewLifecycleOwner) {
-            if (it) {
-                intentToUserActivity()
-            }
-        }
 
         viewModel.signInResult.observe(viewLifecycleOwner) { success ->
             if (success) {
@@ -98,11 +93,15 @@ class LoginFragment : Fragment() {
                 // Handle sign-in failure
             }
         }
+
+
     }
 
     private fun intentToUserActivity() {
-        findNavController().popBackStack()
-        findNavController().navigate(R.id.action_loginFragment_to_userActivity)
+        val intent = Intent(requireActivity(), UserActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+
     }
 
 }

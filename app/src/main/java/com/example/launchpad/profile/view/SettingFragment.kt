@@ -1,5 +1,6 @@
 package com.example.launchpad.profile.view
 
+import android.content.Intent
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.util.Log
@@ -8,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.example.launchpad.MainActivity
 import com.example.launchpad.R
+import com.example.launchpad.UserActivity
 import com.example.launchpad.databinding.FragmentSettingBinding
 import com.example.launchpad.profile.viewmodel.SettingViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -66,9 +69,9 @@ class SettingFragment : Fragment() {
         googleSignInClient.signOut().addOnSuccessListener {
             // Optional: Update UI or show a message to the user
             Log.d("UI", "signOut: navigate to login")
-            findNavController().popBackStack()
-            findNavController().navigate(R.id.action_settingFragment_to_mainActivity)
-
+            val intent = Intent(requireActivity(), MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
         }
     }
 

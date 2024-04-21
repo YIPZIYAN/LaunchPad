@@ -25,13 +25,9 @@ class LoginViewModel(val app: Application) :
     private val _signInResult = MutableLiveData<Boolean>()
     val signInResult: LiveData<Boolean> = _signInResult
 
-    private val _isSignedIn = MutableLiveData<Boolean>()
-    val isSignedIn: LiveData<Boolean> = _isSignedIn
 
+    fun isLoggedIn() = auth.currentUser != null
 
-    fun checkLoggedIn() {
-        _isSignedIn.value = auth.currentUser != null
-    }
 
     fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
