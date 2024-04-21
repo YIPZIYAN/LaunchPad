@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.auth.viewmodel.LoginViewModel
@@ -29,7 +30,6 @@ class LoginFragment : Fragment() {
 
     private lateinit var viewModel: LoginViewModel
     private lateinit var binding: FragmentLoginBinding
-    private val auth = Firebase.auth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,28 +72,37 @@ class LoginFragment : Fragment() {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)
-                firebaseAuthWithGoogle(account.idToken!!)
+                viewModel.firebaseAuthWithGoogle(account.idToken!!)
             } catch (e: ApiException) {
                 Log.d("error", "onActivityResult: error")
             }
         }
     }
 
-    private fun firebaseAuthWithGoogle(idToken: String) {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    findNavController().navigate(R.id.action_loginFragment_to_userActivity)
-                } else {
-                }
-            }
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
-        // TODO: Use the ViewModel
+
+        viewModel.checkLoggedIn()
+        viewModel.isSignedIn.observe(viewLifecycleOwner) {
+            if (it) {
+                intentToUserActivity()
+            }
+        }
+
+        viewModel.signInResult.observe(viewLifecycleOwner) { success ->
+            if (success) {
+                intentToUserActivity()
+            } else {
+                // Handle sign-in failure
+            }
+        }
+    }
+
+    private fun intentToUserActivity() {
+        findNavController().popBackStack()
+        findNavController().navigate(R.id.action_loginFragment_to_userActivity)
     }
 
 }

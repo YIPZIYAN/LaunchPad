@@ -66,6 +66,7 @@ class SettingFragment : Fragment() {
         googleSignInClient.signOut().addOnSuccessListener {
             // Optional: Update UI or show a message to the user
             Log.d("UI", "signOut: navigate to login")
+            findNavController().popBackStack()
             findNavController().navigate(R.id.action_settingFragment_to_mainActivity)
 
         }
