@@ -7,9 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.viewmodel.HomeViewModel
 import com.example.launchpad.R
+import com.example.launchpad.adapter.JobAdapter
 import com.example.launchpad.databinding.FragmentHomeBinding
 import com.example.launchpad.databinding.FragmentMyProfileBinding
 import com.example.launchpad.view.LoginFragment.Companion.userType
@@ -20,7 +22,7 @@ class HomeFragment : Fragment() {
         fun newInstance() = HomeFragment()
     }
 
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel: HomeViewModel by activityViewModels()
     private lateinit var binding: FragmentHomeBinding
 
 
@@ -30,8 +32,15 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        binding.jobCard.setOnClickListener{
-            findNavController().navigate(R.id.action_homeFragment_to_jobDetailsFragment)
+        val adapter = JobAdapter { h, job ->
+            h.binding.jobCard.setOnClickListener {
+                findNavController().navigate(R.id.action_homeFragment_to_jobDetailsFragment)
+            }
+        }
+        binding.rvJobCard.adapter = adapter
+
+        viewModel.getJobsLD().observe(viewLifecycleOwner) {
+            adapter.submitList(it)
         }
 
         binding.btnPostJob.setOnClickListener{
@@ -41,20 +50,12 @@ class HomeFragment : Fragment() {
         // company
         if (userType == 0) {
             binding.homeTitle.text = resources.getString(R.string.your_posted_job)
-            binding.bookmark.visibility = View.GONE
             binding.btnPostJob.visibility = View.VISIBLE
-            binding.jobCard2.visibility = View.GONE
-            binding.jobCard3.visibility = View.GONE
             binding.btnSavedJob.visibility = View.GONE
         }
 
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
 
 }
