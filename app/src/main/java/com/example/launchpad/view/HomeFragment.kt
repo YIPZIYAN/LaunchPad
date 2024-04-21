@@ -1,6 +1,5 @@
 package com.example.launchpad.view
 
-import android.content.res.ColorStateList
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,8 +12,7 @@ import com.example.launchpad.viewmodel.HomeViewModel
 import com.example.launchpad.R
 import com.example.launchpad.adapter.JobAdapter
 import com.example.launchpad.databinding.FragmentHomeBinding
-import com.example.launchpad.databinding.FragmentMyProfileBinding
-import com.example.launchpad.view.LoginFragment.Companion.userType
+import com.example.launchpad.auth.view.LoginFragment.Companion.userType
 
 class HomeFragment : Fragment() {
 

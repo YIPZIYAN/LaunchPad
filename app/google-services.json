@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "402844892969",
+    "firebase_url": "https://launchpad-1d2dd-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "launchpad-1d2dd",
     "storage_bucket": "launchpad-1d2dd.appspot.com"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.example.launchpad"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "402844892969-cvlvriflu3q5ntu1rmgkmnbkepur28vi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.launchpad",
+            "certificate_hash": "32db83ba09c4fc15beba619e6c77c25a2451522d"
+          }
+        },
+        {
+          "client_id": "402844892969-50v2vgn16snkr157l2jpdrao6m7l958g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBMYJGcx23hoKzl8zYc_vJuMqspYS08GD4"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "402844892969-50v2vgn16snkr157l2jpdrao6m7l958g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

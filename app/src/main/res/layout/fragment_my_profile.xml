@@ -7,7 +7,7 @@
         android:id="@+id/profileFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.MyProfileFragment">
+        tools:context=".profile.view.MyProfileFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"

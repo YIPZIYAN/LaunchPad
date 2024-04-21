@@ -6,7 +6,7 @@
         android:id="@+id/profileFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.UserProfileFragment">
+        tools:context=".profile.view.UserProfileFragment">
 
 
         <com.google.android.material.appbar.AppBarLayout
