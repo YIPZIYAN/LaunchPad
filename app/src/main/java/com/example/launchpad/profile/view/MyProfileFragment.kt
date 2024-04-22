@@ -1,4 +1,4 @@
-package com.example.launchpad.view
+package com.example.launchpad.profile.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -7,13 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentMyProfileBinding
-import com.example.launchpad.viewmodel.MyProfileViewModel
+import com.example.launchpad.view.TabMyJobFragment
+import com.example.launchpad.profile.viewmodel.MyProfileViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import io.getstream.avatarview.coil.loadImage
 

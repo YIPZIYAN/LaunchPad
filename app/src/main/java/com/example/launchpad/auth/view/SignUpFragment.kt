@@ -1,6 +1,5 @@
-package com.example.launchpad.view
+package com.example.launchpad.auth.view
 
-import android.content.Intent
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,9 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
-import com.example.launchpad.databinding.FragmentLoginBinding
 import com.example.launchpad.databinding.FragmentSignUpBinding
-import com.example.launchpad.viewmodel.SignUpViewModel
+import com.example.launchpad.auth.viewmodel.SignUpViewModel
 
 class SignUpFragment : Fragment() {
 

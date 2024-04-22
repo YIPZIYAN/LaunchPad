@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentJobDetailsBinding
-import com.example.launchpad.view.LoginFragment.Companion.userType
+import com.example.launchpad.auth.view.LoginFragment.Companion.userType
 import com.example.launchpad.viewmodel.JobDetailsViewModel
 
 class JobDetailsFragment : Fragment() {

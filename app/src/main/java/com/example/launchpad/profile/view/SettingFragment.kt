@@ -1,4 +1,4 @@
-package com.example.launchpad.view
+package com.example.launchpad.profile.view
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -9,7 +9,12 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentSettingBinding
-import com.example.launchpad.viewmodel.SettingViewModel
+import com.example.launchpad.profile.viewmodel.SettingViewModel
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 class SettingFragment : Fragment() {
 
@@ -19,6 +24,8 @@ class SettingFragment : Fragment() {
 
     private val viewModel: SettingViewModel by viewModels()
     private lateinit var binding: FragmentSettingBinding
+    private val auth = Firebase.auth
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +43,29 @@ class SettingFragment : Fragment() {
             findNavController().navigateUp()
         }
 
+        binding.cardLogout.setOnClickListener {
+            signOut()
+        }
+
         return binding.root
     }
+
+    private fun signOut() {
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.client_id))
+            .requestEmail()
+            .build()
+
+        val googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+
+        auth.signOut()
+
+        googleSignInClient.signOut().addOnCanceledListener {
+            // Optional: Update UI or show a message to the user
+            findNavController().navigate(R.id.action_settingFragment_to_mainActivity)
+
+        }
+    }
+
 }

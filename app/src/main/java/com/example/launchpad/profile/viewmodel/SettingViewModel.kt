@@ -1,4 +1,4 @@
-package com.example.launchpad.viewmodel
+package com.example.launchpad.profile.viewmodel
 
 import androidx.lifecycle.ViewModel
 

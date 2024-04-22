@@ -1,4 +1,4 @@
-package com.example.launchpad.view
+package com.example.launchpad.auth.view
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -7,8 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.example.launchpad.viewmodel.ForgotPasswordViewModel
-import com.example.launchpad.R
+import com.example.launchpad.auth.viewmodel.ForgotPasswordViewModel
 import com.example.launchpad.databinding.FragmentForgotPasswordBinding
 
 class ForgotPasswordFragment : Fragment() {
