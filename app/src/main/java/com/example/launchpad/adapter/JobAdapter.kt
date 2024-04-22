@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.launchpad.R
 import com.example.launchpad.data.Job
 import com.example.launchpad.databinding.ItemJobCardBinding
 import com.example.launchpad.view.LoginFragment
@@ -34,7 +33,6 @@ class JobAdapter (
             holder.binding.bookmark.visibility = View.GONE
         }
         holder.binding.jobName.text = job.jobName
-        holder.binding.companyLocation.text = job.location
         holder.binding.lblSalary.text = "RM ${"%.2f".format(job.minSalary)} - RM ${"%.2f".format(job.maxSalary)} per month"
         holder.binding.chipJobType.text = job.jobType
         holder.binding.chipWorkplace.text = job.workplace

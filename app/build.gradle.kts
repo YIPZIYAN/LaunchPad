@@ -79,4 +79,6 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-firestore:24.11.0")
 
+    //DateTime
+    implementation("joda-time:joda-time:2.12.7")
 }
