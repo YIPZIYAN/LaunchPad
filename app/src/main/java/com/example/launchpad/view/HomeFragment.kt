@@ -31,11 +31,8 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        val adapter = JobAdapter { holder, _ ->
-            holder.binding.jobCard.setOnClickListener{
-                nav.navigate(R.id.action_homeFragment_to_jobDetailsFragment)
-            }
-        }
+        val adapter = JobAdapter { _, _ -> }
+
         binding.rvJobCard.adapter = adapter
 
         viewModel.getJobsLD().observe(viewLifecycleOwner) { jobs ->

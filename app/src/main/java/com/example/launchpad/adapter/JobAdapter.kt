@@ -4,9 +4,11 @@ import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.launchpad.R
 import com.example.launchpad.data.Job
 import com.example.launchpad.databinding.ItemJobCardBinding
 import com.example.launchpad.auth.view.LoginFragment
@@ -31,12 +33,16 @@ class JobAdapter (
         if (LoginFragment.userType == 0) {
             holder.binding.bookmark.visibility = View.GONE
         }
+        holder.binding.jobCard.setOnClickListener{
+            it.findNavController().navigate(R.id.action_homeFragment_to_jobDetailsFragment)
+        }
         holder.binding.jobName.text = job.jobName
         holder.binding.lblSalary.text = "RM ${job.minSalary} - RM ${job.maxSalary} per month"
         holder.binding.chipJobType.text = job.jobType
         holder.binding.chipWorkplace.text = job.workplace
         holder.binding.chipPosition.text = job.position
         holder.binding.timePosted.text = displayPostTime(job.postTime!!)
+
     }
 
     private fun displayPostTime(postTime: Long): String {
