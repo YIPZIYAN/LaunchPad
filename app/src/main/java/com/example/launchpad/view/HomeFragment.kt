@@ -38,11 +38,11 @@ class HomeFragment : Fragment() {
         }
         binding.rvJobCard.adapter = adapter
 
-        viewModel.getJobsLD().observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+        viewModel.getJobsLD().observe(viewLifecycleOwner) { jobs ->
+            adapter.submitList(jobs.sortedByDescending { it.postTime })
         }
 
-        binding.btnPostJob.setOnClickListener{
+        binding.btnPostJob.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_postJobFragment)
         }
 

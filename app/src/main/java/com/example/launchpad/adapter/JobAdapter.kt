@@ -1,5 +1,6 @@
 package com.example.launchpad.adapter
 
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,6 @@ import com.example.launchpad.auth.view.LoginFragment
 class JobAdapter (
     val fn: (ViewHolder, Job) -> Unit = { _, _ -> }
 ): ListAdapter<Job, JobAdapter.ViewHolder>(Diff) {
-
 
     companion object Diff : DiffUtil.ItemCallback<Job>() {
         override fun areItemsTheSame(a: Job, b: Job) = a.jobName == b.jobName
@@ -33,10 +33,21 @@ class JobAdapter (
             holder.binding.bookmark.visibility = View.GONE
         }
         holder.binding.jobName.text = job.jobName
-        holder.binding.lblSalary.text = "RM ${"%.2f".format(job.minSalary)} - RM ${"%.2f".format(job.maxSalary)} per month"
+        holder.binding.lblSalary.text = "RM ${job.minSalary} - RM ${job.maxSalary} per month"
         holder.binding.chipJobType.text = job.jobType
         holder.binding.chipWorkplace.text = job.workplace
         holder.binding.chipPosition.text = job.position
+        holder.binding.timePosted.text = displayPostTime(job.postTime!!)
+
+    }
+
+    private fun displayPostTime(postTime: Long): String {
+        return DateUtils.getRelativeTimeSpanString(
+            postTime,
+            System.currentTimeMillis(),
+            DateUtils.MINUTE_IN_MILLIS,
+            DateUtils.FORMAT_ABBREV_RELATIVE
+        ).toString()
     }
 
 }
