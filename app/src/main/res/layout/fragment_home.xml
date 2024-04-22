@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/homeFragment"
         android:layout_width="match_parent"
@@ -108,12 +113,12 @@
                     app:strokeColor="@color/m3_text_button_foreground_color_selector" />
 
                 <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_job_card"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:scrollbars="vertical"
-                    android:layout_marginBottom="8dp"
                     app:layoutManager="LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -147,4 +152,5 @@
             android:visibility="gone"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

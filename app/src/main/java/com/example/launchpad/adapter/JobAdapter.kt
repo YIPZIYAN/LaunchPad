@@ -25,7 +25,6 @@ class JobAdapter (
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ViewHolder(ItemJobCardBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val job = getItem(position)
         // company
@@ -38,7 +37,6 @@ class JobAdapter (
         holder.binding.chipWorkplace.text = job.workplace
         holder.binding.chipPosition.text = job.position
         holder.binding.timePosted.text = displayPostTime(job.postTime!!)
-
     }
 
     private fun displayPostTime(postTime: Long): String {

@@ -31,8 +31,8 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        val adapter = JobAdapter { h, job ->
-            h.binding.jobCard.setOnClickListener {
+        val adapter = JobAdapter { holder, _ ->
+            holder.binding.jobCard.setOnClickListener{
                 nav.navigate(R.id.action_homeFragment_to_jobDetailsFragment)
             }
         }
@@ -43,7 +43,12 @@ class HomeFragment : Fragment() {
         }
 
         binding.btnPostJob.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_postJobFragment)
+            nav.navigate(R.id.action_homeFragment_to_postJobFragment)
+        }
+
+        binding.refresh.setOnRefreshListener {
+            adapter.notifyDataSetChanged()
+            binding.refresh.isRefreshing = false
         }
 
         // company
