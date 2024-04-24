@@ -1,9 +1,7 @@
 package com.example.launchpad.view
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,18 +14,19 @@ import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentJobDetailsBinding
 import com.example.launchpad.auth.view.LoginFragment.Companion.userType
-import com.example.launchpad.data.Job
-import com.example.launchpad.viewmodel.JobDetailsViewModel
+import com.example.launchpad.data.Company
+import com.example.launchpad.data.User
+import com.example.launchpad.profile.viewmodel.CompanyViewModel
+import com.example.launchpad.profile.viewmodel.MyProfileViewModel
+import com.example.launchpad.util.setImageBlob
 import com.example.launchpad.viewmodel.JobViewModel
 
 class JobDetailsFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = JobDetailsFragment()
-    }
     private lateinit var binding: FragmentJobDetailsBinding
     private val nav by lazy { findNavController() }
-    private val viewModel: JobViewModel by activityViewModels()
+    private val jobVM: JobViewModel by activityViewModels()
+    private val companyVM: CompanyViewModel by activityViewModels()
 
     private val jobID by lazy { arguments?.getString("jobID") ?: "" }
 
@@ -61,14 +60,18 @@ class JobDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val job = viewModel.get(jobID)
+        val job = jobVM.get(jobID)
 
         if (job == null) {
             nav.navigateUp()
             return
         }
 
+        job.company = companyVM.get(job.companyID) ?: Company()
+
         binding.jobName.text = job.jobName
+        binding.companyAvatar.setImageBlob(job.company.avatar)
+        binding.companyName.text = job.company.name
 
         val adapter = MyPagerAdapter(childFragmentManager, job.jobID)
         binding.tabContent.adapter = adapter

@@ -1,6 +1,7 @@
 package com.example.launchpad.data
 
 import com.google.firebase.firestore.DocumentId
+import com.google.firebase.firestore.Exclude
 
 data class Job(
     @DocumentId
@@ -16,4 +17,8 @@ data class Job(
     val description: String = "",
     val requirement: String = "",
     val postTime: Long? = null,
-)
+    val companyID: String = "",
+) {
+    @get:Exclude
+    var company: Company = Company()
+}

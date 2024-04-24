@@ -255,7 +255,7 @@
                     app:layout_constraintTop_toBottomOf="@id/lbl_about_company" />
 
                 <TextView
-                    android:id="@+id/lbl_locations"
+                    android:id="@+id/lbl_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -275,7 +275,7 @@
                     android:textAppearance="?attr/textAppearanceLabelLarge"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="@id/title9"
-                    app:layout_constraintTop_toBottomOf="@id/lbl_locations" />
+                    app:layout_constraintTop_toBottomOf="@id/lbl_location" />
 
                 <TextView
                     android:id="@+id/lbl_since"

@@ -5,17 +5,27 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import androidx.activity.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.launchpad.databinding.ActivityUserBinding
+import com.example.launchpad.profile.viewmodel.CompanyViewModel
+import com.example.launchpad.viewmodel.JobViewModel
 
 class UserActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityUserBinding
     private val nav by lazy {
         supportFragmentManager.findFragmentById(R.id.user_nav_host)!!.findNavController()
     }
+    private val jobVM: JobViewModel by viewModels()
+    private val companyVM: CompanyViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //Early data loading
+        companyVM.init()
+        jobVM.init()
+
         super.onCreate(savedInstanceState)
         binding = ActivityUserBinding.inflate(layoutInflater)
         setupNav()

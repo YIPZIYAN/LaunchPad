@@ -9,8 +9,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.example.launchpad.R
+import com.example.launchpad.data.Company
 import com.example.launchpad.data.Job
 import com.example.launchpad.databinding.FragmentTabJobDetailsBinding
+import com.example.launchpad.profile.viewmodel.CompanyViewModel
 import com.example.launchpad.viewmodel.JobViewModel
 import com.example.launchpad.viewmodel.TabJobDetailsViewModel
 
@@ -31,7 +33,8 @@ class TabJobDetailsFragment : Fragment() {
         }
     }
 
-    private val viewModel: JobViewModel by activityViewModels()
+    private val jobVM: JobViewModel by activityViewModels()
+    private val companyVM: CompanyViewModel by activityViewModels()
     private lateinit var binding: FragmentTabJobDetailsBinding
 
     override fun onCreateView(
@@ -48,7 +51,8 @@ class TabJobDetailsFragment : Fragment() {
         val position = arguments?.getInt(ARG_POSITION, 0) ?: 0
         val jobID = arguments?.getString(ARG_JOBID) ?: ""
 
-        val job = viewModel.get(jobID) ?: return
+        val job = jobVM.get(jobID) ?: return
+        job.company = companyVM.get(job.companyID) ?: Company()
 
         binding.lblJobDesc.text = job.description
         binding.lblRequirements.text = if (job.requirement == "") "-" else job.requirement
@@ -58,6 +62,9 @@ class TabJobDetailsFragment : Fragment() {
         binding.lblSalary.text = "RM ${job.minSalary} - RM ${job.maxSalary} per month"
         binding.lblQualification.text = job.qualification
         binding.lblExperience.text = "${job.experience} year(s)"
+        binding.lblAboutCompany.text = job.company.description
+        binding.lblLocation.text = job.company.location
+        binding.lblSince.text = job.company.year.toString()
 
         when (position) {
             0 -> {

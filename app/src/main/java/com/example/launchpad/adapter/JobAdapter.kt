@@ -12,6 +12,7 @@ import com.example.launchpad.R
 import com.example.launchpad.data.Job
 import com.example.launchpad.databinding.ItemJobCardBinding
 import com.example.launchpad.auth.view.LoginFragment
+import com.example.launchpad.util.setImageBlob
 
 class JobAdapter (
     val fn: (ViewHolder, Job) -> Unit = { _, _ -> }
@@ -34,6 +35,10 @@ class JobAdapter (
         if (LoginFragment.userType == 0) {
             holder.binding.bookmark.visibility = View.GONE
         }
+
+        holder.binding.companyAvatar.setImageBlob(job.company.avatar)
+        holder.binding.companyName.text = job.company.name
+        holder.binding.companyLocation.text = job.company.location
         holder.binding.jobName.text = job.jobName
         holder.binding.lblSalary.text = "RM ${job.minSalary} - RM ${job.maxSalary} per month"
         holder.binding.chipJobType.text = job.jobType

@@ -3,21 +3,25 @@ package com.example.launchpad.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.launchpad.data.Job
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObjects
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.Firebase
 
-class JobViewModel(val app: Application) : AndroidViewModel(app) {
+class JobViewModel : ViewModel() {
     private val JOBS = Firebase.firestore.collection("job")
     private val jobsLD = MutableLiveData<List<Job>>()
     private var listener: ListenerRegistration? = null
     private val required = "* Required"
 
     init {
-        listener = JOBS.addSnapshotListener { snap, _ -> jobsLD.value = snap?.toObjects() }
+        listener = JOBS.addSnapshotListener { snap, _ ->
+            jobsLD.value = snap?.toObjects()
+            updateResult()
+        }
     }
 
     override fun onCleared() {
@@ -42,7 +46,12 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
         return isValid
     }
 
-    fun validateSalaryInput(minInput: TextInputLayout, maxInput: TextInputLayout, min: Int?, max: Int?): Boolean {
+    fun validateSalaryInput(
+        minInput: TextInputLayout,
+        maxInput: TextInputLayout,
+        min: Int?,
+        max: Int?
+    ): Boolean {
         val isMinValid = min != null
         val isMaxValid = max != null
 
@@ -60,5 +69,14 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
         return isMinValid && isMaxValid
     }
 
+    private val resultLD = MutableLiveData<List<Job>>()
+
+    fun getResultLD() = resultLD
+
+    fun updateResult() {
+        var list = getAll()
+
+        resultLD.value = list
+    }
 
 }
