@@ -30,6 +30,8 @@ class LoginViewModel(val app: Application) :
 
     fun isLoggedIn() = auth.currentUser != null
 
+    fun isVerified() = auth.currentUser!!.isEmailVerified
+
     fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)

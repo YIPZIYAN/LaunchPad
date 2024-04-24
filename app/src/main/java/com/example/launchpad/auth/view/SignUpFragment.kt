@@ -13,6 +13,7 @@ import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentSignUpBinding
 import com.example.launchpad.auth.viewmodel.SignUpViewModel
 import com.example.launchpad.util.displayErrorHelper
+import com.example.launchpad.util.toast
 import java.util.regex.Pattern
 
 class SignUpFragment : Fragment() {
@@ -28,6 +29,8 @@ class SignUpFragment : Fragment() {
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
 
         binding.btnSignUp.setOnClickListener { submit() }
+
+        viewModel.responseMsg.observe(viewLifecycleOwner) { toast(it) }
 
         return binding.root
     }

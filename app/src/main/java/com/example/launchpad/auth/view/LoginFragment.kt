@@ -36,9 +36,13 @@ class LoginFragment : Fragment() {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
 
         //auto login
-        if (viewModel.isLoggedIn()) {
+        if (viewModel.isLoggedIn() && viewModel.isVerified()) {
             Log.d("status", "onCreateView: logged in")
             intentToUserActivity()
+        }
+
+        if (viewModel.isLoggedIn()){
+            //intent to
         }
 
         buttonAction()
