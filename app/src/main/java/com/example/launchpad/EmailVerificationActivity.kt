@@ -18,7 +18,7 @@ class EmailVerificationActivity : AppCompatActivity() {
         binding = ActivityEmailVerificationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.init()
+        viewModel.checkEmailVerificationInterval()
 
         binding.txtSentTo.text = """
             An email verification sent to 

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.example.launchpad.R
 import com.example.launchpad.UserActivity
 import com.example.launchpad.auth.viewmodel.LoginViewModel
 import com.example.launchpad.databinding.FragmentLoginBinding
+import com.example.launchpad.util.displayErrorHelper
 import com.example.launchpad.util.intentWithoutBackstack
 import com.example.launchpad.util.toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -48,7 +50,10 @@ class LoginFragment : Fragment() {
 
         if (viewModel.isLoggedIn()) {
             Log.d("status", "onCreateView: logged in")
-            requireContext().intentWithoutBackstack(requireActivity(), EmailVerificationActivity::class.java)
+            requireContext().intentWithoutBackstack(
+                requireActivity(),
+                EmailVerificationActivity::class.java
+            )
         }
 
         buttonAction()
@@ -58,17 +63,17 @@ class LoginFragment : Fragment() {
             if (success) {
                 requireContext().intentWithoutBackstack(requireActivity(), UserActivity::class.java)
             } else {
-                toast(getString(R.string.exception_error_msg))
+//                toast(getString(R.string.exception_error_msg))
             }
         }
+
+        viewModel.response.observe(viewLifecycleOwner) { toast(it) }
 
         return binding.root
     }
 
     private fun buttonAction() {
-        binding.btnLogin.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_userActivity)
-        }
+        binding.btnLogin.setOnClickListener { signInWithEmail() }
 
         binding.txtSignUp.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
@@ -79,6 +84,33 @@ class LoginFragment : Fragment() {
         }
 
         binding.btnGoogle.setOnClickListener { signInWithGoogle() }
+    }
+
+    private fun signInWithEmail() {
+        val email = binding.edtEmail.text.toString()
+        val password = binding.edtPassword.text.toString()
+
+        if (!isValid(email, password)) {
+            return
+        }
+
+        viewModel.firebaseAuthWithEmail(email, password)
+    }
+
+    private fun isValid(email: String, password: String): Boolean {
+        when {
+            email == "" || !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                displayErrorHelper(binding.lblEmail, "Invalid email address.")
+                return false
+            }
+
+            password == "" -> {
+                displayErrorHelper(binding.lblPassword, "Wrong password")
+                return false
+            }
+
+            else -> return true
+        }
     }
 
     private fun signInWithGoogle() {

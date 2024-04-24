@@ -28,6 +28,9 @@ class LoginViewModel(val app: Application) :
     private val _signInResult = MutableLiveData<Boolean>()
     val signInResult = _signInResult
 
+    private val _response = MutableLiveData<String>()
+    val response = _response
+
     fun isLoggedIn() = auth.currentUser != null
 
     fun isVerified() = auth.currentUser!!.isEmailVerified
@@ -40,8 +43,11 @@ class LoginViewModel(val app: Application) :
             }
     }
 
-    fun firebaseAuthWithEmail(idToken: String) {
-
+    fun firebaseAuthWithEmail(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+            _signInResult.value = it.isSuccessful
+            _response.value = it.exception?.message
+        }
     }
 
 }
