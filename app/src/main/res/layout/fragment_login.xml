@@ -41,7 +41,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textField1"
+                android:id="@+id/edtEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="36dp"
@@ -58,7 +58,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textField"
+                android:id="@+id/edtPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="36dp"
@@ -66,7 +66,7 @@
                 app:endIconMode="password_toggle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textField1">
+                app:layout_constraintTop_toBottomOf="@+id/edtEmail">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/textInputEditText3"
@@ -85,7 +85,7 @@
                 android:linksClickable="true"
                 android:text="@string/forget_password"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textField" />
+                app:layout_constraintTop_toBottomOf="@+id/edtPassword" />
 
             <Button
                 android:id="@+id/btnLogin"

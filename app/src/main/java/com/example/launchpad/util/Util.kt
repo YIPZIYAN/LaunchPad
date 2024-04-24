@@ -1,10 +1,12 @@
 package com.example.launchpad.util
 
 import android.content.DialogInterface
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputLayout
 
 fun Fragment.toast(text: String) {
     Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
@@ -42,4 +44,10 @@ fun Fragment.dialog(
     }
 
     builder.show()
+}
+
+fun Fragment.displayErrorHelper(view: TextInputLayout, errorMsg: String) {
+    view.requestFocus()
+    view.error = errorMsg
+    view.errorIconDrawable = null
 }
