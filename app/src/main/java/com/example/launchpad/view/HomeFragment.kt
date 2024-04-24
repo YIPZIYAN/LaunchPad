@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.viewmodel.JobViewModel
@@ -20,10 +21,9 @@ class HomeFragment : Fragment() {
         fun newInstance() = HomeFragment()
     }
 
-    private val viewModel: JobViewModel by activityViewModels()
-    private val nav by lazy { findNavController() }
     private lateinit var binding: FragmentHomeBinding
-
+    private val nav by lazy { findNavController() }
+    private val viewModel: JobViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +31,9 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        val adapter = JobAdapter { _, _ -> }
+        val adapter = JobAdapter { holder, job ->
+            holder.binding.root.setOnClickListener { detail(job.jobID) }
+        }
 
         binding.rvJobCard.adapter = adapter
 
@@ -58,5 +60,12 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    private fun detail(jobID: String) {
+        nav.navigate(
+            R.id.jobDetailsFragment, bundleOf(
+                "jobID" to jobID
+            )
+        )
+    }
 
 }

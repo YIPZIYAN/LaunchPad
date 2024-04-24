@@ -18,7 +18,7 @@ class JobAdapter (
 ): ListAdapter<Job, JobAdapter.ViewHolder>(Diff) {
 
     companion object Diff : DiffUtil.ItemCallback<Job>() {
-        override fun areItemsTheSame(a: Job, b: Job) = a.jobName == b.jobName
+        override fun areItemsTheSame(a: Job, b: Job) = a.jobID == b.jobID
         override fun areContentsTheSame(a: Job, b: Job) = a == b
     }
 
@@ -29,12 +29,10 @@ class JobAdapter (
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val job = getItem(position)
+
         // company
         if (LoginFragment.userType == 0) {
             holder.binding.bookmark.visibility = View.GONE
-        }
-        holder.binding.jobCard.setOnClickListener{
-            it.findNavController().navigate(R.id.action_homeFragment_to_jobDetailsFragment)
         }
         holder.binding.jobName.text = job.jobName
         holder.binding.lblSalary.text = "RM ${job.minSalary} - RM ${job.maxSalary} per month"
@@ -43,6 +41,7 @@ class JobAdapter (
         holder.binding.chipPosition.text = job.position
         holder.binding.timePosted.text = displayPostTime(job.postTime!!)
 
+        fn(holder, job)
     }
 
     private fun displayPostTime(postTime: Long): String {

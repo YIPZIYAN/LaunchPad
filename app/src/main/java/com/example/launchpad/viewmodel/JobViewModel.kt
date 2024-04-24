@@ -28,9 +28,9 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
 
     fun getJobsLD() = jobsLD
 
-    fun getAll() = jobsLD.value
+    fun getAll() = jobsLD.value ?: emptyList()
 
-    fun get(jobID: String) = jobsLD.value?.find { it.jobID == jobID }
+    fun get(jobID: String) = getAll().find { it.jobID == jobID }
 
     fun set(job: Job) {
         JOBS.document().set(job);

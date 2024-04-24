@@ -4,14 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.transition.Fade
-import android.transition.Slide
-import android.transition.TransitionManager
 import android.view.View
-import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.launchpad.R
 import com.example.launchpad.databinding.ActivityUserBinding
 
 class UserActivity : AppCompatActivity() {
@@ -29,28 +24,31 @@ class UserActivity : AppCompatActivity() {
 
     private fun setupNav() {
         nav.addOnDestinationChangedListener { _, destination, _ ->
-            Handler(Looper.getMainLooper()).postDelayed({
-                when (destination.id) {
-                    R.id.jobDetailsFragment,
-                    R.id.applyJobFragment,
-                    R.id.postJobFragment,
-                    R.id.viewApplicantFragment,
-                    R.id.applicantDetailsFragment,
-                    R.id.chatTextFragment,
-                    R.id.settingFragment,
-                    R.id.addPostFragment,
-                    R.id.userProfileFragment,
-                    R.id.scheduleInterviewFragment,
-                    -> {
-                        binding.bottomNavigation.visibility = View.GONE
-                    }
 
-                    else -> {
-                        binding.bottomNavigation.visibility = View.VISIBLE
-                    }
-                }
-            }, 200)
+            val hideBottomNavDestinations = setOf(
+                R.id.jobDetailsFragment,
+                R.id.applyJobFragment,
+                R.id.postJobFragment,
+                R.id.viewApplicantFragment,
+                R.id.applicantDetailsFragment,
+                R.id.chatTextFragment,
+                R.id.settingFragment,
+                R.id.addPostFragment,
+                R.id.userProfileFragment,
+                R.id.scheduleInterviewFragment
+            )
+
+            val isBottomNavVisible = !hideBottomNavDestinations.contains(destination.id)
+            //TransitionManager.beginDelayedTransition(binding.root as ViewGroup)
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.bottomNavigation.visibility =
+                    if (isBottomNavVisible) View.VISIBLE else View.GONE
+            }, -100)
+
         }
+
         binding.bottomNavigation.setupWithNavController(nav)
+
     }
 }
