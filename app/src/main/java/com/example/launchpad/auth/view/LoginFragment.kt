@@ -14,10 +14,10 @@ import com.example.launchpad.R
 import com.example.launchpad.UserActivity
 import com.example.launchpad.auth.viewmodel.LoginViewModel
 import com.example.launchpad.databinding.FragmentLoginBinding
+import com.example.launchpad.util.toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.firestore.auth.User
 
 class LoginFragment : Fragment() {
 
@@ -26,7 +26,7 @@ class LoginFragment : Fragment() {
         var userType = 0; // 1 = employee, 0 = company, testing only
     }
 
-    private  val viewModel: LoginViewModel by viewModels()
+    private val viewModel: LoginViewModel by viewModels()
     private lateinit var binding: FragmentLoginBinding
 
     override fun onCreateView(
@@ -35,11 +35,27 @@ class LoginFragment : Fragment() {
     ): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
 
-        if (viewModel.isLoggedIn()){
+        //auto login
+        if (viewModel.isLoggedIn()) {
             Log.d("status", "onCreateView: logged in")
             intentToUserActivity()
         }
 
+        buttonAction()
+
+        // check if login success
+        viewModel.signInResult.observe(viewLifecycleOwner) { success ->
+            if (success) {
+                intentToUserActivity()
+            } else {
+                toast(getString(R.string.exception_error_msg))
+            }
+        }
+
+        return binding.root
+    }
+
+    private fun buttonAction() {
         binding.btnLogin.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_userActivity)
         }
@@ -53,8 +69,6 @@ class LoginFragment : Fragment() {
         }
 
         binding.btnGoogle.setOnClickListener { signInWithGoogle() }
-
-        return binding.root
     }
 
     private fun signInWithGoogle() {
@@ -70,31 +84,17 @@ class LoginFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         if (requestCode == Activity.RESULT_OK) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)
                 viewModel.firebaseAuthWithGoogle(account.idToken!!)
+                Log.d("success", "onActivityResult: getID")
             } catch (e: ApiException) {
                 Log.d("error", "onActivityResult: error")
+                toast(getString(R.string.exception_error_msg))
             }
         }
-    }
-
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        viewModel.signInResult.observe(viewLifecycleOwner) { success ->
-            if (success) {
-                intentToUserActivity()
-            } else {
-                // Handle sign-in failure
-            }
-        }
-
-
     }
 
     private fun intentToUserActivity() {

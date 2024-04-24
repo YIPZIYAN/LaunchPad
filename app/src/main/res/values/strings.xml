@@ -119,4 +119,6 @@
     <string name="schedule_interview">Schedule Interview</string>
     <string name="save">SAVE</string>
     <string name="client_id">402844892969-50v2vgn16snkr157l2jpdrao6m7l958g.apps.googleusercontent.com</string>
+    <string name="exception_error_msg">Something Went Wrong! Please Try Again.</string>
+    <string name="password_helper_text">Password should be at least 8 characters long with alphabets and digits.</string>
 </resources>

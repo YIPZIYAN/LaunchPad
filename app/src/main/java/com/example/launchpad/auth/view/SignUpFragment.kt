@@ -13,20 +13,14 @@ import com.example.launchpad.auth.viewmodel.SignUpViewModel
 
 class SignUpFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = SignUpFragment()
-    }
-
     private val viewModel: SignUpViewModel by viewModels()
     private val nav by lazy { findNavController() }
     private lateinit var binding: FragmentSignUpBinding
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         binding = FragmentSignUpBinding.inflate(inflater,container,false)
 
         binding.txtSignIn.setOnClickListener {

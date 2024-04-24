@@ -16,12 +16,14 @@ class MyProfileViewModel : ViewModel() {
 
     fun fetchUser() {
         auth.currentUser.let {
-            userLD.value = User(
-                id = it?.uid,
-                name = it?.displayName,
-                email = it?.email,
-                avatar = it?.photoUrl.toString(),
-            )
+            if (it != null) {
+                userLD.value = User(
+                    uid = it.uid,
+                    name = it.displayName ?: "",
+                    email = it.email ?: "",
+                    avatar = it?.photoUrl.toString(),
+                )
+            }
         }
     }
 }
