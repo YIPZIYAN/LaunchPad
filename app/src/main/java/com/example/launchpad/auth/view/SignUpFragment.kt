@@ -30,7 +30,12 @@ class SignUpFragment : Fragment() {
 
         binding.btnSignUp.setOnClickListener { submit() }
 
-        viewModel.responseMsg.observe(viewLifecycleOwner) { toast(it) }
+        viewModel.errorResponseMsg.observe(viewLifecycleOwner) { toast(it) }
+
+        viewModel.isSignUpSuccess.observe(viewLifecycleOwner) {
+
+        }
+
 
         return binding.root
     }

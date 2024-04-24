@@ -67,5 +67,8 @@ dependencies {
 
     //DateTime
     implementation("joda-time:joda-time:2.12.7")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation("androidx.activity:activity:1.8.0")
 
 }

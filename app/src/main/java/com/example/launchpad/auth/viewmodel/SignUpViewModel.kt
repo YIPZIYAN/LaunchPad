@@ -15,19 +15,19 @@ class SignUpViewModel : ViewModel() {
     private val _responseMsg = MutableLiveData<String>()
     val responseMsg = _responseMsg
 
+    private val _errorResponseMsg = MutableLiveData<String>()
+    val errorResponseMsg = _errorResponseMsg
+
     fun signUpWithEmail(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    auth.currentUser?.sendEmailVerification()?.addOnSuccessListener {
-                        _responseMsg.value =
-                            "Email verification sent to ${auth.currentUser!!.email}"
-                    }?.addOnFailureListener {
-                        _responseMsg.value = it.message
-                    }
+                    _isSignUpSuccess.value = task.isSuccessful
+                    auth.currentUser?.sendEmailVerification()?
                 }
             }
             .addOnFailureListener {
+                _errorResponseMsg.value = it.message
                 Log.d("Error", "signUpWithEmail: " + it.message)
             }
     }
