@@ -9,10 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.navigation.fragment.findNavController
+import com.example.launchpad.EmailVerificationActivity
 import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentSignUpBinding
 import com.example.launchpad.auth.viewmodel.SignUpViewModel
 import com.example.launchpad.util.displayErrorHelper
+import com.example.launchpad.util.intentWithoutBackstack
 import com.example.launchpad.util.toast
 import java.util.regex.Pattern
 
@@ -33,8 +35,12 @@ class SignUpFragment : Fragment() {
         viewModel.errorResponseMsg.observe(viewLifecycleOwner) { toast(it) }
 
         viewModel.isSignUpSuccess.observe(viewLifecycleOwner) {
-
+            requireContext().intentWithoutBackstack(
+                requireActivity(),
+                EmailVerificationActivity::class.java
+            )
         }
+
 
 
         return binding.root

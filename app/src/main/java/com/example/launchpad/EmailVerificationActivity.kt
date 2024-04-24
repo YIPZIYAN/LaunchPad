@@ -8,6 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.launchpad.auth.viewmodel.SignUpViewModel
 import com.example.launchpad.databinding.ActivityEmailVerificationBinding
+import com.example.launchpad.util.intentWithoutBackstack
 
 class EmailVerificationActivity : AppCompatActivity() {
     lateinit var binding: ActivityEmailVerificationBinding
@@ -17,7 +18,15 @@ class EmailVerificationActivity : AppCompatActivity() {
         binding = ActivityEmailVerificationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.
+        viewModel.init()
 
+        binding.txtSentTo.text = """
+            An email verification sent to 
+            ${viewModel.getCurrentUser()?.email}
+        """.trimIndent()
+
+        viewModel.isVerified.observe(this) {
+            if (it) intentWithoutBackstack(this, UserActivity::class.java)
+        }
     }
 }
