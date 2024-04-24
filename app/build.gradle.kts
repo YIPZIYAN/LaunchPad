@@ -56,7 +56,7 @@ dependencies {
     implementation("io.getstream:avatarview-coil:1.0.4")
 
     //swipe to refresh
-    //implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
 
     //firebase
     implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
@@ -64,5 +64,8 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.android.gms:play-services-auth:21.1.0")
     implementation("com.google.firebase:firebase-firestore:24.11.0")
+
+    //DateTime
+    implementation("joda-time:joda-time:2.12.7")
 
 }

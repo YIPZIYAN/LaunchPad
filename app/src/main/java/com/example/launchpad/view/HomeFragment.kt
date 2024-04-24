@@ -1,6 +1,6 @@
 package com.example.launchpad.view
 
-import androidx.lifecycle.ViewModelProvider
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.launchpad.viewmodel.HomeViewModel
+import com.example.launchpad.viewmodel.JobViewModel
 import com.example.launchpad.R
 import com.example.launchpad.adapter.JobAdapter
 import com.example.launchpad.databinding.FragmentHomeBinding
@@ -20,7 +20,8 @@ class HomeFragment : Fragment() {
         fun newInstance() = HomeFragment()
     }
 
-    private val viewModel: HomeViewModel by activityViewModels()
+    private val viewModel: JobViewModel by activityViewModels()
+    private val nav by lazy { findNavController() }
     private lateinit var binding: FragmentHomeBinding
 
 
@@ -30,19 +31,21 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        val adapter = JobAdapter { h, job ->
-            h.binding.jobCard.setOnClickListener {
-                findNavController().navigate(R.id.action_homeFragment_to_jobDetailsFragment)
-            }
-        }
+        val adapter = JobAdapter { _, _ -> }
+
         binding.rvJobCard.adapter = adapter
 
-        viewModel.getJobsLD().observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+        viewModel.getJobsLD().observe(viewLifecycleOwner) { jobs ->
+            adapter.submitList(jobs.sortedByDescending { it.postTime })
         }
 
-        binding.btnPostJob.setOnClickListener{
-            findNavController().navigate(R.id.action_homeFragment_to_postJobFragment)
+        binding.btnPostJob.setOnClickListener {
+            nav.navigate(R.id.action_homeFragment_to_postJobFragment)
+        }
+
+        binding.refresh.setOnRefreshListener {
+            adapter.notifyDataSetChanged()
+            binding.refresh.isRefreshing = false
         }
 
         // company

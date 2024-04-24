@@ -6,10 +6,14 @@ data class Job(
     @DocumentId
     val jobID: String = "",
     val jobName: String = "",
-    val location: String = "",
-    val minSalary: Double = 0.0,
-    val maxSalary: Double = 0.0,
+    val position: String = "",
     val jobType: String = "",
     val workplace: String = "",
-    val position: String = "",
+    val minSalary: Int? = null,
+    val maxSalary: Int? = null,
+    val qualification: String = "",
+    val experience: Int? = null,
+    val description: String = "",
+    val requirement: String = "",
+    val postTime: Long? = null,
 )

@@ -7,12 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentApplyJobBinding
-import com.example.launchpad.databinding.FragmentHomeBinding
 import com.example.launchpad.viewmodel.ApplyJobViewModel
-import com.example.launchpad.viewmodel.HomeViewModel
-import com.example.launchpad.viewmodel.PostJobViewModel
 
 class ApplyJobFragment : Fragment() {
 
