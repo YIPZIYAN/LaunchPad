@@ -42,7 +42,7 @@ class SignUpFragment : Fragment() {
             return
         }
 
-
+        viewModel.signUpWithEmail(email, password)
     }
 
     private fun isValid(email: String, password: String, passwordConfirmation: String): Boolean {
