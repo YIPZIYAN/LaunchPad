@@ -33,8 +33,12 @@ class LoginViewModel(val app: Application) :
     val response = _response
 
     init {
-       if (!isLoggedIn()) auth.signOut()
+        auth.currentUser?.reload()
+        if (!isLoggedIn()) auth.signOut()
+        Log.d("user", " ${auth.currentUser}")
     }
+
+    suspend fun init() = Unit
 
     fun isLoggedIn() = auth.currentUser != null
 
@@ -54,5 +58,6 @@ class LoginViewModel(val app: Application) :
             _response.value = it.exception?.message
         }
     }
+
 
 }

@@ -30,9 +30,12 @@ class UserViewModel : ViewModel() {
     fun getUserLD() = _usersLD
 
     suspend fun set(user: User) {
+        Log.d("USER", "set: trying to add user...")
+
         if (!USERS.document(user.uid).get().isSuccessful) {
             USERS.document(user.uid).set(user).addOnCompleteListener {
             }.await()
+            Log.d("USER", "set: added user to firebase")
         }
 
     }
@@ -42,7 +45,7 @@ class UserViewModel : ViewModel() {
             uid = it.uid,
             email = it.email ?: "",
             name = it.displayName ?: "User#${it.uid.take(8)}",
-            provider = it.providerId,
+            provider = it.providerId
         )
     }
 }

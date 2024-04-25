@@ -13,6 +13,7 @@ import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.EmailVerificationActivity
 import com.example.launchpad.R
@@ -25,6 +26,7 @@ import com.example.launchpad.util.toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import kotlinx.coroutines.launch
 import kotlin.system.exitProcess
 
 class LoginFragment : Fragment() {
@@ -43,6 +45,7 @@ class LoginFragment : Fragment() {
     ): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
 
+        lifecycleScope.launch { viewModel.init() }
         //auto login
         if (viewModel.isLoggedIn() && viewModel.isVerified()) {
             Log.d("status", "onCreateView: logged in and verified")
