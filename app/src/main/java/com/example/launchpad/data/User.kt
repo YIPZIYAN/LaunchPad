@@ -7,5 +7,6 @@ data class User(
     val uid: String = "",
     val name: String = "",
     val email: String = "",
+    val provider: String = "",
     val avatar: String = "",
 )

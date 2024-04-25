@@ -42,14 +42,13 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
-        
+
         //auto login
         if (viewModel.isLoggedIn() && viewModel.isVerified()) {
             Log.d("status", "onCreateView: logged in and verified")
             requireContext().intentWithoutBackstack(requireActivity(), UserActivity::class.java)
         }
-
-        if (viewModel.isLoggedIn()) {
+        if (viewModel.isLoggedIn() && !viewModel.isVerified()) {
             Log.d("status", "onCreateView: logged in")
             requireContext().intentWithoutBackstack(
                 requireActivity(),
@@ -63,14 +62,16 @@ class LoginFragment : Fragment() {
         viewModel.signInResult.observe(viewLifecycleOwner) { success ->
             if (success) {
                 requireContext().intentWithoutBackstack(requireActivity(), UserActivity::class.java)
-            } else {
-//                toast(getString(R.string.exception_error_msg))
             }
         }
 
         viewModel.response.observe(viewLifecycleOwner) { if (it != null) toast(it) }
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
     }
 
     private fun buttonAction() {

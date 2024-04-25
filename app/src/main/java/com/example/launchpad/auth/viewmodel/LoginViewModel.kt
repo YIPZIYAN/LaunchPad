@@ -32,6 +32,9 @@ class LoginViewModel(val app: Application) :
     private val _response = MutableLiveData<String>()
     val response = _response
 
+    init {
+       if (!isLoggedIn()) auth.signOut()
+    }
 
     fun isLoggedIn() = auth.currentUser != null
 

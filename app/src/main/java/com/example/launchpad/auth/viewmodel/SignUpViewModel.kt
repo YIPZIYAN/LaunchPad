@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.launchpad.data.User
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.firestore
 import java.util.Timer
 import java.util.TimerTask
 
@@ -33,12 +34,6 @@ class SignUpViewModel : ViewModel() {
                 _errorResponseMsg.value = it.message
                 Log.d("Error", "signUpWithEmail: " + it.message)
             }
-    }
-
-    fun getCurrentUser() = auth.currentUser?.let {
-        User(
-            email = it.email ?: ""
-        )
     }
 
      fun checkEmailVerificationInterval() {
