@@ -1,4 +1,4 @@
-package com.example.launchpad.view
+package com.example.launchpad.job.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,7 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.data.Job
 import com.example.launchpad.databinding.FragmentPostJobBinding
-import com.example.launchpad.viewmodel.JobViewModel
+import com.example.launchpad.job.viewmodel.JobViewModel
 import org.joda.time.DateTime
 
 class PostJobFragment : Fragment() {

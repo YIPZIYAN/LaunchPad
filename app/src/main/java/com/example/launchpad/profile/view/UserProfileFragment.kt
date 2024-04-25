@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.launchpad.R
-import com.example.launchpad.profile.viewmodel.UserProfileViewModel
+import com.example.launchpad.profile.viewmodel.CompanyViewModel
 
 class UserProfileFragment : Fragment() {
 
@@ -15,7 +15,7 @@ class UserProfileFragment : Fragment() {
         fun newInstance() = UserProfileFragment()
     }
 
-    private val viewModel: UserProfileViewModel by viewModels()
+    private val viewModel: CompanyViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
