@@ -37,5 +37,7 @@ class EmailVerificationActivity : AppCompatActivity() {
                 intentWithoutBackstack(this, UserActivity::class.java)
             }
         }
+
+        binding.btnResend.setOnClickListener { viewModel.sendEmailVerification() }
     }
 }

@@ -27,7 +27,7 @@ class SignUpViewModel : ViewModel() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     _isSignUpSuccess.value = task.isSuccessful
-                    auth.currentUser?.sendEmailVerification()
+                    sendEmailVerification()
                 }
             }
             .addOnFailureListener {
@@ -36,7 +36,7 @@ class SignUpViewModel : ViewModel() {
             }
     }
 
-     fun checkEmailVerificationInterval() {
+    fun checkEmailVerificationInterval() {
         val timer = Timer()
         val timerTask = object : TimerTask() {
             override fun run() {
@@ -50,5 +50,11 @@ class SignUpViewModel : ViewModel() {
 
         if (auth.currentUser != null)
             timer.scheduleAtFixedRate(timerTask, 0, 3000)
+    }
+
+    fun sendEmailVerification() {
+        auth.currentUser?.sendEmailVerification()?.addOnFailureListener {
+            errorResponseMsg.value = it.message
+        }
     }
 }
