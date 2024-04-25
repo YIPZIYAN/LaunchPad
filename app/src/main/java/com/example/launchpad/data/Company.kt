@@ -19,10 +19,10 @@ data class Company(
     val location: String = "",
     val year: Int = -1,
 )
-/*
+
 private val COMPANIES = Firebase.firestore.collection("company")
 
-
+/*
 fun COMPANY_SEEDER(ctx: Context) {
     fun getBlob(res: Int) = BitmapFactory.decodeResource(ctx.resources, res).toBlob()
     val companies = listOf(
@@ -31,4 +31,19 @@ fun COMPANY_SEEDER(ctx: Context) {
 
     companies.forEach { COMPANIES.document(it.id).set(it) }
 }
-*/
+
+
+private val USERS = Firebase.firestore.collection("user")
+
+
+fun USER_SEEDER(ctx: Context) {
+    fun getBlob(res: Int) = BitmapFactory.decodeResource(ctx.resources, res).toBlob()
+    val users = listOf(
+        User("USER1", "Msoft Marketing", "msoftmarketing@gmail.com")
+    )
+
+    users.forEach { USERS.document(it.id!!).set(it) }
+}
+
+
+ */

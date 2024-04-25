@@ -1,10 +1,12 @@
 package com.example.launchpad.job.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -14,6 +16,7 @@ import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentJobDetailsBinding
 import com.example.launchpad.auth.view.LoginFragment.Companion.userType
 import com.example.launchpad.data.Company
+import com.example.launchpad.data.Job
 import com.example.launchpad.profile.viewmodel.CompanyViewModel
 import com.example.launchpad.util.setImageBlob
 import com.example.launchpad.job.viewmodel.JobViewModel
@@ -30,8 +33,10 @@ class JobDetailsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_job_details, container, false)
+    ): View? {
+        Log.e("ONCREATEVIEW", "xxx")
+
+        binding = FragmentJobDetailsBinding.inflate(inflater, container, false)
 
         binding.topAppBar.setNavigationOnClickListener {
             nav.navigateUp()
@@ -56,8 +61,10 @@ class JobDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.e("ONVIEWCREATED", "yyy")
 
-        val job = jobVM.get(jobID)
+        val job = jobVM.get(jobID)!!
+
 
         if (job == null) {
             nav.navigateUp()
@@ -76,7 +83,7 @@ class JobDetailsFragment : Fragment() {
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.edit -> {
-                    nav.navigate(R.id.action_jobDetailsFragment_to_postJobFragment)
+                    detail(job.jobID)
                     true
                 }
                 R.id.archive -> {
@@ -91,6 +98,15 @@ class JobDetailsFragment : Fragment() {
             binding.loadingView.visibility = View.GONE
         }, 500)
         */
+    }
+
+
+    private fun detail(jobID: String) {
+        nav.navigate(
+            R.id.postJobFragment, bundleOf(
+                "jobID" to jobID
+            )
+        )
     }
 
     class MyPagerAdapter(fm: FragmentManager, private val jobID: String) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {

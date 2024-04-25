@@ -139,7 +139,16 @@
         android:id="@+id/postJobFragment"
         android:name="com.example.launchpad.job.view.PostJobFragment"
         android:label="fragment_post_job"
-        tools:layout="@layout/fragment_post_job" />
+        tools:layout="@layout/fragment_post_job" >
+        <action
+            android:id="@+id/action_postJobFragment_to_jobDetailsFragment"
+            app:destination="@id/jobDetailsFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit"
+            />
+    </fragment>
     <fragment
         android:id="@+id/viewApplicantFragment"
         android:name="com.example.launchpad.view.ViewApplicantFragment"
