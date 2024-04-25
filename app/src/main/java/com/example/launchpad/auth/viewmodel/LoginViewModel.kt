@@ -19,6 +19,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.Firebase
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
+import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.tasks.await
 
 class LoginViewModel(val app: Application) :
@@ -38,7 +39,7 @@ class LoginViewModel(val app: Application) :
         Log.d("user", " ${auth.currentUser}")
     }
 
-    suspend fun init() = Unit
+    suspend fun init() = awaitFrame()
 
     fun isLoggedIn() = auth.currentUser != null
 

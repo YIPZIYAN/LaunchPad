@@ -20,6 +20,9 @@ class UserViewModel : ViewModel() {
     private var listener: ListenerRegistration? = null
 
     init {
+        auth.currentUser?.reload()
+        USERS.document(getAuth().uid).set(getAuth())
+
         listener = auth.currentUser?.let {
             USERS.document(it.uid).addSnapshotListener { snap, _ ->
                 _usersLD.value = snap?.toObject()
@@ -30,22 +33,25 @@ class UserViewModel : ViewModel() {
     fun getUserLD() = _usersLD
 
     suspend fun set(user: User) {
-        Log.d("USER", "set: trying to add user...")
+        Log.d("USER", "set: trying to set user...")
 
-        if (!USERS.document(user.uid).get().isSuccessful) {
+        if (!hasUser(user)) {
             USERS.document(user.uid).set(user).addOnCompleteListener {
             }.await()
-            Log.d("USER", "set: added user to firebase")
+            Log.d("USER", "set: set user to firebase")
         }
-
     }
+
+    private fun hasUser(user: User) = USERS.document(user.uid).get().isSuccessful
 
     fun getAuth() = auth.currentUser!!.let {
         User(
             uid = it.uid,
             email = it.email ?: "",
+            avatar = if (it.photoUrl != null) it.photoUrl.toString() else "",
             name = it.displayName ?: "User#${it.uid.take(8)}",
-            provider = it.providerId
         )
     }
+
+    fun init() = Unit
 }

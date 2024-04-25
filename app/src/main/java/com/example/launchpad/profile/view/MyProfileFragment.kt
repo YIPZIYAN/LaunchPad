@@ -7,15 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.launchpad.MainActivity
 import com.example.launchpad.R
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentMyProfileBinding
 import com.example.launchpad.view.TabMyJobFragment
 import com.example.launchpad.profile.viewmodel.MyProfileViewModel
+import com.example.launchpad.util.dialog
+import com.example.launchpad.util.intentWithoutBackstack
 import com.google.android.material.tabs.TabLayoutMediator
 import io.getstream.avatarview.coil.loadImage
 
@@ -25,7 +29,7 @@ class MyProfileFragment : Fragment() {
         fun newInstance() = MyProfileFragment()
     }
 
-    private val userVM: UserViewModel by viewModels()
+    private val userVM: UserViewModel by activityViewModels()
     private lateinit var binding: FragmentMyProfileBinding
     private val tabItems = arrayOf(
         "Job",

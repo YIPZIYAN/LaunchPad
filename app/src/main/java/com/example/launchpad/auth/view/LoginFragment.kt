@@ -36,7 +36,7 @@ class LoginFragment : Fragment() {
         var userType = 0; // 1 = employee, 0 = company, testing only
     }
 
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel: LoginViewModel by activityViewModels()
     private lateinit var binding: FragmentLoginBinding
 
     override fun onCreateView(
@@ -44,8 +44,9 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
-
-        lifecycleScope.launch { viewModel.init() }
+        lifecycleScope.launch {
+            viewModel.init()
+        }
         //auto login
         if (viewModel.isLoggedIn() && viewModel.isVerified()) {
             Log.d("status", "onCreateView: logged in and verified")
