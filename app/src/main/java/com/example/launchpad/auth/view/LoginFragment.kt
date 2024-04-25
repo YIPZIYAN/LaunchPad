@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.EmailVerificationActivity
@@ -41,7 +42,7 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
-
+        
         //auto login
         if (viewModel.isLoggedIn() && viewModel.isVerified()) {
             Log.d("status", "onCreateView: logged in and verified")
@@ -67,7 +68,7 @@ class LoginFragment : Fragment() {
             }
         }
 
-        viewModel.response.observe(viewLifecycleOwner) { toast(it) }
+        viewModel.response.observe(viewLifecycleOwner) { if (it != null) toast(it) }
 
         return binding.root
     }

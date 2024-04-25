@@ -1,6 +1,7 @@
 package com.example.launchpad.auth.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -30,6 +31,7 @@ class LoginViewModel(val app: Application) :
 
     private val _response = MutableLiveData<String>()
     val response = _response
+
 
     fun isLoggedIn() = auth.currentUser != null
 
