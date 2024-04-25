@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.TabJobDetailsFragment">
+        tools:context=".job.view.TabJobDetailsFragment">
 
         <ScrollView
             android:id="@+id/tab_desc"

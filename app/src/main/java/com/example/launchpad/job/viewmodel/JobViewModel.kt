@@ -1,7 +1,5 @@
-package com.example.launchpad.viewmodel
+package com.example.launchpad.job.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.launchpad.data.Job

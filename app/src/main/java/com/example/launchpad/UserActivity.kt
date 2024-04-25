@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.launchpad.databinding.ActivityUserBinding
 import com.example.launchpad.profile.viewmodel.CompanyViewModel
-import com.example.launchpad.viewmodel.JobViewModel
+import com.example.launchpad.job.viewmodel.JobViewModel
 
 class UserActivity : AppCompatActivity() {
 

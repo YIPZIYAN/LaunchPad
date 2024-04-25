@@ -1,4 +1,4 @@
-package com.example.launchpad.view
+package com.example.launchpad.job.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,14 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.example.launchpad.R
 import com.example.launchpad.data.Company
-import com.example.launchpad.data.Job
 import com.example.launchpad.databinding.FragmentTabJobDetailsBinding
 import com.example.launchpad.profile.viewmodel.CompanyViewModel
-import com.example.launchpad.viewmodel.JobViewModel
-import com.example.launchpad.viewmodel.TabJobDetailsViewModel
+import com.example.launchpad.job.viewmodel.JobViewModel
 
 
 class TabJobDetailsFragment : Fragment() {
