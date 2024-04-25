@@ -1,17 +1,25 @@
 package com.example.launchpad.job.view
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import com.example.launchpad.util.*
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.launchpad.R
 import com.example.launchpad.data.Job
 import com.example.launchpad.databinding.FragmentPostJobBinding
 import com.example.launchpad.job.viewmodel.JobViewModel
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 import org.joda.time.DateTime
 
 class PostJobFragment : Fragment() {
@@ -20,54 +28,61 @@ class PostJobFragment : Fragment() {
         fun newInstance() = PostJobFragment()
     }
 
-    private val viewModel: JobViewModel by activityViewModels()
+    private val jobVM: JobViewModel by activityViewModels()
     private val nav by lazy { findNavController() }
     private lateinit var binding: FragmentPostJobBinding
+    private val jobID by lazy { arguments?.getString("jobID") ?: "" }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View {
+    ): View? {
         binding = FragmentPostJobBinding.inflate(inflater, container, false)
-        binding.topAppBar.setNavigationOnClickListener {
-            nav.navigateUp()
-        }
-        binding.btnPost.setOnClickListener { post() }
+
         validateOnTextChanged()
+
+        binding.btnPost.setOnClickListener { post() }
+
+        val isEditing = checkEdit()
+
+        binding.topAppBar.setNavigationOnClickListener { navigateUp(isEditing) }
+
         return binding.root
     }
 
     private fun validateOnTextChanged() {
-        binding.edtJobName.doOnTextChanged { text, _, _, _ ->
-            viewModel.validateInput(
-                binding.lblJobName,
-                text.toString().trim()
-            )
+        val textFields = listOf(
+            binding.edtJobName,
+            binding.edtPosition,
+            binding.edtJobType,
+            binding.edtWorkplace,
+            binding.edtQualification,
+            binding.edtExperience,
+            binding.edtJobDescription
+        )
+
+        textFields.forEach { textField ->
+            textField.doOnTextChanged { text, _, _, _ ->
+                val label = when (textField) {
+                    binding.edtJobName -> binding.lblJobName
+                    binding.edtPosition -> binding.lblPosition
+                    binding.edtJobType -> binding.lblJobType
+                    binding.edtWorkplace -> binding.lblWorkplace
+                    binding.edtQualification -> binding.lblQualification
+                    binding.edtExperience -> binding.lblExperience
+                    binding.edtJobDescription -> binding.lblJobDesc
+                    else -> null
+                }
+                jobVM.validateInput(label!!, text.toString().trim())
+            }
         }
-        binding.edtPosition.doOnTextChanged { text, _, _, _ ->
-            viewModel.validateInput(
-                binding.lblPosition,
-                text.toString().trim()
-            )
-        }
-        binding.edtJobType.doOnTextChanged { text, _, _, _ ->
-            viewModel.validateInput(
-                binding.lblJobType,
-                text.toString().trim()
-            )
-        }
-        binding.edtWorkplace.doOnTextChanged { text, _, _, _ ->
-            viewModel.validateInput(
-                binding.lblWorkplace,
-                text.toString().trim()
-            )
-        }
+
         binding.edtMinSalary.doOnTextChanged { text, _, _, _ ->
 
             val min = text.toString().toIntOrNull()
             val max = binding.edtMaxSalary.text.toString().toIntOrNull()
 
-            viewModel.validateSalaryInput(binding.lblMinSalary, binding.lblMaxSalary, min, max)
+            jobVM.validateSalaryInput(binding.lblMinSalary, binding.lblMaxSalary, min, max)
 
         }
         binding.edtMaxSalary.doOnTextChanged { text, _, _, _ ->
@@ -75,75 +90,207 @@ class PostJobFragment : Fragment() {
             val min = binding.edtMinSalary.text.toString().toIntOrNull()
             val max = text.toString().toIntOrNull()
 
-            viewModel.validateSalaryInput(binding.lblMinSalary, binding.lblMaxSalary, min, max)
+            jobVM.validateSalaryInput(binding.lblMinSalary, binding.lblMaxSalary, min, max)
 
         }
-        binding.edtQualification.doOnTextChanged { text, _, _, _ ->
-            viewModel.validateInput(
-                binding.lblQualification,
-                text.toString().trim()
-            )
-        }
-        binding.edtExperience.doOnTextChanged { text, _, _, _ ->
-            viewModel.validateInput(
-                binding.lblExperience,
-                text.toString().trim()
-            )
-        }
-        binding.edtJobDescription.doOnTextChanged { text, _, _, _ ->
-            viewModel.validateInput(
-                binding.lblJobDesc,
-                text.toString().trim()
-            )
-        }
+
     }
 
+    private fun navigateUp(isEditing: Boolean) {
+
+        // Edit
+        if (isEditing) {
+            if (isJobUnchanged()) {
+                nav.popBackStack()
+                return
+            }
+            dialog("Unsaved changes", "Are you sure to discard the changes ?",
+                onPositiveClick = { _, _ ->
+                    nav.popBackStack()
+                }
+            )
+            return
+        }
+
+        // Post
+        if (isJobEmpty()) {
+            nav.popBackStack()
+            return
+        }
+        dialog("Unsaved changes", "Are you sure to discard the changes ?",
+            onPositiveClick = { _, _ ->
+                nav.navigateUp()
+            }
+        )
+
+    }
 
     private fun post() {
+        val job = createJobObject(false)
 
-        val job = Job(
+        if (!isJobDetailsValid(job)) {
+            snackbar("Please fulfill the requirement.")
+            return
+        }
+
+        dialog("Post Job", "Are you sure want to post the job ?",
+            onPositiveClick = { _, _ ->
+                lifecycleScope.launch {
+                    jobVM.set(job)
+                }
+                Handler(Looper.getMainLooper()).postDelayed({
+                    snackbar("Job Posted Successfully.")
+                    nav.navigateUp()
+                }, 50)
+            }
+        )
+    }
+
+    private fun edit() {
+        if (isJobUnchanged()) {
+            snackbar("No Changes Made.")
+            nav.popBackStack()
+            return
+        }
+
+        val job = createJobObject(true)
+
+        if (!isJobDetailsValid(job)) {
+            snackbar("Please fulfill the requirement.")
+            return
+        }
+
+        dialog("Edit Job", "Are you sure want to edit the job ?",
+            onPositiveClick = { _, _ ->
+                lifecycleScope.launch {
+                    jobVM.update(job)
+                }
+                Handler(Looper.getMainLooper()).postDelayed({
+                    snackbar("Job Edited Successfully.")
+                    nav.navigateUp()
+                }, 50)
+            }
+        )
+    }
+
+    private fun createJobObject(isEditing: Boolean): Job {
+        return Job(
+            jobID = if (isEditing) jobID else "",
             jobName = binding.edtJobName.text.toString().trim(),
             position = binding.edtPosition.text.toString(),
             jobType = binding.edtJobType.text.toString(),
             workplace = binding.edtWorkplace.text.toString(),
-            minSalary = binding.edtMinSalary.text.toString().toIntOrNull(),
-            maxSalary = binding.edtMaxSalary.text.toString().toIntOrNull(),
+            minSalary = binding.edtMinSalary.text.toString().toIntOrNull() ?: -1,
+            maxSalary = binding.edtMaxSalary.text.toString().toIntOrNull() ?: -1,
             qualification = binding.edtQualification.text.toString(),
-            experience = binding.edtExperience.text.toString().toIntOrNull(),
+            experience = binding.edtExperience.text.toString().toIntOrNull() ?: -1,
             description = binding.edtJobDescription.text.toString().trim(),
             requirement = binding.edtJobRequirement.text.toString().trim(),
-            postTime = DateTime.now().millis
+            createdAt = if (isEditing) binding.createdAt.text.toString()
+                .toLong() else DateTime.now().millis,
+            updatedAt = if (isEditing) DateTime.now().millis else 0,
+            companyID = binding.companyID.text.toString() // need modify
         )
 
+    }
+
+    private fun isJobDetailsValid(job: Job): Boolean {
+
         val validations = listOf(
-            { viewModel.validateInput(binding.lblJobName, job.jobName) },
-            { viewModel.validateInput(binding.lblPosition, job.position) },
-            { viewModel.validateInput(binding.lblJobType, job.jobType) },
-            { viewModel.validateInput(binding.lblWorkplace, job.workplace) },
+            { jobVM.validateInput(binding.lblJobName, job.jobName) },
+            { jobVM.validateInput(binding.lblPosition, job.position) },
+            { jobVM.validateInput(binding.lblJobType, job.jobType) },
+            { jobVM.validateInput(binding.lblWorkplace, job.workplace) },
             {
-                viewModel.validateSalaryInput(
+                jobVM.validateSalaryInput(
                     binding.lblMinSalary,
                     binding.lblMaxSalary,
                     job.minSalary,
                     job.maxSalary
                 )
             },
-            { viewModel.validateInput(binding.lblQualification, job.qualification) },
-            { viewModel.validateInput(binding.lblExperience, job.experience.toString()) },
-            { viewModel.validateInput(binding.lblJobDesc, job.description) },
+            { jobVM.validateInput(binding.lblQualification, job.qualification) },
+            { jobVM.validateInput(binding.lblExperience, job.experience.toString()) },
+            { jobVM.validateInput(binding.lblJobDesc, job.description) },
         )
 
-        val isValid = validations.all { it() }
+        return validations.all { it() }
+    }
 
-        if (!isValid)
-            return
+    private fun isJobEmpty(): Boolean {
 
-        dialog("Post Job", "Are you sure want to post the job ?",
-            onPositiveClick = { _, _ ->
-                viewModel.set(job)
-                snackbar("Job Posted Successfully")
+        val validations = listOf(
+            { binding.edtJobName.text?.isEmpty() },
+            { binding.edtPosition.text?.isEmpty() },
+            { binding.edtJobType.text?.isEmpty() },
+            { binding.edtWorkplace.text?.isEmpty() },
+            { binding.edtMinSalary.text?.isEmpty() },
+            { binding.edtMaxSalary.text?.isEmpty() },
+            { binding.edtQualification.text?.isEmpty() },
+            { binding.edtExperience.text?.isEmpty() },
+            { binding.edtJobDescription.text?.isEmpty() },
+            { binding.edtJobRequirement.text?.isEmpty() },
+        )
+
+        return validations.all { it()!! }
+    }
+
+    private fun isJobUnchanged(): Boolean {
+        val job = Job(
+            jobID = jobID,
+            jobName = binding.edtJobName.text.toString().trim(),
+            position = binding.edtPosition.text.toString(),
+            jobType = binding.edtJobType.text.toString(),
+            workplace = binding.edtWorkplace.text.toString(),
+            minSalary = binding.edtMinSalary.text.toString().toInt(),
+            maxSalary = binding.edtMaxSalary.text.toString().toInt(),
+            qualification = binding.edtQualification.text.toString(),
+            experience = binding.edtExperience.text.toString().toInt(),
+            description = binding.edtJobDescription.text.toString().trim(),
+            requirement = binding.edtJobRequirement.text.toString().trim(),
+            createdAt = binding.createdAt.text.toString().toLong(),
+            updatedAt = binding.updatedAt.text.toString().toLong(),
+            companyID = binding.companyID.text.toString() // need modify
+        )
+        Log.e("JOB1", job.toString())
+        Log.e("JOB2", jobVM.get(jobID).toString())
+        return job == jobVM.get(jobID)
+    }
+
+    private fun checkEdit(): Boolean {
+        val isEditing = jobID.isNotEmpty()
+
+        if (isEditing) {
+            val job = jobVM.get(jobID)
+
+            if (job == null) {
                 nav.navigateUp()
-            })
+                return false
+            }
+
+            binding.topAppBar.setTitle(R.string.edit_job)
+            binding.btnPost.setText(R.string.EDIT)
+            binding.btnPost.setOnClickListener { edit() }
+
+            binding.edtJobName.setText(job.jobName)
+            binding.edtPosition.setText(job.position, false)
+            binding.edtJobType.setText(job.jobType, false)
+            binding.edtWorkplace.setText(job.workplace, false)
+            binding.edtMinSalary.setText(job.minSalary.toString())
+            binding.edtMaxSalary.setText(job.maxSalary.toString())
+            binding.edtQualification.setText(job.qualification, false)
+            binding.edtExperience.setText(job.experience.toString())
+            binding.edtJobDescription.setText(job.description)
+            binding.edtJobRequirement.setText(job.requirement)
+
+            binding.createdAt.text = job.createdAt.toString()
+            binding.updatedAt.text = job.updatedAt.toString()
+            binding.deletedAt.text = job.deletedAt.toString()
+            binding.companyID.text = job.companyID
+
+        }
+
+        return isEditing
     }
 
 }
