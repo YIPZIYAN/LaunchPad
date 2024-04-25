@@ -39,8 +39,11 @@ class MyProfileFragment : Fragment() {
         binding = FragmentMyProfileBinding.inflate(inflater, container, false)
 
         userVM.getUserLD().observe(viewLifecycleOwner) { user ->
+
+            val avatar = if (user.avatar == "") R.drawable.round_account_circle_24 else user.avatar
             binding.txtName.text = user.name
-            binding.avatarView.loadImage(user.avatar)
+            binding.avatarView.loadImage(avatar)
+
         }
 
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
