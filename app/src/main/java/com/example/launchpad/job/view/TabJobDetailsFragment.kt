@@ -1,4 +1,4 @@
-package com.example.launchpad.view
+package com.example.launchpad.job.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,34 +6,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.example.launchpad.R
+import com.example.launchpad.data.Company
 import com.example.launchpad.databinding.FragmentTabJobDetailsBinding
-import com.example.launchpad.viewmodel.TabJobDetailsViewModel
+import com.example.launchpad.profile.viewmodel.CompanyViewModel
+import com.example.launchpad.job.viewmodel.JobViewModel
 
 
 class TabJobDetailsFragment : Fragment() {
 
     companion object {
         private const val ARG_POSITION = "position"
+        private const val ARG_JOBID = "jobID"
 
-        fun newInstance(position: Int): TabJobDetailsFragment {
+        fun newInstance(position: Int, jobID: String): TabJobDetailsFragment {
             val fragment = TabJobDetailsFragment()
             val args = Bundle()
             args.putInt(ARG_POSITION, position)
+            args.putString(ARG_JOBID, jobID)
             fragment.arguments = args
             return fragment
         }
     }
 
-    private val viewModel: TabJobDetailsViewModel by viewModels()
+    private val jobVM: JobViewModel by activityViewModels()
+    private val companyVM: CompanyViewModel by activityViewModels()
     private lateinit var binding: FragmentTabJobDetailsBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +46,23 @@ class TabJobDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val position = arguments?.getInt(ARG_POSITION, 0) ?: 0
+        val jobID = arguments?.getString(ARG_JOBID) ?: ""
+
+        val job = jobVM.get(jobID) ?: return
+        job.company = companyVM.get(job.companyID) ?: Company()
+
+        binding.lblJobDesc.text = job.description
+        binding.lblRequirements.text = if (job.requirement == "") "-" else job.requirement
+        binding.lblPosition.text = job.position
+        binding.lblJobType.text = job.jobType
+        binding.lblWorkplace.text = job.workplace
+        binding.lblSalary.text = "RM ${job.minSalary} - RM ${job.maxSalary} per month"
+        binding.lblQualification.text = job.qualification
+        binding.lblExperience.text = "${job.experience} year(s)"
+        binding.lblAboutCompany.text = job.company.description
+        binding.lblLocation.text = job.company.location
+        binding.lblSince.text = job.company.year.toString()
+
         when (position) {
             0 -> {
                 binding.tabDesc.visibility = View.VISIBLE

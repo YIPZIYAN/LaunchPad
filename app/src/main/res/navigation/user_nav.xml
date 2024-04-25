@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.launchpad.view.HomeFragment"
+        android:name="com.example.launchpad.job.view.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -105,7 +105,7 @@
         tools:layout="@layout/fragment_user_profile"/>
     <fragment
         android:id="@+id/jobDetailsFragment"
-        android:name="com.example.launchpad.view.JobDetailsFragment"
+        android:name="com.example.launchpad.job.view.JobDetailsFragment"
         android:label="fragment_job_details"
         tools:layout="@layout/fragment_job_details">
         <action
@@ -137,7 +137,7 @@
         tools:layout="@layout/fragment_apply_job" />
     <fragment
         android:id="@+id/postJobFragment"
-        android:name="com.example.launchpad.view.PostJobFragment"
+        android:name="com.example.launchpad.job.view.PostJobFragment"
         android:label="fragment_post_job"
         tools:layout="@layout/fragment_post_job" />
     <fragment

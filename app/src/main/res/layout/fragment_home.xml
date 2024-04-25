@@ -12,7 +12,7 @@
         android:id="@+id/homeFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.HomeFragment">
+        tools:context=".job.view.HomeFragment">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/coordinatorLayout"

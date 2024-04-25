@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.TabJobDetailsFragment">
+        tools:context=".job.view.TabJobDetailsFragment">
 
         <ScrollView
             android:id="@+id/tab_desc"
@@ -16,6 +16,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginHorizontal="32dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -23,7 +24,7 @@
                     android:id="@+id/title1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="24dp"
                     android:text="@string/description"
                     android:textAppearance="?attr/textAppearanceLabelLarge"
                     android:textSize="16sp"
@@ -215,6 +216,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -222,7 +224,7 @@
                     android:id="@+id/title9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="24dp"
                     android:text="@string/about_company"
                     android:textAppearance="?attr/textAppearanceLabelLarge"
                     android:textSize="16sp"
@@ -253,7 +255,7 @@
                     app:layout_constraintTop_toBottomOf="@id/lbl_about_company" />
 
                 <TextView
-                    android:id="@+id/lbl_locations"
+                    android:id="@+id/lbl_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -273,7 +275,7 @@
                     android:textAppearance="?attr/textAppearanceLabelLarge"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="@id/title9"
-                    app:layout_constraintTop_toBottomOf="@id/lbl_locations" />
+                    app:layout_constraintTop_toBottomOf="@id/lbl_location" />
 
                 <TextView
                     android:id="@+id/lbl_since"
