@@ -76,6 +76,7 @@
     <string name="required">* Required</string>
     <string name="optional">* Optional</string>
     <string name="POST">POST</string>
+    <string name="EDIT">EDIT</string>
     <string name="SAVE">SAVE</string>
     <string name="resume">Resume</string>
     <string name="resume_hint">Be sure to include an updated resume with PDF, DOC or DOCX*</string>

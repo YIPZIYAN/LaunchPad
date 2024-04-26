@@ -42,7 +42,7 @@ class JobAdapter (
         holder.binding.chipJobType.text = job.jobType
         holder.binding.chipWorkplace.text = job.workplace
         holder.binding.chipPosition.text = job.position
-        holder.binding.timePosted.text = displayPostTime(job.postTime!!)
+        holder.binding.timePosted.text = displayPostTime(job.createdAt)
 
         fn(holder, job)
     }

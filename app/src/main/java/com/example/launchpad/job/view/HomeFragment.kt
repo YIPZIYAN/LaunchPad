@@ -29,8 +29,6 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        //COMPANY_SEEDER(requireContext())
-
         val adapter = JobAdapter { holder, job ->
             holder.binding.root.setOnClickListener { detail(job.jobID) }
         }
@@ -39,7 +37,7 @@ class HomeFragment : Fragment() {
 
         jobVM.getResultLD().observe(viewLifecycleOwner) {
             it.forEach { it.company = companyVM.get(it.companyID) ?: Company() }
-            adapter.submitList(it.sortedByDescending { it.postTime })
+            adapter.submitList(it.sortedByDescending { it.createdAt })
         }
 
         binding.btnPostJob.setOnClickListener {
