@@ -37,12 +37,14 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
 
     fun get(jobID: String) = getAll().find { it.jobID == jobID }
 
+    fun getJobLive(jobList: List<Job>, jobID: String) = jobList.find { it.jobID == jobID }!!
+
     fun set(job: Job) {
         JOBS.document().set(job)
     }
 
-    fun update(job: Job) {
-        JOBS.document(job.jobID).set(job)
+    suspend fun update(job: Job) {
+        JOBS.document(job.jobID).set(job).await()
     }
 
     fun validateInput(field: TextInputLayout, fieldValue: String): Boolean {
@@ -75,11 +77,33 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     private val resultLD = MutableLiveData<List<Job>>()
+    private var name = ""
+    private var position = emptyList<String>()
 
     fun getResultLD() = resultLD
 
+    fun search(name: String) {
+        this.name = name
+        updateResult()
+    }
+
+    fun filterPosition(position: List<String>) {
+        this.position = position
+        updateResult()
+    }
+
     fun updateResult() {
         var list = getAll()
+
+        list = list.filter {
+            it.jobName.contains(name, true)
+        }
+
+        if (position.isNotEmpty()) {
+            list = list.filter { job ->
+                position.any { it in job.position }
+            }
+        }
 
         resultLD.value = list
     }
