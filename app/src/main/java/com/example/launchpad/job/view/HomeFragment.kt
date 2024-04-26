@@ -17,14 +17,16 @@ import com.example.launchpad.auth.view.LoginFragment.Companion.userType
 import com.example.launchpad.data.Company
 import com.example.launchpad.profile.viewmodel.CompanyViewModel
 
-
 class HomeFragment : Fragment(), BottomSheetListener {
 
     private lateinit var binding: FragmentHomeBinding
     private val nav by lazy { findNavController() }
     private val jobVM: JobViewModel by activityViewModels()
     private val companyVM: CompanyViewModel by activityViewModels()
-    private var checkedState = mutableListOf<String>()
+    private var chipPositionState = mutableListOf<String>()
+    private var chipJobTypeState = mutableListOf<String>()
+    private var chipWorkplaceState = mutableListOf<String>()
+    private var chipSalaryState = mutableListOf("0", "999999")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,8 +59,13 @@ class HomeFragment : Fragment(), BottomSheetListener {
             false
         }
 
-        binding.chipPosition.setOnClickListener { chipClicked() }
+        binding.chipPosition.setOnClickListener { chipPosition() }
 
+        binding.chipJobType.setOnClickListener { chipJobType() }
+
+        binding.chipWorkplace.setOnClickListener { chipWorkplace() }
+
+        binding.chipSalary.setOnClickListener { chipSalary() }
 
         binding.searchView.editText.doOnTextChanged { text, start, before, count ->
             jobVM.search(text.toString())
@@ -74,7 +81,6 @@ class HomeFragment : Fragment(), BottomSheetListener {
             binding.refresh.isRefreshing = false
         }
 
-
         // company
         if (userType == 0) {
             binding.homeTitle.text = resources.getString(R.string.your_posted_job)
@@ -85,10 +91,28 @@ class HomeFragment : Fragment(), BottomSheetListener {
         return binding.root
     }
 
-    private fun chipClicked() {
-        val bottomSheetFragment = PositionBottomSheetFragment(checkedState)
-        bottomSheetFragment.setListener(this)
+    private fun chipPosition() {
+        val bottomSheetFragment = PositionBottomSheetFragment(chipPositionState)
+        bottomSheetFragment.setListener(this, BottomSheetListener.Type.POSITION)
         bottomSheetFragment.show(parentFragmentManager, PositionBottomSheetFragment.TAG)
+    }
+
+    private fun chipJobType() {
+        val bottomSheetFragment = JobTypeBottomSheetFragment(chipJobTypeState)
+        bottomSheetFragment.setListener(this, BottomSheetListener.Type.JOB_TYPE)
+        bottomSheetFragment.show(parentFragmentManager, JobTypeBottomSheetFragment.TAG)
+    }
+
+    private fun chipWorkplace() {
+        val bottomSheetFragment = WorkplaceBottomSheetFragment(chipWorkplaceState)
+        bottomSheetFragment.setListener(this, BottomSheetListener.Type.WORKPLACE)
+        bottomSheetFragment.show(parentFragmentManager, WorkplaceBottomSheetFragment.TAG)
+    }
+
+    private fun chipSalary() {
+        val bottomSheetFragment = SalaryBottomSheetFragment(chipSalaryState)
+        bottomSheetFragment.setListener(this, BottomSheetListener.Type.SALARY)
+        bottomSheetFragment.show(parentFragmentManager, SalaryBottomSheetFragment.TAG)
     }
 
     private fun detail(jobID: String) {
@@ -99,13 +123,55 @@ class HomeFragment : Fragment(), BottomSheetListener {
         )
     }
 
-    override fun onValueSelected(value: List<String>) {
-        jobVM.filterPosition(value)
-        checkedState = value.toMutableList()
-        binding.chipPosition.isChecked = value.isNotEmpty()
-        if (value.isNotEmpty()) {
-            binding.chipPosition.text = if (value.count() > 1) "${value[0]}+${value.count() - 1}" else value[0]
+    override fun onValueSelected(value: List<String>, type: BottomSheetListener.Type) {
+
+        when (type) {
+            BottomSheetListener.Type.POSITION -> {
+                jobVM.filterPosition(value)
+                chipPositionState = value.toMutableList()
+                binding.chipPosition.isChecked = value.isNotEmpty()
+                binding.chipPosition.text = "Position"
+                if (value.isNotEmpty()) {
+                    binding.chipPosition.text =
+                        if (value.count() > 1) "${value[0]}+${value.count() - 1}" else value[0]
+                }
+            }
+
+            BottomSheetListener.Type.JOB_TYPE -> {
+                jobVM.filterJobType(value)
+                chipJobTypeState = value.toMutableList()
+                binding.chipJobType.isChecked = value.isNotEmpty()
+                binding.chipJobType.text = "Job Type"
+                if (value.isNotEmpty()) {
+                    binding.chipJobType.text =
+                        if (value.count() > 1) "${value[0]}+${value.count() - 1}" else value[0]
+                }
+            }
+
+            BottomSheetListener.Type.WORKPLACE -> {
+                jobVM.filterWorkplace(value)
+                chipWorkplaceState = value.toMutableList()
+                binding.chipWorkplace.isChecked = value.isNotEmpty()
+                binding.chipWorkplace.text = "Workplace"
+                if (value.isNotEmpty()) {
+                    binding.chipWorkplace.text =
+                        if (value.count() > 1) "${value[0]}+${value.count() - 1}" else value[0]
+                }
+            }
+
+            BottomSheetListener.Type.SALARY -> {
+                val isDefaultValue = value[0].toInt() == 0 && value[1].toInt() == 999999
+                jobVM.filterSalary(value)
+                chipSalaryState = value.toMutableList()
+                binding.chipSalary.isChecked = !isDefaultValue
+                binding.chipSalary.text = "Salary"
+                if (!isDefaultValue) {
+                    binding.chipSalary.text =
+                         "RM ${value[0]} - RM ${value[1]}"
+                }
+            }
         }
+
     }
 
 }

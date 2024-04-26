@@ -5,17 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.launchpad.databinding.FragmentPositionBottomSheetBinding
+import com.example.launchpad.databinding.FragmentWorkplaceBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
-class PositionBottomSheetFragment(checkedState: MutableList<String>) : BottomSheetDialogFragment() {
+class WorkplaceBottomSheetFragment(checkedState: MutableList<String>) : BottomSheetDialogFragment() {
 
     companion object {
-        const val TAG = "PositionBottomSheetFragment"
+        const val TAG = "WorkplaceBottomSheetFragment"
     }
 
-    private lateinit var binding: FragmentPositionBottomSheetBinding
+    private lateinit var binding: FragmentWorkplaceBottomSheetBinding
     private var listener: BottomSheetListener? = null // Interface reference
     private var type: BottomSheetListener.Type? = null
     private var checkedState = checkedState // Stores checked states
@@ -25,12 +25,11 @@ class PositionBottomSheetFragment(checkedState: MutableList<String>) : BottomShe
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentPositionBottomSheetBinding.inflate(inflater, container, false)
+        binding = FragmentWorkplaceBottomSheetBinding.inflate(inflater, container, false)
 
-        binding.chkDirector.isChecked = checkedState.contains("Director")
-        binding.chkManager.isChecked = checkedState.contains("Manager")
-        binding.chkSenior.isChecked = checkedState.contains("Senior")
-        binding.chkJunior.isChecked = checkedState.contains("Junior")
+        binding.chkRemote.isChecked = checkedState.contains("Remote")
+        binding.chkOnsite.isChecked = checkedState.contains("On Site")
+        binding.chkHybrid.isChecked = checkedState.contains("Hybrid")
 
         checkedState.clear()
 
@@ -40,10 +39,9 @@ class PositionBottomSheetFragment(checkedState: MutableList<String>) : BottomShe
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
 
-        if (binding.chkDirector.isChecked) checkedState.add("Director")
-        if (binding.chkManager.isChecked) checkedState.add("Manager")
-        if (binding.chkSenior.isChecked) checkedState.add("Senior")
-        if (binding.chkJunior.isChecked) checkedState.add("Junior")
+        if (binding.chkRemote.isChecked) checkedState.add("Remote")
+        if (binding.chkOnsite.isChecked) checkedState.add("On Site")
+        if (binding.chkHybrid.isChecked) checkedState.add("Hybrid")
 
         listener?.onValueSelected(checkedState, type!!)
     }

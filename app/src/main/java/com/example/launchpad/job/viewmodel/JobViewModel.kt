@@ -11,6 +11,7 @@ import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObjects
 import com.google.firebase.Firebase
 import kotlinx.coroutines.tasks.await
+import kotlin.math.min
 
 class JobViewModel(val app: Application) : AndroidViewModel(app) {
     private val JOBS = Firebase.firestore.collection("job")
@@ -79,6 +80,9 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
     private val resultLD = MutableLiveData<List<Job>>()
     private var name = ""
     private var position = emptyList<String>()
+    private var jobType = emptyList<String>()
+    private var workplace = emptyList<String>()
+    private var salary = emptyList<String>()
 
     fun getResultLD() = resultLD
 
@@ -92,6 +96,21 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
         updateResult()
     }
 
+    fun filterJobType(jobType: List<String>) {
+        this.jobType = jobType
+        updateResult()
+    }
+
+    fun filterWorkplace(workplace: List<String>) {
+        this.workplace = workplace
+        updateResult()
+    }
+
+    fun filterSalary(salary: List<String>) {
+        this.salary = salary
+        updateResult()
+    }
+
     fun updateResult() {
         var list = getAll()
 
@@ -102,6 +121,26 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
         if (position.isNotEmpty()) {
             list = list.filter { job ->
                 position.any { it in job.position }
+            }
+        }
+
+        if (jobType.isNotEmpty()) {
+            list = list.filter { job ->
+                jobType.any { it in job.jobType }
+            }
+        }
+
+        if (workplace.isNotEmpty()) {
+            list = list.filter { job ->
+                workplace.any { it in job.workplace }
+            }
+        }
+
+        if (salary.isNotEmpty()) {
+            val minSalary = salary[0].toInt()
+            val maxSalary = salary[1].toInt()
+            list = list.filter { job ->
+                job.minSalary >= minSalary && job.maxSalary <= maxSalary
             }
         }
 

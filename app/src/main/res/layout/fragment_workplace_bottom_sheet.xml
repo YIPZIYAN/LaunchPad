@@ -30,7 +30,7 @@
                         android:layout_height="wrap_content"
                         app:navigationIcon="@drawable/baseline_close_24"
                         app:navigationIconTint="?attr/colorControlNormal"
-                        app:title="@string/position" />
+                        app:title="@string/workplace" />
 
                 </com.google.android.material.appbar.AppBarLayout>
 
@@ -43,78 +43,60 @@
                     app:layout_constraintTop_toBottomOf="@id/appBar">
 
                     <TextView
-                        android:id="@+id/lbl_director"
+                        android:id="@+id/lbl_remote"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/Director"
+                        android:text="@string/Remote"
                         android:textAppearance="?attr/textAppearanceTitleMedium"
-                        app:layout_constraintBottom_toBottomOf="@id/chk_director"
+                        app:layout_constraintBottom_toBottomOf="@id/chk_remote"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/chk_director" />
+                        app:layout_constraintTop_toTopOf="@id/chk_remote" />
 
                     <CheckBox
-                        android:id="@+id/chk_director"
+                        android:id="@+id/chk_remote"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:value="@string/Director"
+                        android:value="@string/Remote"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/lbl_manager"
+                        android:id="@+id/lbl_onsite"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/Manager"
+                        android:text="@string/OnSite"
                         android:textAppearance="?attr/textAppearanceTitleMedium"
-                        app:layout_constraintBottom_toBottomOf="@id/chk_manager"
+                        app:layout_constraintBottom_toBottomOf="@id/chk_onsite"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/chk_manager" />
+                        app:layout_constraintTop_toTopOf="@id/chk_onsite" />
 
                     <CheckBox
-                        android:id="@+id/chk_manager"
+                        android:id="@+id/chk_onsite"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:value="@string/Manager"
+                        android:value="@string/OnSite"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/chk_director" />
+                        app:layout_constraintTop_toBottomOf="@id/chk_remote" />
 
                     <TextView
-                        android:id="@+id/lbl_senior"
+                        android:id="@+id/lbl_hybrid"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/Senior"
+                        android:text="@string/Hybrid"
                         android:textAppearance="?attr/textAppearanceTitleMedium"
-                        app:layout_constraintBottom_toBottomOf="@id/chk_senior"
+                        app:layout_constraintBottom_toBottomOf="@id/chk_hybrid"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/chk_senior" />
+                        app:layout_constraintTop_toTopOf="@id/chk_hybrid" />
 
                     <CheckBox
-                        android:id="@+id/chk_senior"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:value="@string/Senior"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/chk_manager" />
-
-                    <TextView
-                        android:id="@+id/lbl_junior"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/Junior"
-                        android:textAppearance="?attr/textAppearanceTitleMedium"
-                        app:layout_constraintBottom_toBottomOf="@id/chk_junior"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/chk_junior" />
-
-                    <CheckBox
-                        android:id="@+id/chk_junior"
+                        android:id="@+id/chk_hybrid"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="42dp"
-                        android:value="@string/Junior"
+                        android:value="@string/Hybrid"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/chk_senior" />
+                        app:layout_constraintTop_toBottomOf="@id/chk_onsite" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

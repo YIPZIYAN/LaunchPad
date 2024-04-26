@@ -124,5 +124,14 @@
     <string name="Manager">Manager</string>
     <string name="Senior">Senior</string>
     <string name="Junior">Junior</string>
+    <string name="FullTime">Full Time</string>
+    <string name="PartTime">Part Time</string>
+    <string name="Contract">Contract</string>
+    <string name="Temporary">Temporary</string>
+    <string name="Internship">Internship</string>
+    <string name="Volunteer">Volunteer</string>
+    <string name="Remote">Remote</string>
+    <string name="OnSite">On Site</string>
+    <string name="Hybrid">Hybrid</string>
     <string name="client_id">402844892969-50v2vgn16snkr157l2jpdrao6m7l958g.apps.googleusercontent.com</string>
 </resources>
