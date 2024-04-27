@@ -12,6 +12,7 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="setting">Setting</string>
     <string name="searchbar_hint">Search</string>
+    <string name="searchview_hint">Search Job, Company</string>
     <string name="description">Description</string>
     <string name="forget_password">Forget Password</string>
     <string name="got_account_sentence">Already have an account ?</string>
@@ -119,7 +120,24 @@
     <string name="pending">Pending</string>
     <string name="schedule_interview">Schedule Interview</string>
     <string name="save">SAVE</string>
+    <string name="Archived">Archived</string>
+    <string name="Director">Director</string>
+    <string name="Manager">Manager</string>
+    <string name="Senior">Senior</string>
+    <string name="Junior">Junior</string>
+    <string name="FullTime">Full Time</string>
+    <string name="PartTime">Part Time</string>
+    <string name="Contract">Contract</string>
+    <string name="Temporary">Temporary</string>
+    <string name="Internship">Internship</string>
+    <string name="Volunteer">Volunteer</string>
+    <string name="Remote">Remote</string>
+    <string name="OnSite">On Site</string>
+    <string name="Hybrid">Hybrid</string>
+    <string name="ArchivedJob">Archived Job</string>
     <string name="client_id">402844892969-50v2vgn16snkr157l2jpdrao6m7l958g.apps.googleusercontent.com</string>
     <string name="exception_error_msg">Something Went Wrong! Please Try Again.</string>
     <string name="password_helper_text">Password should be at least 8 characters long with alphabets and digits.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -38,8 +38,7 @@ class TabJobDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_tab_job_details, container, false)
+        binding = FragmentTabJobDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -48,20 +47,22 @@ class TabJobDetailsFragment : Fragment() {
         val position = arguments?.getInt(ARG_POSITION, 0) ?: 0
         val jobID = arguments?.getString(ARG_JOBID) ?: ""
 
-        val job = jobVM.get(jobID) ?: return
-        job.company = companyVM.get(job.companyID) ?: Company()
+        jobVM.getJobsLD().observe(viewLifecycleOwner) { jobList ->
+            val job = jobVM.getJobLive(jobList, jobID)
+            job.company = companyVM.get(job.companyID) ?: Company()
 
-        binding.lblJobDesc.text = job.description
-        binding.lblRequirements.text = if (job.requirement == "") "-" else job.requirement
-        binding.lblPosition.text = job.position
-        binding.lblJobType.text = job.jobType
-        binding.lblWorkplace.text = job.workplace
-        binding.lblSalary.text = "RM ${job.minSalary} - RM ${job.maxSalary} per month"
-        binding.lblQualification.text = job.qualification
-        binding.lblExperience.text = "${job.experience} year(s)"
-        binding.lblAboutCompany.text = job.company.description
-        binding.lblLocation.text = job.company.location
-        binding.lblSince.text = job.company.year.toString()
+            binding.lblJobDesc.text = job.description
+            binding.lblRequirements.text = if (job.requirement == "") "-" else job.requirement
+            binding.lblPosition.text = job.position
+            binding.lblJobType.text = job.jobType
+            binding.lblWorkplace.text = job.workplace
+            binding.lblSalary.text = "RM ${job.minSalary} - RM ${job.maxSalary} per month"
+            binding.lblQualification.text = job.qualification
+            binding.lblExperience.text = "${job.experience} year(s)"
+            binding.lblAboutCompany.text = job.company.description
+            binding.lblLocation.text = job.company.location
+            binding.lblSince.text = job.company.year.toString()
+        }
 
         when (position) {
             0 -> {

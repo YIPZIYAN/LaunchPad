@@ -18,7 +18,7 @@ data class Job(
     val requirement: String = "",
     val createdAt: Long = 0,
     val updatedAt: Long = 0,
-    val deletedAt: Long = 0,
+    var deletedAt: Long = 0,
     val companyID: String = "",
 ) {
     @get:Exclude
