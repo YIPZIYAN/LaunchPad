@@ -53,6 +53,10 @@ class SalaryBottomSheetFragment(checkedState: MutableList<String>) : BottomSheet
 
         }
 
+        binding.topAppBar.setNavigationOnClickListener {
+            dismiss()
+        }
+
         return binding.root
     }
 

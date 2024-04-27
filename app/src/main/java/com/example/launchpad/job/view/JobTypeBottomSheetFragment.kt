@@ -35,6 +35,10 @@ class JobTypeBottomSheetFragment(checkedState: MutableList<String>) : BottomShee
 
         checkedState.clear()
 
+        binding.topAppBar.setNavigationOnClickListener {
+           dismiss()
+        }
+
         return binding.root
     }
 

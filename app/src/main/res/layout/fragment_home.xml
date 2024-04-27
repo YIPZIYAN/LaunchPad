@@ -133,7 +133,7 @@
                     android:id="@+id/search_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/searchbar_hint"
+                    android:hint="@string/searchview_hint"
                     app:layout_anchor="@id/search_bar">
                     <!-- Search suggestions/results go here (ScrollView, RecyclerView, etc.). -->
 

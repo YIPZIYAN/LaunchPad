@@ -16,6 +16,7 @@ import com.example.launchpad.databinding.FragmentHomeBinding
 import com.example.launchpad.auth.view.LoginFragment.Companion.userType
 import com.example.launchpad.data.Company
 import com.example.launchpad.profile.viewmodel.CompanyViewModel
+import com.google.android.material.search.SearchView
 
 class HomeFragment : Fragment(), BottomSheetListener {
 
@@ -37,13 +38,11 @@ class HomeFragment : Fragment(), BottomSheetListener {
         val adapter = JobAdapter { holder, job ->
             holder.binding.root.setOnClickListener { detail(job.jobID) }
         }
-
         binding.rvJobCard.adapter = adapter
 
         val svAdapter = JobAdapter { holder, job ->
             holder.binding.root.setOnClickListener { detail(job.jobID) }
         }
-
         binding.rvSearchResult.adapter = adapter
 
         jobVM.getResultLD().observe(viewLifecycleOwner) {
@@ -51,12 +50,16 @@ class HomeFragment : Fragment(), BottomSheetListener {
             adapter.submitList(it.sortedByDescending { it.createdAt })
             svAdapter.submitList(it.sortedByDescending { it.createdAt })
         }
+        
+        binding.searchView.addTransitionListener { _, _, newState ->
+            if (newState == SearchView.TransitionState.HIDDEN) {
+                jobVM.clearSearch()
+                clearFilter()
+            }
+        }
 
-        binding.searchView.editText.setOnEditorActionListener { _, _, _ ->
-            binding.searchBar.text = binding.searchView.text
-            binding.searchView.hide()
-            jobVM.search(binding.searchBar.text.toString())
-            false
+        binding.searchView.editText.doOnTextChanged { text, _, _, _ ->
+            jobVM.search(text.toString())
         }
 
         binding.chipPosition.setOnClickListener { chipPosition() }
@@ -67,17 +70,13 @@ class HomeFragment : Fragment(), BottomSheetListener {
 
         binding.chipSalary.setOnClickListener { chipSalary() }
 
-        binding.searchView.editText.doOnTextChanged { text, start, before, count ->
-            jobVM.search(text.toString())
-
-        }
-
         binding.btnPostJob.setOnClickListener {
             nav.navigate(R.id.action_homeFragment_to_postJobFragment)
         }
 
         binding.refresh.setOnRefreshListener {
             adapter.notifyDataSetChanged()
+            svAdapter.notifyDataSetChanged()
             binding.refresh.isRefreshing = false
         }
 
@@ -89,6 +88,21 @@ class HomeFragment : Fragment(), BottomSheetListener {
         }
 
         return binding.root
+    }
+
+    private fun clearFilter() {
+        chipPositionState = emptyList<String>().toMutableList()
+        chipJobTypeState = emptyList<String>().toMutableList()
+        chipWorkplaceState = emptyList<String>().toMutableList()
+        chipSalaryState = mutableListOf("0", "999999")
+        binding.chipPosition.isChecked = false
+        binding.chipJobType.isChecked = false
+        binding.chipWorkplace.isChecked = false
+        binding.chipSalary.isChecked = false
+        binding.chipPosition.text = "Position"
+        binding.chipJobType.text = "Job Type"
+        binding.chipWorkplace.text = "Workplace"
+        binding.chipSalary.text = "Salary"
     }
 
     private fun chipPosition() {

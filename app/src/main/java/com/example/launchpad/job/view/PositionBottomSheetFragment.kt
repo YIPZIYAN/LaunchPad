@@ -34,6 +34,10 @@ class PositionBottomSheetFragment(checkedState: MutableList<String>) : BottomShe
 
         checkedState.clear()
 
+        binding.topAppBar.setNavigationOnClickListener {
+            dismiss()
+        }
+
         return binding.root
     }
 

@@ -78,7 +78,7 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     private val resultLD = MutableLiveData<List<Job>>()
-    private var name = ""
+    private var search = ""
     private var position = emptyList<String>()
     private var jobType = emptyList<String>()
     private var workplace = emptyList<String>()
@@ -86,8 +86,17 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
 
     fun getResultLD() = resultLD
 
-    fun search(name: String) {
-        this.name = name
+    fun clearSearch() {
+        search = ""
+        position = emptyList()
+        jobType = emptyList()
+        workplace = emptyList()
+        salary = emptyList()
+        updateResult()
+    }
+
+    fun search(search: String) {
+        this.search = search
         updateResult()
     }
 
@@ -115,7 +124,7 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
         var list = getAll()
 
         list = list.filter {
-            it.jobName.contains(name, true)
+            it.jobName.contains(search, true) || it.company.name.contains(search, true)
         }
 
         if (position.isNotEmpty()) {

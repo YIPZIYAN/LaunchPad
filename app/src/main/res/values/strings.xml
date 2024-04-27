@@ -12,6 +12,7 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="setting">Setting</string>
     <string name="searchbar_hint">Search</string>
+    <string name="searchview_hint">Search Job, Company</string>
     <string name="description">Description</string>
     <string name="forget_password">Forget Password</string>
     <string name="got_account_sentence">Already have an account ?</string>

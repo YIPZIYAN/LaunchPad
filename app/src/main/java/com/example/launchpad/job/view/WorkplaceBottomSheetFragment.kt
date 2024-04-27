@@ -33,6 +33,10 @@ class WorkplaceBottomSheetFragment(checkedState: MutableList<String>) : BottomSh
 
         checkedState.clear()
 
+        binding.topAppBar.setNavigationOnClickListener {
+            dismiss()
+        }
+
         return binding.root
     }
 
