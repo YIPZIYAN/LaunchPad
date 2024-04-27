@@ -85,6 +85,9 @@ class HomeFragment : Fragment(), BottomSheetListener {
             binding.homeTitle.text = resources.getString(R.string.your_posted_job)
             binding.btnPostJob.visibility = View.VISIBLE
             binding.btnSavedJob.text = resources.getString(R.string.Archived)
+            binding.btnSavedJob.setOnClickListener {
+                nav.navigate(R.id.action_homeFragment_to_archivedJobFragment)
+            }
         }
 
         return binding.root

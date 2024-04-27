@@ -134,5 +134,8 @@
     <string name="Remote">Remote</string>
     <string name="OnSite">On Site</string>
     <string name="Hybrid">Hybrid</string>
+    <string name="ArchivedJob">Archived Job</string>
     <string name="client_id">402844892969-50v2vgn16snkr157l2jpdrao6m7l958g.apps.googleusercontent.com</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
