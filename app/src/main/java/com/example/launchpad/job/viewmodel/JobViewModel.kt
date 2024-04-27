@@ -23,6 +23,7 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
         listener = JOBS.addSnapshotListener { snap, _ ->
             jobsLD.value = snap?.toObjects()
             updateResult()
+            updateArchived()
         }
     }
 
@@ -77,6 +78,21 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
         return isMinValid && isMaxValid
     }
 
+    private val archivedLD = MutableLiveData<List<Job>>()
+
+    fun getArchivedLD() = archivedLD
+
+    fun updateArchived() {
+        var list = getAll()
+
+        list = list.filter {
+            it.deletedAt != 0.toLong()
+        }
+
+        archivedLD.value = list
+
+    }
+
     private val resultLD = MutableLiveData<List<Job>>()
     private var search = ""
     private var position = emptyList<String>()
@@ -122,6 +138,10 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
 
     fun updateResult() {
         var list = getAll()
+
+        list = list.filter {
+            it.deletedAt == 0.toLong()
+        }
 
         list = list.filter {
             it.jobName.contains(search, true) || it.company.name.contains(search, true)
