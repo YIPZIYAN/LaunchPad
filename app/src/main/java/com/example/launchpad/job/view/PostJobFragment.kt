@@ -138,10 +138,10 @@ class PostJobFragment : Fragment() {
                 lifecycleScope.launch {
                     jobVM.set(job)
                 }
-                Handler(Looper.getMainLooper()).postDelayed({
-                    snackbar("Job Posted Successfully.")
-                    nav.navigateUp()
-                }, 50)
+
+                snackbar("Job Posted Successfully.")
+                nav.navigateUp()
+
             }
         )
     }

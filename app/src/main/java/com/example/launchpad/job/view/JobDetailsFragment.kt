@@ -34,7 +34,6 @@ class JobDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        Log.e("ONCREATEVIEW", "xxx")
 
         binding = FragmentJobDetailsBinding.inflate(inflater, container, false)
 
@@ -61,21 +60,24 @@ class JobDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e("ONVIEWCREATED", "yyy")
 
         val job = jobVM.get(jobID)!!
 
+        jobVM.getJobsLD().observe(viewLifecycleOwner) { jobList ->
+            val job = jobVM.getJobLive(jobList, jobID)
 
-        if (job == null) {
-            nav.navigateUp()
-            return
+            if (job == null) {
+                nav.navigateUp()
+                return@observe
+            }
+
+            job.company = companyVM.get(job.companyID) ?: Company()
+
+            binding.jobName.text = job.jobName
+            binding.companyAvatar.setImageBlob(job.company.avatar)
+            binding.companyName.text = job.company.name
+
         }
-
-        job.company = companyVM.get(job.companyID) ?: Company()
-
-        binding.jobName.text = job.jobName
-        binding.companyAvatar.setImageBlob(job.company.avatar)
-        binding.companyName.text = job.company.name
 
         val adapter = MyPagerAdapter(childFragmentManager, job.jobID)
         binding.tabContent.adapter = adapter

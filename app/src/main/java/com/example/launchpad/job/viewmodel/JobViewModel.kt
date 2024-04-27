@@ -11,6 +11,7 @@ import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObjects
 import com.google.firebase.Firebase
 import kotlinx.coroutines.tasks.await
+import kotlin.math.min
 
 class JobViewModel(val app: Application) : AndroidViewModel(app) {
     private val JOBS = Firebase.firestore.collection("job")
@@ -37,12 +38,14 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
 
     fun get(jobID: String) = getAll().find { it.jobID == jobID }
 
+    fun getJobLive(jobList: List<Job>, jobID: String) = jobList.find { it.jobID == jobID }!!
+
     fun set(job: Job) {
         JOBS.document().set(job)
     }
 
-    fun update(job: Job) {
-        JOBS.document(job.jobID).set(job)
+    suspend fun update(job: Job) {
+        JOBS.document(job.jobID).set(job).await()
     }
 
     fun validateInput(field: TextInputLayout, fieldValue: String): Boolean {
@@ -75,11 +78,80 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     private val resultLD = MutableLiveData<List<Job>>()
+    private var search = ""
+    private var position = emptyList<String>()
+    private var jobType = emptyList<String>()
+    private var workplace = emptyList<String>()
+    private var salary = emptyList<String>()
 
     fun getResultLD() = resultLD
 
+    fun clearSearch() {
+        search = ""
+        position = emptyList()
+        jobType = emptyList()
+        workplace = emptyList()
+        salary = emptyList()
+        updateResult()
+    }
+
+    fun search(search: String) {
+        this.search = search
+        updateResult()
+    }
+
+    fun filterPosition(position: List<String>) {
+        this.position = position
+        updateResult()
+    }
+
+    fun filterJobType(jobType: List<String>) {
+        this.jobType = jobType
+        updateResult()
+    }
+
+    fun filterWorkplace(workplace: List<String>) {
+        this.workplace = workplace
+        updateResult()
+    }
+
+    fun filterSalary(salary: List<String>) {
+        this.salary = salary
+        updateResult()
+    }
+
     fun updateResult() {
         var list = getAll()
+
+        list = list.filter {
+            it.jobName.contains(search, true) || it.company.name.contains(search, true)
+        }
+
+        if (position.isNotEmpty()) {
+            list = list.filter { job ->
+                position.any { it in job.position }
+            }
+        }
+
+        if (jobType.isNotEmpty()) {
+            list = list.filter { job ->
+                jobType.any { it in job.jobType }
+            }
+        }
+
+        if (workplace.isNotEmpty()) {
+            list = list.filter { job ->
+                workplace.any { it in job.workplace }
+            }
+        }
+
+        if (salary.isNotEmpty()) {
+            val minSalary = salary[0].toInt()
+            val maxSalary = salary[1].toInt()
+            list = list.filter { job ->
+                job.minSalary >= minSalary && job.maxSalary <= maxSalary
+            }
+        }
 
         resultLD.value = list
     }
