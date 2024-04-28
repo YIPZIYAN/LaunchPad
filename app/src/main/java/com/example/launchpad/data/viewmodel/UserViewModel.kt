@@ -19,15 +19,10 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
     private val USERS = Firebase.firestore.collection("user")
     private val _usersLD = MutableLiveData<User>()
 
-    private val COMPANIES = Firebase.firestore.collection("company")
-
     private val auth = Firebase.auth
     private var listener: ListenerRegistration? = null
 
     init {
-//        auth.currentUser?.reload()
-//        USERS.document(getAuth().uid).set(getAuth())
-
         listener = auth.currentUser?.let {
             USERS.document(it.uid).addSnapshotListener { snap, _ ->
                 _usersLD.value = snap?.toObject()
@@ -48,9 +43,10 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     suspend fun setCompany(user: User) {
-        if (isEnterprise()) {
-            USERS.document(user.uid).update("company",getCompanyFromLocal()).addOnCompleteListener {
-            }.await()
+        if (getPreferences().getString("company", null) != "") {
+            USERS.document(user.uid).update("company", getCompanyFromLocal())
+                .addOnCompleteListener {
+                }.await()
             Log.d("COMPANY", "set: set company to firebase")
         }
     }
@@ -67,11 +63,14 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
         )
     }
 
-    fun getCompanyFromLocal(): Company =
+    private fun getCompanyFromLocal(): Company =
         Gson().fromJson(getPreferences().getString("company", null), Company::class.java)
 
-
-    fun isEnterprise() = getPreferences().getString("company", null) != ""
+    fun isEnterprise() = _usersLD.value!!.company != null
     private fun getPreferences() = app.getSharedPreferences("company", Context.MODE_PRIVATE)
+
+    fun signOut(){
+        auth.signOut()
+    }
     fun init() = Unit
 }
