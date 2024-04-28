@@ -7,7 +7,6 @@ import com.google.firebase.firestore.Exclude
 import com.google.firebase.firestore.firestore
 
 data class Company(
-    @DocumentId
     val id: String = "",
     val name: String = "",
     val email: String = "",

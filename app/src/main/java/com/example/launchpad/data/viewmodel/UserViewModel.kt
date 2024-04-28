@@ -25,8 +25,8 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
     private var listener: ListenerRegistration? = null
 
     init {
-        auth.currentUser?.reload()
-        USERS.document(getAuth().uid).set(getAuth())
+//        auth.currentUser?.reload()
+//        USERS.document(getAuth().uid).set(getAuth())
 
         listener = auth.currentUser?.let {
             USERS.document(it.uid).addSnapshotListener { snap, _ ->
@@ -38,7 +38,6 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
     fun getUserLD() = _usersLD
 
     suspend fun set(user: User) {
-        Log.d("COMPANY", "setCompany: ${getCompanyFromLocal()}")
 
         if (!hasUser(user)) {
             USERS.document(user.uid).set(user).addOnCompleteListener {
@@ -50,7 +49,7 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
 
     suspend fun setCompany(user: User) {
         if (isEnterprise()) {
-            COMPANIES.document().set(getCompanyFromLocal()).addOnCompleteListener {
+            USERS.document(user.uid).update("company",getCompanyFromLocal()).addOnCompleteListener {
             }.await()
             Log.d("COMPANY", "set: set company to firebase")
         }
