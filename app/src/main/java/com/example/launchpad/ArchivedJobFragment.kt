@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.launchpad.data.Company
 import com.example.launchpad.databinding.FragmentArchivedJobBinding
 import com.example.launchpad.job.adapter.ArchivedJobAdapter
-import com.example.launchpad.job.adapter.JobAdapter
 import com.example.launchpad.job.viewmodel.JobViewModel
 import com.example.launchpad.profile.viewmodel.CompanyViewModel
 

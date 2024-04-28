@@ -5,9 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import com.example.launchpad.R
 import com.example.launchpad.data.Company
 import com.example.launchpad.databinding.FragmentTabJobDetailsBinding
 import com.example.launchpad.profile.viewmodel.CompanyViewModel

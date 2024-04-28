@@ -33,6 +33,7 @@ class EmailVerificationActivity : AppCompatActivity() {
             if (it) {
                 lifecycleScope.launch {
                     userVM.set(userVM.getAuth())
+                    userVM.setCompany(userVM.getAuth())
                 }
                 intentWithoutBackstack(this, UserActivity::class.java)
             }

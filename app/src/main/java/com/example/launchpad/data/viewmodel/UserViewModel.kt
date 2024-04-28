@@ -1,20 +1,25 @@
 package com.example.launchpad.data.viewmodel
 
+import android.app.Application
+import android.content.Context
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.example.launchpad.data.Company
 import com.example.launchpad.data.User
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
-import com.google.firebase.firestore.toObjects
+import com.google.gson.Gson
 import kotlinx.coroutines.tasks.await
 
-class UserViewModel : ViewModel() {
+class UserViewModel(val app: Application) : AndroidViewModel(app) {
     private val USERS = Firebase.firestore.collection("user")
     private val _usersLD = MutableLiveData<User>()
+
+    private val COMPANIES = Firebase.firestore.collection("company")
 
     private val auth = Firebase.auth
     private var listener: ListenerRegistration? = null
@@ -33,16 +38,26 @@ class UserViewModel : ViewModel() {
     fun getUserLD() = _usersLD
 
     suspend fun set(user: User) {
-        Log.d("USER", "set: trying to set user...")
+        Log.d("COMPANY", "setCompany: ${getCompanyFromLocal()}")
 
         if (!hasUser(user)) {
             USERS.document(user.uid).set(user).addOnCompleteListener {
             }.await()
             Log.d("USER", "set: set user to firebase")
+
+        }
+    }
+
+    suspend fun setCompany(user: User) {
+        if (isEnterprise()) {
+            COMPANIES.document().set(getCompanyFromLocal()).addOnCompleteListener {
+            }.await()
+            Log.d("COMPANY", "set: set company to firebase")
         }
     }
 
     private fun hasUser(user: User) = USERS.document(user.uid).get().isSuccessful
+
 
     fun getAuth() = auth.currentUser!!.let {
         User(
@@ -53,5 +68,11 @@ class UserViewModel : ViewModel() {
         )
     }
 
+    fun getCompanyFromLocal(): Company =
+        Gson().fromJson(getPreferences().getString("company", null), Company::class.java)
+
+
+    fun isEnterprise() = getPreferences().getString("company", null) != ""
+    private fun getPreferences() = app.getSharedPreferences("company", Context.MODE_PRIVATE)
     fun init() = Unit
 }

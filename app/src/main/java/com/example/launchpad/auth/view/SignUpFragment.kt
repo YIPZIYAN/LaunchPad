@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.EmailVerificationActivity
 import com.example.launchpad.R
@@ -16,7 +15,6 @@ import com.example.launchpad.auth.viewmodel.SignUpViewModel
 import com.example.launchpad.util.displayErrorHelper
 import com.example.launchpad.util.intentWithoutBackstack
 import com.example.launchpad.util.toast
-import java.util.regex.Pattern
 
 class SignUpFragment : Fragment() {
 
@@ -31,6 +29,8 @@ class SignUpFragment : Fragment() {
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
 
         binding.btnSignUp.setOnClickListener { submit() }
+
+        binding.btnEnterprise.setOnClickListener { nav.navigate(R.id.action_signUpFragment_to_signUpEnterpriseFragment) }
 
         viewModel.errorResponseMsg.observe(viewLifecycleOwner) { toast(it) }
 

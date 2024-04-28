@@ -28,7 +28,7 @@ class ArchivedJobAdapter (
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val job = getItem(position)
 
-        holder.binding.companyAvatar.setImageBlob(job.company.avatar)
+//        holder.binding.companyAvatar.setImageBlob(job.company.avatar)
         holder.binding.jobName.text = job.jobName
         holder.binding.typeWorkplacePosition.text = "${job.jobType} ・ ${job.workplace} ・ ${job.position}"
         holder.binding.salary.text = "RM ${job.minSalary} - RM ${job.maxSalary} per month"

@@ -1,16 +1,18 @@
 package com.example.launchpad.auth.viewmodel
 
+import android.app.Application
+import android.content.Context
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.launchpad.data.User
+import com.example.launchpad.data.Company
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
-import com.google.firebase.firestore.firestore
+import com.google.gson.Gson
 import java.util.Timer
 import java.util.TimerTask
 
-class SignUpViewModel : ViewModel() {
+class SignUpViewModel(val app: Application) : AndroidViewModel(app) {
     private val auth = Firebase.auth
 
     private val _isVerified = MutableLiveData<Boolean>()
@@ -22,11 +24,22 @@ class SignUpViewModel : ViewModel() {
     private val _errorResponseMsg = MutableLiveData<String>()
     val errorResponseMsg = _errorResponseMsg
 
-    fun signUpWithEmail(email: String, password: String) {
+    fun signUpWithEmail(email: String, password: String, company: Company = Company()) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     _isSignUpSuccess.value = task.isSuccessful
+                    if (company != null) {
+                        getPreferences()
+                            .edit()
+                            .putString("company", Gson().toJson(company))
+                            .apply()
+                        Log.d(
+                            "Sign Up Enterprise",
+                            "signUpWithEmail: ${getPreferences().getString("company", null)}"
+                        )
+
+                    }
                     sendEmailVerification()
                 }
             }
@@ -57,4 +70,8 @@ class SignUpViewModel : ViewModel() {
             errorResponseMsg.value = it.message
         }
     }
+
+    private fun getPreferences() = app.getSharedPreferences("company", Context.MODE_PRIVATE)
+
+    fun cancel() = Unit
 }
