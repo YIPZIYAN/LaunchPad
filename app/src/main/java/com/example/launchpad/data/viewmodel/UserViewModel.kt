@@ -69,8 +69,5 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
     fun isEnterprise() = _usersLD.value!!.company != null
     private fun getPreferences() = app.getSharedPreferences("company", Context.MODE_PRIVATE)
 
-    fun signOut(){
-        auth.signOut()
-    }
     fun init() = Unit
 }

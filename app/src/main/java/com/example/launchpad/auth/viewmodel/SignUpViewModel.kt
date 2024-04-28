@@ -24,7 +24,7 @@ class SignUpViewModel(val app: Application) : AndroidViewModel(app) {
     private val _errorResponseMsg = MutableLiveData<String>()
     val errorResponseMsg = _errorResponseMsg
 
-    fun signUpWithEmail(email: String, password: String, company: Company = Company()) {
+    fun signUpWithEmail(email: String, password: String, company: Company? = null) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {

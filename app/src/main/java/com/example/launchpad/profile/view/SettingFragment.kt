@@ -47,9 +47,8 @@ class SettingFragment : Fragment() {
         }
 
         binding.cardLogout.setOnClickListener {
-            userVM.signOut()
-            Log.d("UI", "signOut: navigate to login")
-            requireContext().intentWithoutBackstack(requireContext(), MainActivity::class.java)
+            signOut()
+
         }
 
         return binding.root
@@ -69,9 +68,8 @@ class SettingFragment : Fragment() {
         googleSignInClient.signOut().addOnSuccessListener {
             // Optional: Update UI or show a message to the user
             Log.d("UI", "signOut: navigate to login")
-            val intent = Intent(requireActivity(), MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
+            requireActivity().deleteSharedPreferences("company")
+            requireContext().intentWithoutBackstack(requireContext(), MainActivity::class.java)
         }
     }
 
