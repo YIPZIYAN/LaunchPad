@@ -1,7 +1,6 @@
 package com.example.launchpad.auth.view
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,10 +8,8 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.EmailVerificationActivity
@@ -27,7 +24,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import kotlinx.coroutines.launch
-import kotlin.system.exitProcess
 
 class LoginFragment : Fragment() {
 
@@ -133,7 +129,12 @@ class LoginFragment : Fragment() {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)
-                viewModel.firebaseAuthWithGoogle(account.idToken!!)
+                binding.progressBar.visibility = View.VISIBLE
+                
+                lifecycleScope.launch {
+                    viewModel.firebaseAuthWithGoogle(account.idToken!!)
+                    binding.progressBar.visibility = View.INVISIBLE
+                }
                 Log.d("success", "onActivityResult: getID")
             } catch (e: ApiException) {
                 Log.d("error", "onActivityResult: ${e.message}")

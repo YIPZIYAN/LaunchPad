@@ -45,12 +45,12 @@ class LoginViewModel(val app: Application) :
 
     fun isVerified() = auth.currentUser!!.isEmailVerified
 
-    fun firebaseAuthWithGoogle(idToken: String) {
+    suspend fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
             .addOnCompleteListener { task ->
                 _signInResult.value = task.isSuccessful
-            }
+            }.await()
     }
 
     fun firebaseAuthWithEmail(email: String, password: String) {
