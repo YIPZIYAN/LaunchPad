@@ -1,6 +1,19 @@
+import org.gradle.internal.impldep.org.jsoup.safety.Safelist.basic
+
 buildscript {
     dependencies {
         classpath("com.google.gms:google-services:4.4.1")
+    }
+    repositories {
+        mavenCentral()
+        maven {
+            url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
+            // Do not change the username below. It should always be "mapbox" (not your username).
+            credentials.username = "mapbox"
+            // Use the secret token stored in gradle.properties as the password
+            credentials.password = providers.gradleProperty("MAPBOX_DOWNLOADS_TOKEN").get()
+            authentication.create<BasicAuthentication>("basic")
+        }
     }
 }
 // Top-level build file where you can add configuration options common to all sub-projects/modules.

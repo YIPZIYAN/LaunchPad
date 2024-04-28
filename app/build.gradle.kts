@@ -10,11 +10,10 @@ android {
 
     defaultConfig {
         applicationId = "com.example.launchpad"
-        minSdk = 24
+        minSdk = 21
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -71,4 +70,6 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.activity:activity:1.8.0")
 
+    implementation("com.mapbox.maps:android:11.3.1")
+    implementation("com.mapbox.search:place-autocomplete:1.2.0")
 }
