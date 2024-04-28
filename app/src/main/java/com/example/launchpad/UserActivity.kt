@@ -8,6 +8,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.ActivityUserBinding
 import com.example.launchpad.profile.viewmodel.CompanyViewModel
 import com.example.launchpad.job.viewmodel.JobViewModel
@@ -20,11 +21,13 @@ class UserActivity : AppCompatActivity() {
     }
     private val jobVM: JobViewModel by viewModels()
     private val companyVM: CompanyViewModel by viewModels()
+    private val userVM: UserViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //Early data loading
         companyVM.init()
         jobVM.init()
+        userVM.init()
 
         super.onCreate(savedInstanceState)
         binding = ActivityUserBinding.inflate(layoutInflater)

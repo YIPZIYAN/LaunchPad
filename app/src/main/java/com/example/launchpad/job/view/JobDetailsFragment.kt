@@ -1,13 +1,11 @@
 package com.example.launchpad.job.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.activityViewModels
@@ -17,7 +15,6 @@ import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentJobDetailsBinding
 import com.example.launchpad.auth.view.LoginFragment.Companion.userType
 import com.example.launchpad.data.Company
-import com.example.launchpad.data.Job
 import com.example.launchpad.profile.viewmodel.CompanyViewModel
 import com.example.launchpad.util.setImageBlob
 import com.example.launchpad.job.viewmodel.JobViewModel
@@ -83,7 +80,7 @@ class JobDetailsFragment : Fragment() {
             job.company = companyVM.get(job.companyID) ?: Company()
 
             binding.jobName.text = job.jobName
-            binding.companyAvatar.setImageBlob(job.company.avatar)
+//            binding.companyAvatar.setImageBlob(job.company.avatar)
             binding.companyName.text = job.company.name
 
         }
