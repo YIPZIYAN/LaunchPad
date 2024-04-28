@@ -38,6 +38,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+
         userVM.getUserLD().observe(viewLifecycleOwner){
             Log.d("USER", "onCreateView: $it")
             Log.d("ENTERPRISE?", "onCreateView: ${userVM.isEnterprise()}")

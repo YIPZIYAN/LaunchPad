@@ -23,21 +23,22 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
     private var listener: ListenerRegistration? = null
 
     init {
-        auth.currentUser?.reload()
-        auth.currentUser?.let {
-            if (hasUser()) {
-                USERS.document(it.uid).update(
-                    "name", it.displayName ?: "User#${it.uid.take(8)}",
-                    "avatar", if (it.photoUrl != null) it.photoUrl.toString() else "",
-                )
-            }
-        }
-
         listener = auth.currentUser?.let {
             USERS.document(it.uid).addSnapshotListener { snap, _ ->
                 _usersLD.value = snap?.toObject()
 
             }
+        }
+        refreshProfile()
+    }
+
+    fun refreshProfile() {
+        auth.currentUser?.reload()
+        auth.currentUser?.let {
+                USERS.document(it.uid).update(
+                    "name", it.displayName ?: "User#${it.uid.take(8)}",
+                    "avatar", if (it.photoUrl != null) it.photoUrl.toString() else "",
+                )
         }
     }
 
@@ -59,7 +60,7 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
         }
     }
 
-    private fun hasUser() = USERS.document(auth.currentUser!!.uid).get().isSuccessful
+    private fun hasUser(id: String) = USERS.document(id).get().isSuccessful
 
     fun getAuth() = auth.currentUser!!.let {
         User(
