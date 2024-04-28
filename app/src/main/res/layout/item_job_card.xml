@@ -55,7 +55,8 @@
                 android:button="@drawable/sl_bookmark_30dp"
                 app:buttonTint="@color/bookmark_yellow"
                 app:layout_constraintEnd_toEndOf="@+id/chipGroup"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/job_name"

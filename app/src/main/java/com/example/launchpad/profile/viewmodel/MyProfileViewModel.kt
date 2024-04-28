@@ -10,7 +10,6 @@ class MyProfileViewModel : ViewModel() {
     private val userLD = MutableLiveData<User?>()
     private val auth = Firebase.auth
 
-
     fun getUserLD() = userLD
     fun getUser() = userLD.value
 

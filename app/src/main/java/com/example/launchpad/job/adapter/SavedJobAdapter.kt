@@ -7,19 +7,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.launchpad.data.Job
-import com.example.launchpad.databinding.ItemJobCardBinding
 import com.example.launchpad.auth.view.LoginFragment
+import com.example.launchpad.data.Job
 import com.example.launchpad.data.SaveJob
+import com.example.launchpad.databinding.ItemJobCardBinding
 import com.example.launchpad.util.setImageBlob
 
-class JobAdapter(
+class SavedJobAdapter(
     val fn: (ViewHolder, Job) -> Unit = { _, _ -> }
-    ) : ListAdapter<Job, JobAdapter.ViewHolder>(Diff) {
+) : ListAdapter<SaveJob, SavedJobAdapter.ViewHolder>(Diff) {
 
-    companion object Diff : DiffUtil.ItemCallback<Job>() {
-        override fun areItemsTheSame(a: Job, b: Job) = a.jobID == b.jobID
-        override fun areContentsTheSame(a: Job, b: Job) = a == b
+    companion object Diff : DiffUtil.ItemCallback<SaveJob>() {
+        override fun areItemsTheSame(a: SaveJob, b: SaveJob) = a.id == b.id
+        override fun areContentsTheSame(a: SaveJob, b: SaveJob) = a == b
     }
 
     class ViewHolder(val binding: ItemJobCardBinding) : RecyclerView.ViewHolder(binding.root)
@@ -28,23 +28,23 @@ class JobAdapter(
         ViewHolder(ItemJobCardBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val job = getItem(position)
+        val savedJob = getItem(position)
 
         if (LoginFragment.userType == 1) {
             holder.binding.bookmark.visibility = View.VISIBLE
         }
 
-        holder.binding.companyAvatar.setImageBlob(job.company.avatar)
-        holder.binding.companyName.text = job.company.name
-        holder.binding.companyLocation.text = job.company.location
-        holder.binding.jobName.text = job.jobName
-        holder.binding.lblSalary.text = "RM ${job.minSalary} - RM ${job.maxSalary} per month"
-        holder.binding.chipJobType.text = job.jobType
-        holder.binding.chipWorkplace.text = job.workplace
-        holder.binding.chipPosition.text = job.position
-        holder.binding.timePosted.text = displayPostTime(job.createdAt)
+        holder.binding.companyAvatar.setImageBlob(savedJob.job.company.avatar)
+        holder.binding.companyName.text = savedJob.job.company.name
+        holder.binding.companyLocation.text = savedJob.job.company.location
+        holder.binding.jobName.text = savedJob.job.jobName
+        holder.binding.lblSalary.text = "RM ${savedJob.job.minSalary} - RM ${savedJob.job.maxSalary} per month"
+        holder.binding.chipJobType.text = savedJob.job.jobType
+        holder.binding.chipWorkplace.text = savedJob.job.workplace
+        holder.binding.chipPosition.text = savedJob.job.position
+        holder.binding.timePosted.text = displayPostTime(savedJob.job.createdAt)
 
-        fn(holder, job)
+        fn(holder, savedJob.job)
     }
 
     private fun displayPostTime(postTime: Long): String {

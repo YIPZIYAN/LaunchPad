@@ -31,6 +31,13 @@
             app:exitAnim="@anim/exit"
             app:popEnterAnim="@anim/pop_enter"
             app:popExitAnim="@anim/pop_exit" />
+        <action
+            android:id="@+id/action_homeFragment_to_savedJobFragment"
+            app:destination="@id/savedJobFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit" />
     </fragment>
     <fragment
         android:id="@+id/communityFragment"
@@ -191,8 +198,13 @@
         tools:layout="@layout/activity_main" />
     <fragment
         android:id="@+id/archivedJobFragment"
-        android:name="com.example.launchpad.ArchivedJobFragment"
+        android:name="com.example.launchpad.job.view.ArchivedJobFragment"
         android:label="ArchivedJobFragment"
         tools:layout="@layout/fragment_archived_job"/>
+    <fragment
+        android:id="@+id/savedJobFragment"
+        android:name="com.example.launchpad.job.view.SavedJobFragment"
+        android:label="SavedJobFragment"
+        tools:layout="@layout/fragment_saved_job"/>
 
 </navigation>

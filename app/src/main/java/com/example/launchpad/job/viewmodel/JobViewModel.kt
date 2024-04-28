@@ -5,18 +5,23 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.launchpad.data.Job
+import com.example.launchpad.data.SaveJob
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObjects
 import com.google.firebase.Firebase
 import kotlinx.coroutines.tasks.await
+import java.util.Objects
 import kotlin.math.min
 
 class JobViewModel(val app: Application) : AndroidViewModel(app) {
     private val JOBS = Firebase.firestore.collection("job")
+    private val SAVE_JOBS = Firebase.firestore.collection("save_job")
+    private val saveJobsLD = MutableLiveData<List<SaveJob>>()
     private val jobsLD = MutableLiveData<List<Job>>()
     private var listener: ListenerRegistration? = null
+    private var listener2: ListenerRegistration? = null
     private val required = "* Required"
 
     init {
@@ -25,10 +30,14 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
             updateResult()
             updateArchived()
         }
+        listener2 = SAVE_JOBS.addSnapshotListener{ snap, _ ->
+            saveJobsLD.value = snap?.toObjects()
+        }
     }
 
     override fun onCleared() {
         listener?.remove()
+        listener2?.remove()
     }
 
     fun init() = Unit
@@ -47,6 +56,30 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
 
     suspend fun update(job: Job) {
         JOBS.document(job.jobID).set(job).await()
+    }
+
+    fun getSaveJobLD() = saveJobsLD
+
+    fun getAllSaveJob() = saveJobsLD.value ?: emptyList()
+
+    fun getSaveJobByUser(userID: String): List<SaveJob> {
+        var list = getAllSaveJob()
+
+        list = list.filter {
+            it.userID == userID
+        }
+
+        saveJobsLD.value = list
+
+        return list
+    }
+
+    fun saveJob(saveJob: SaveJob) {
+        SAVE_JOBS.document(saveJob.id).set(saveJob)
+    }
+
+    fun unsaveJob(id: String) {
+        SAVE_JOBS.document(id).delete()
     }
 
     fun validateInput(field: TextInputLayout, fieldValue: String): Boolean {

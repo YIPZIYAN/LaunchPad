@@ -5,8 +5,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".job.view.ArchivedJobFragment">
+        android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBar"
@@ -22,7 +21,7 @@
                 android:minHeight="?attr/actionBarSize"
                 app:navigationIcon="@drawable/round_arrow_back_24"
                 app:navigationIconTint="?attr/colorControlNormal"
-                app:title="@string/ArchivedJob" />
+                app:title="@string/saved_job" />
 
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/materialDivider"
@@ -32,7 +31,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_archived_job"
+            android:id="@+id/rv_saved_job"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:scrollbars="vertical"
@@ -41,7 +40,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/appBar"
-            tools:listitem="@layout/item_archived_job" />
+            tools:listitem="@layout/item_job_card" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </layout>

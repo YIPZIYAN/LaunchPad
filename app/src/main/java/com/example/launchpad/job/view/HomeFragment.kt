@@ -1,6 +1,7 @@
 package com.example.launchpad.job.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.example.launchpad.job.adapter.JobAdapter
 import com.example.launchpad.databinding.FragmentHomeBinding
 import com.example.launchpad.auth.view.LoginFragment.Companion.userType
 import com.example.launchpad.data.Company
+import com.example.launchpad.data.SaveJob
 import com.example.launchpad.profile.viewmodel.CompanyViewModel
 import com.google.android.material.search.SearchView
 
@@ -35,13 +37,53 @@ class HomeFragment : Fragment(), BottomSheetListener {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        val adapter = JobAdapter { holder, job ->
+        //-----------------------------------------------------------
+        // Show Job List
+        val adapter = JobAdapter() { holder, job ->
             holder.binding.root.setOnClickListener { detail(job.jobID) }
+            val saveJob = jobVM.getSaveJobByUser("userID")
+            saveJob.forEach {
+                if (it.jobID == job.jobID) {
+                    holder.binding.bookmark.isChecked = true
+                }
+            }
+            holder.binding.bookmark.setOnCheckedChangeListener { _, _ ->
+                val saveJob = SaveJob(
+                    id = "userID" + "_" + job.jobID,
+                    userID = "userID",
+                    jobID = job.jobID,
+                )
+                if (holder.binding.bookmark.isChecked) {
+                    jobVM.saveJob(saveJob)
+                }
+                else {
+                    jobVM.unsaveJob(saveJob.id)
+                }
+            }
         }
         binding.rvJobCard.adapter = adapter
 
-        val svAdapter = JobAdapter { holder, job ->
+        val svAdapter = JobAdapter() { holder, job ->
             holder.binding.root.setOnClickListener { detail(job.jobID) }
+            val saveJob = jobVM.getSaveJobByUser("userID")
+            saveJob.forEach {
+                if (it.jobID == job.jobID) {
+                    holder.binding.bookmark.isChecked = true
+                }
+            }
+            holder.binding.bookmark.setOnCheckedChangeListener { _, _ ->
+                val saveJob = SaveJob(
+                    id = "userID" + "_" + job.jobID,
+                    userID = "userID",
+                    jobID = job.jobID,
+                )
+                if (holder.binding.bookmark.isChecked) {
+                    jobVM.saveJob(saveJob)
+                }
+                else {
+                    jobVM.unsaveJob(saveJob.id)
+                }
+            }
         }
         binding.rvSearchResult.adapter = adapter
 
@@ -50,7 +92,9 @@ class HomeFragment : Fragment(), BottomSheetListener {
             adapter.submitList(it.sortedByDescending { it.createdAt })
             svAdapter.submitList(it.sortedByDescending { it.createdAt })
         }
-        
+
+        //-----------------------------------------------------------
+        // Search And Filter
         binding.searchView.addTransitionListener { _, _, newState ->
             if (newState == SearchView.TransitionState.HIDDEN) {
                 jobVM.clearSearch()
@@ -74,10 +118,16 @@ class HomeFragment : Fragment(), BottomSheetListener {
             nav.navigate(R.id.action_homeFragment_to_postJobFragment)
         }
 
+        //-----------------------------------------------------------
+        // Refresh
         binding.refresh.setOnRefreshListener {
             adapter.notifyDataSetChanged()
             svAdapter.notifyDataSetChanged()
             binding.refresh.isRefreshing = false
+        }
+
+        binding.btnSavedJob.setOnClickListener {
+            nav.navigate(R.id.action_homeFragment_to_savedJobFragment)
         }
 
         // company
