@@ -7,13 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.launchpad.MainActivity
 import com.example.launchpad.R
+import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentMyProfileBinding
 import com.example.launchpad.view.TabMyJobFragment
 import com.example.launchpad.profile.viewmodel.MyProfileViewModel
+import com.example.launchpad.util.dialog
+import com.example.launchpad.util.intentWithoutBackstack
 import com.google.android.material.tabs.TabLayoutMediator
 import io.getstream.avatarview.coil.loadImage
 
@@ -23,7 +29,7 @@ class MyProfileFragment : Fragment() {
         fun newInstance() = MyProfileFragment()
     }
 
-    private lateinit var viewModel: MyProfileViewModel
+    private val userVM: UserViewModel by activityViewModels()
     private lateinit var binding: FragmentMyProfileBinding
     private val tabItems = arrayOf(
         "Job",
@@ -35,6 +41,14 @@ class MyProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMyProfileBinding.inflate(inflater, container, false)
+
+        userVM.getUserLD().observe(viewLifecycleOwner) { user ->
+
+            val avatar = if (user.avatar == "") R.drawable.round_account_circle_24 else user.avatar
+            binding.txtName.text = user.name
+            binding.avatarView.loadImage(avatar)
+
+        }
 
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
@@ -73,16 +87,5 @@ class MyProfileFragment : Fragment() {
         }
     }
 
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this)[MyProfileViewModel::class.java]
-        viewModel.fetchUser()
-
-        viewModel.getUserLD().observe(viewLifecycleOwner){
-            binding.txtName.text = it?.name
-            binding.avatarView.loadImage(it?.avatar)
-        }
-    }
 
 }

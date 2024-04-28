@@ -14,7 +14,6 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -67,5 +66,10 @@ dependencies {
 
     //DateTime
     implementation("joda-time:joda-time:2.12.7")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation("androidx.activity:activity:1.8.0")
 
+//    implementation("com.mapbox.maps:android:11.3.1")
+    implementation("com.google.code.gson:gson:2.10.1")
 }

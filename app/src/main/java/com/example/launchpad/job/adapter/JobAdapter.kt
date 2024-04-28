@@ -34,7 +34,7 @@ class JobAdapter(
             holder.binding.bookmark.visibility = View.VISIBLE
         }
 
-        holder.binding.companyAvatar.setImageBlob(job.company.avatar)
+//        holder.binding.companyAvatar.setImageBlob(job.company.avatar)
         holder.binding.companyName.text = job.company.name
         holder.binding.companyLocation.text = job.company.location
         holder.binding.jobName.text = job.jobName

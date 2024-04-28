@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">LaunchPad</string>
     <string name="full_name">Full name</string>
     <string name="email">Email</string>
@@ -136,6 +136,13 @@
     <string name="Hybrid">Hybrid</string>
     <string name="ArchivedJob">Archived Job</string>
     <string name="client_id">402844892969-50v2vgn16snkr157l2jpdrao6m7l958g.apps.googleusercontent.com</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="exception_error_msg">Something Went Wrong! Please Try Again.</string>
+    <string name="password_helper_text">Password should be at least 8 characters long with alphabets and digits.</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="slogon_enterprise">Create an enterprise account to recruit talents in your company.</string>
+    <string name="launchpad_enterprise">LaunchPad Enterprise</string>
+    <string name="company_name">Company Name</string>
+    <string name="mapbox_access_token" translatable="false"
+        tools:ignore="UnusedResources">pk.eyJ1Ijoieml5YW4wMyIsImEiOiJjbHZqNHNoaTExaG44MmluMHc1dW9vM2lrIn0.iM0K_pB7iqUThlUTUu-UTg</string>
+    <string name="founded_in_year">Founded in Year</string>
 </resources>

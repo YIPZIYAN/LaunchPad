@@ -17,6 +17,7 @@ import com.example.launchpad.databinding.FragmentHomeBinding
 import com.example.launchpad.auth.view.LoginFragment.Companion.userType
 import com.example.launchpad.data.Company
 import com.example.launchpad.data.SaveJob
+import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.profile.viewmodel.CompanyViewModel
 import com.google.android.material.search.SearchView
 
@@ -25,6 +26,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
     private lateinit var binding: FragmentHomeBinding
     private val nav by lazy { findNavController() }
     private val jobVM: JobViewModel by activityViewModels()
+    private val userVM: UserViewModel by activityViewModels()
     private val companyVM: CompanyViewModel by activityViewModels()
     private var chipPositionState = mutableListOf<String>()
     private var chipJobTypeState = mutableListOf<String>()
@@ -37,9 +39,19 @@ class HomeFragment : Fragment(), BottomSheetListener {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+
         //-----------------------------------------------------------
         // Show Job List
         val adapter = JobAdapter() { holder, job ->
+
+
+        userVM.getUserLD().observe(viewLifecycleOwner){
+            Log.d("USER", "onCreateView: $it")
+            Log.d("ENTERPRISE?", "onCreateView: ${userVM.isEnterprise()}")
+        }
+
+        val adapter = JobAdapter { holder, job ->
+
             holder.binding.root.setOnClickListener { detail(job.jobID) }
             val saveJob = jobVM.getSaveJobByUser("userID")
             saveJob.forEach {

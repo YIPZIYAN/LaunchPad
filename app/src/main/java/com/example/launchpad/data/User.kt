@@ -1,8 +1,12 @@
 package com.example.launchpad.data
 
+import com.google.firebase.firestore.DocumentId
+
 data class User(
-    val id: String? = "",
-    val name: String? = "",
-    val email: String? = "",
-    val avatar: String? = "",
+    @DocumentId
+    val uid: String = "",
+    val name: String = "",
+    val email: String = "",
+    val avatar: String = "",
+    val company: Company? = null,
 )

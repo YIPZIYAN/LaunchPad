@@ -1,6 +1,10 @@
 package com.example.launchpad.util
 
+import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
+import android.os.Bundle
+import android.widget.EditText
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.widget.ImageView
@@ -10,6 +14,7 @@ import androidx.core.graphics.scale
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.firestore.Blob
 import java.io.ByteArrayOutputStream
 
@@ -51,6 +56,20 @@ fun Fragment.dialog(
     builder.show()
 }
 
+fun Fragment.displayErrorHelper(view: TextInputLayout, errorMsg: String) {
+    view.requestFocus()
+    view.error = errorMsg
+    view.errorIconDrawable = null
+}
+
+fun Context.intentWithoutBackstack(context: Context, targetClass: Class<*>, extras: Bundle? = null) {
+    val intent = Intent(context, targetClass)
+    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+    extras?.let {
+        intent.putExtras(it)
+    }
+    context.startActivity(intent)
+}
 // ----------------------------------------------------------------------------
 // Bitmap Extensions
 // ----------------------------------------------------------------------------
