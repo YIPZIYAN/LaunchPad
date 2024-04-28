@@ -74,9 +74,6 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
 
     private fun buttonAction() {
         binding.btnLogin.setOnClickListener { signInWithEmail() }
@@ -139,7 +136,7 @@ class LoginFragment : Fragment() {
                 viewModel.firebaseAuthWithGoogle(account.idToken!!)
                 Log.d("success", "onActivityResult: getID")
             } catch (e: ApiException) {
-                Log.d("error", "onActivityResult: error")
+                Log.d("error", "onActivityResult: ${e.message}")
                 toast(getString(R.string.exception_error_msg))
             }
         }

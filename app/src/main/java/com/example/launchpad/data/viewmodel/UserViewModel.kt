@@ -23,9 +23,20 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
     private var listener: ListenerRegistration? = null
 
     init {
+        auth.currentUser?.reload()
+        auth.currentUser?.let {
+            if (hasUser()) {
+                USERS.document(it.uid).update(
+                    "name", it.displayName ?: "User#${it.uid.take(8)}",
+                    "avatar", if (it.photoUrl != null) it.photoUrl.toString() else "",
+                )
+            }
+        }
+
         listener = auth.currentUser?.let {
             USERS.document(it.uid).addSnapshotListener { snap, _ ->
                 _usersLD.value = snap?.toObject()
+
             }
         }
     }
@@ -33,26 +44,22 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
     fun getUserLD() = _usersLD
 
     suspend fun set(user: User) {
-
-        if (!hasUser(user)) {
-            USERS.document(user.uid).set(user).addOnCompleteListener {
-            }.await()
-            Log.d("USER", "set: set user to firebase")
-
-        }
+        USERS.document(user.uid).set(user).addOnCompleteListener {
+        }.await()
+        Log.d("USER", "set: set user to firebase")
     }
 
     suspend fun setCompany(user: User) {
-        if (getPreferences().getString("company", null) != "") {
+        Log.d("COMPANY", "set: set company to firebase")
+
+        if (getPreferences().getString("company", null) != null) {
             USERS.document(user.uid).update("company", getCompanyFromLocal())
                 .addOnCompleteListener {
                 }.await()
-            Log.d("COMPANY", "set: set company to firebase")
         }
     }
 
-    private fun hasUser(user: User) = USERS.document(user.uid).get().isSuccessful
-
+    private fun hasUser() = USERS.document(auth.currentUser!!.uid).get().isSuccessful
 
     fun getAuth() = auth.currentUser!!.let {
         User(

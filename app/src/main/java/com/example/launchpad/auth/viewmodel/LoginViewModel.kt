@@ -36,7 +36,7 @@ class LoginViewModel(val app: Application) :
     init {
         auth.currentUser?.reload()
         if (!isLoggedIn()) auth.signOut()
-        Log.d("user", " ${auth.currentUser}")
+        Log.d("USER", " ${auth.currentUser}")
     }
 
     suspend fun init() = awaitFrame()
