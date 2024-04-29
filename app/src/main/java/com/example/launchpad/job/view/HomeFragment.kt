@@ -41,7 +41,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
 
         userVM.getUserLD().observe(viewLifecycleOwner){
             Log.d("USER", "onCreateView: $it")
-            Log.d("ENTERPRISE?", "onCreateView: ${userVM.isEnterprise()}")
+//            Log.d("ENTERPRISE?", "onCreateView: ${userVM.isEnterprise()}")
         }
 
         val adapter = JobAdapter { holder, job ->

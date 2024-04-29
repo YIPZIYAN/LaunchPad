@@ -19,6 +19,7 @@ import com.example.launchpad.auth.viewmodel.LoginViewModel
 import com.example.launchpad.databinding.FragmentLoginBinding
 import com.example.launchpad.util.displayErrorHelper
 import com.example.launchpad.util.intentWithoutBackstack
+import com.example.launchpad.util.loadingDialog
 import com.example.launchpad.util.toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -40,14 +41,14 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
-        lifecycleScope.launch {
-            viewModel.init()
-        }
+        buttonAction()
+
         //auto login
         if (viewModel.isLoggedIn() && viewModel.isVerified()) {
             Log.d("status", "onCreateView: logged in and verified")
             requireContext().intentWithoutBackstack(requireActivity(), UserActivity::class.java)
         }
+
         if (viewModel.isLoggedIn() && !viewModel.isVerified()) {
             Log.d("status", "onCreateView: logged in")
             requireContext().intentWithoutBackstack(
@@ -56,9 +57,6 @@ class LoginFragment : Fragment() {
             )
         }
 
-        buttonAction()
-
-        // check if login success
         viewModel.signInResult.observe(viewLifecycleOwner) { success ->
             if (success) {
                 requireContext().intentWithoutBackstack(requireActivity(), UserActivity::class.java)
@@ -92,8 +90,12 @@ class LoginFragment : Fragment() {
         if (!isValid(email, password)) {
             return
         }
+        loadingDialog().show()
+        lifecycleScope.launch {
+            viewModel.firebaseAuthWithEmail(email, password)
+        }
+        loadingDialog().dismiss()
 
-        viewModel.firebaseAuthWithEmail(email, password)
     }
 
     private fun isValid(email: String, password: String): Boolean {
@@ -112,6 +114,10 @@ class LoginFragment : Fragment() {
         }
     }
 
+    /*
+    * show Google login dialog
+    * onActivityResult() -> if dialog success loaded, auth with google login
+    * */
     private fun signInWithGoogle() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.client_id))
@@ -129,11 +135,10 @@ class LoginFragment : Fragment() {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)
-                binding.progressBar.visibility = View.VISIBLE
-                
+                loadingDialog().show()
                 lifecycleScope.launch {
                     viewModel.firebaseAuthWithGoogle(account.idToken!!)
-                    binding.progressBar.visibility = View.INVISIBLE
+                    loadingDialog().dismiss()
                 }
                 Log.d("success", "onActivityResult: getID")
             } catch (e: ApiException) {

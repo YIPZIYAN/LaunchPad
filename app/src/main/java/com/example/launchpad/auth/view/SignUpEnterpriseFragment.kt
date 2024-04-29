@@ -47,7 +47,7 @@ class SignUpEnterpriseFragment : Fragment() {
             year = binding.edtYear.text.toString().toIntOrNull() ?: -1
         )
 
-        signUpViewModel.signUpWithEmail(email, password, company)
+//        signUpViewModel.signUpWithEmail(email, password)
 
     }
 

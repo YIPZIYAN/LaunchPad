@@ -9,6 +9,7 @@ import com.example.launchpad.data.Company
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.gson.Gson
+import kotlinx.coroutines.tasks.await
 import java.util.Timer
 import java.util.TimerTask
 
@@ -24,29 +25,17 @@ class SignUpViewModel(val app: Application) : AndroidViewModel(app) {
     private val _errorResponseMsg = MutableLiveData<String>()
     val errorResponseMsg = _errorResponseMsg
 
-    fun signUpWithEmail(email: String, password: String, company: Company? = null) {
+    suspend fun signUpWithEmail(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     _isSignUpSuccess.value = task.isSuccessful
-                    if (company != null) {
-                        getPreferences()
-                            .edit()
-                            .putString("company", Gson().toJson(company))
-                            .apply()
-                        Log.d(
-                            "Sign Up Enterprise",
-                            "signUpWithEmail: ${getPreferences().getString("company", null)}"
-                        )
-
-                    }
-                    sendEmailVerification()
                 }
             }
             .addOnFailureListener {
                 _errorResponseMsg.value = it.message
                 Log.d("Error", "signUpWithEmail: " + it.message)
-            }
+            }.await()
     }
 
     fun checkEmailVerificationInterval() {
@@ -71,7 +60,4 @@ class SignUpViewModel(val app: Application) : AndroidViewModel(app) {
         }
     }
 
-    private fun getPreferences() = app.getSharedPreferences("company", Context.MODE_PRIVATE)
-
-    fun cancel() = Unit
 }

@@ -1,24 +1,29 @@
 package com.example.launchpad.auth.view
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.util.Patterns
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.EmailVerificationActivity
 import com.example.launchpad.R
-import com.example.launchpad.databinding.FragmentSignUpBinding
 import com.example.launchpad.auth.viewmodel.SignUpViewModel
+import com.example.launchpad.data.viewmodel.UserViewModel
+import com.example.launchpad.databinding.FragmentSignUpBinding
 import com.example.launchpad.util.displayErrorHelper
 import com.example.launchpad.util.intentWithoutBackstack
+import com.example.launchpad.util.loadingDialog
 import com.example.launchpad.util.toast
+import kotlinx.coroutines.launch
 
 class SignUpFragment : Fragment() {
 
     private val viewModel: SignUpViewModel by viewModels()
+    private val userVM: UserViewModel by viewModels()
     private val nav by lazy { findNavController() }
     private lateinit var binding: FragmentSignUpBinding
 
@@ -30,11 +35,12 @@ class SignUpFragment : Fragment() {
 
         binding.btnSignUp.setOnClickListener { submit() }
 
-        binding.btnEnterprise.setOnClickListener { nav.navigate(R.id.action_signUpFragment_to_signUpEnterpriseFragment) }
+        binding.btnEnterprise.setOnClickListener { submit(true) }
 
         viewModel.errorResponseMsg.observe(viewLifecycleOwner) { toast(it) }
 
         viewModel.isSignUpSuccess.observe(viewLifecycleOwner) {
+            viewModel.sendEmailVerification()
             requireContext().intentWithoutBackstack(
                 requireActivity(),
                 EmailVerificationActivity::class.java
@@ -44,7 +50,7 @@ class SignUpFragment : Fragment() {
         return binding.root
     }
 
-    private fun submit() {
+    private fun submit(isEnterprise: Boolean = false) {
         resetError()
         val email = binding.edtEmail.text.toString().trim()
         val password = binding.edtPassword.text.toString()
@@ -54,7 +60,13 @@ class SignUpFragment : Fragment() {
             return
         }
 
-        viewModel.signUpWithEmail(email, password)
+        loadingDialog().show()
+        lifecycleScope.launch {
+            viewModel.signUpWithEmail(email, password)
+            userVM.set(userVM.getAuth())
+        }
+        loadingDialog().dismiss()
+
     }
 
     private fun isValid(email: String, password: String, passwordConfirmation: String): Boolean {
