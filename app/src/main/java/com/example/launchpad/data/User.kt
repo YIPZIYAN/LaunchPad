@@ -9,5 +9,6 @@ data class User(
     val email: String = "",
     val avatar: String = "",
     val provider: String = "",
+    val company_id: String = "",
     var isEnterprise: Boolean = false,
 )
