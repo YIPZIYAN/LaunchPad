@@ -145,4 +145,10 @@
     <string name="mapbox_access_token" translatable="false"
         tools:ignore="UnusedResources">pk.eyJ1Ijoieml5YW4wMyIsImEiOiJjbHZqNHNoaTExaG44MmluMHc1dW9vM2lrIn0.iM0K_pB7iqUThlUTUu-UTg</string>
     <string name="founded_in_year">Founded in Year</string>
+    <string name="GoodMorning">Good Morning,</string>
+    <string name="GoodAfternoon">Good Afternoon,</string>
+    <string name="GoodEvening">Good Evening,</string>
+    <string name="TimeToSleep">Time To Sleep,</string>
+    <string name="no_save_job">You do not save any job.</string>
+    <string name="no_archived_job">You do not archive any job.</string>
 </resources>

@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.data.Job
+import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentPostJobBinding
 import com.example.launchpad.job.viewmodel.JobViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -29,6 +30,7 @@ class PostJobFragment : Fragment() {
     }
 
     private val jobVM: JobViewModel by activityViewModels()
+    private val userVM: UserViewModel by activityViewModels()
     private val nav by lazy { findNavController() }
     private lateinit var binding: FragmentPostJobBinding
     private val jobID by lazy { arguments?.getString("jobID") ?: "" }
@@ -187,7 +189,7 @@ class PostJobFragment : Fragment() {
             createdAt = if (isEditing) binding.createdAt.text.toString()
                 .toLong() else DateTime.now().millis,
             updatedAt = if (isEditing) DateTime.now().millis else 0,
-            companyID = binding.companyID.text.toString() // need modify
+            companyID = "NEED MODIFY"
         )
 
     }
@@ -248,7 +250,7 @@ class PostJobFragment : Fragment() {
             requirement = binding.edtJobRequirement.text.toString().trim(),
             createdAt = binding.createdAt.text.toString().toLong(),
             updatedAt = binding.updatedAt.text.toString().toLong(),
-            companyID = binding.companyID.text.toString() // need modify
+            companyID = userVM.getCompanyID()
         )
         Log.e("JOB1", job.toString())
         Log.e("JOB2", jobVM.get(jobID).toString())
@@ -284,7 +286,6 @@ class PostJobFragment : Fragment() {
             binding.createdAt.text = job.createdAt.toString()
             binding.updatedAt.text = job.updatedAt.toString()
             binding.deletedAt.text = job.deletedAt.toString()
-            binding.companyID.text = job.companyID
 
         }
 

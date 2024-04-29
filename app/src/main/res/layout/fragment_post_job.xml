@@ -328,12 +328,5 @@
         android:visibility="gone"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/company_ID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        tools:ignore="MissingConstraints" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

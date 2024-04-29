@@ -40,7 +40,9 @@ class SavedJobFragment : Fragment() {
 
         val adapter = SavedJobAdapter { holder, job ->
             holder.binding.root.setOnClickListener { detail(job.jobID) }
+            holder.binding.bookmark.visibility = View.VISIBLE
             val saveJob = jobVM.getSaveJobByUser("userID")
+
             saveJob.forEach {
                 if (it.jobID == job.jobID) {
                     holder.binding.bookmark.isChecked = true
@@ -54,15 +56,18 @@ class SavedJobFragment : Fragment() {
                 )
                 if (holder.binding.bookmark.isChecked) {
                     jobVM.saveJob(saveJob)
-                }
-                else {
+                } else {
                     jobVM.unsaveJob(saveJob.id)
                 }
             }
+
         }
         binding.rvSavedJob.adapter = adapter
 
         jobVM.getSaveJobLD().observe(viewLifecycleOwner) {
+            if (it.isEmpty()) {
+                binding.noSaveJob.visibility = View.VISIBLE
+            }
             it.forEach {
                 it.job = jobVM.get(it.jobID) ?: Job()
                 it.job.company = companyVM.get(it.job.companyID) ?: Company()

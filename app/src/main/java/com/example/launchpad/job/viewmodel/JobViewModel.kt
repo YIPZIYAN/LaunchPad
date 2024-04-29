@@ -29,6 +29,7 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
             jobsLD.value = snap?.toObjects()
             updateResult()
             updateArchived()
+            getJobByCompany()
         }
         listener2 = SAVE_JOBS.addSnapshotListener{ snap, _ ->
             saveJobsLD.value = snap?.toObjects()
@@ -124,6 +125,23 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
 
         archivedLD.value = list
 
+    }
+
+    private var companyID = ""
+
+    fun filterJobByCompany(companyID: String) {
+        this.companyID == companyID
+        getJobByCompany()
+    }
+
+    fun getJobByCompany() {
+        var list = getAll()
+
+        list = list.filter {
+            it.companyID == companyID
+        }
+
+        resultLD.value = list
     }
 
     private val resultLD = MutableLiveData<List<Job>>()

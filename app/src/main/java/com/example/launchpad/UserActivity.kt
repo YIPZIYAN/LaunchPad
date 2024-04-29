@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.navigation.fragment.findNavController
@@ -26,6 +27,8 @@ class UserActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         //Early data loading
         companyVM.init()
+        Log.d("COMPANY2", companyVM.get("COM1").toString())
+
         jobVM.init()
         userVM.init()
 
@@ -48,7 +51,9 @@ class UserActivity : AppCompatActivity() {
                 R.id.settingFragment,
                 R.id.addPostFragment,
                 R.id.userProfileFragment,
-                R.id.scheduleInterviewFragment
+                R.id.scheduleInterviewFragment,
+                R.id.savedJobFragment,
+                R.id.archivedJobFragment,
             )
 
             val isBottomNavVisible = !hideBottomNavDestinations.contains(destination.id)

@@ -41,6 +41,9 @@ class ArchivedJobFragment : Fragment() {
         jobVM.updateArchived()
 
         jobVM.getArchivedLD().observe(viewLifecycleOwner) {
+            if (it.isEmpty()) {
+                binding.noArchivedJob.visibility = View.VISIBLE
+            }
             it.forEach { it.company = companyVM.get(it.companyID) ?: Company() }
             adapter.submitList(it.sortedByDescending { it.deletedAt })
         }

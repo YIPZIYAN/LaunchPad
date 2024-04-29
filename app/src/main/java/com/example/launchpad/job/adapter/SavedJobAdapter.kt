@@ -2,16 +2,13 @@ package com.example.launchpad.job.adapter
 
 import android.text.format.DateUtils
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.launchpad.auth.view.LoginFragment
 import com.example.launchpad.data.Job
 import com.example.launchpad.data.SaveJob
 import com.example.launchpad.databinding.ItemJobCardBinding
-import com.example.launchpad.util.setImageBlob
 
 class SavedJobAdapter(
     val fn: (ViewHolder, Job) -> Unit = { _, _ -> }
@@ -30,11 +27,7 @@ class SavedJobAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val savedJob = getItem(position)
 
-        if (LoginFragment.userType == 1) {
-            holder.binding.bookmark.visibility = View.VISIBLE
-        }
-
-        holder.binding.companyAvatar.setImageBlob(savedJob.job.company.avatar)
+        //holder.binding.companyAvatar.setImageBlob(savedJob.job.company.avatar)
         holder.binding.companyName.text = savedJob.job.company.name
         holder.binding.companyLocation.text = savedJob.job.company.location
         holder.binding.jobName.text = savedJob.job.jobName
