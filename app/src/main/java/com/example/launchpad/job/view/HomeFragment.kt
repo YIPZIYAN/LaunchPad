@@ -1,22 +1,24 @@
 package com.example.launchpad.job.view
 
+import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import com.example.launchpad.job.viewmodel.JobViewModel
 import com.example.launchpad.R
-import com.example.launchpad.job.adapter.JobAdapter
-import com.example.launchpad.databinding.FragmentHomeBinding
 import com.example.launchpad.auth.view.LoginFragment.Companion.userType
 import com.example.launchpad.data.Company
 import com.example.launchpad.data.viewmodel.UserViewModel
+import com.example.launchpad.databinding.FragmentHomeBinding
+import com.example.launchpad.job.adapter.JobAdapter
+import com.example.launchpad.job.viewmodel.JobViewModel
 import com.example.launchpad.profile.viewmodel.CompanyViewModel
 import com.google.android.material.search.SearchView
 
@@ -39,9 +41,12 @@ class HomeFragment : Fragment(), BottomSheetListener {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
 
-        userVM.getUserLD().observe(viewLifecycleOwner){
+        userVM.getUserLD().observe(viewLifecycleOwner) {
             Log.d("USER", "onCreateView: $it")
-           if (userVM.isCompanyRegistered()) Log.d("COMPANY NOT REGISTER", "onCreateView: p")
+            if (!userVM.isCompanyRegistered()) {
+                nav.navigate(R.id.signUpEnterpriseFragment)
+                Log.d("COMPANY NOT REGISTER", "onCreateView: p")
+            }
         }
 
         val adapter = JobAdapter { holder, job ->
@@ -59,7 +64,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
             adapter.submitList(it.sortedByDescending { it.createdAt })
             svAdapter.submitList(it.sortedByDescending { it.createdAt })
         }
-        
+
         binding.searchView.addTransitionListener { _, _, newState ->
             if (newState == SearchView.TransitionState.HIDDEN) {
                 jobVM.clearSearch()
@@ -193,7 +198,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
                 binding.chipSalary.text = "Salary"
                 if (!isDefaultValue) {
                     binding.chipSalary.text =
-                         "RM ${value[0]} - RM ${value[1]}"
+                        "RM ${value[0]} - RM ${value[1]}"
                 }
             }
         }

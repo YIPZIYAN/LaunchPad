@@ -38,8 +38,6 @@ class SignUpEnterpriseFragment : Fragment() {
     }
 
     private fun submit() {
-        val email = binding.edtEmail.text.toString()
-        val password = binding.edtPassword.text.toString()
         val company = Company(
             name = binding.edtCompanyName.text.toString(),
             description = binding.edtCompanyDescription.text.toString(),

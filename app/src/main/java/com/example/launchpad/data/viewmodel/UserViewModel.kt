@@ -1,6 +1,7 @@
 package com.example.launchpad.data.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.launchpad.data.User
@@ -19,11 +20,6 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
     private var listener: ListenerRegistration? = null
 
     init {
-        auth.currentUser?.reload()
-        if (!isExisted(auth.currentUser!!.uid)) {
-            USERS.document(getAuth().uid).set(getAuth())
-        }
-
         listener = auth.currentUser?.let {
             USERS.document(it.uid).addSnapshotListener { snap, _ ->
                 _userLD.value = snap?.toObject()
@@ -38,8 +34,6 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
         USERS.document(user.uid).set(user).addOnCompleteListener {
         }.await()
     }
-
-    private fun isExisted(id: String) = USERS.document(id).get().isSuccessful
 
     fun getAuth() = auth.currentUser!!.let {
         User(

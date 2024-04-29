@@ -75,7 +75,7 @@ class SignUpFragment : Fragment() {
         if (!isValid(email, password, passwordConfirmation)) {
             return
         }
-        
+
         viewModel.signUpWithEmail(email, password)
 
     }
