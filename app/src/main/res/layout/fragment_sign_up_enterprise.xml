@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".auth.view.SignUpEnterpriseFragment">
+    tools:context=".profile.view.SignUpEnterpriseFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -12,6 +12,7 @@
             android:id="@+id/appBarLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -21,8 +22,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
-                app:navigationIcon="@drawable/round_arrow_back_24"
-                app:title="@string/launchpad_enterprise" />
+                app:subtitle="Fill in company details before access LaunchPad"
+                app:subtitleCentered="true"
+                app:title="@string/launchpad_enterprise"
+                app:titleCentered="true" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -30,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/btnSignUp"
+            app:layout_constraintBottom_toTopOf="@+id/btnDone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout2">
@@ -39,62 +42,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/lblEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="36dp"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edtEmail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/email"
-                        android:inputType="textEmailAddress" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/lblPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="36dp"
-                    android:layout_marginTop="16dp"
-                    app:endIconMode="password_toggle"
-                    app:helperText="@string/password_helper_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/lblEmail">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edtPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/password"
-                        android:inputType="textPassword" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/lblPasswordConfirm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="36dp"
-                    android:layout_marginTop="16dp"
-                    app:endIconMode="password_toggle"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/lblPassword">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edtPasswordConfirmation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/confirm_password"
-                        android:inputType="textPassword" />
-                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/lblCompanyName"
@@ -102,7 +49,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="36dp"
                     android:layout_marginTop="16dp"
-                    app:layout_constraintTop_toBottomOf="@+id/lblPasswordConfirm">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtCompanyName"
@@ -171,7 +120,7 @@
 
 
         <Button
-            android:id="@+id/btnSignUp"
+            android:id="@+id/btnDone"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginHorizontal="64dp"

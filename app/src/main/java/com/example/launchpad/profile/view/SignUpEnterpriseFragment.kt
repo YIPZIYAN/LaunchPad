@@ -1,4 +1,4 @@
-package com.example.launchpad.auth.view
+package com.example.launchpad.profile.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -38,8 +38,6 @@ class SignUpEnterpriseFragment : Fragment() {
     }
 
     private fun submit() {
-        val email = binding.edtEmail.text.toString()
-        val password = binding.edtPassword.text.toString()
         val company = Company(
             name = binding.edtCompanyName.text.toString(),
             description = binding.edtCompanyDescription.text.toString(),
@@ -47,7 +45,7 @@ class SignUpEnterpriseFragment : Fragment() {
             year = binding.edtYear.text.toString().toIntOrNull() ?: -1
         )
 
-        signUpViewModel.signUpWithEmail(email, password, company)
+//        signUpViewModel.signUpWithEmail(email, password)
 
     }
 

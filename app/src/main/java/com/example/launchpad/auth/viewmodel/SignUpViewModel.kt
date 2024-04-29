@@ -1,19 +1,16 @@
 package com.example.launchpad.auth.viewmodel
 
 import android.app.Application
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.example.launchpad.data.Company
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
-import com.google.gson.Gson
 import java.util.Timer
 import java.util.TimerTask
 
 class SignUpViewModel(val app: Application) : AndroidViewModel(app) {
-    private val auth = Firebase.auth
+    val auth = Firebase.auth
 
     private val _isVerified = MutableLiveData<Boolean>()
     val isVerified = _isVerified
@@ -24,23 +21,11 @@ class SignUpViewModel(val app: Application) : AndroidViewModel(app) {
     private val _errorResponseMsg = MutableLiveData<String>()
     val errorResponseMsg = _errorResponseMsg
 
-    fun signUpWithEmail(email: String, password: String, company: Company? = null) {
+    fun signUpWithEmail(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     _isSignUpSuccess.value = task.isSuccessful
-                    if (company != null) {
-                        getPreferences()
-                            .edit()
-                            .putString("company", Gson().toJson(company))
-                            .apply()
-                        Log.d(
-                            "Sign Up Enterprise",
-                            "signUpWithEmail: ${getPreferences().getString("company", null)}"
-                        )
-
-                    }
-                    sendEmailVerification()
                 }
             }
             .addOnFailureListener {
@@ -71,7 +56,4 @@ class SignUpViewModel(val app: Application) : AndroidViewModel(app) {
         }
     }
 
-    private fun getPreferences() = app.getSharedPreferences("company", Context.MODE_PRIVATE)
-
-    fun cancel() = Unit
 }
