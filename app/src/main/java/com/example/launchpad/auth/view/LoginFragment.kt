@@ -24,6 +24,7 @@ import com.example.launchpad.util.toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
@@ -43,19 +44,7 @@ class LoginFragment : Fragment() {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         buttonAction()
 
-        //auto login
-        if (viewModel.isLoggedIn() && viewModel.isVerified()) {
-            Log.d("status", "onCreateView: logged in and verified")
-            requireContext().intentWithoutBackstack(requireActivity(), UserActivity::class.java)
-        }
 
-        if (viewModel.isLoggedIn() && !viewModel.isVerified()) {
-            Log.d("status", "onCreateView: logged in")
-            requireContext().intentWithoutBackstack(
-                requireActivity(),
-                EmailVerificationActivity::class.java
-            )
-        }
 
         viewModel.signInResult.observe(viewLifecycleOwner) { success ->
             if (success) {

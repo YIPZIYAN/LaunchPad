@@ -16,7 +16,6 @@ import kotlinx.coroutines.launch
 class EmailVerificationActivity : AppCompatActivity() {
     lateinit var binding: ActivityEmailVerificationBinding
     val viewModel: SignUpViewModel by viewModels()
-    private val userVM: UserViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEmailVerificationBinding.inflate(layoutInflater)
@@ -26,7 +25,7 @@ class EmailVerificationActivity : AppCompatActivity() {
 
         binding.txtSentTo.text = """
             An email verification sent to 
-            ${userVM.getAuth().email}
+            ${viewModel.auth.currentUser?.email}
         """.trimIndent()
 
         viewModel.isVerified.observe(this) {

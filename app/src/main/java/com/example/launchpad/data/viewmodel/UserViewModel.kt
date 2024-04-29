@@ -1,7 +1,6 @@
 package com.example.launchpad.data.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.launchpad.data.User
@@ -14,27 +13,26 @@ import kotlinx.coroutines.tasks.await
 
 class UserViewModel(val app: Application) : AndroidViewModel(app) {
     private val USERS = Firebase.firestore.collection("user")
-    private val _usersLD = MutableLiveData<User>()
+    private val _userLD = MutableLiveData<User>()
 
     private val auth = Firebase.auth
     private var listener: ListenerRegistration? = null
 
     init {
         auth.currentUser?.reload()
-        if (isExisted(auth.currentUser!!.uid)) {
+        if (!isExisted(auth.currentUser!!.uid)) {
             USERS.document(getAuth().uid).set(getAuth())
         }
 
         listener = auth.currentUser?.let {
             USERS.document(it.uid).addSnapshotListener { snap, _ ->
-                _usersLD.value = snap?.toObject()
-
+                _userLD.value = snap?.toObject()
             }
         }
     }
 
 
-    fun getUserLD() = _usersLD
+    fun getUserLD() = _userLD
 
     suspend fun set(user: User) {
         USERS.document(user.uid).set(user).addOnCompleteListener {
@@ -49,11 +47,10 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
             email = it.email ?: "",
             avatar = if (it.photoUrl != null) it.photoUrl.toString() else "",
             name = it.displayName ?: "User#${it.uid.take(8)}",
-            provider = it.providerId
+            provider = it.providerData.toString()
         )
     }
-
-
-    fun isEnterprise() = true
+    fun isEnterprise() = _userLD.value!!.isEnterprise
+    fun isCompanyRegistered() = isEnterprise() && _userLD.value?.company_id != ""
     fun init() = Unit
 }

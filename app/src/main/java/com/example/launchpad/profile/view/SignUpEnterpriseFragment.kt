@@ -1,4 +1,4 @@
-package com.example.launchpad.auth.view
+package com.example.launchpad.profile.view
 
 import android.os.Bundle
 import android.view.LayoutInflater

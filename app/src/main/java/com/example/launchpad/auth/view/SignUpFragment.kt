@@ -26,6 +26,7 @@ class SignUpFragment : Fragment() {
     private val userVM: UserViewModel by viewModels()
     private val nav by lazy { findNavController() }
     private lateinit var binding: FragmentSignUpBinding
+    private var isEnterprise = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,18 +34,33 @@ class SignUpFragment : Fragment() {
     ): View {
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
 
-        binding.btnSignUp.setOnClickListener { submit() }
+        binding.btnSignUp.setOnClickListener {
+            submit()
+            isEnterprise = false
+        }
 
-        binding.btnEnterprise.setOnClickListener { submit(true) }
+        binding.btnEnterprise.setOnClickListener {
+            submit()
+            isEnterprise = true
+        }
 
-        viewModel.errorResponseMsg.observe(viewLifecycleOwner) { toast(it) }
+        viewModel.errorResponseMsg.observe(viewLifecycleOwner) {
+            toast(it)
+        }
 
         viewModel.isSignUpSuccess.observe(viewLifecycleOwner) {
-            viewModel.sendEmailVerification()
-            requireContext().intentWithoutBackstack(
-                requireActivity(),
-                EmailVerificationActivity::class.java
-            )
+            if (it) {
+                lifecycleScope.launch {
+                    val user = userVM.getAuth()
+                    user.isEnterprise = isEnterprise
+                    userVM.set(user)
+                }
+                viewModel.sendEmailVerification()
+                requireContext().intentWithoutBackstack(
+                    requireActivity(),
+                    EmailVerificationActivity::class.java
+                )
+            }
         }
 
         return binding.root
@@ -59,13 +75,8 @@ class SignUpFragment : Fragment() {
         if (!isValid(email, password, passwordConfirmation)) {
             return
         }
-
-        loadingDialog().show()
-        lifecycleScope.launch {
-            viewModel.signUpWithEmail(email, password)
-            userVM.set(userVM.getAuth())
-        }
-        loadingDialog().dismiss()
+        
+        viewModel.signUpWithEmail(email, password)
 
     }
 
