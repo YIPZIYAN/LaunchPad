@@ -23,7 +23,7 @@ class SignUpEnterpriseFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSignUpEnterpriseBinding.inflate(inflater, container, false)
-        binding.btnSignUp.setOnClickListener { submit() }
+        binding.btnDone.setOnClickListener { submit() }
 
         signUpViewModel.errorResponseMsg.observe(viewLifecycleOwner) { toast(it) }
 
