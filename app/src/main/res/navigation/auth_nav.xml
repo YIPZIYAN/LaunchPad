@@ -45,11 +45,6 @@
             app:exitAnim="@anim/exit"
             app:popEnterAnim="@anim/pop_enter"
             app:popExitAnim="@anim/pop_exit" />
-        <action
-            android:id="@+id/action_signUpFragment_to_signUpEnterpriseFragment"
-            app:destination="@id/signUpEnterpriseFragment"
-            app:enterAnim="@anim/enter"
-            app:exitAnim="@anim/exit" />
     </fragment>
     <activity
         android:id="@+id/userActivity"
@@ -61,9 +56,4 @@
         android:name="com.example.launchpad.auth.view.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
         tools:layout="@layout/fragment_forgot_password" />
-    <fragment
-        android:id="@+id/signUpEnterpriseFragment"
-        android:name="com.example.launchpad.auth.view.SignUpEnterpriseFragment"
-        android:label="fragment_sign_up_enterprise"
-        tools:layout="@layout/fragment_sign_up_enterprise" />
 </navigation>

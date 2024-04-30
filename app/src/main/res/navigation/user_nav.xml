@@ -206,5 +206,10 @@
         android:name="com.example.launchpad.job.view.SavedJobFragment"
         android:label="SavedJobFragment"
         tools:layout="@layout/fragment_saved_job"/>
+    <fragment
+        android:id="@+id/signUpEnterpriseFragment"
+        android:name="com.example.launchpad.profile.view.SignUpEnterpriseFragment"
+        android:label="fragment_sign_up_enterprise"
+        tools:layout="@layout/fragment_sign_up_enterprise"/>
 
 </navigation>

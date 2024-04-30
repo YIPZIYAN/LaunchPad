@@ -1,17 +1,19 @@
 package com.example.launchpad.util
 
+import android.app.Application
+import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.os.Bundle
-import android.widget.EditText
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Bundle
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.graphics.drawable.toBitmapOrNull
 import androidx.core.graphics.scale
 import androidx.fragment.app.Fragment
+import com.example.launchpad.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
@@ -56,13 +58,23 @@ fun Fragment.dialog(
     builder.show()
 }
 
+fun Fragment.loadingDialog(): Dialog {
+    val dialog = Dialog(requireContext())
+    dialog.setContentView(R.layout.layout_loading)
+    return dialog
+}
+
 fun Fragment.displayErrorHelper(view: TextInputLayout, errorMsg: String) {
     view.requestFocus()
     view.error = errorMsg
     view.errorIconDrawable = null
 }
 
-fun Context.intentWithoutBackstack(context: Context, targetClass: Class<*>, extras: Bundle? = null) {
+fun Context.intentWithoutBackstack(
+    context: Context,
+    targetClass: Class<*>,
+    extras: Bundle? = null
+) {
     val intent = Intent(context, targetClass)
     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
     extras?.let {
@@ -94,8 +106,7 @@ fun Bitmap.crop(width: Int, height: Int): Bitmap {
         h = (sw / ratio).toInt()
         x = 0
         y = (sh - h) / 2
-    }
-    else {
+    } else {
         // Retain height, calculate width
         w = (sh * ratio).toInt()
         h = sh

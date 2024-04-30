@@ -1,18 +1,18 @@
 package com.example.launchpad
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.ActivityUserBinding
-import com.example.launchpad.profile.viewmodel.CompanyViewModel
 import com.example.launchpad.job.viewmodel.JobViewModel
+import com.example.launchpad.profile.viewmodel.CompanyViewModel
 
 class UserActivity : AppCompatActivity() {
 
@@ -54,6 +54,7 @@ class UserActivity : AppCompatActivity() {
                 R.id.scheduleInterviewFragment,
                 R.id.savedJobFragment,
                 R.id.archivedJobFragment,
+                R.id.signUpEnterpriseFragment
             )
 
             val isBottomNavVisible = !hideBottomNavDestinations.contains(destination.id)

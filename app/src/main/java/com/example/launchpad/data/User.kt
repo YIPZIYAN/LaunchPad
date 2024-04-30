@@ -8,5 +8,7 @@ data class User(
     val name: String = "",
     val email: String = "",
     val avatar: String = "",
-    val company: Company? = null,
+    val provider: String = "",
+    val company_id: String = "",
+    var isEnterprise: Boolean = false,
 )

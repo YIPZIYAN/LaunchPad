@@ -1,23 +1,25 @@
 package com.example.launchpad.job.view
 
+import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import com.example.launchpad.job.viewmodel.JobViewModel
 import com.example.launchpad.R
-import com.example.launchpad.job.adapter.JobAdapter
-import com.example.launchpad.databinding.FragmentHomeBinding
 import com.example.launchpad.auth.view.LoginFragment.Companion.userType
 import com.example.launchpad.data.Company
 import com.example.launchpad.data.SaveJob
 import com.example.launchpad.data.viewmodel.UserViewModel
+import com.example.launchpad.databinding.FragmentHomeBinding
+import com.example.launchpad.job.adapter.JobAdapter
+import com.example.launchpad.job.viewmodel.JobViewModel
 import com.example.launchpad.profile.viewmodel.CompanyViewModel
 import com.google.android.material.search.SearchView
 import org.joda.time.DateTime
@@ -144,6 +146,15 @@ class HomeFragment : Fragment(), BottomSheetListener {
 
         //-----------------------------------------------------------
         // Search And Filter
+// check register
+//        userVM.getUserLD().observe(viewLifecycleOwner) {
+//            Log.d("USER", "onCreateView: $it")
+//            if (userVM.isEnterprise() && !userVM.isCompanyRegistered()) {
+//                nav.navigate(R.id.signUpEnterpriseFragment)
+//                Log.d("COMPANY NOT REGISTER", "onCreateView: p")
+//            }
+//        }
+
         binding.searchView.addTransitionListener { _, _, newState ->
             if (newState == SearchView.TransitionState.HIDDEN) {
                 jobVM.clearSearch()

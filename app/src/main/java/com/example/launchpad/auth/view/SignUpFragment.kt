@@ -1,26 +1,32 @@
 package com.example.launchpad.auth.view
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.util.Patterns
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.EmailVerificationActivity
 import com.example.launchpad.R
-import com.example.launchpad.databinding.FragmentSignUpBinding
 import com.example.launchpad.auth.viewmodel.SignUpViewModel
+import com.example.launchpad.data.viewmodel.UserViewModel
+import com.example.launchpad.databinding.FragmentSignUpBinding
 import com.example.launchpad.util.displayErrorHelper
 import com.example.launchpad.util.intentWithoutBackstack
+import com.example.launchpad.util.loadingDialog
 import com.example.launchpad.util.toast
+import kotlinx.coroutines.launch
 
 class SignUpFragment : Fragment() {
 
     private val viewModel: SignUpViewModel by viewModels()
+    private val userVM: UserViewModel by viewModels()
     private val nav by lazy { findNavController() }
     private lateinit var binding: FragmentSignUpBinding
+    private var isEnterprise = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,23 +34,39 @@ class SignUpFragment : Fragment() {
     ): View {
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
 
-        binding.btnSignUp.setOnClickListener { submit() }
+        binding.btnSignUp.setOnClickListener {
+            submit()
+            isEnterprise = false
+        }
 
-        binding.btnEnterprise.setOnClickListener { nav.navigate(R.id.action_signUpFragment_to_signUpEnterpriseFragment) }
+        binding.btnEnterprise.setOnClickListener {
+            submit()
+            isEnterprise = true
+        }
 
-        viewModel.errorResponseMsg.observe(viewLifecycleOwner) { toast(it) }
+        viewModel.errorResponseMsg.observe(viewLifecycleOwner) {
+            toast(it)
+        }
 
         viewModel.isSignUpSuccess.observe(viewLifecycleOwner) {
-            requireContext().intentWithoutBackstack(
-                requireActivity(),
-                EmailVerificationActivity::class.java
-            )
+            if (it) {
+                lifecycleScope.launch {
+                    val user = userVM.getAuth()
+                    user.isEnterprise = isEnterprise
+                    userVM.set(user)
+                }
+                viewModel.sendEmailVerification()
+                requireContext().intentWithoutBackstack(
+                    requireActivity(),
+                    EmailVerificationActivity::class.java
+                )
+            }
         }
 
         return binding.root
     }
 
-    private fun submit() {
+    private fun submit(isEnterprise: Boolean = false) {
         resetError()
         val email = binding.edtEmail.text.toString().trim()
         val password = binding.edtPassword.text.toString()
@@ -55,6 +77,7 @@ class SignUpFragment : Fragment() {
         }
 
         viewModel.signUpWithEmail(email, password)
+
     }
 
     private fun isValid(email: String, password: String, passwordConfirmation: String): Boolean {
