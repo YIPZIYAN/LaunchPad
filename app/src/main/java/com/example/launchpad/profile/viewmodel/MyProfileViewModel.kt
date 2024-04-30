@@ -11,5 +11,8 @@ class MyProfileViewModel : ViewModel() {
     private val auth = Firebase.auth
 
 
+    fun getUserLD() = userLD
+    fun getUser() = userLD.value
+
 
 }

@@ -15,12 +15,14 @@ import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.auth.view.LoginFragment.Companion.userType
 import com.example.launchpad.data.Company
+import com.example.launchpad.data.SaveJob
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentHomeBinding
 import com.example.launchpad.job.adapter.JobAdapter
 import com.example.launchpad.job.viewmodel.JobViewModel
 import com.example.launchpad.profile.viewmodel.CompanyViewModel
 import com.google.android.material.search.SearchView
+import org.joda.time.DateTime
 
 class HomeFragment : Fragment(), BottomSheetListener {
 
@@ -40,6 +42,110 @@ class HomeFragment : Fragment(), BottomSheetListener {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        getGreeting()
+        Log.d("COMPANY2", companyVM.get("COM1").toString())
+
+        userVM.getUserLD().observe(viewLifecycleOwner) {
+            Log.d("USER", "onCreateView: $it")
+            Log.d("ENTERPRISE?", "onCreateView: ${userVM.isEnterprise()}")
+            binding.username.text = userVM.getAuth().name
+            //-----------------------------------------------------------
+            // Company
+            if (userVM.isEnterprise()) {
+                binding.homeTitle.text = resources.getString(R.string.your_posted_job)
+                binding.btnSavedJob.text = resources.getString(R.string.Archived)
+                binding.btnSavedJob.setOnClickListener {
+                    nav.navigate(R.id.action_homeFragment_to_archivedJobFragment)
+                }
+                binding.btnPostJob.visibility = View.VISIBLE
+                binding.btnPostJob.setOnClickListener {
+                    nav.navigate(R.id.action_homeFragment_to_postJobFragment)
+                }
+            }
+            else {
+                binding.homeTitle.text = resources.getString(R.string.recent_job_list)
+                binding.btnSavedJob.text = resources.getString(R.string.saved_job)
+                binding.btnSavedJob.setOnClickListener {
+                    nav.navigate(R.id.action_homeFragment_to_savedJobFragment)
+                }
+            }
+            //-----------------------------------------------------------
+            // Show Job List & Save Job
+            val adapter = JobAdapter { holder, job ->
+                holder.binding.root.setOnClickListener { detail(job.jobID) }
+                if (!userVM.isEnterprise()) {
+                    holder.binding.bookmark.visibility = View.VISIBLE
+                    val saveJob = jobVM.getSaveJobByUser("userID")
+                    saveJob.forEach {
+                        if (it.jobID == job.jobID) {
+                            holder.binding.bookmark.isChecked = true
+                        }
+                    }
+                    holder.binding.bookmark.setOnCheckedChangeListener { _, _ ->
+                        val saveJob = SaveJob(
+                            id = "userID" + "_" + job.jobID,
+                            userID = "userID",
+                            jobID = job.jobID,
+                        )
+                        if (holder.binding.bookmark.isChecked) {
+                            jobVM.saveJob(saveJob)
+                        } else {
+                            jobVM.unsaveJob(saveJob.id)
+                        }
+                    }
+                }
+            }
+            binding.rvJobCard.adapter = adapter
+
+            val svAdapter = JobAdapter() { holder, job ->
+                holder.binding.root.setOnClickListener { detail(job.jobID) }
+                if (!userVM.isEnterprise()) {
+                    holder.binding.bookmark.visibility = View.VISIBLE
+                    val saveJob = jobVM.getSaveJobByUser("userID")
+                    saveJob.forEach {
+                        if (it.jobID == job.jobID) {
+                            holder.binding.bookmark.isChecked = true
+                        }
+                    }
+                    holder.binding.bookmark.setOnCheckedChangeListener { _, _ ->
+                        val saveJob = SaveJob(
+                            id = "userID" + "_" + job.jobID,
+                            userID = "userID",
+                            jobID = job.jobID,
+                        )
+                        if (holder.binding.bookmark.isChecked) {
+                            jobVM.saveJob(saveJob)
+                        } else {
+                            jobVM.unsaveJob(saveJob.id)
+                        }
+                    }
+                }
+            }
+            binding.rvSearchResult.adapter = adapter
+
+            jobVM.getResultLD().observe(viewLifecycleOwner) {
+                Log.d("COMPANY", it.toString())
+                Log.d("DIU", companyVM.get("COMPANY2").toString())
+
+                it.forEach { it.company = companyVM.get(it.companyID) ?: Company() }
+                if (userVM.isEnterprise()) {
+                    //jobVM.filterJobByCompany("COM1")
+                }
+                adapter.submitList(it.sortedByDescending { it.createdAt })
+                svAdapter.submitList(it.sortedByDescending { it.createdAt })
+            }
+
+            //-----------------------------------------------------------
+            // Refresh
+            binding.refresh.setOnRefreshListener {
+                adapter.notifyDataSetChanged()
+                svAdapter.notifyDataSetChanged()
+                binding.refresh.isRefreshing = false
+            }
+        }
+
+        //-----------------------------------------------------------
+        // Search And Filter
 // check register
 //        userVM.getUserLD().observe(viewLifecycleOwner) {
 //            Log.d("USER", "onCreateView: $it")
@@ -48,22 +154,6 @@ class HomeFragment : Fragment(), BottomSheetListener {
 //                Log.d("COMPANY NOT REGISTER", "onCreateView: p")
 //            }
 //        }
-
-        val adapter = JobAdapter { holder, job ->
-            holder.binding.root.setOnClickListener { detail(job.jobID) }
-        }
-        binding.rvJobCard.adapter = adapter
-
-        val svAdapter = JobAdapter { holder, job ->
-            holder.binding.root.setOnClickListener { detail(job.jobID) }
-        }
-        binding.rvSearchResult.adapter = adapter
-
-        jobVM.getResultLD().observe(viewLifecycleOwner) {
-            it.forEach { it.company = companyVM.get(it.companyID) ?: Company() }
-            adapter.submitList(it.sortedByDescending { it.createdAt })
-            svAdapter.submitList(it.sortedByDescending { it.createdAt })
-        }
 
         binding.searchView.addTransitionListener { _, _, newState ->
             if (newState == SearchView.TransitionState.HIDDEN) {
@@ -83,26 +173,6 @@ class HomeFragment : Fragment(), BottomSheetListener {
         binding.chipWorkplace.setOnClickListener { chipWorkplace() }
 
         binding.chipSalary.setOnClickListener { chipSalary() }
-
-        binding.btnPostJob.setOnClickListener {
-            nav.navigate(R.id.action_homeFragment_to_postJobFragment)
-        }
-
-        binding.refresh.setOnRefreshListener {
-            adapter.notifyDataSetChanged()
-            svAdapter.notifyDataSetChanged()
-            binding.refresh.isRefreshing = false
-        }
-
-        // company
-        if (userType == 0) {
-            binding.homeTitle.text = resources.getString(R.string.your_posted_job)
-            binding.btnPostJob.visibility = View.VISIBLE
-            binding.btnSavedJob.text = resources.getString(R.string.Archived)
-            binding.btnSavedJob.setOnClickListener {
-                nav.navigate(R.id.action_homeFragment_to_archivedJobFragment)
-            }
-        }
 
         return binding.root
     }
@@ -152,6 +222,16 @@ class HomeFragment : Fragment(), BottomSheetListener {
                 "jobID" to jobID
             )
         )
+    }
+
+    private fun getGreeting() {
+        val now = DateTime.now().hourOfDay
+        when (now) {
+            in 0..4 -> binding.lblGreeting.text = resources.getString(R.string.TimeToSleep)
+            in 5..11 -> binding.lblGreeting.text = resources.getString(R.string.GoodMorning)
+            in 12..17 -> binding.lblGreeting.text = resources.getString(R.string.GoodAfternoon)
+            else -> binding.lblGreeting.text = resources.getString(R.string.GoodEvening)
+        }
     }
 
     override fun onValueSelected(value: List<String>, type: BottomSheetListener.Type) {
@@ -204,7 +284,6 @@ class HomeFragment : Fragment(), BottomSheetListener {
         }
 
     }
-
 }
 
 

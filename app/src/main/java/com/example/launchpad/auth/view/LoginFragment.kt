@@ -31,7 +31,7 @@ class LoginFragment : Fragment() {
 
     companion object {
         fun newInstance() = LoginFragment()
-        var userType = 0; // 1 = employee, 0 = company, testing only
+        var userType = 1; // 1 = employee, 0 = company, testing only
     }
 
     private val viewModel: LoginViewModel by activityViewModels()

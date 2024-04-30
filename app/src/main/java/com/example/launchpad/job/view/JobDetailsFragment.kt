@@ -15,6 +15,7 @@ import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentJobDetailsBinding
 import com.example.launchpad.auth.view.LoginFragment.Companion.userType
 import com.example.launchpad.data.Company
+import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.profile.viewmodel.CompanyViewModel
 import com.example.launchpad.util.setImageBlob
 import com.example.launchpad.job.viewmodel.JobViewModel
@@ -29,6 +30,7 @@ class JobDetailsFragment : Fragment() {
     private val nav by lazy { findNavController() }
     private val jobVM: JobViewModel by activityViewModels()
     private val companyVM: CompanyViewModel by activityViewModels()
+    private val userVM: UserViewModel by activityViewModels()
 
     private val jobID by lazy { arguments?.getString("jobID") ?: "" }
     private val isArchived by lazy { arguments?.getBoolean("isArchived") ?: false }
@@ -44,7 +46,7 @@ class JobDetailsFragment : Fragment() {
             nav.navigateUp()
         }
 
-        if (userType == 0) {
+        if (userVM.isEnterprise()) {
             binding.topAppBar.menu.findItem(R.id.edit).isVisible = !isArchived
             binding.topAppBar.menu.findItem(R.id.archive).setVisible(true)
             if (isArchived) {

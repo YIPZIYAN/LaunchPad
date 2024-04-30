@@ -23,4 +23,5 @@ data class Job(
 ) {
     @get:Exclude
     var company: Company = Company()
+
 }

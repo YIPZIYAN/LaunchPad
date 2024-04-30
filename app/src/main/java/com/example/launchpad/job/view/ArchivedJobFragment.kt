@@ -1,4 +1,4 @@
-package com.example.launchpad
+package com.example.launchpad.job.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.launchpad.R
 import com.example.launchpad.data.Company
 import com.example.launchpad.databinding.FragmentArchivedJobBinding
 import com.example.launchpad.job.adapter.ArchivedJobAdapter
@@ -40,6 +41,9 @@ class ArchivedJobFragment : Fragment() {
         jobVM.updateArchived()
 
         jobVM.getArchivedLD().observe(viewLifecycleOwner) {
+            if (it.isEmpty()) {
+                binding.noArchivedJob.visibility = View.VISIBLE
+            }
             it.forEach { it.company = companyVM.get(it.companyID) ?: Company() }
             adapter.submitList(it.sortedByDescending { it.deletedAt })
         }

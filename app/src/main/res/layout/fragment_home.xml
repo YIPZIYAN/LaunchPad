@@ -54,15 +54,17 @@
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
+                                android:id="@+id/username"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
-                                android:text="Username123"
+                                android:text=""
                                 android:textAppearance="?attr/textAppearanceTitleMedium"
                                 android:textColor="@color/md_theme_dark_onBackground"
                                 android:textSize="16sp"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/lbl_greeting" />
+                                app:layout_constraintTop_toBottomOf="@id/lbl_greeting"
+                                tools:text="Username" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -92,12 +94,13 @@
                         android:layout_marginStart="28dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="20dp"
-                        android:text="@string/recent_job_list"
+                        android:text=""
                         android:textAppearance="?attr/textAppearanceTitleLarge"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toTopOf="@id/rv_job_card"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/searchbar_container" />
+                        app:layout_constraintTop_toBottomOf="@+id/searchbar_container"
+                        tools:text="Home Title" />
 
                     <Button
                         android:id="@+id/btn_saved_job"
@@ -105,12 +108,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="45dp"
                         android:layout_marginEnd="24dp"
-                        android:text="@string/saved_job"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="@id/home_title"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/home_title"
-                        app:strokeColor="@color/m3_text_button_foreground_color_selector" />
+                        app:strokeColor="@color/m3_text_button_foreground_color_selector"
+                        tools:text="Saved/Post"/>
 
                     <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
 
