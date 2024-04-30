@@ -43,7 +43,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
 
         userVM.getUserLD().observe(viewLifecycleOwner) {
             Log.d("USER", "onCreateView: $it")
-            if (!userVM.isCompanyRegistered()) {
+            if (userVM.isEnterprise() && !userVM.isCompanyRegistered()) {
                 nav.navigate(R.id.signUpEnterpriseFragment)
                 Log.d("COMPANY NOT REGISTER", "onCreateView: p")
             }

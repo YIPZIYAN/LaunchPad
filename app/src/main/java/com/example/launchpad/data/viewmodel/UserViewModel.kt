@@ -45,6 +45,6 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
         )
     }
     fun isEnterprise() = _userLD.value!!.isEnterprise
-    fun isCompanyRegistered() = isEnterprise() && _userLD.value?.company_id != ""
+    fun isCompanyRegistered() =  _userLD.value?.company_id != ""
     fun init() = Unit
 }
