@@ -1,8 +1,6 @@
 package com.example.launchpad.job.view
 
-import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +23,8 @@ import org.joda.time.DateTime
 class HomeFragment : Fragment(), BottomSheetListener {
 
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var adapter: JobAdapter
+    private lateinit var svAdapter: JobAdapter
     private val nav by lazy { findNavController() }
     private val jobVM: JobViewModel by activityViewModels()
     private val userVM: UserViewModel by activityViewModels()
@@ -41,12 +41,10 @@ class HomeFragment : Fragment(), BottomSheetListener {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         getGreeting()
-        Log.d("COMPANY2", companyVM.get("COM1").toString())
 
         userVM.getUserLD().observe(viewLifecycleOwner) {
-            Log.d("USER", "onCreateView: $it")
-            Log.d("ENTERPRISE?", "onCreateView: ${userVM.isEnterprise()}")
-            binding.username.text = userVM.getAuth().name
+
+            binding.username.text = it.name
             //-----------------------------------------------------------
             // Company
             if (userVM.isEnterprise()) {
@@ -59,8 +57,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
                 binding.btnPostJob.setOnClickListener {
                     nav.navigate(R.id.action_homeFragment_to_postJobFragment)
                 }
-            }
-            else {
+            } else {
                 binding.homeTitle.text = resources.getString(R.string.recent_job_list)
                 binding.btnSavedJob.text = resources.getString(R.string.saved_job)
                 binding.btnSavedJob.setOnClickListener {
@@ -69,13 +66,13 @@ class HomeFragment : Fragment(), BottomSheetListener {
             }
             //-----------------------------------------------------------
             // Show Job List & Save Job
-            val adapter = JobAdapter { holder, job ->
+            adapter = JobAdapter { holder, job ->
                 holder.binding.root.setOnClickListener { detail(job.jobID) }
                 if (!userVM.isEnterprise()) {
                     holder.binding.bookmark.visibility = View.VISIBLE
                     val saveJob = jobVM.getSaveJobByUser("userID")
-                    saveJob.forEach {
-                        if (it.jobID == job.jobID) {
+                    saveJob.forEach { jobs ->
+                        if (jobs.jobID == job.jobID) {
                             holder.binding.bookmark.isChecked = true
                         }
                     }
@@ -95,13 +92,13 @@ class HomeFragment : Fragment(), BottomSheetListener {
             }
             binding.rvJobCard.adapter = adapter
 
-            val svAdapter = JobAdapter() { holder, job ->
+            svAdapter = JobAdapter() { holder, job ->
                 holder.binding.root.setOnClickListener { detail(job.jobID) }
                 if (!userVM.isEnterprise()) {
                     holder.binding.bookmark.visibility = View.VISIBLE
                     val saveJob = jobVM.getSaveJobByUser("userID")
-                    saveJob.forEach {
-                        if (it.jobID == job.jobID) {
+                    saveJob.forEach { jobs ->
+                        if (jobs.jobID == job.jobID) {
                             holder.binding.bookmark.isChecked = true
                         }
                     }
@@ -121,37 +118,37 @@ class HomeFragment : Fragment(), BottomSheetListener {
             }
             binding.rvSearchResult.adapter = adapter
 
-            jobVM.getResultLD().observe(viewLifecycleOwner) {
-                Log.d("COMPANY", it.toString())
-                Log.d("DIU", companyVM.get("COMPANY2").toString())
-
-                it.forEach { it.company = companyVM.get(it.companyID) ?: Company() }
-                if (userVM.isEnterprise()) {
-                    //jobVM.filterJobByCompany("COM1")
-                }
-                adapter.submitList(it.sortedByDescending { it.createdAt })
-                svAdapter.submitList(it.sortedByDescending { it.createdAt })
-            }
-
-            //-----------------------------------------------------------
-            // Refresh
-            binding.refresh.setOnRefreshListener {
-                adapter.notifyDataSetChanged()
-                svAdapter.notifyDataSetChanged()
-                binding.refresh.isRefreshing = false
+            if (userVM.isEnterprise()) {
+                jobVM.filterJobByCompany(userVM.getUserLD().value!!.company_id)
             }
         }
 
+
+
+        jobVM.getResultLD().observe(viewLifecycleOwner) {
+
+            it.forEach { job ->
+                job.company = companyVM.get(job.companyID) ?: Company()
+            }
+
+            it.sortedByDescending { job ->
+                job.createdAt
+            }
+
+            adapter.submitList(it)
+            svAdapter.submitList(it)
+        }
+
+        //-----------------------------------------------------------
+        // Refresh
+        binding.refresh.setOnRefreshListener {
+            adapter.notifyDataSetChanged()
+            svAdapter.notifyDataSetChanged()
+            binding.refresh.isRefreshing = false
+        }
         //-----------------------------------------------------------
         // Search And Filter
-// check register
-//        userVM.getUserLD().observe(viewLifecycleOwner) {
-//            Log.d("USER", "onCreateView: $it")
-//            if (userVM.isEnterprise() && !userVM.isCompanyRegistered()) {
-//                nav.navigate(R.id.signUpEnterpriseFragment)
-//                Log.d("COMPANY NOT REGISTER", "onCreateView: p")
-//            }
-//        }
+
 
         binding.searchView.addTransitionListener { _, _, newState ->
             if (newState == SearchView.TransitionState.HIDDEN) {

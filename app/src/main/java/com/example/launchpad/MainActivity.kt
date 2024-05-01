@@ -7,18 +7,26 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.example.launchpad.auth.viewmodel.LoginViewModel
+import com.example.launchpad.data.viewmodel.CompanyViewModel
+import com.example.launchpad.data.viewmodel.UserViewModel
+import com.example.launchpad.job.viewmodel.JobViewModel
 import com.example.launchpad.util.intentWithoutBackstack
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     val viewModel: LoginViewModel by viewModels()
+    private val jobVM: JobViewModel by viewModels()
+    private val companyVM: CompanyViewModel by viewModels()
+    private val userVM: UserViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
+        companyVM.init()
+        jobVM.init()
+        userVM.init()
 
         super.onCreate(savedInstanceState)
         installSplashScreen()
         setContentView(R.layout.activity_main) //change accordingly for testing
-
         lifecycleScope.launch {
             viewModel.getCurrentUser()
         }
