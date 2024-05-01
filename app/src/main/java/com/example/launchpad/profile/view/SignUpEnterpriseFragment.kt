@@ -5,18 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.example.launchpad.EmailVerificationActivity
-import com.example.launchpad.auth.viewmodel.SignUpViewModel
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.launchpad.data.Company
+import com.example.launchpad.data.viewmodel.CompanyViewModel
+import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentSignUpEnterpriseBinding
-import com.example.launchpad.util.intentWithoutBackstack
-import com.example.launchpad.util.toast
+import kotlinx.coroutines.launch
 
 class SignUpEnterpriseFragment : Fragment() {
 
     lateinit var binding: FragmentSignUpEnterpriseBinding
-    private val signUpViewModel: SignUpViewModel by viewModels()
+    private val companyVM: CompanyViewModel by activityViewModels()
+    private val userVM: UserViewModel by activityViewModels()
+    private val nav by lazy { findNavController() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,14 +29,7 @@ class SignUpEnterpriseFragment : Fragment() {
         binding = FragmentSignUpEnterpriseBinding.inflate(inflater, container, false)
         binding.btnDone.setOnClickListener { submit() }
 
-        signUpViewModel.errorResponseMsg.observe(viewLifecycleOwner) { toast(it) }
-
-        signUpViewModel.isSignUpSuccess.observe(viewLifecycleOwner) {
-            requireContext().intentWithoutBackstack(
-                requireActivity(),
-                EmailVerificationActivity::class.java
-            )
-        }
+        binding.topAppBar.setOnClickListener { nav.navigateUp() }
 
         return binding.root
     }
@@ -45,7 +42,8 @@ class SignUpEnterpriseFragment : Fragment() {
             year = binding.edtYear.text.toString().toIntOrNull() ?: -1
         )
 
-//        signUpViewModel.signUpWithEmail(email, password)
+        lifecycleScope.launch { companyVM.set(company) }
+
 
     }
 
