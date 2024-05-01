@@ -189,7 +189,7 @@ class PostJobFragment : Fragment() {
             createdAt = if (isEditing) binding.createdAt.text.toString()
                 .toLong() else DateTime.now().millis,
             updatedAt = if (isEditing) DateTime.now().millis else 0,
-            companyID = "NEED MODIFY"
+            companyID = userVM.getUserLD().value!!.company_id
         )
 
     }

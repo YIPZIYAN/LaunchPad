@@ -130,7 +130,7 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
     private var companyID = ""
 
     fun filterJobByCompany(companyID: String) {
-        this.companyID == companyID
+        this.companyID = companyID
         getJobByCompany()
     }
 
