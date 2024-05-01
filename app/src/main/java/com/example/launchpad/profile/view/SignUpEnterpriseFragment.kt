@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -14,6 +13,7 @@ import com.example.launchpad.data.Company
 import com.example.launchpad.data.viewmodel.CompanyViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentSignUpEnterpriseBinding
+import com.example.launchpad.util.snackbar
 import kotlinx.coroutines.launch
 
 class SignUpEnterpriseFragment : Fragment() {
@@ -27,18 +27,14 @@ class SignUpEnterpriseFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.setContentView<FragmentSignUpEnterpriseBinding>(
-            inflater,
-            R.layout.fragment_sign_up_enterprise,
-            container,
-            false
-        )
-        binding.company = Company()
-        binding.btnDone.setOnClickListener { submit() }
-        binding.btnUpdate.setOnClickListener { update() }
-        binding.topAppBar.setOnClickListener { nav.navigateUp() }
+        binding = FragmentSignUpEnterpriseBinding.inflate(inflater, container, false)
 
-        companyVM.isSuccess.observe(viewLifecycleOwner) { nav.navigateUp() }
+        binding.btnDone.setOnClickListener { submit() }
+        binding.topAppBar.setOnClickListener { nav.navigateUp() }
+        companyVM.isSuccess.observe(viewLifecycleOwner) {
+            nav.popBackStack(R.id.profileFragment, true)
+            snackbar("Company Updated Successfully")
+        }
         userVM.getUserLD().observe(viewLifecycleOwner) {
             if (it.company_id != "" && it.isEnterprise) {
                 updateUI(companyVM.get(it.company_id))
@@ -49,18 +45,24 @@ class SignUpEnterpriseFragment : Fragment() {
         return binding.root
     }
 
-    private fun update() {
+    private fun update(id: String) {
+        val company = getInput(id)
         lifecycleScope.launch {
-            companyVM.update(binding.company)
+            companyVM.update(company)
         }
     }
 
     private fun updateUI(company: Company?) {
         if (company != null) {
-            binding.company = company
+            binding.edtYear.setText(company.year.toString())
+            binding.edtCompanyName.setText(company.name)
+            binding.edtLocation.setText(company.location)
+            binding.edtCompanyDescription.setText(company.description)
+            binding.btnDone.visibility = View.GONE
+            binding.btnUpdate.visibility = View.VISIBLE
+            binding.btnUpdate.setOnClickListener { update(company.id) }
         }
-        binding.btnDone.visibility = View.GONE
-        binding.btnUpdate.visibility = View.VISIBLE
+
     }
 
     private fun submit() {
@@ -73,8 +75,9 @@ class SignUpEnterpriseFragment : Fragment() {
 
     }
 
-    private fun getInput(): Company {
+    private fun getInput(id: String = ""): Company {
         return Company(
+            id = id,
             name = binding.edtCompanyName.text.toString(),
             description = binding.edtCompanyDescription.text.toString(),
             location = binding.edtLocation.text.toString(),

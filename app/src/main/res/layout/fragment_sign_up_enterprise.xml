@@ -4,12 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".profile.view.SignUpEnterpriseFragment">
 
-    <data>
-        <variable
-            name="company"
-            type="com.example.launchpad.data.Company" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -60,7 +54,6 @@
                         android:id="@+id/edtCompanyName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{company.name}"
                         android:hint="@string/company_name" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,7 +71,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"
-                        android:text="@{company.year}"
                         android:maxLength="4" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -95,7 +87,6 @@
                         android:id="@+id/edtLocation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{company.location}"
                         android:hint="@string/location" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -115,7 +106,6 @@
                         android:id="@+id/edtCompanyDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{company.description}"
                         android:inputType="textMultiLine"
                         android:scrollbars="vertical" />
 

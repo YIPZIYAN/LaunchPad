@@ -48,6 +48,7 @@
                 app:avatarViewIndicatorDrawable="@drawable/ic_verified"
                 app:avatarViewIndicatorPosition="bottomRight"
                 app:avatarViewIndicatorSizeCriteria="3"
+                app:avatarViewIndicatorEnabled="false"
                 app:avatarViewPlaceholder="@drawable/launchpadlogo_whitebg"
                 tools:srcCompat="@drawable/launchpadlogo_whitebg" />
 
