@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.example.launchpad.data.Company
 import com.example.launchpad.data.User
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -46,5 +47,9 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
     }
     fun isEnterprise() = _userLD.value!!.isEnterprise
     fun isCompanyRegistered() =  _userLD.value?.company_id != ""
+    fun attachCompany(company: Company){
+        USERS.document(getAuth().uid).update("company_id",company.id)
+    }
+
     fun init() = Unit
 }
