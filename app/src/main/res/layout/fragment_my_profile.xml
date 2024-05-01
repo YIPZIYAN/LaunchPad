@@ -45,7 +45,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+                app:avatarViewIndicatorDrawable="@drawable/ic_verified"
+                app:avatarViewIndicatorPosition="bottomRight"
+                app:avatarViewIndicatorSizeCriteria="3"
+                app:avatarViewPlaceholder="@drawable/launchpadlogo_whitebg"
+                tools:srcCompat="@drawable/launchpadlogo_whitebg" />
 
             <TextView
                 android:id="@+id/txtName"
