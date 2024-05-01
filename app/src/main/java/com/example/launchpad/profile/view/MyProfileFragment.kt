@@ -1,7 +1,6 @@
 package com.example.launchpad.profile.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +40,7 @@ class MyProfileFragment : Fragment() {
             val avatar = if (user.avatar == "") R.drawable.round_account_circle_24 else user.avatar
             binding.txtName.text = user.name
             binding.avatarView.loadImage(avatar)
-            if (user.isEnterprise) {
+            if (userVM.isCompanyRegistered()) {
                 binding.avatarView.indicatorEnabled = true
             }
         }
