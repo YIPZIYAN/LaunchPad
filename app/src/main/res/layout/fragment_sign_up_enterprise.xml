@@ -12,7 +12,6 @@
             android:id="@+id/appBarLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -22,10 +21,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
-                app:subtitle="Fill in company details before access LaunchPad"
-                app:subtitleCentered="true"
-                app:title="@string/launchpad_enterprise"
-                app:titleCentered="true" />
+                app:navigationIcon="@drawable/round_arrow_back_24"
+                app:title="@string/launchpad_enterprise" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -125,9 +122,25 @@
             android:layout_height="56dp"
             android:layout_marginHorizontal="64dp"
             android:layout_marginBottom="24dp"
-            android:text="@string/sign_up_2"
+            android:text="@string/done"
+            android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginHorizontal="64dp"
+            android:layout_marginBottom="24dp"
+            android:text="@string/update"
+            android:textAllCaps="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

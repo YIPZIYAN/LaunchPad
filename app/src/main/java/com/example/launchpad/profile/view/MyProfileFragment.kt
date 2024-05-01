@@ -1,25 +1,19 @@
 package com.example.launchpad.profile.view
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.launchpad.MainActivity
 import com.example.launchpad.R
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentMyProfileBinding
 import com.example.launchpad.view.TabMyJobFragment
-import com.example.launchpad.profile.viewmodel.MyProfileViewModel
-import com.example.launchpad.util.dialog
-import com.example.launchpad.util.intentWithoutBackstack
 import com.google.android.material.tabs.TabLayoutMediator
 import io.getstream.avatarview.coil.loadImage
 
@@ -46,6 +40,9 @@ class MyProfileFragment : Fragment() {
             val avatar = if (user.avatar == "") R.drawable.round_account_circle_24 else user.avatar
             binding.txtName.text = user.name
             binding.avatarView.loadImage(avatar)
+            if (userVM.isCompanyRegistered()) {
+                binding.avatarView.indicatorEnabled = true
+            }
         }
 
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->

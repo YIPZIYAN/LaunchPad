@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.launchpad.R
-import com.example.launchpad.profile.viewmodel.CompanyViewModel
+import com.example.launchpad.data.viewmodel.CompanyViewModel
 
 class UserProfileFragment : Fragment() {
 

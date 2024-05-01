@@ -10,7 +10,6 @@ data class Company(
     @DocumentId
     val id: String = "",
     val name: String = "",
-    val email: String = "",
 //    val avatar: Blob? = Blob.fromBytes(ByteArray(0)),
     val description: String = "",
     val location: String = "",

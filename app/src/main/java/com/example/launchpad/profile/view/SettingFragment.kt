@@ -1,6 +1,5 @@
 package com.example.launchpad.profile.view
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -28,13 +27,7 @@ class SettingFragment : Fragment() {
     private val userVM: UserViewModel by activityViewModels()
     private lateinit var binding: FragmentSettingBinding
     private val auth = Firebase.auth
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
+    private val nav by lazy { findNavController() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,13 +35,16 @@ class SettingFragment : Fragment() {
     ): View {
         binding = FragmentSettingBinding.inflate(inflater, container, false)
 
-        binding.topAppBar.setOnClickListener {
-            findNavController().navigateUp()
-        }
+        binding.topAppBar.setOnClickListener { nav.navigateUp() }
 
-        binding.cardLogout.setOnClickListener {
-            signOut()
+        binding.cardLogout.setOnClickListener { signOut() }
 
+        binding.cardCompany.setOnClickListener { nav.navigate(R.id.action_settingFragment_to_signUpEnterpriseFragment) }
+
+        userVM.getUserLD().observe(viewLifecycleOwner) {
+            if (it.isEnterprise) {
+                binding.cardCompany.visibility = View.VISIBLE
+            }
         }
 
         return binding.root
@@ -66,9 +62,7 @@ class SettingFragment : Fragment() {
         auth.signOut()
 
         googleSignInClient.signOut().addOnSuccessListener {
-            // Optional: Update UI or show a message to the user
             Log.d("UI", "signOut: navigate to login")
-            requireActivity().deleteSharedPreferences("company")
             requireContext().intentWithoutBackstack(requireContext(), MainActivity::class.java)
         }
     }

@@ -250,7 +250,7 @@ class PostJobFragment : Fragment() {
             requirement = binding.edtJobRequirement.text.toString().trim(),
             createdAt = binding.createdAt.text.toString().toLong(),
             updatedAt = binding.updatedAt.text.toString().toLong(),
-            companyID = userVM.getCompanyID()
+            companyID = userVM.getUserLD().value!!.company_id
         )
         Log.e("JOB1", job.toString())
         Log.e("JOB2", jobVM.get(jobID).toString())
