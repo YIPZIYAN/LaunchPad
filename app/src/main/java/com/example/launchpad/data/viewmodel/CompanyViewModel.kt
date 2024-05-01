@@ -44,7 +44,9 @@ class CompanyViewModel : ViewModel() {
 
     suspend fun update(company: Company?) {
         if (company != null)
-            COMPANIES.document(company.id).set(company).await()
+            COMPANIES.document(company.id).set(company).addOnCompleteListener {
+                isSuccess.value = it.isSuccessful
+            }.await()
     }
 
 }

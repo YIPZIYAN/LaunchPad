@@ -32,8 +32,10 @@ class SignUpEnterpriseFragment : Fragment() {
         binding.btnDone.setOnClickListener { submit() }
         binding.topAppBar.setOnClickListener { nav.navigateUp() }
         companyVM.isSuccess.observe(viewLifecycleOwner) {
-            nav.popBackStack(R.id.profileFragment, true)
-            snackbar("Company Updated Successfully")
+            if (it) {
+                nav.popBackStack(R.id.profileFragment, true)
+                snackbar("Company Updated Successfully")
+            }
         }
         userVM.getUserLD().observe(viewLifecycleOwner) {
             if (it.company_id != "" && it.isEnterprise) {
