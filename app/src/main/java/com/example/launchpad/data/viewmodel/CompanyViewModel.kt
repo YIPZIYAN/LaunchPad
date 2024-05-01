@@ -12,6 +12,7 @@ import kotlinx.coroutines.tasks.await
 class CompanyViewModel : ViewModel() {
     private val COMPANIES = Firebase.firestore.collection("company")
     private val _companyLD = MutableLiveData<List<Company>>()
+    val isSuccess = MutableLiveData<Boolean>()
 
     private var listener: ListenerRegistration? = null
 
@@ -35,12 +36,15 @@ class CompanyViewModel : ViewModel() {
 
     suspend fun set(company: Company): String {
         val companyRef = COMPANIES.document()
-        companyRef.set(company).await()
+        companyRef.set(company).addOnSuccessListener {
+
+        }.await()
         return companyRef.id
     }
 
-    suspend fun update(company: Company) {
-        COMPANIES.document(company.id).set(company).await()
+    suspend fun update(company: Company?) {
+        if (company != null)
+            COMPANIES.document(company.id).set(company).await()
     }
 
 }
