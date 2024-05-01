@@ -13,11 +13,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentJobDetailsBinding
-import com.example.launchpad.auth.view.LoginFragment.Companion.userType
 import com.example.launchpad.data.Company
+import com.example.launchpad.data.viewmodel.CompanyViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
-import com.example.launchpad.profile.viewmodel.CompanyViewModel
-import com.example.launchpad.util.setImageBlob
 import com.example.launchpad.job.viewmodel.JobViewModel
 import com.example.launchpad.util.dialog
 import com.example.launchpad.util.snackbar

@@ -9,10 +9,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.launchpad.data.viewmodel.CompanyViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.ActivityUserBinding
 import com.example.launchpad.job.viewmodel.JobViewModel
-import com.example.launchpad.profile.viewmodel.CompanyViewModel
 
 class UserActivity : AppCompatActivity() {
 
@@ -31,6 +31,7 @@ class UserActivity : AppCompatActivity() {
 
         jobVM.init()
         userVM.init()
+
 
         super.onCreate(savedInstanceState)
         binding = ActivityUserBinding.inflate(layoutInflater)

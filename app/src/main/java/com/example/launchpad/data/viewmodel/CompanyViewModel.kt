@@ -36,8 +36,8 @@ class CompanyViewModel : ViewModel() {
 
     suspend fun set(company: Company): String {
         val companyRef = COMPANIES.document()
-        companyRef.set(company).addOnSuccessListener {
-
+        companyRef.set(company).addOnCompleteListener {
+            isSuccess.value = it.isSuccessful
         }.await()
         return companyRef.id
     }

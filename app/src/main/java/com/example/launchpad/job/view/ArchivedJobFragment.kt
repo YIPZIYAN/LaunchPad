@@ -10,10 +10,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.data.Company
+import com.example.launchpad.data.viewmodel.CompanyViewModel
 import com.example.launchpad.databinding.FragmentArchivedJobBinding
 import com.example.launchpad.job.adapter.ArchivedJobAdapter
 import com.example.launchpad.job.viewmodel.JobViewModel
-import com.example.launchpad.profile.viewmodel.CompanyViewModel
 
 class ArchivedJobFragment : Fragment() {
 
