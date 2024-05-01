@@ -33,8 +33,10 @@ class CompanyViewModel : ViewModel() {
 
     fun get(companyID: String) = getAll().find { it.id == companyID }
 
-    suspend fun set(company: Company) {
-        COMPANIES.document().set(company).await()
+    suspend fun set(company: Company): String {
+        val companyRef = COMPANIES.document()
+        companyRef.set(company).await()
+        return companyRef.id
     }
 
     suspend fun update(company: Company) {

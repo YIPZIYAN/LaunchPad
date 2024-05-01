@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.data.Company
@@ -42,7 +41,10 @@ class SignUpEnterpriseFragment : Fragment() {
             year = binding.edtYear.text.toString().toIntOrNull() ?: -1
         )
 
-        lifecycleScope.launch { companyVM.set(company) }
+        lifecycleScope.launch {
+            val companyId = companyVM.set(company)
+            userVM.attachCompany(companyId)
+        }
 
 
     }
