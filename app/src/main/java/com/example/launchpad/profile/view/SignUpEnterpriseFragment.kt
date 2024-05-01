@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
@@ -19,8 +20,8 @@ import kotlinx.coroutines.launch
 class SignUpEnterpriseFragment : Fragment() {
 
     lateinit var binding: FragmentSignUpEnterpriseBinding
-    private val companyVM: CompanyViewModel by activityViewModels()
-    private val userVM: UserViewModel by activityViewModels()
+    private val companyVM: CompanyViewModel by viewModels()
+    private val userVM: UserViewModel by viewModels()
     private val nav by lazy { findNavController() }
 
     override fun onCreateView(
@@ -33,7 +34,7 @@ class SignUpEnterpriseFragment : Fragment() {
         binding.topAppBar.setOnClickListener { nav.navigateUp() }
         companyVM.isSuccess.observe(viewLifecycleOwner) {
             if (it) {
-                nav.popBackStack(R.id.profileFragment, true)
+                nav.popBackStack(R.id.profileFragment, false)
                 snackbar("Company Updated Successfully")
             }
         }
