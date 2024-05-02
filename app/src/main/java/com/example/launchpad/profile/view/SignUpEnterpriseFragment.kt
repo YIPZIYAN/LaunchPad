@@ -34,7 +34,7 @@ class SignUpEnterpriseFragment : Fragment() {
         binding.topAppBar.setOnClickListener { nav.navigateUp() }
         companyVM.isSuccess.observe(viewLifecycleOwner) {
             if (it) {
-                nav.popBackStack(R.id.profileFragment, false)
+                nav.popBackStack(R.id.homeFragment,false)
                 snackbar("Company Updated Successfully")
             }
         }

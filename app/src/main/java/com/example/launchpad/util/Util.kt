@@ -75,7 +75,7 @@ fun Fragment.dialogCompanyNotRegister(status :Boolean,nav:NavController) {
             getString(R.string.register_now),
             onPositiveClick = { _, _ ->
                 nav.navigate(R.id.signUpEnterpriseFragment)
-                
+
             }
         )
     }

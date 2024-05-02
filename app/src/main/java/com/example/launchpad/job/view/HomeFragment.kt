@@ -44,9 +44,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
         getGreeting()
 
         userVM.getUserLD().observe(viewLifecycleOwner) {
-
-            dialogCompanyNotRegister(userVM.isEnterprise() && !userVM.isCompanyRegistered(), nav)
-
+            
             binding.username.text = it.name
             //-----------------------------------------------------------
             // Company
