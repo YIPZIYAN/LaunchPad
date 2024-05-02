@@ -29,6 +29,8 @@ class UserActivity : AppCompatActivity() {
         userVM.init()
         companyVM.init()
         jobVM.init()
+        Log.d("USER IS GOOGLE?", " ${userVM.isGoogleLogin()}")
+
         super.onCreate(savedInstanceState)
         binding = ActivityUserBinding.inflate(layoutInflater)
         setupNav()
