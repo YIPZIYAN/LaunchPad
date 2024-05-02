@@ -1,7 +1,6 @@
 package com.example.launchpad.job.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +17,7 @@ import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentHomeBinding
 import com.example.launchpad.job.adapter.JobAdapter
 import com.example.launchpad.job.viewmodel.JobViewModel
+import com.example.launchpad.util.dialogCompanyNotRegister
 import com.google.android.material.search.SearchView
 import org.joda.time.DateTime
 
@@ -45,6 +45,8 @@ class HomeFragment : Fragment(), BottomSheetListener {
 
         userVM.getUserLD().observe(viewLifecycleOwner) {
 
+            dialogCompanyNotRegister(userVM.isEnterprise() && !userVM.isCompanyRegistered(), nav)
+
             binding.username.text = it.name
             //-----------------------------------------------------------
             // Company
@@ -56,6 +58,10 @@ class HomeFragment : Fragment(), BottomSheetListener {
                 }
                 binding.btnPostJob.visibility = View.VISIBLE
                 binding.btnPostJob.setOnClickListener {
+                    if(!userVM.isCompanyRegistered()){
+                        dialogCompanyNotRegister(userVM.isEnterprise() && !userVM.isCompanyRegistered(), nav)
+                        return@setOnClickListener
+                    }
                     nav.navigate(R.id.action_homeFragment_to_postJobFragment)
                 }
             } else {
@@ -129,7 +135,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
 
 
         jobVM.getResultLD().observe(viewLifecycleOwner) { jobList ->
-           if (jobList.isEmpty()) return@observe
+            if (jobList.isEmpty()) return@observe
             companyVM.getCompaniesLD().observe(viewLifecycleOwner) { company ->
                 if (company != null)
                     jobList.forEach { job ->
@@ -178,6 +184,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
 
         return binding.root
     }
+
 
     private fun clearFilter() {
         chipPositionState = emptyList<String>().toMutableList()
