@@ -28,7 +28,6 @@ class UserActivity : AppCompatActivity() {
         //Early data loading
         userVM.init()
         companyVM.init()
-        jobVM.init()
         Log.d("USER IS GOOGLE?", " ${userVM.isGoogleLogin()}")
 
 

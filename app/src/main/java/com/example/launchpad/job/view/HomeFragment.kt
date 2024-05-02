@@ -44,7 +44,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
         getGreeting()
 
         userVM.getUserLD().observe(viewLifecycleOwner) {
-            
+
             binding.username.text = it.name
             //-----------------------------------------------------------
             // Company
@@ -56,8 +56,11 @@ class HomeFragment : Fragment(), BottomSheetListener {
                 }
                 binding.btnPostJob.visibility = View.VISIBLE
                 binding.btnPostJob.setOnClickListener {
-                    if(!userVM.isCompanyRegistered()){
-                        dialogCompanyNotRegister(userVM.isEnterprise() && !userVM.isCompanyRegistered(), nav)
+                    if (!userVM.isCompanyRegistered()) {
+                        dialogCompanyNotRegister(
+                            userVM.isEnterprise() && !userVM.isCompanyRegistered(),
+                            nav
+                        )
                         return@setOnClickListener
                     }
                     nav.navigate(R.id.action_homeFragment_to_postJobFragment)
@@ -133,7 +136,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
 
 
         jobVM.getResultLD().observe(viewLifecycleOwner) { jobList ->
-            if (jobList.isEmpty()) return@observe
+            if (!userVM.isEnterprise() && jobList.isEmpty()) return@observe
             companyVM.getCompaniesLD().observe(viewLifecycleOwner) { company ->
                 if (company != null)
                     jobList.forEach { job ->
