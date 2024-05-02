@@ -142,8 +142,8 @@ class HomeFragment : Fragment(), BottomSheetListener {
                 job.createdAt
             }
 
-            adapter.submitList(jobList)
-            svAdapter.submitList(jobList)
+            adapter.submitList(sortedJobList)
+            svAdapter.submitList(sortedJobList)
         }
 
         jobVM.getResultLD().observe(viewLifecycleOwner) { jobList ->
