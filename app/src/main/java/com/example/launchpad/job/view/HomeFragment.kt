@@ -126,17 +126,19 @@ class HomeFragment : Fragment(), BottomSheetListener {
 
 
         jobVM.getResultLD().observe(viewLifecycleOwner) {
-
-            it.forEach { job ->
-                job.company = companyVM.get(job.companyID) ?: Company()
+            companyVM.getCompaniesLD().observe(viewLifecycleOwner) { company ->
+                if (company != null)
+                    it.forEach { job ->
+                        job.company = companyVM.get(job.companyID) ?: Company()
+                    }
             }
 
-            it.sortedByDescending { job ->
+           val sortedJobList = it.sortedByDescending { job ->
                 job.createdAt
             }
 
-            adapter.submitList(it)
-            svAdapter.submitList(it)
+            adapter.submitList(sortedJobList)
+            svAdapter.submitList(sortedJobList)
         }
 
         //-----------------------------------------------------------
