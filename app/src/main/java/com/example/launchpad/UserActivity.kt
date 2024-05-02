@@ -28,7 +28,7 @@ class UserActivity : AppCompatActivity() {
         //Early data loading
         userVM.init()
         companyVM.init()
-
+        jobVM.init()
         super.onCreate(savedInstanceState)
         binding = ActivityUserBinding.inflate(layoutInflater)
         setupNav()

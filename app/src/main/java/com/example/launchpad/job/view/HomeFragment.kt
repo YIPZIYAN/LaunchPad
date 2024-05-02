@@ -72,7 +72,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
                 holder.binding.root.setOnClickListener { detail(job.jobID) }
                 if (!userVM.isEnterprise()) {
                     holder.binding.bookmark.visibility = View.VISIBLE
-                    val saveJob = jobVM.getSaveJobByUser("userID")
+                    val saveJob = jobVM.getSaveJobByUser(it.uid)
                     saveJob.forEach { jobs ->
                         if (jobs.jobID == job.jobID) {
                             holder.binding.bookmark.isChecked = true
@@ -80,8 +80,8 @@ class HomeFragment : Fragment(), BottomSheetListener {
                     }
                     holder.binding.bookmark.setOnCheckedChangeListener { _, _ ->
                         val saveJob = SaveJob(
-                            id = "userID" + "_" + job.jobID,
-                            userID = "userID",
+                            id = it.uid + "_" + job.jobID,
+                            userID = it.uid,
                             jobID = job.jobID,
                         )
                         if (holder.binding.bookmark.isChecked) {
@@ -98,7 +98,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
                 holder.binding.root.setOnClickListener { detail(job.jobID) }
                 if (!userVM.isEnterprise()) {
                     holder.binding.bookmark.visibility = View.VISIBLE
-                    val saveJob = jobVM.getSaveJobByUser("userID")
+                    val saveJob = jobVM.getSaveJobByUser(it.uid)
                     saveJob.forEach { jobs ->
                         if (jobs.jobID == job.jobID) {
                             holder.binding.bookmark.isChecked = true
@@ -106,8 +106,8 @@ class HomeFragment : Fragment(), BottomSheetListener {
                     }
                     holder.binding.bookmark.setOnCheckedChangeListener { _, _ ->
                         val saveJob = SaveJob(
-                            id = "userID" + "_" + job.jobID,
-                            userID = "userID",
+                            id = it.uid + "_" + job.jobID,
+                            userID = it.uid,
                             jobID = job.jobID,
                         )
                         if (holder.binding.bookmark.isChecked) {
@@ -122,33 +122,14 @@ class HomeFragment : Fragment(), BottomSheetListener {
 
             if (userVM.isEnterprise()) {
                 jobVM.filterJobByCompany(userVM.getUserLD().value!!.company_id)
+            } else {
+                jobVM.updateResult()
             }
         }
 
-        jobVM.getJobsLD().observe(viewLifecycleOwner) { jobList ->
-            if (userVM.isEnterprise()) return@observe
-            companyVM.getCompaniesLD().observe(viewLifecycleOwner) { company ->
-                if (company != null) {
-                    jobList.forEach { job ->
-                        job.company = companyVM.get(job.companyID)!!
-                        Log.d("JOBS", "onCreateView: ${job}")
-                    }
-                    Log.d("COMPANY", "onCreateView: $company")
-                    Log.d("JOBLIST", "onCreateView: $jobList")
-                }
-            }
-
-            val sortedJobList = jobList.sortedByDescending { job ->
-                job.createdAt
-            }
-
-            adapter.submitList(sortedJobList)
-            svAdapter.submitList(sortedJobList)
-        }
 
         jobVM.getResultLD().observe(viewLifecycleOwner) { jobList ->
-            if (!userVM.isEnterprise()) return@observe
-            Log.d("ENTERPRISE ONLY", "onCreateView: ")
+           if (jobList.isEmpty()) return@observe
             companyVM.getCompaniesLD().observe(viewLifecycleOwner) { company ->
                 if (company != null)
                     jobList.forEach { job ->
