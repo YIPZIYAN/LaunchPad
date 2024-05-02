@@ -1,6 +1,7 @@
 package com.example.launchpad.job.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,6 +65,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
                     nav.navigate(R.id.action_homeFragment_to_savedJobFragment)
                 }
             }
+
             //-----------------------------------------------------------
             // Show Job List & Save Job
             adapter = JobAdapter { holder, job ->
@@ -123,21 +125,45 @@ class HomeFragment : Fragment(), BottomSheetListener {
             }
         }
 
-
-
-        jobVM.getResultLD().observe(viewLifecycleOwner) {
-
-            it.forEach { job ->
-                job.company = companyVM.get(job.companyID) ?: Company()
+        jobVM.getJobsLD().observe(viewLifecycleOwner) { jobList ->
+            if (userVM.isEnterprise()) return@observe
+            companyVM.getCompaniesLD().observe(viewLifecycleOwner) { company ->
+                if (company != null) {
+                    jobList.forEach { job ->
+                        job.company = companyVM.get(job.companyID)!!
+                        Log.d("JOBS", "onCreateView: ${job}")
+                    }
+                    Log.d("COMPANY", "onCreateView: $company")
+                    Log.d("JOBLIST", "onCreateView: $jobList")
+                }
             }
 
-            it.sortedByDescending { job ->
+            val sortedJobList = jobList.sortedByDescending { job ->
                 job.createdAt
             }
 
-            adapter.submitList(it)
-            svAdapter.submitList(it)
+            adapter.submitList(sortedJobList)
+            svAdapter.submitList(sortedJobList)
         }
+
+        jobVM.getResultLD().observe(viewLifecycleOwner) { jobList ->
+            if (!userVM.isEnterprise()) return@observe
+            Log.d("ENTERPRISE ONLY", "onCreateView: ")
+            companyVM.getCompaniesLD().observe(viewLifecycleOwner) { company ->
+                if (company != null)
+                    jobList.forEach { job ->
+                        job.company = companyVM.get(job.companyID) ?: Company()
+                    }
+            }
+
+            val sortedJobList = jobList.sortedByDescending { job ->
+                job.createdAt
+            }
+
+            adapter.submitList(sortedJobList)
+            svAdapter.submitList(sortedJobList)
+        }
+
 
         //-----------------------------------------------------------
         // Refresh
