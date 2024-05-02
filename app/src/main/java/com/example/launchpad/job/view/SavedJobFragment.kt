@@ -1,11 +1,11 @@
 package com.example.launchpad.job.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
@@ -13,6 +13,7 @@ import com.example.launchpad.data.Company
 import com.example.launchpad.data.Job
 import com.example.launchpad.data.SaveJob
 import com.example.launchpad.data.viewmodel.CompanyViewModel
+import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentSavedJobBinding
 import com.example.launchpad.job.adapter.SavedJobAdapter
 import com.example.launchpad.job.viewmodel.JobViewModel
@@ -25,6 +26,7 @@ class SavedJobFragment : Fragment() {
 
     private val jobVM: JobViewModel by activityViewModels()
     private val companyVM: CompanyViewModel by activityViewModels()
+    private val userVM: UserViewModel by activityViewModels()
     private val nav by lazy { findNavController() }
     private lateinit var binding: FragmentSavedJobBinding
 
@@ -35,10 +37,12 @@ class SavedJobFragment : Fragment() {
     ): View? {
         binding = FragmentSavedJobBinding.inflate(inflater, container, false)
 
+        val uid = userVM.getAuth().uid
+
         val adapter = SavedJobAdapter { holder, job ->
             holder.binding.root.setOnClickListener { detail(job.jobID) }
             holder.binding.bookmark.visibility = View.VISIBLE
-            val saveJob = jobVM.getSaveJobByUser("userID")
+            val saveJob = jobVM.getSaveJobByUser(uid)
 
             saveJob.forEach {
                 if (it.jobID == job.jobID) {
@@ -47,8 +51,8 @@ class SavedJobFragment : Fragment() {
             }
             holder.binding.bookmark.setOnCheckedChangeListener { _, _ ->
                 val saveJob = SaveJob(
-                    id = "userID" + "_" + job.jobID,
-                    userID = "userID",
+                    id = uid + "_" + job.jobID,
+                    userID = uid,
                     jobID = job.jobID,
                 )
                 if (holder.binding.bookmark.isChecked) {
