@@ -13,6 +13,8 @@ import android.widget.Toast
 import androidx.core.graphics.drawable.toBitmapOrNull
 import androidx.core.graphics.scale
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.example.launchpad.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -62,6 +64,21 @@ fun Fragment.loadingDialog(): Dialog {
     val dialog = Dialog(requireContext())
     dialog.setContentView(R.layout.layout_loading)
     return dialog
+}
+
+fun Fragment.dialogCompanyNotRegister(status :Boolean,nav:NavController) {
+    if (status) {
+        dialog(
+            getString(R.string.register_your_company),
+            getString(R.string.dialog_company_not_register),
+            getString(R.string.remind_me_later),
+            getString(R.string.register_now),
+            onPositiveClick = { _, _ ->
+                nav.navigate(R.id.signUpEnterpriseFragment)
+
+            }
+        )
+    }
 }
 
 fun Fragment.displayErrorHelper(view: TextInputLayout, errorMsg: String) {

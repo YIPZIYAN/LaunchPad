@@ -124,10 +124,8 @@ class LoginFragment : Fragment() {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)
-                loadingDialog().show()
                 lifecycleScope.launch {
                     viewModel.firebaseAuthWithGoogle(account.idToken!!)
-                    loadingDialog().dismiss()
                 }
                 Log.d("success", "onActivityResult: getID")
             } catch (e: ApiException) {

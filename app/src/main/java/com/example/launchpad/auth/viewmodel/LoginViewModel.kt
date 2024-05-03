@@ -47,7 +47,6 @@ class LoginViewModel(val app: Application) :
         }
         Log.d("USER", " ${auth.currentUser?.uid}")
         Log.d("USER", " ${auth.currentUser?.isEmailVerified}")
-        Log.d("USER", " ${auth.currentUser?.providerData}")
     }
 
 

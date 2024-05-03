@@ -1,14 +1,17 @@
 package com.example.launchpad.data.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.launchpad.data.User
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class UserViewModel(val app: Application) : AndroidViewModel(app) {
@@ -26,7 +29,6 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
         }
     }
 
-
     fun getUserLD() = _userLD
 
     suspend fun set(user: User) {
@@ -40,7 +42,6 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
             email = it.email ?: "",
             avatar = if (it.photoUrl != null) it.photoUrl.toString() else "",
             name = it.displayName ?: "User#${it.uid.take(8)}",
-            provider = it.providerData.toString()
         )
     }
 
@@ -49,6 +50,10 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
     fun attachCompany(id: String) {
         USERS.document(getAuth().uid).update("company_id", id)
     }
+
+    fun isGoogleLogin(): Boolean =
+        auth.currentUser?.providerData?.any { it.providerId == "google.com" } ?: false
+
 
     fun init() = Unit
 }

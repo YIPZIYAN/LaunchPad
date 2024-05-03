@@ -1,7 +1,6 @@
 package com.example.launchpad.job.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.data.Company
@@ -18,7 +18,9 @@ import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentHomeBinding
 import com.example.launchpad.job.adapter.JobAdapter
 import com.example.launchpad.job.viewmodel.JobViewModel
+import com.example.launchpad.util.dialogCompanyNotRegister
 import com.google.android.material.search.SearchView
+import kotlinx.coroutines.launch
 import org.joda.time.DateTime
 
 class HomeFragment : Fragment(), BottomSheetListener {
@@ -44,7 +46,12 @@ class HomeFragment : Fragment(), BottomSheetListener {
         getGreeting()
 
         userVM.getUserLD().observe(viewLifecycleOwner) {
-
+            if (it == null){
+                lifecycleScope.launch {
+                    userVM.set(userVM.getAuth())
+                }
+                return@observe
+            }
             binding.username.text = it.name
             //-----------------------------------------------------------
             // Company
@@ -56,6 +63,13 @@ class HomeFragment : Fragment(), BottomSheetListener {
                 }
                 binding.btnPostJob.visibility = View.VISIBLE
                 binding.btnPostJob.setOnClickListener {
+                    if (!userVM.isCompanyRegistered()) {
+                        dialogCompanyNotRegister(
+                            userVM.isEnterprise() && !userVM.isCompanyRegistered(),
+                            nav
+                        )
+                        return@setOnClickListener
+                    }
                     nav.navigate(R.id.action_homeFragment_to_postJobFragment)
                 }
             } else {
@@ -129,7 +143,8 @@ class HomeFragment : Fragment(), BottomSheetListener {
 
 
         jobVM.getResultLD().observe(viewLifecycleOwner) { jobList ->
-           if (jobList.isEmpty()) return@observe
+            if (userVM.getUserLD().value == null) return@observe
+            if (!userVM.isEnterprise() && jobList.isEmpty()) return@observe
             companyVM.getCompaniesLD().observe(viewLifecycleOwner) { company ->
                 if (company != null)
                     jobList.forEach { job ->
@@ -178,6 +193,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
 
         return binding.root
     }
+
 
     private fun clearFilter() {
         chipPositionState = emptyList<String>().toMutableList()
