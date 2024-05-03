@@ -16,9 +16,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     val viewModel: LoginViewModel by viewModels()
-    private val userVM: UserViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
-        userVM.init()
 
         super.onCreate(savedInstanceState)
         installSplashScreen()

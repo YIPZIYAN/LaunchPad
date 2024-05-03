@@ -8,6 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.data.Company
@@ -19,6 +20,7 @@ import com.example.launchpad.job.adapter.JobAdapter
 import com.example.launchpad.job.viewmodel.JobViewModel
 import com.example.launchpad.util.dialogCompanyNotRegister
 import com.google.android.material.search.SearchView
+import kotlinx.coroutines.launch
 import org.joda.time.DateTime
 
 class HomeFragment : Fragment(), BottomSheetListener {
@@ -44,7 +46,12 @@ class HomeFragment : Fragment(), BottomSheetListener {
         getGreeting()
 
         userVM.getUserLD().observe(viewLifecycleOwner) {
-
+            if (it == null){
+                lifecycleScope.launch {
+                    userVM.set(userVM.getAuth())
+                }
+                return@observe
+            }
             binding.username.text = it.name
             //-----------------------------------------------------------
             // Company
@@ -136,6 +143,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
 
 
         jobVM.getResultLD().observe(viewLifecycleOwner) { jobList ->
+            if (userVM.getUserLD().value == null) return@observe
             if (!userVM.isEnterprise() && jobList.isEmpty()) return@observe
             companyVM.getCompaniesLD().observe(viewLifecycleOwner) { company ->
                 if (company != null)

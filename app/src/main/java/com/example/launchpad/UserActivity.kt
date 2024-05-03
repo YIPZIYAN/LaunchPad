@@ -3,16 +3,18 @@ package com.example.launchpad
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.launchpad.data.viewmodel.CompanyViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.ActivityUserBinding
 import com.example.launchpad.job.viewmodel.JobViewModel
+import kotlinx.coroutines.launch
 
 class UserActivity : AppCompatActivity() {
 
@@ -28,7 +30,6 @@ class UserActivity : AppCompatActivity() {
         //Early data loading
         userVM.init()
         companyVM.init()
-        Log.d("USER IS GOOGLE?", " ${userVM.isGoogleLogin()}")
 
 
 
