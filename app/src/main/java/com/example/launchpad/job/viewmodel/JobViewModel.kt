@@ -220,9 +220,12 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
         if (salary.isNotEmpty()) {
             val minSalary = salary[0].toInt()
             val maxSalary = salary[1].toInt()
-            list = list.filter { job ->
-                job.minSalary >= minSalary && job.maxSalary <= maxSalary
+            if (minSalary != 0 && maxSalary != 999999) {
+                list = list.filter { job ->
+                    minSalary >= job.minSalary && maxSalary <= job.maxSalary
+                }
             }
+
         }
 
         resultLD.value = list
