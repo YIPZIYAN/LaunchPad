@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.AddPostFragment">
+    tools:context=".community.view.AddPostFragment">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
@@ -63,24 +63,24 @@
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/imageView2"
+                        app:layout_constraintTop_toBottomOf="@id/edtImage"
                         app:strokeColor="@color/m3_text_button_foreground_color_selector" />
 
 
                     <ImageView
-                        android:id="@+id/imageView2"
+                        android:id="@+id/edtImage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:src="@drawable/tarumt"
-                        app:layout_constraintTop_toBottomOf="@+id/textView18"
+                        app:layout_constraintTop_toBottomOf="@+id/lblImage"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:scaleType="centerInside"
                         android:adjustViewBounds="true"/>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/txt_post_desc"
+                        android:id="@+id/lblPostDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/description"
@@ -95,6 +95,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtDescription"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textMultiLine"
@@ -104,14 +105,14 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
-                        android:id="@+id/textView18"
+                        android:id="@+id/lblImage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:text="Image"
                         android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_post_desc" />
+                        app:layout_constraintTop_toBottomOf="@+id/lblPostDescription" />
 
                     <com.google.android.material.materialswitch.MaterialSwitch
                         android:id="@+id/switch_notify"
@@ -153,6 +154,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             />
+
+        <TextView
+            android:id="@+id/created_at"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

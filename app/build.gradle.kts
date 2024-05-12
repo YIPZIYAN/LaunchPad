@@ -34,6 +34,10 @@ android {
         jvmTarget = "1.8"
     }
 
+    packaging {
+        resources.excludes.add("META-INF/androidx.cardview_cardview.version")
+    }
+
     buildFeatures {
         dataBinding = true
 
@@ -72,4 +76,5 @@ dependencies {
 
 //    implementation("com.mapbox.maps:android:11.3.1")
     implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.android.support:cardview-v7:28.0.0")
 }

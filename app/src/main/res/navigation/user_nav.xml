@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/communityFragment"
-        android:name="com.example.launchpad.view.CommunityFragment"
+        android:name="com.example.launchpad.community.view.CommunityFragment"
         android:label="fragment_community"
         tools:layout="@layout/fragment_community" >
         <action
@@ -114,7 +114,7 @@
     </fragment>
     <fragment
         android:id="@+id/addPostFragment"
-        android:name="com.example.launchpad.view.AddPostFragment"
+        android:name="com.example.launchpad.community.view.AddPostFragment"
         android:label="fragment_add_post"
         tools:layout="@layout/fragment_add_post" />
     <fragment
