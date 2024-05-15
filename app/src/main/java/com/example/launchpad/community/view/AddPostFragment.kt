@@ -112,7 +112,9 @@ class AddPostFragment : Fragment() {
             createdAt = if (isEditing) binding.createdAt.text.toString()
                 .toLong() else DateTime.now().millis,
             image = binding.edtImage.cropToBlob(600,500),
-            userID = userVM.getUserLD().value!!.uid
+            userID = userVM.getUserLD().value!!.uid,
+            comments = 0,
+            likes = 0
         )
 
     }

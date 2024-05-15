@@ -41,8 +41,8 @@ class PostViewModel(val app: Application) : AndroidViewModel(app){
         POSTS.document().set(post)
     }
 
-    suspend fun update(post: Post) {
-        POSTS.document(post.postID).set(post).await()
+    fun update(post: Post) {
+        POSTS.document(post.postID).set(post)
     }
 
     fun restore() {

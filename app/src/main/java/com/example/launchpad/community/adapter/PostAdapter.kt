@@ -14,7 +14,7 @@ import org.joda.time.DateTime
 class PostAdapter (
     val fn: (ViewHolder, Post) -> Unit = { _, _ -> }
     ) : ListAdapter<Post, PostAdapter.ViewHolder>(Diff) {
-
+        inner class PostViewHolder(val binding: ItemPostBinding) : RecyclerView.ViewHolder(binding.root)
         companion object Diff : DiffUtil.ItemCallback<Post>() {
             override fun areItemsTheSame(a: Post, b: Post) = a.postID == b.postID
             override fun areContentsTheSame(a: Post, b: Post) = a == b
@@ -33,6 +33,9 @@ class PostAdapter (
             holder.binding.txtDescription.text = post.description
             holder.binding.txtUsername.text = post.user.name
             holder.binding.txtTime.text = time
+            holder.binding.txtLikes.text = post.likes.toString()
+            holder.binding.txtComments.text = post.comments.toString() + " Comments"
+
             fn(holder, post)
         }
 

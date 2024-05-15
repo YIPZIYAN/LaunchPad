@@ -35,7 +35,7 @@
 
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/imgViewProfile"
                     tools:src="@drawable/round_account_circle_24"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
@@ -53,7 +53,7 @@
                     android:layout_marginStart="8dp"
                     android:text="Carolyn Ting"
                     android:textSize="15sp"
-                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    app:layout_constraintStart_toEndOf="@+id/imgViewProfile"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -64,7 +64,7 @@
                     android:layout_marginTop="4dp"
                     android:text="1d"
                     android:textSize="11sp"
-                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    app:layout_constraintStart_toEndOf="@+id/imgViewProfile"
                     app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
 
                 <TextView
@@ -118,7 +118,7 @@
                     android:text="Feeling great to be teaching again, it is a good action to enhae your self confidence."
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                    app:layout_constraintTop_toBottomOf="@+id/imgViewProfile" />
 
 
                 <ImageView
@@ -145,7 +145,7 @@
                     app:srcCompat="@drawable/baseline_thumb_up_off_alt_24_blue" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/txtLikes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
@@ -156,7 +156,7 @@
                     app:layout_constraintTop_toTopOf="@+id/imageThumbUp" />
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/txtComments"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
@@ -173,7 +173,7 @@
                     android:layout_marginEnd="5dp"
                     android:text="•"
                     app:layout_constraintEnd_toStartOf="@id/textView16"
-                    app:layout_constraintTop_toTopOf="@id/textView5" />
+                    app:layout_constraintTop_toTopOf="@id/txtComments" />
 
                 <TextView
                     android:id="@+id/textView16"
