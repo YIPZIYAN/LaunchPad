@@ -123,11 +123,8 @@ class HomeFragment : Fragment(), BottomSheetListener {
         }
 
         jobVM.getResultLD().observe(viewLifecycleOwner) { jobList ->
-            Log.d("ARCHIVED0", jobList.toString())
             if (userVM.getUserLD().value == null) return@observe
-            Log.d("ARCHIVED1", jobList.toString())
             if (!userVM.isEnterprise() && jobList.isEmpty() && !isSearching) return@observe
-            Log.d("ARCHIVED2", jobList.toString())
             companyVM.getCompaniesLD().observe(viewLifecycleOwner) { company ->
                 if (company != null)
                     jobList.forEach { job ->
