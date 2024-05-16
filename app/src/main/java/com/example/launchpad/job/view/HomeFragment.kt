@@ -1,6 +1,7 @@
 package com.example.launchpad.job.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +37,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
     private var chipJobTypeState = mutableListOf<String>()
     private var chipWorkplaceState = mutableListOf<String>()
     private var chipSalaryState = mutableListOf("0", "999999")
+    private var isSearching = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -110,29 +112,8 @@ class HomeFragment : Fragment(), BottomSheetListener {
 
             svAdapter = JobAdapter() { holder, job ->
                 holder.binding.root.setOnClickListener { detail(job.jobID) }
-                if (!userVM.isEnterprise()) {
-                    holder.binding.bookmark.visibility = View.VISIBLE
-                    val saveJob = jobVM.getSaveJobByUser(it.uid)
-                    saveJob.forEach { jobs ->
-                        if (jobs.jobID == job.jobID) {
-                            holder.binding.bookmark.isChecked = true
-                        }
-                    }
-                    holder.binding.bookmark.setOnCheckedChangeListener { _, _ ->
-                        val saveJob = SaveJob(
-                            id = it.uid + "_" + job.jobID,
-                            userID = it.uid,
-                            jobID = job.jobID,
-                        )
-                        if (holder.binding.bookmark.isChecked) {
-                            jobVM.saveJob(saveJob)
-                        } else {
-                            jobVM.unsaveJob(saveJob.id)
-                        }
-                    }
-                }
             }
-            binding.rvSearchResult.adapter = adapter
+            binding.rvSearchResult.adapter = svAdapter
 
             if (userVM.isEnterprise()) {
                 jobVM.filterJobByCompany(userVM.getUserLD().value!!.company_id)
@@ -141,10 +122,9 @@ class HomeFragment : Fragment(), BottomSheetListener {
             }
         }
 
-
         jobVM.getResultLD().observe(viewLifecycleOwner) { jobList ->
             if (userVM.getUserLD().value == null) return@observe
-            if (!userVM.isEnterprise() && jobList.isEmpty()) return@observe
+            if (!userVM.isEnterprise() && jobList.isEmpty() && !isSearching) return@observe
             companyVM.getCompaniesLD().observe(viewLifecycleOwner) { company ->
                 if (company != null)
                     jobList.forEach { job ->
@@ -174,12 +154,13 @@ class HomeFragment : Fragment(), BottomSheetListener {
 
         binding.searchView.addTransitionListener { _, _, newState ->
             if (newState == SearchView.TransitionState.HIDDEN) {
-                jobVM.clearSearch()
                 clearFilter()
+                jobVM.clearSearch()
             }
         }
 
         binding.searchView.editText.doOnTextChanged { text, _, _, _ ->
+            isSearching = true
             jobVM.search(text.toString())
         }
 
@@ -208,6 +189,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
         binding.chipJobType.text = "Job Type"
         binding.chipWorkplace.text = "Workplace"
         binding.chipSalary.text = "Salary"
+        isSearching = false
     }
 
     private fun chipPosition() {
@@ -300,6 +282,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
                 }
             }
         }
+        isSearching = true
 
     }
 }
