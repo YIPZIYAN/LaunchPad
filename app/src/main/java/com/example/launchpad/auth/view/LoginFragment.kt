@@ -10,22 +10,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.launchpad.EmailVerificationActivity
 import com.example.launchpad.R
 import com.example.launchpad.UserActivity
 import com.example.launchpad.auth.viewmodel.LoginViewModel
 import com.example.launchpad.databinding.FragmentLoginBinding
 import com.example.launchpad.util.displayErrorHelper
 import com.example.launchpad.util.intentWithoutBackstack
-import com.example.launchpad.util.loadingDialog
 import com.example.launchpad.util.toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
 
@@ -79,11 +74,9 @@ class LoginFragment : Fragment() {
         if (!isValid(email, password)) {
             return
         }
-        loadingDialog().show()
-        lifecycleScope.launch {
-            viewModel.firebaseAuthWithEmail(email, password)
-        }
-        loadingDialog().dismiss()
+
+        viewModel.firebaseAuthWithEmail(email, password)
+
 
     }
 
@@ -124,9 +117,8 @@ class LoginFragment : Fragment() {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)
-                lifecycleScope.launch {
-                    viewModel.firebaseAuthWithGoogle(account.idToken!!)
-                }
+                viewModel.firebaseAuthWithGoogle(account.idToken!!)
+
                 Log.d("success", "onActivityResult: getID")
             } catch (e: ApiException) {
                 Log.d("error", "onActivityResult: ${e.message}")

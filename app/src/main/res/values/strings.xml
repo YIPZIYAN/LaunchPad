@@ -142,8 +142,7 @@
     <string name="slogon_enterprise">Create an enterprise account to recruit talents in your company.</string>
     <string name="launchpad_enterprise">LaunchPad Enterprise</string>
     <string name="company_name">Company Name</string>
-    <string name="mapbox_access_token" translatable="false"
-        tools:ignore="UnusedResources">pk.eyJ1Ijoieml5YW4wMyIsImEiOiJjbHZqNHNoaTExaG44MmluMHc1dW9vM2lrIn0.iM0K_pB7iqUThlUTUu-UTg</string>
+    <string name="mapbox_access_token" translatable="false" tools:ignore="UnusedResources">pk.eyJ1Ijoieml5YW4wMyIsImEiOiJjbHZqNHNoaTExaG44MmluMHc1dW9vM2lrIn0.iM0K_pB7iqUThlUTUu-UTg</string>
     <string name="founded_in_year">Founded in Year</string>
     <string name="GoodMorning">Good Morning,</string>
     <string name="GoodAfternoon">Good Afternoon,</string>
