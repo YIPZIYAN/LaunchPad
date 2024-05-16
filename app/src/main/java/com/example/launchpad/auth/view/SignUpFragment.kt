@@ -64,7 +64,7 @@ class SignUpFragment : Fragment() {
         return binding.root
     }
 
-    private fun submit(isEnterprise: Boolean = false) {
+    private fun submit() {
         resetError()
         val email = binding.edtEmail.text.toString().trim()
         val password = binding.edtPassword.text.toString()

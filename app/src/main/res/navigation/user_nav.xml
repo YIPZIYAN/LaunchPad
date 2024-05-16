@@ -99,7 +99,9 @@
             app:popExitAnim="@anim/pop_exit" />
         <action
             android:id="@+id/action_profileFragment_to_emailVerificationFragment"
-            app:destination="@id/emailVerificationFragment" />
+            app:destination="@id/emailVerificationFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -112,6 +114,11 @@
         <action
             android:id="@+id/action_settingFragment_to_signUpEnterpriseFragment"
             app:destination="@id/signUpEnterpriseFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit" />
+        <action
+            android:id="@+id/action_settingFragment_to_profileUpdateFragment"
+            app:destination="@id/profileUpdateFragment"
             app:enterAnim="@anim/enter"
             app:exitAnim="@anim/exit" />
     </fragment>
@@ -223,5 +230,10 @@
         android:id="@+id/emailVerificationFragment"
         android:name="com.example.launchpad.profile.view.EmailVerificationFragment"
         android:label="EmailVerificationFragment" />
+    <fragment
+        android:id="@+id/profileUpdateFragment"
+        android:name="com.example.launchpad.ProfileUpdateFragment"
+        android:label="fragment_profile_update"
+        tools:layout="@layout/fragment_profile_update" />
 
 </navigation>

@@ -7,6 +7,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.Toast
@@ -20,6 +21,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.firestore.Blob
+import io.getstream.avatarview.AvatarView
 import java.io.ByteArrayOutputStream
 
 fun Fragment.toast(text: String) {
@@ -159,7 +161,7 @@ fun Blob.toBitmap(): Bitmap? {
 // ----------------------------------------------------------------------------
 
 // Usage: Crop to Firebase Blob
-fun ImageView.cropToBlob(width: Int, height: Int): Blob {
+fun AvatarView.cropToBlob(width: Int, height: Int): Blob {
     return drawable?.toBitmapOrNull()?.crop(width, height)?.toBlob() ?: Blob.fromBytes(ByteArray(0))
 }
 

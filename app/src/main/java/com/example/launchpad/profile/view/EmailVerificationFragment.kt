@@ -42,7 +42,7 @@ class EmailVerificationFragment : Fragment() {
         }
 
         viewModel.errorResponseMsg.observe(this) {
-            if (it != null) toast(it.toString())
+            if (it != null) toast("Please check your email.")
         }
 
 
