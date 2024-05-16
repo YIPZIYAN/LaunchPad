@@ -1,16 +1,15 @@
-package com.example.launchpad
+package com.example.launchpad.profile.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.launchpad.R
 import com.example.launchpad.data.User
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentProfileUpdateBinding
@@ -54,7 +53,7 @@ class ProfileUpdateFragment : Fragment() {
 
         userVM.response.observe(viewLifecycleOwner){
             if (it){
-                findNavController().navigate(R.id.profileUpdateFragment)
+                findNavController().navigate(R.id.profileFragment)
                 snackbar("Profile updated successfully!")
             }
         }

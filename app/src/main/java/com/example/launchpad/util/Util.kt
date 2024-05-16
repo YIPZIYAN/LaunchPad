@@ -165,6 +165,10 @@ fun AvatarView.cropToBlob(width: Int, height: Int): Blob {
     return drawable?.toBitmapOrNull()?.crop(width, height)?.toBlob() ?: Blob.fromBytes(ByteArray(0))
 }
 
+fun ImageView.cropToBlob(width: Int, height: Int): Blob {
+    return drawable?.toBitmapOrNull()?.crop(width, height)?.toBlob() ?: Blob.fromBytes(ByteArray(0))
+}
+
 // Usage: Load Firebase Blob
 fun ImageView.setImageBlob(blob: Blob) {
     setImageBitmap(blob.toBitmap())

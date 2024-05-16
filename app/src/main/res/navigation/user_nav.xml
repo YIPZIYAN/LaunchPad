@@ -232,7 +232,7 @@
         android:label="EmailVerificationFragment" />
     <fragment
         android:id="@+id/profileUpdateFragment"
-        android:name="com.example.launchpad.ProfileUpdateFragment"
+        android:name="com.example.launchpad.profile.view.ProfileUpdateFragment"
         android:label="fragment_profile_update"
         tools:layout="@layout/fragment_profile_update" />
 
