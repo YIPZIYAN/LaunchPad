@@ -76,6 +76,16 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
         return list
     }
 
+    fun getSaveJobByJobID(jobID: String): List<SaveJob> {
+        var list = getAllSaveJob()
+
+        list = list.filter {
+            it.jobID == jobID
+        }
+
+        return list
+    }
+
     fun saveJob(saveJob: SaveJob) {
         SAVE_JOBS.document(saveJob.id).set(saveJob)
     }
@@ -141,6 +151,10 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
         list = list.filter {
             it.companyID == companyID
         }
+        list = list.filter {
+            it.deletedAt == 0.toLong()
+        }
+
         list = list.filter {
             it.deletedAt == 0.toLong()
         }
@@ -223,9 +237,12 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
         if (salary.isNotEmpty()) {
             val minSalary = salary[0].toInt()
             val maxSalary = salary[1].toInt()
-            list = list.filter { job ->
-                job.minSalary >= minSalary && job.maxSalary <= maxSalary
+            if (minSalary != 0 && maxSalary != 999999) {
+                list = list.filter { job ->
+                    minSalary >= job.minSalary && maxSalary <= job.maxSalary
+                }
             }
+
         }
 
         resultLD.value = list
