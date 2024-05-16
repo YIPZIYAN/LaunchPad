@@ -24,6 +24,8 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
     private var listener: ListenerRegistration? = null
     private var listener2: ListenerRegistration? = null
 
+    val response = MutableLiveData<Boolean>()
+
     init {
         listener = auth.currentUser?.let {
             USERS.document(it.uid).addSnapshotListener { snap, _ ->
@@ -45,11 +47,21 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
         }.await()
     }
 
+    suspend fun update(user: User) {
+        USERS.document(auth.currentUser!!.uid)
+            .update(
+                "name", user.name,
+                "avatar", user.avatar
+            )
+            .addOnCompleteListener {
+                response.value = it.isSuccessful
+            }.await()
+    }
+
     fun getAuth() = auth.currentUser!!.let {
         User(
             uid = it.uid,
             email = it.email ?: "",
-            avatar = if (it.photoUrl != null) it.photoUrl.toString() else "",
             name = it.displayName ?: "User#${it.uid.take(8)}",
         )
     }
@@ -59,6 +71,8 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
 
     fun isEnterprise() = _userLD.value!!.isEnterprise
     fun isCompanyRegistered() = _userLD.value?.company_id != ""
+
+    fun isVerified() = auth.currentUser!!.isEmailVerified
     fun attachCompany(id: String) {
         USERS.document(getAuth().uid).update("company_id", id)
     }

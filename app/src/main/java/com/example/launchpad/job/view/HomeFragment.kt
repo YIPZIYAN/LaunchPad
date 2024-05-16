@@ -48,7 +48,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
         getGreeting()
 
         userVM.getUserLD().observe(viewLifecycleOwner) {
-            if (it == null){
+            if (it == null) {
                 lifecycleScope.launch {
                     userVM.set(userVM.getAuth())
                 }
@@ -132,7 +132,8 @@ class HomeFragment : Fragment(), BottomSheetListener {
                     }
             }
 
-            val sortedJobList = jobList.sortedByDescending { job ->
+
+            var sortedJobList = jobList.sortedByDescending { job ->
                 job.createdAt
             }
 

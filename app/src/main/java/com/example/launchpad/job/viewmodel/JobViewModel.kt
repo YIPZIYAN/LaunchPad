@@ -151,6 +151,9 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
         list = list.filter {
             it.companyID == companyID
         }
+        list = list.filter {
+            it.deletedAt == 0.toLong()
+        }
 
         list = list.filter {
             it.deletedAt == 0.toLong()

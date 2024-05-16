@@ -26,15 +26,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         //auto login
-        if (viewModel.isLoggedIn() && viewModel.isVerified()) {
+        if (viewModel.isLoggedIn()) {
             Log.d("status", "onCreateView: logged in and verified")
             intentWithoutBackstack(this, UserActivity::class.java)
         }
 
-        if (viewModel.isLoggedIn() && !viewModel.isVerified()) {
-            Log.d("status", "onCreateView: logged in")
-            intentWithoutBackstack(this, EmailVerificationActivity::class.java)
-        }
 
     }
 }

@@ -1,6 +1,7 @@
 package com.example.launchpad.profile.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +14,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.launchpad.R
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentMyProfileBinding
+import com.example.launchpad.util.toBitmap
 import com.example.launchpad.view.TabMyJobFragment
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.firestore.Blob
 import io.getstream.avatarview.coil.loadImage
 
 class MyProfileFragment : Fragment() {
@@ -37,13 +40,29 @@ class MyProfileFragment : Fragment() {
         binding = FragmentMyProfileBinding.inflate(inflater, container, false)
 
         userVM.getUserLD().observe(viewLifecycleOwner) { user ->
-            val avatar = if (user.avatar == "") R.drawable.round_account_circle_24 else user.avatar
+            val avatar =
+                if (user.avatar.toBytes().isEmpty())
+                    R.drawable.round_account_circle_24
+                else
+                    user.avatar.toBitmap()
+
             binding.txtName.text = user.name
             binding.avatarView.loadImage(avatar)
             if (userVM.isCompanyRegistered()) {
                 binding.avatarView.indicatorEnabled = true
             }
+            if (userVM.isVerified()) {
+                binding.cardViewFollowing.visibility = View.VISIBLE
+                binding.cardViewFollower.visibility = View.VISIBLE
+                binding.btnVerify.visibility = View.GONE
+            } else {
+                binding.cardViewFollowing.visibility = View.INVISIBLE
+                binding.cardViewFollower.visibility = View.INVISIBLE
+                binding.btnVerify.visibility = View.VISIBLE
+            }
         }
+
+        binding.btnVerify.setOnClickListener { findNavController().navigate(R.id.action_profileFragment_to_emailVerificationFragment) }
 
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
