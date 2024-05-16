@@ -9,14 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.launchpad.EmailVerificationActivity
 import com.example.launchpad.R
+import com.example.launchpad.UserActivity
 import com.example.launchpad.auth.viewmodel.SignUpViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentSignUpBinding
 import com.example.launchpad.util.displayErrorHelper
 import com.example.launchpad.util.intentWithoutBackstack
-import com.example.launchpad.util.loadingDialog
 import com.example.launchpad.util.toast
 import kotlinx.coroutines.launch
 
@@ -55,10 +54,9 @@ class SignUpFragment : Fragment() {
                     user.isEnterprise = isEnterprise
                     userVM.set(user)
                 }
-                viewModel.sendEmailVerification()
                 requireContext().intentWithoutBackstack(
                     requireActivity(),
-                    EmailVerificationActivity::class.java
+                    UserActivity::class.java
                 )
             }
         }

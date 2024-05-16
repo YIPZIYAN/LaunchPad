@@ -47,6 +47,8 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
 
     fun isEnterprise() = _userLD.value!!.isEnterprise
     fun isCompanyRegistered() = _userLD.value?.company_id != ""
+
+    fun isVerified() = auth.currentUser!!.isEmailVerified
     fun attachCompany(id: String) {
         USERS.document(getAuth().uid).update("company_id", id)
     }

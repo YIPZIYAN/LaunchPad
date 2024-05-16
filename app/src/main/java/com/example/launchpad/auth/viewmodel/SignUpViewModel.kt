@@ -12,9 +12,6 @@ import java.util.TimerTask
 class SignUpViewModel(val app: Application) : AndroidViewModel(app) {
     val auth = Firebase.auth
 
-    private val _isVerified = MutableLiveData<Boolean>()
-    val isVerified = _isVerified
-
     private val _isSignUpSuccess = MutableLiveData<Boolean>()
     val isSignUpSuccess = _isSignUpSuccess
 
@@ -34,26 +31,6 @@ class SignUpViewModel(val app: Application) : AndroidViewModel(app) {
             }
     }
 
-    fun checkEmailVerificationInterval() {
-        val timer = Timer()
-        val timerTask = object : TimerTask() {
-            override fun run() {
-                Log.d("timer task", "run: $isVerified")
-                auth.currentUser?.reload()
-                _isVerified.postValue(auth.currentUser!!.isEmailVerified)
-                if (auth.currentUser!!.isEmailVerified)
-                    timer.cancel()
-            }
-        }
 
-        if (auth.currentUser != null)
-            timer.scheduleAtFixedRate(timerTask, 0, 3000)
-    }
-
-    fun sendEmailVerification() {
-        auth.currentUser?.sendEmailVerification()?.addOnFailureListener {
-            errorResponseMsg.value = it.message
-        }
-    }
 
 }
