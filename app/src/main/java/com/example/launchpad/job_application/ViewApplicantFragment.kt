@@ -1,4 +1,4 @@
-package com.example.launchpad.view
+package com.example.launchpad.job_application
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -25,12 +25,15 @@ class ViewApplicantFragment : Fragment() {
 
     private val viewModel: ViewApplicantViewModel by viewModels()
     private lateinit var binding: FragmentViewApplicantBinding
+    private val jobID by lazy { arguments?.getString("jobID") ?: "" }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_view_applicant, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_view_applicant, container, false)
 
         binding.topAppBar.setNavigationOnClickListener {
             findNavController().navigateUp()
@@ -41,16 +44,17 @@ class ViewApplicantFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = MyPagerAdapter(childFragmentManager)
+        val adapter = MyPagerAdapter(childFragmentManager, jobID)
         binding.tabContent.adapter = adapter
         binding.tab.setupWithViewPager(binding.tabContent)
     }
 
-    class MyPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-
+    class MyPagerAdapter(fm: FragmentManager, id: String) :
+        FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        val id = id
         override fun getItem(position: Int): Fragment {
             return when (position) {
-                0 -> TabApplicantFragment()
+                0 -> TabApplicantFragment(id)
                 1 -> TabAcceptedApplicantFragment()
                 2 -> TabRejectedApplicantFragment()
                 else -> throw Exception()

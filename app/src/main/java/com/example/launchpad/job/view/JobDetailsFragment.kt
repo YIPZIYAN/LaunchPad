@@ -58,7 +58,11 @@ class JobDetailsFragment : Fragment() {
             }
             binding.btnApply.text = resources.getString(R.string.VIEW_APPLICANT)
             binding.btnApply.setOnClickListener {
-                nav.navigate(R.id.action_jobDetailsFragment_to_viewApplicantFragment)
+                nav.navigate(
+                    R.id.action_jobDetailsFragment_to_viewApplicantFragment, bundleOf(
+                        "jobID" to jobID
+                    )
+                )
             }
         } else {
             jobAppVM.getJobAppLD().observe(viewLifecycleOwner) {
