@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
@@ -23,8 +24,8 @@ import kotlinx.coroutines.launch
 class ProfileUpdateFragment : Fragment() {
 
     lateinit var binding: FragmentProfileUpdateBinding
-    val userVM: UserViewModel by activityViewModels()
-    val companyVM: CompanyViewModel by activityViewModels()
+    val userVM: UserViewModel by viewModels()
+    val companyVM: CompanyViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
