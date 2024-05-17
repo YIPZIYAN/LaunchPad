@@ -15,6 +15,7 @@ import com.example.launchpad.data.viewmodel.CompanyViewModel
 import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.databinding.FragmentApplyJobBinding
 import com.example.launchpad.job.viewmodel.JobViewModel
+import com.example.launchpad.util.showFileSize
 
 class ApplyJobFragment : Fragment() {
 
@@ -44,6 +45,7 @@ class ApplyJobFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentApplyJobBinding.inflate(inflater, container, false)
+        binding.file.visibility = View.GONE
 
         binding.btnUploadResume.setOnClickListener { getContent.launch("application/pdf") }
 
@@ -57,8 +59,12 @@ class ApplyJobFragment : Fragment() {
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             if (uri == null) return@registerForActivityResult
             filePath = uri
-            binding.fileName.text =
-                uri?.let { DocumentFile.fromSingleUri(requireActivity(), it) }.toString()
+
+            binding.file.visibility = View.VISIBLE
+
+            val file = uri.let { DocumentFile.fromSingleUri(requireActivity(), it) }!!
+            binding.fileName.text = file.name.toString()
+            binding.fileSize.text = showFileSize(file.length())
         }
 
 }
