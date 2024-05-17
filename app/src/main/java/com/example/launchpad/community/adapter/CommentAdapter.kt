@@ -1,0 +1,60 @@
+package com.example.launchpad.community.adapter
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.example.launchpad.data.PostComments
+import com.example.launchpad.databinding.ItemPostBinding
+import com.example.launchpad.databinding.ItemPostCommentBinding
+import com.example.launchpad.util.setImageBlob
+
+class CommentAdapter (
+    val fn: (ViewHolder, PostComments) -> Unit = { _, _ -> }
+    ) : ListAdapter<PostComments, CommentAdapter.ViewHolder>(Diff) {
+        inner class CommentViewHolder(val binding: ItemPostCommentBinding) : RecyclerView.ViewHolder(binding.root)
+        companion object Diff : DiffUtil.ItemCallback<PostComments>() {
+            override fun areItemsTheSame(a: PostComments, b: PostComments) = a.postCommentID == b.postCommentID
+            override fun areContentsTheSame(a: PostComments, b: PostComments) = a == b
+        }
+
+        class ViewHolder(val binding: ItemPostCommentBinding) : RecyclerView.ViewHolder(binding.root)
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+            ViewHolder(ItemPostCommentBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            val postComment = getItem(position)
+            val time = displayPostTime(postComment.createdAt)
+
+            holder.binding.txtComment.text = postComment.comment
+            holder.binding.txtUsername.text = postComment.user.name
+            holder.binding.txtTime.text = time
+
+            fn(holder, postComment)
+        }
+
+        private fun displayPostTime(postTime: Long): String {
+            val currentTime = System.currentTimeMillis()
+            val timeDifference = currentTime - postTime
+
+            val seconds = timeDifference / 1000
+            val minutes = seconds / 60
+            val hours = minutes / 60
+            val days = hours / 24
+            val weeks = days / 7
+            val months = days / 30
+            val years = days / 365
+
+            return when {
+                years > 0 -> "$years year${if (years > 1) "s" else ""} ago"
+                months > 0 -> "$months month${if (months > 1) "s" else ""} ago"
+                weeks > 0 -> "$weeks week${if (weeks > 1) "s" else ""} ago"
+                days > 0 -> "$days day${if (days > 1) "s" else ""} ago"
+                hours > 0 -> "$hours hour${if (hours > 1) "s" else ""} ago"
+                minutes > 0 -> "$minutes minute${if (minutes > 1) "s" else ""} ago"
+                else -> "Just now"
+            }
+        }
+}

@@ -29,6 +29,7 @@ class PostAdapter (
             val post = getItem(position)
             val time = displayPostTime(post.createdAt)
 
+            holder.binding.imgViewProfile.setImageBlob(post.user.avatar)
             holder.binding.postImageView.setImageBlob(post.image)
             holder.binding.txtDescription.text = post.description
             holder.binding.txtUsername.text = post.user.name

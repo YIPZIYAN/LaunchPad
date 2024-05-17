@@ -3,6 +3,7 @@ package com.example.launchpad.community.viewmodel
 import android.app.Application
 import android.graphics.BitmapFactory
 import android.view.View
+import android.widget.ImageView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.launchpad.R
@@ -80,6 +81,7 @@ class PostViewModel(val app: Application) : AndroidViewModel(app){
         field.helperText = if (isValid) "" else required
         return isValid
     }
+
 
 
 

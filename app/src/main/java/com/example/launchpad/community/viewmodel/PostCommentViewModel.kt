@@ -32,6 +32,15 @@ class PostCommentViewModel(val app: Application) : AndroidViewModel(app){
 
     fun get(postID: String, userID: String) = getAll().find { it.postID == postID && it.userID == userID }
 
+    fun get(postID: String) = getAll().find { it.postID == postID }
+
+    fun getCommentsByPostID(postID: String): MutableLiveData<List<PostComments>> {
+        val filteredCommentsLiveData = MutableLiveData<List<PostComments>>()
+        _postCommentsLD.observeForever { comments ->
+            filteredCommentsLiveData.value = comments.filter { it.postID == postID }
+        }
+        return filteredCommentsLiveData
+    }
     fun set(comment: PostComments) {
         POSTCOMMENTS.document().set(comment)
     }

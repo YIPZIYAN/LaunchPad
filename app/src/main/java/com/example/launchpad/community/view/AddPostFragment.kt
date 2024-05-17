@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.community.viewmodel.PostViewModel
 import com.example.launchpad.data.Post
+import com.example.launchpad.data.PostComments
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentAddPostBinding
 import com.example.launchpad.util.cropToBlob
@@ -92,6 +93,11 @@ class AddPostFragment : Fragment() {
             return
         }
 
+        if(!isImageValid()){
+            snackbar("Please Add a picture.")
+            return
+        }
+
         dialog("Create Post", "Are you sure want to submit this post ?",
             onPositiveClick = { _, _ ->
                 lifecycleScope.launch {
@@ -111,7 +117,7 @@ class AddPostFragment : Fragment() {
             description = binding.edtDescription.text.toString().trim(),
             createdAt = if (isEditing) binding.createdAt.text.toString()
                 .toLong() else DateTime.now().millis,
-            image = binding.edtImage.cropToBlob(600,500),
+            image = binding.edtImage.cropToBlob(binding.edtImage.getDrawable().getIntrinsicWidth(),binding.edtImage.getDrawable().getIntrinsicHeight()),
             userID = userVM.getUserLD().value!!.uid,
             comments = 0,
             likes = 0
@@ -123,7 +129,17 @@ class AddPostFragment : Fragment() {
 
         val validation = postVM.validateInput(binding.lblPostDescription, post.description)
 
+
         return validation
+    }
+
+
+    private fun isImageValid(): Boolean {
+        if(binding.edtImage.getDrawable() == null){
+            return false
+        }else
+            return true
+
     }
 
 }

@@ -28,7 +28,7 @@
                     android:layout_height="wrap_content"
                     android:minHeight="?attr/actionBarSize"
                     app:navigationIcon="@drawable/baseline_close_24"
-                    app:title="Edit Post" />
+                    app:title="Add Post" />
 
                 <com.google.android.material.divider.MaterialDivider
                     android:id="@+id/materialDivider"
@@ -72,12 +72,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:src="@drawable/tarumt"
-                        app:layout_constraintTop_toBottomOf="@+id/lblImage"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        android:adjustViewBounds="true"
                         android:scaleType="centerInside"
-                        android:adjustViewBounds="true"/>
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lblImage" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/lblPostDescription"
@@ -99,8 +98,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textMultiLine"
-                            android:scrollbars="vertical"
-                            android:text="Feeling great to be teaching again, it is a good action to enhance your self confidence " />
+                            android:scrollbars="vertical" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -113,26 +111,6 @@
                         android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/lblPostDescription" />
-
-                    <com.google.android.material.materialswitch.MaterialSwitch
-                        android:id="@+id/switch_notify"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:text="Notify Followers"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/switch_public" />
-
-                    <com.google.android.material.materialswitch.MaterialSwitch
-                        android:id="@+id/switch_public"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:text="Post to Public"
-                        android:layout_marginTop="12dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/btn_upload_image" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
