@@ -74,8 +74,8 @@ class ProfileUpdateFragment : Fragment() {
 
         lifecycleScope.launch {
             userVM.update(User(name = name, avatar = avatar))
-            if (userVM.isEnterprise()){
-                companyVM.syncAvatar(userVM.getUserLD().value?.company_id,avatar)
+            if (userVM.isEnterprise()) {
+                companyVM.syncAvatar(userVM.getUserLD().value?.company_id, avatar)
             }
         }
 
@@ -83,6 +83,7 @@ class ProfileUpdateFragment : Fragment() {
 
     // Get-content launcher
     private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) {
+        if (it == null) return@registerForActivityResult
         binding.avatar.loadImage(it)
     }
 
