@@ -30,9 +30,20 @@ class TabApplicantFragment(val jobID: String, val state: JobApplicationState) : 
     ): View {
         binding = FragmentTabApplicantBinding.inflate(inflater, container, false)
         when (state) {
-            JobApplicationState.NEW -> binding.imgNoApplicant.setImageResource(R.drawable.no_applicant)
-            JobApplicationState.ACCEPTED -> binding.imgNoApplicant.setImageResource(R.drawable.no_accept_applicant)
-            JobApplicationState.REJECTED -> binding.imgNoApplicant.setImageResource(R.drawable.no_reject_applicant)
+            JobApplicationState.NEW -> {
+                binding.imgNoApplicant.setImageResource(R.drawable.no_applicant)
+                binding.lblNoApplicant.text = getString(R.string.no_applicant)
+            }
+
+            JobApplicationState.ACCEPTED -> {
+                binding.imgNoApplicant.setImageResource(R.drawable.no_accept_applicant)
+                binding.lblNoApplicant.text = getString(R.string.no_accept_applicant)
+            }
+
+            JobApplicationState.REJECTED -> {
+                binding.imgNoApplicant.setImageResource(R.drawable.no_reject_applicant)
+                binding.lblNoApplicant.text = getString(R.string.no_reject_applicant)
+            }
         }
 
 
