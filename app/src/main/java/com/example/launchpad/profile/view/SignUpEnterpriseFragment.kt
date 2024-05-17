@@ -15,6 +15,7 @@ import com.example.launchpad.data.viewmodel.CompanyViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentSignUpEnterpriseBinding
 import com.example.launchpad.util.snackbar
+import com.google.firebase.firestore.Blob
 import kotlinx.coroutines.launch
 
 class SignUpEnterpriseFragment : Fragment() {
@@ -84,7 +85,8 @@ class SignUpEnterpriseFragment : Fragment() {
             name = binding.edtCompanyName.text.toString(),
             description = binding.edtCompanyDescription.text.toString(),
             location = binding.edtLocation.text.toString(),
-            year = binding.edtYear.text.toString().toIntOrNull() ?: -1
+            year = binding.edtYear.text.toString().toIntOrNull() ?: -1,
+            avatar = userVM.getUserLD().value?.avatar ?: Blob.fromBytes(ByteArray(0))
         )
     }
 

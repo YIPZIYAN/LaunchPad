@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/communityFragment"
-        android:name="com.example.launchpad.view.CommunityFragment"
+        android:name="com.example.launchpad.community.view.CommunityFragment"
         android:label="fragment_community"
         tools:layout="@layout/fragment_community" >
         <action
@@ -54,6 +54,13 @@
         <action
             android:id="@+id/action_communityFragment_to_userProfileFragment"
             app:destination="@id/userProfileFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit" />
+        <action
+            android:id="@+id/action_communityFragment_to_postCommentFragment"
+            app:destination="@id/postCommentFragment"
             app:enterAnim="@anim/enter"
             app:exitAnim="@anim/exit"
             app:popEnterAnim="@anim/pop_enter"
@@ -124,7 +131,7 @@
     </fragment>
     <fragment
         android:id="@+id/addPostFragment"
-        android:name="com.example.launchpad.view.AddPostFragment"
+        android:name="com.example.launchpad.community.view.AddPostFragment"
         android:label="fragment_add_post"
         tools:layout="@layout/fragment_add_post" />
     <fragment
@@ -161,9 +168,15 @@
     </fragment>
     <fragment
         android:id="@+id/applyJobFragment"
-        android:name="com.example.launchpad.view.ApplyJobFragment"
+        android:name="com.example.launchpad.job_application.ApplyJobFragment"
         android:label="fragment_apply_job"
-        tools:layout="@layout/fragment_apply_job" />
+        tools:layout="@layout/fragment_apply_job" >
+        <action
+            android:id="@+id/action_applyJobFragment_to_eventFragment"
+            app:destination="@id/eventFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit" />
+    </fragment>
     <fragment
         android:id="@+id/postJobFragment"
         android:name="com.example.launchpad.job.view.PostJobFragment"
@@ -180,7 +193,7 @@
     </fragment>
     <fragment
         android:id="@+id/viewApplicantFragment"
-        android:name="com.example.launchpad.view.ViewApplicantFragment"
+        android:name="com.example.launchpad.job_application.ViewApplicantFragment"
         android:label="ViewApplicantFragment"
         tools:layout="@layout/fragment_view_applicant">
         <action
@@ -193,7 +206,7 @@
     </fragment>
     <fragment
         android:id="@+id/applicantDetailsFragment"
-        android:name="com.example.launchpad.view.ApplicantDetailsFragment"
+        android:name="com.example.launchpad.job_application.ApplicantDetailsFragment"
         android:label="ApplicantDetailsFragment"
         tools:layout="@layout/fragment_applicant_details"/>
     <fragment
@@ -235,5 +248,9 @@
         android:name="com.example.launchpad.profile.view.ProfileUpdateFragment"
         android:label="fragment_profile_update"
         tools:layout="@layout/fragment_profile_update" />
+    <fragment
+        android:id="@+id/postCommentFragment"
+        android:name="com.example.launchpad.community.view.PostCommentFragment"
+        android:label="PostCommentFragment" />
 
 </navigation>

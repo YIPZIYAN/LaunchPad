@@ -14,10 +14,13 @@ import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentJobDetailsBinding
 import com.example.launchpad.data.Company
+import com.example.launchpad.data.JobApplication
 import com.example.launchpad.data.viewmodel.CompanyViewModel
+import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.job.viewmodel.JobViewModel
 import com.example.launchpad.util.dialog
+import com.example.launchpad.util.setImageBlob
 import com.example.launchpad.util.snackbar
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
@@ -29,6 +32,8 @@ class JobDetailsFragment : Fragment() {
     private val jobVM: JobViewModel by activityViewModels()
     private val companyVM: CompanyViewModel by activityViewModels()
     private val userVM: UserViewModel by activityViewModels()
+
+    private val jobAppVM: JobApplicationViewModel by activityViewModels()
 
     private val jobID by lazy { arguments?.getString("jobID") ?: "" }
     private val isArchived by lazy { arguments?.getBoolean("isArchived") ?: false }
@@ -53,11 +58,29 @@ class JobDetailsFragment : Fragment() {
             }
             binding.btnApply.text = resources.getString(R.string.VIEW_APPLICANT)
             binding.btnApply.setOnClickListener {
-                nav.navigate(R.id.action_jobDetailsFragment_to_viewApplicantFragment)
+                nav.navigate(
+                    R.id.action_jobDetailsFragment_to_viewApplicantFragment, bundleOf(
+                        "jobID" to jobID
+                    )
+                )
             }
         } else {
-            binding.btnApply.setOnClickListener {
-                nav.navigate(R.id.action_jobDetailsFragment_to_applyJobFragment)
+            jobAppVM.getJobAppLD().observe(viewLifecycleOwner) {
+                if (jobAppVM.isApplied(userVM.getAuth().uid, jobID)) {
+                    binding.btnApply.let {
+                        it.isEnabled = false
+                        it.isClickable = false
+                    }
+                    return@observe
+                }
+
+                binding.btnApply.setOnClickListener {
+                    nav.navigate(
+                        R.id.action_jobDetailsFragment_to_applyJobFragment, bundleOf(
+                            "jobID" to jobID
+                        )
+                    )
+                }
             }
         }
 
@@ -80,7 +103,7 @@ class JobDetailsFragment : Fragment() {
             job.company = companyVM.get(job.companyID) ?: Company()
 
             binding.jobName.text = job.jobName
-//            binding.companyAvatar.setImageBlob(job.company.avatar)
+            binding.companyAvatar.setImageBlob(job.company.avatar)
             binding.companyName.text = job.company.name
 
         }
