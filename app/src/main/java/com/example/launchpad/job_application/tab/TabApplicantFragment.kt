@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.launchpad.R
 import com.example.launchpad.data.viewmodel.JobApplicationViewModel
+import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentTabApplicantBinding
 import com.example.launchpad.job_application.adapter.ApplicantAdapter
 import com.example.launchpad.viewmodel.TabApplicantViewModel
@@ -21,6 +22,7 @@ class TabApplicantFragment(val jobID: String) : Fragment() {
 
 
     private val jobAppVM: JobApplicationViewModel by activityViewModels()
+    private val userVM: UserViewModel by activityViewModels()
     private lateinit var binding: FragmentTabApplicantBinding
 
 
@@ -30,8 +32,7 @@ class TabApplicantFragment(val jobID: String) : Fragment() {
     ): View {
         binding = FragmentTabApplicantBinding.inflate(inflater, container, false)
 
-        binding.tabApplicant.visibility = View.INVISIBLE
-        binding.tabNoApplicant.visibility = View.VISIBLE
+
 
         val adapter = ApplicantAdapter { h, f ->
             h.binding.root.setOnClickListener { }
@@ -42,12 +43,21 @@ class TabApplicantFragment(val jobID: String) : Fragment() {
 
         jobAppVM.getJobAppLD().observe(viewLifecycleOwner) { list ->
             val applicantList = list.filter { it.jobId == jobID }
+                .forEach { it.user = userVM.getAuth() }
 
-            if (applicantList.isEmpty()) return@observe
+            if (applicantList.isEmpty()){
+                binding.tabApplicant.visibility = View.INVISIBLE
+                binding.tabNoApplicant.visibility = View.VISIBLE
+                return@observe
+            }
 
+            Log.d("TAG", "onCreateView: $applicantList")
             binding.numApplicant.text = applicantList.size.toString() + " applicant(s)"
             binding.tabApplicant.visibility = View.VISIBLE
             binding.tabNoApplicant.visibility = View.GONE
+
+
+
             adapter.submitList(applicantList)
 
         }

@@ -32,7 +32,7 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     fun getUserLD() = _userLD
-
+    
     suspend fun set(user: User) {
         USERS.document(user.uid).set(user).addOnCompleteListener {
         }.await()
