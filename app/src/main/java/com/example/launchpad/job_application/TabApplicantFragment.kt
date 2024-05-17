@@ -1,14 +1,11 @@
-package com.example.launchpad.job_application.tab
+package com.example.launchpad.job_application
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -18,9 +15,8 @@ import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentTabApplicantBinding
 import com.example.launchpad.job_application.adapter.ApplicantAdapter
 import com.example.launchpad.util.JobApplicationState
-import com.example.launchpad.viewmodel.TabApplicantViewModel
 
-class TabApplicantFragment(val jobID: String) : Fragment() {
+class TabApplicantFragment(val jobID: String, val state: JobApplicationState) : Fragment() {
 
 
     private val jobAppVM: JobApplicationViewModel by activityViewModels()
@@ -33,6 +29,11 @@ class TabApplicantFragment(val jobID: String) : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentTabApplicantBinding.inflate(inflater, container, false)
+        when (state) {
+            JobApplicationState.NEW -> binding.imgNoApplicant.setImageResource(R.drawable.no_applicant)
+            JobApplicationState.ACCEPTED -> binding.imgNoApplicant.setImageResource(R.drawable.no_accept_applicant)
+            JobApplicationState.REJECTED -> binding.imgNoApplicant.setImageResource(R.drawable.no_reject_applicant)
+        }
 
 
         val adapter = ApplicantAdapter { h, f ->
@@ -54,7 +55,7 @@ class TabApplicantFragment(val jobID: String) : Fragment() {
 
         jobAppVM.getJobAppLD().observe(viewLifecycleOwner) { list ->
             val applicantList =
-                list.filter { it.jobId == jobID && it.status == JobApplicationState.NEW.toString() }
+                list.filter { it.jobId == jobID && it.status == state.toString() }
 
             if (applicantList.isEmpty()) {
                 binding.tabApplicant.visibility = View.INVISIBLE

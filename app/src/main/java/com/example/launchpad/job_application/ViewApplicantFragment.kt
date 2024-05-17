@@ -12,9 +12,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentViewApplicantBinding
-import com.example.launchpad.job_application.tab.TabAcceptedApplicantFragment
-import com.example.launchpad.job_application.tab.TabApplicantFragment
-import com.example.launchpad.job_application.tab.TabRejectedApplicantFragment
+import com.example.launchpad.util.JobApplicationState
 import com.example.launchpad.viewmodel.ViewApplicantViewModel
 
 class ViewApplicantFragment : Fragment() {
@@ -54,9 +52,9 @@ class ViewApplicantFragment : Fragment() {
         val id = id
         override fun getItem(position: Int): Fragment {
             return when (position) {
-                0 -> TabApplicantFragment(id)
-                1 -> TabAcceptedApplicantFragment()
-                2 -> TabRejectedApplicantFragment()
+                0 -> TabApplicantFragment(id,JobApplicationState.NEW)
+                1 -> TabApplicantFragment(id,JobApplicationState.ACCEPTED)
+                2 -> TabApplicantFragment(id,JobApplicationState.REJECTED)
                 else -> throw Exception()
             }
         }
