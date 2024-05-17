@@ -13,7 +13,7 @@ data class JobApplication(
     val status: String = ""
 ) {
     @get:Exclude
-    val user: User = User()
+    var user: User = User()
     @get:Exclude
     val job: Job = Job()
     @get:Exclude

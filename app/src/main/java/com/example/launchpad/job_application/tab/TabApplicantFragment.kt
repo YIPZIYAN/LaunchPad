@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -33,25 +34,34 @@ class TabApplicantFragment(val jobID: String) : Fragment() {
         binding = FragmentTabApplicantBinding.inflate(inflater, container, false)
 
 
-
         val adapter = ApplicantAdapter { h, f ->
-            h.binding.root.setOnClickListener { }
+            h.binding.root.setOnClickListener {
+                findNavController().navigate(
+                    R.id.applicantDetailsFragment,
+                    bundleOf("jobID" to jobID)
+                )
+            }
         }
 
         binding.recyclerView.adapter = adapter
-        binding.recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        binding.recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
 
         jobAppVM.getJobAppLD().observe(viewLifecycleOwner) { list ->
             val applicantList = list.filter { it.jobId == jobID }
-                .forEach { it.user = userVM.getAuth() }
 
-            if (applicantList.isEmpty()){
+            if (applicantList.isEmpty()) {
                 binding.tabApplicant.visibility = View.INVISIBLE
                 binding.tabNoApplicant.visibility = View.VISIBLE
                 return@observe
             }
 
-            Log.d("TAG", "onCreateView: $applicantList")
+            applicantList.forEach { it.user = userVM.get(it.userId)!! }
+
             binding.numApplicant.text = applicantList.size.toString() + " applicant(s)"
             binding.tabApplicant.visibility = View.VISIBLE
             binding.tabNoApplicant.visibility = View.GONE
