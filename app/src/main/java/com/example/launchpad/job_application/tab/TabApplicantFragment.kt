@@ -17,6 +17,7 @@ import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentTabApplicantBinding
 import com.example.launchpad.job_application.adapter.ApplicantAdapter
+import com.example.launchpad.util.JobApplicationState
 import com.example.launchpad.viewmodel.TabApplicantViewModel
 
 class TabApplicantFragment(val jobID: String) : Fragment() {
@@ -52,7 +53,8 @@ class TabApplicantFragment(val jobID: String) : Fragment() {
         )
 
         jobAppVM.getJobAppLD().observe(viewLifecycleOwner) { list ->
-            val applicantList = list.filter { it.jobId == jobID }
+            val applicantList =
+                list.filter { it.jobId == jobID && it.status == JobApplicationState.NEW.toString() }
 
             if (applicantList.isEmpty()) {
                 binding.tabApplicant.visibility = View.INVISIBLE
@@ -65,7 +67,6 @@ class TabApplicantFragment(val jobID: String) : Fragment() {
             binding.numApplicant.text = applicantList.size.toString() + " applicant(s)"
             binding.tabApplicant.visibility = View.VISIBLE
             binding.tabNoApplicant.visibility = View.GONE
-
 
 
             adapter.submitList(applicantList)
