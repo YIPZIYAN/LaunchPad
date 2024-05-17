@@ -11,15 +11,18 @@ import com.google.firebase.auth.auth
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
+import com.google.firebase.firestore.toObjects
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class UserViewModel(val app: Application) : AndroidViewModel(app) {
     private val USERS = Firebase.firestore.collection("user")
     private val _userLD = MutableLiveData<User>()
+    private val _userLLD = MutableLiveData<List<User>>()
 
     private val auth = Firebase.auth
     private var listener: ListenerRegistration? = null
+    private var listener2: ListenerRegistration? = null
 
     val response = MutableLiveData<Boolean>()
 
@@ -29,10 +32,17 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
                 _userLD.value = snap?.toObject()
             }
         }
+
+        listener2 = USERS.addSnapshotListener{ snap, _ ->
+            _userLLD.value = snap?.toObjects()
+        }
     }
 
     fun getUserLD() = _userLD
-    
+
+
+    fun getUserLLD() = _userLLD
+
     suspend fun set(user: User) {
         USERS.document(user.uid).set(user).addOnCompleteListener {
         }.await()
@@ -56,6 +66,9 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
             name = it.displayName ?: "User#${it.uid.take(8)}",
         )
     }
+
+    fun getAll() = _userLLD.value ?: emptyList()
+    fun get(userID: String) = getAll().find { it.uid == userID }
 
     fun isEnterprise() = _userLD.value!!.isEnterprise
     fun isCompanyRegistered() = _userLD.value?.company_id != ""
