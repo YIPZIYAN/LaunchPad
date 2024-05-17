@@ -199,7 +199,7 @@
     </fragment>
     <fragment
         android:id="@+id/applicantDetailsFragment"
-        android:name="com.example.launchpad.view.ApplicantDetailsFragment"
+        android:name="com.example.launchpad.job_application.ApplicantDetailsFragment"
         android:label="ApplicantDetailsFragment"
         tools:layout="@layout/fragment_applicant_details"/>
     <fragment

@@ -22,6 +22,7 @@ import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentApplyJobBinding
 import com.example.launchpad.job.viewmodel.JobViewModel
+import com.example.launchpad.util.JobApplicationState
 import com.example.launchpad.util.dialog
 import com.example.launchpad.util.showFileSize
 import com.example.launchpad.util.snackbar
@@ -115,7 +116,8 @@ class ApplyJobFragment : Fragment() {
                 userId = userVM.getAuth().uid,
                 jobId = jobID,
                 file = it,
-                info = binding.edtInfo.text.toString().trim()
+                info = binding.edtInfo.text.toString().trim(),
+                status = JobApplicationState.NEW.toString(),
             )
 
             lifecycleScope.launch {

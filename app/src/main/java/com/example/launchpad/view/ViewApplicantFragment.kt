@@ -12,6 +12,9 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentViewApplicantBinding
+import com.example.launchpad.job_application.tab.TabAcceptedApplicantFragment
+import com.example.launchpad.job_application.tab.TabApplicantFragment
+import com.example.launchpad.job_application.tab.TabRejectedApplicantFragment
 import com.example.launchpad.viewmodel.ViewApplicantViewModel
 
 class ViewApplicantFragment : Fragment() {

@@ -1,4 +1,4 @@
-package com.example.launchpad.view
+package com.example.launchpad.job_application.tab
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -7,15 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.launchpad.R
-import com.example.launchpad.viewmodel.TabRejectedApplicantViewModel
+import com.example.launchpad.viewmodel.TabAcceptedApplicantViewModel
 
-class TabRejectedApplicantFragment : Fragment() {
+class TabAcceptedApplicantFragment : Fragment() {
 
     companion object {
-        fun newInstance() = TabRejectedApplicantFragment()
+        fun newInstance() = TabAcceptedApplicantFragment()
     }
 
-    private val viewModel: TabRejectedApplicantViewModel by viewModels()
+    private val viewModel: TabAcceptedApplicantViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +27,6 @@ class TabRejectedApplicantFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_tab_rejected_applicant, container, false)
+        return inflater.inflate(R.layout.fragment_tab_accepted_applicant, container, false)
     }
 }

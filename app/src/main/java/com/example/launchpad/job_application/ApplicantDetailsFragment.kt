@@ -1,4 +1,4 @@
-package com.example.launchpad.view
+package com.example.launchpad.job_application
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentApplicantDetailsBinding
-import com.example.launchpad.databinding.FragmentHomeBinding
 import com.example.launchpad.viewmodel.ApplicantDetailsViewModel
 
 class ApplicantDetailsFragment : Fragment() {
