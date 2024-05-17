@@ -19,12 +19,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            app:title="Apply To Google Inc"
             app:navigationIcon="@drawable/baseline_close_24"
             app:navigationIconTint="?attr/colorControlNormal"
-            />
+            app:title="Apply To Google Inc" />
 
     </com.google.android.material.appbar.AppBarLayout>
+
+
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/materialDivider"
@@ -32,6 +33,14 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBar" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialDivider" />
 
     <TextView
         android:id="@+id/subtitle"

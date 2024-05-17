@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.launchpad.R
 import com.example.launchpad.data.Company
 import com.example.launchpad.data.JobApplication
 import com.example.launchpad.data.Pdf
@@ -21,7 +22,9 @@ import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentApplyJobBinding
 import com.example.launchpad.job.viewmodel.JobViewModel
+import com.example.launchpad.util.dialog
 import com.example.launchpad.util.showFileSize
+import com.example.launchpad.util.snackbar
 import com.example.launchpad.util.toast
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -41,7 +44,7 @@ class ApplyJobFragment : Fragment() {
 
     private val jobID by lazy { arguments?.getString("jobID") ?: "" }
     private var fileUri: Uri? = null
-
+    private val nav by lazy { findNavController() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,10 +52,6 @@ class ApplyJobFragment : Fragment() {
             var job = jobVM.get(jobID) ?: return@observe
             job.company = companyVM.get(job.companyID) ?: Company()
             binding.topAppBar.title = "Apply To ${job.company.name}"
-        }
-
-        jobAppVM.progress.observe(this) {
-            toast(it.toString())
         }
 
     }
@@ -72,7 +71,20 @@ class ApplyJobFragment : Fragment() {
 
         binding.btnSubmit.setOnClickListener { submit() }
 
+        jobAppVM.progress.observe(viewLifecycleOwner) {
+            binding.progressBar.progress = it
+        }
 
+        jobAppVM.response.observe(viewLifecycleOwner) { if (it != null) toast(it) }
+
+        jobAppVM.isSuccess.observe(viewLifecycleOwner) {
+            if (it) {
+                nav.popBackStack()
+                nav.popBackStack()
+                nav.navigate(R.id.eventFragment)
+                snackbar("Job Applied Successfully")
+            }
+        }
 
         return binding.root
     }
@@ -83,6 +95,14 @@ class ApplyJobFragment : Fragment() {
             return
         }
 
+        dialog("Apply Job", "Are you sure to apply this job?",
+            onPositiveClick = { _, _ ->
+                upload()
+            })
+
+    }
+
+    private fun upload() {
         lifecycleScope.launch {
             jobAppVM.uploadResume(fileUri!!, binding.fileName.text.toString())
         }
@@ -102,8 +122,6 @@ class ApplyJobFragment : Fragment() {
                 jobAppVM.set(jobApp)
             }
         }
-
-
     }
 
     private val getContent =

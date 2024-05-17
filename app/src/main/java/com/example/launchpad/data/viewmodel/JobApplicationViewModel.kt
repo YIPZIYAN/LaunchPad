@@ -1,10 +1,8 @@
 package com.example.launchpad.data.viewmodel
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.launchpad.data.Company
 import com.example.launchpad.data.JobApplication
 import com.example.launchpad.data.Pdf
 import com.google.firebase.Firebase
@@ -17,7 +15,7 @@ import org.joda.time.DateTime
 
 class JobApplicationViewModel : ViewModel() {
     private val JOBAPP = Firebase.firestore.collection("job_application")
-    private val _jobAppLD = MutableLiveData<List<Company>>()
+    private val _jobAppLD = MutableLiveData<List<JobApplication>>()
     val isSuccess = MutableLiveData<Boolean>()
     val response = MutableLiveData<String>()
     val progress = MutableLiveData<Int>()
@@ -53,9 +51,8 @@ class JobApplicationViewModel : ViewModel() {
             }
         }.addOnProgressListener {
             progress.value = (it.bytesTransferred * 100 / it.totalByteCount).toInt()
-        }.addOnCompleteListener() {
-            isSuccess.value = it.isSuccessful
-            response.value = it.exception.toString()
+        }.addOnFailureListener() {
+            response.value = it.message.toString()
         }.await()
     }
 
