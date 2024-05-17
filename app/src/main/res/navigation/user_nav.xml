@@ -161,7 +161,7 @@
     </fragment>
     <fragment
         android:id="@+id/applyJobFragment"
-        android:name="com.example.launchpad.view.ApplyJobFragment"
+        android:name="com.example.launchpad.job_application.ApplyJobFragment"
         android:label="fragment_apply_job"
         tools:layout="@layout/fragment_apply_job" />
     <fragment

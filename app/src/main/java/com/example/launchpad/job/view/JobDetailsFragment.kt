@@ -58,7 +58,11 @@ class JobDetailsFragment : Fragment() {
             }
         } else {
             binding.btnApply.setOnClickListener {
-                nav.navigate(R.id.action_jobDetailsFragment_to_applyJobFragment)
+                nav.navigate(
+                    R.id.action_jobDetailsFragment_to_applyJobFragment, bundleOf(
+                        "jobID" to jobID
+                    )
+                )
             }
         }
 
