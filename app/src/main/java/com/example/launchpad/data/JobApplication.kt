@@ -7,6 +7,11 @@ data class JobApplication(
     val id: String = "",
     val userId: String = "",
     val jobId: String = "",
-    val file: String = "",
+    val file: Pdf = Pdf(),
     val info: String = "",
+)
+
+data class Pdf(
+    val name: String? = "",
+    val path: String? = "",
 )
