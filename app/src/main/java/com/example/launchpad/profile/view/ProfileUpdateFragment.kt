@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.data.User
+import com.example.launchpad.data.viewmodel.CompanyViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentProfileUpdateBinding
 import com.example.launchpad.util.cropToBlob
@@ -23,6 +24,7 @@ class ProfileUpdateFragment : Fragment() {
 
     lateinit var binding: FragmentProfileUpdateBinding
     val userVM: UserViewModel by activityViewModels()
+    val companyVM: CompanyViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -51,8 +53,8 @@ class ProfileUpdateFragment : Fragment() {
             binding.avatar.loadImage(avatar)
         }
 
-        userVM.response.observe(viewLifecycleOwner){
-            if (it){
+        userVM.response.observe(viewLifecycleOwner) {
+            if (it) {
                 findNavController().navigate(R.id.profileFragment)
                 snackbar("Profile updated successfully!")
             }
@@ -69,7 +71,12 @@ class ProfileUpdateFragment : Fragment() {
             return
         }
 
-        lifecycleScope.launch { userVM.update(User(name = name, avatar = avatar)) }
+        lifecycleScope.launch {
+            userVM.update(User(name = name, avatar = avatar))
+            if (userVM.isEnterprise()){
+                companyVM.syncAvatar(userVM.getUserLD().value?.company_id,avatar)
+            }
+        }
 
     }
 

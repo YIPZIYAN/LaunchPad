@@ -18,6 +18,7 @@ import com.example.launchpad.data.viewmodel.CompanyViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.job.viewmodel.JobViewModel
 import com.example.launchpad.util.dialog
+import com.example.launchpad.util.setImageBlob
 import com.example.launchpad.util.snackbar
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
@@ -80,7 +81,7 @@ class JobDetailsFragment : Fragment() {
             job.company = companyVM.get(job.companyID) ?: Company()
 
             binding.jobName.text = job.jobName
-//            binding.companyAvatar.setImageBlob(job.company.avatar)
+            binding.companyAvatar.setImageBlob(job.company.avatar)
             binding.companyName.text = job.company.name
 
         }
