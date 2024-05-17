@@ -2,6 +2,7 @@ package com.example.launchpad.job_application
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,7 @@ import com.example.launchpad.databinding.FragmentApplyJobBinding
 import com.example.launchpad.job.viewmodel.JobViewModel
 import com.example.launchpad.util.showFileSize
 import com.example.launchpad.util.toast
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.util.Date
 
@@ -32,13 +34,13 @@ class ApplyJobFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentApplyJobBinding
-    private val jobVM: JobViewModel by viewModels()
-    private val companyVM: CompanyViewModel by viewModels()
+    private val jobVM: JobViewModel by activityViewModels()
+    private val companyVM: CompanyViewModel by activityViewModels()
     private val jobAppVM: JobApplicationViewModel by viewModels()
-    private val userVM: UserViewModel by viewModels()
+    private val userVM: UserViewModel by activityViewModels()
 
     private val jobID by lazy { arguments?.getString("jobID") ?: "" }
-    private lateinit var fileUri: Uri
+    private var fileUri: Uri? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +50,11 @@ class ApplyJobFragment : Fragment() {
             job.company = companyVM.get(job.companyID) ?: Company()
             binding.topAppBar.title = "Apply To ${job.company.name}"
         }
+
+        jobAppVM.progress.observe(this) {
+            toast(it.toString())
+        }
+
     }
 
     override fun onCreateView(
@@ -64,6 +71,9 @@ class ApplyJobFragment : Fragment() {
         }
 
         binding.btnSubmit.setOnClickListener { submit() }
+
+
+
         return binding.root
     }
 
@@ -74,15 +84,26 @@ class ApplyJobFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            val resume = jobAppVM.uploadResume(fileUri, binding.fileName.text.toString())
+            jobAppVM.uploadResume(fileUri!!, binding.fileName.text.toString())
+        }
+
+        jobAppVM.resume.observe(viewLifecycleOwner) {
+            Log.d("TAG", "submit: ")
+            if (it.equals(Pdf())) return@observe
+
             val jobApp = JobApplication(
                 userId = userVM.getAuth().uid,
                 jobId = jobID,
-                file = resume,
+                file = it,
                 info = binding.edtInfo.text.toString().trim()
             )
-            jobAppVM.set(jobApp)
+
+            lifecycleScope.launch {
+                jobAppVM.set(jobApp)
+            }
         }
+
+
     }
 
     private val getContent =
