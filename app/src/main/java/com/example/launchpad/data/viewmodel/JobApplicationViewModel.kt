@@ -40,10 +40,14 @@ class JobApplicationViewModel : ViewModel() {
 
     fun getAll() = _jobAppLD.value ?: emptyList()
 
+    fun isApplied(uid: String, jobID: String) =
+        getAll().any { it.jobId == jobID && it.userId == uid }
+
     fun get(jobAppID: String) = getAll().find { it.id == jobAppID }
 
     suspend fun uploadResume(uri: Uri, fileName: String) {
-        val storageRef = Firebase.storage.reference.child("resume/").child("${DateTime.now()}_$fileName ")
+        val storageRef =
+            Firebase.storage.reference.child("resume/").child("${DateTime.now()}_$fileName ")
 
         storageRef.putFile(uri).addOnSuccessListener {
             storageRef.downloadUrl.addOnSuccessListener {
