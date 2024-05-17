@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.viewmodel.CommunityViewModel
@@ -56,6 +57,18 @@ class CommunityFragment : Fragment() {
             }
             holder.binding.btnLike.setOnClickListener {
                 toggleLike(post)
+            }
+            holder.binding.txtComments.setOnClickListener {
+                findNavController().navigate(R.id.action_communityFragment_to_postCommentFragment, bundleOf(
+                    "postID" to post.postID
+                )
+                )
+            }
+            holder.binding.btnComment.setOnClickListener {
+                findNavController().navigate(R.id.action_communityFragment_to_postCommentFragment, bundleOf(
+                    "postID" to post.postID
+                )
+                )
             }
             updateThumbUpDrawable(holder, post)
         }

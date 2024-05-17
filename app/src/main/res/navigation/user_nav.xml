@@ -58,6 +58,13 @@
             app:exitAnim="@anim/exit"
             app:popEnterAnim="@anim/pop_enter"
             app:popExitAnim="@anim/pop_exit" />
+        <action
+            android:id="@+id/action_communityFragment_to_postCommentFragment"
+            app:destination="@id/postCommentFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit" />
     </fragment>
     <fragment
         android:id="@+id/eventFragment"
@@ -235,5 +242,9 @@
         android:name="com.example.launchpad.profile.view.ProfileUpdateFragment"
         android:label="fragment_profile_update"
         tools:layout="@layout/fragment_profile_update" />
+    <fragment
+        android:id="@+id/postCommentFragment"
+        android:name="com.example.launchpad.community.view.PostCommentFragment"
+        android:label="PostCommentFragment" />
 
 </navigation>
