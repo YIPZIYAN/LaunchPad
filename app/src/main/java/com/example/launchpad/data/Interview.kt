@@ -15,7 +15,7 @@ data class Interview(
     val endTime: Time = Time(),
 ) {
     @get:Exclude
-    val jobApp: JobApplication = JobApplication()
+    var jobApp: JobApplication = JobApplication()
 }
 
 data class Time(val hour: Int = 0, val minutes: Int = 0)

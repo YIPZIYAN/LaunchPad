@@ -24,6 +24,9 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.firestore.Blob
 import io.getstream.avatarview.AvatarView
 import java.io.ByteArrayOutputStream
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 fun Fragment.toast(text: String) {
     Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
@@ -111,6 +114,12 @@ fun displayPostTime(postTime: Long): String {
         DateUtils.FORMAT_ABBREV_RELATIVE
     ).toString()
 }
+
+fun displayDate(postTime: Long): String {
+    val format = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+   return format.format(Date(postTime))
+}
+
 
 fun Fragment.showFileSize(l: Long): String {
     var size = l / 1024.0

@@ -43,22 +43,20 @@ class EventFragment : Fragment() {
 
         override fun getItem(position: Int): Fragment {
             return when (position) {
-                0 -> TabApplicantFragment("all", JobApplicationState.ACCEPTED)
-                1 -> TabUpcomingInterviewFragment()
-                2 -> TabHistoryInterviewFragment()
+                0 -> TabUpcomingInterviewFragment()
+                1 -> TabHistoryInterviewFragment()
                 else -> throw Exception()
             }
         }
 
         override fun getCount(): Int {
-            return 3  // Number of tabs
+            return 2  // Number of tabs
         }
 
         override fun getPageTitle(position: Int): CharSequence? {
             return when (position) {
-                0 -> "Pending"
-                1 -> "Upcoming"
-                2 -> "History"
+                0 -> "Upcoming"
+                1 -> "History"
                 else -> null
             }
         }

@@ -112,7 +112,6 @@ class ScheduleInterviewFragment : Fragment() {
             onPositiveClick = { _, _ ->
                 lifecycleScope.launch {
                     interviewVM.set(interview)
-                    jobAppVM.updateStatus(JobApplicationState.SCHEDULED, jobAppID)
                 }
             })
     }
