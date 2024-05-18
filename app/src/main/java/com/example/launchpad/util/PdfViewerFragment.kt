@@ -25,9 +25,12 @@ class PdfViewerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentPdfViewerBinding.inflate(inflater, container, false)
-        binding.topAppBar.title = "fileName"
+        binding.topAppBar.title = fileName
+        binding.topAppBar.setOnClickListener {
+            nav.popBackStack()
+        }
         lifecycleScope.launch(Dispatchers.IO) {
-            val inputStream = URL("https://firebasestorage.googleapis.com/v0/b/launchpad-1d2dd.appspot.com/o/resume%2F2024-05-18T06%3A02%3A37.164Z_Test_resume1.pdf%20?alt=media&token=2068f2a2-dc73-4b81-978d-45aa2b89a80f").openStream()
+            val inputStream = URL(url).openStream()
             withContext(Dispatchers.Main) {
                 binding.PDFView.fromStream(inputStream).onRender { pages, _, _ ->
                     if (pages >= 1) {

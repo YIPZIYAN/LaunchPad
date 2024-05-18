@@ -51,7 +51,7 @@ class TabApplicantFragment(val jobID: String, val state: JobApplicationState) : 
             h.binding.root.setOnClickListener {
                 findNavController().navigate(
                     R.id.applicantDetailsFragment,
-                    bundleOf("jobID" to jobID)
+                    bundleOf("jobAppID" to f.id)
                 )
             }
         }
