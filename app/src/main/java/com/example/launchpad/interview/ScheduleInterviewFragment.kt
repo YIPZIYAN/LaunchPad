@@ -1,29 +1,25 @@
 package com.example.launchpad.interview
 
-import android.opengl.Visibility
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
-import com.example.launchpad.viewmodel.ScheduleInterviewViewModel
 import com.example.launchpad.databinding.FragmentScheduleInterviewBinding
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.mapbox.search.autocomplete.PlaceAutocomplete
+import com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion
 import com.mapbox.search.ui.adapter.autocomplete.PlaceAutocompleteUiAdapter
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.SearchResultsView
@@ -46,40 +42,7 @@ class ScheduleInterviewFragment : Fragment() {
     ): View {
         binding = FragmentScheduleInterviewBinding.inflate(inflater, container, false)
 
-        val key = getString(R.string.mapbox_access_token)
-        val placeAutocomplete = PlaceAutocomplete.create(key)
-
-
-        val placeAutocompleteUiAdapter = PlaceAutocompleteUiAdapter(
-            view = binding.searchResult,
-            placeAutocomplete = placeAutocomplete
-        )
-
-        binding.searchResult.initialize(
-            SearchResultsView.Configuration(
-                commonConfiguration = CommonSearchViewConfiguration()
-            )
-        )
-
-        binding.edtLocation.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
-                lifecycleScope.launchWhenStarted {
-                    placeAutocompleteUiAdapter.search(text.toString())
-                    if (text.isNotEmpty())
-                        binding.searchResult.visibility = View.VISIBLE
-                    else
-                        binding.searchResult.visibility = View.INVISIBLE
-                }
-            }
-
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // Nothing to do
-            }
-
-            override fun afterTextChanged(s: Editable) {
-                // Nothing to do
-            }
-        })
+        mapbox()
 
 
         val startDatePicker =
@@ -117,5 +80,63 @@ class ScheduleInterviewFragment : Fragment() {
         return binding.root
     }
 
+    private fun mapbox() {
+        val key = getString(R.string.mapbox_access_token)
+        val placeAutocomplete = PlaceAutocomplete.create(key)
 
+
+        val placeAutocompleteUiAdapter = PlaceAutocompleteUiAdapter(
+            view = binding.searchResult,
+            placeAutocomplete = placeAutocomplete
+        )
+
+        binding.searchResult.initialize(
+            SearchResultsView.Configuration(
+                commonConfiguration = CommonSearchViewConfiguration()
+            )
+        )
+
+
+        placeAutocompleteUiAdapter.addSearchListener(object :
+            PlaceAutocompleteUiAdapter.SearchListener {
+
+            override fun onSuggestionsShown(suggestions: List<PlaceAutocompleteSuggestion>) {
+                // Nothing to do
+            }
+
+            override fun onSuggestionSelected(suggestion: PlaceAutocompleteSuggestion) {
+                binding.edtLocation.setText(suggestion.name)
+                binding.searchResult.visibility = View.INVISIBLE
+            }
+
+            override fun onPopulateQueryClick(suggestion: PlaceAutocompleteSuggestion) {
+                binding.edtLocation.setText(suggestion.name)
+            }
+
+            override fun onError(e: Exception) {
+                // Nothing to do
+            }
+        })
+
+
+        binding.edtLocation.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
+                lifecycleScope.launchWhenStarted {
+                    placeAutocompleteUiAdapter.search(text.toString())
+                    if (text.isNotEmpty())
+                        binding.searchResult.visibility = View.VISIBLE
+                    else
+                        binding.searchResult.visibility = View.INVISIBLE
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                // Nothing to do
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                // Nothing to do
+            }
+        })
+    }
 }

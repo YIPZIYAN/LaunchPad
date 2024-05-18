@@ -272,7 +272,7 @@
                         android:hint="@string/location"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/materialDivider4"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_message"
                         app:startIconDrawable="@drawable/baseline_location_on_24">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -281,6 +281,14 @@
                             android:layout_height="wrap_content"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.mapbox.search.ui.view.SearchResultsView
+                        android:id="@+id/searchResult"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lblLocation" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/lblVideo"
@@ -291,7 +299,7 @@
                         android:hint="Add video conferencing"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/lblLocation"
+                        app:layout_constraintTop_toBottomOf="@+id/materialDivider4"
                         app:startIconDrawable="@drawable/baseline_videocam_24">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -321,15 +329,7 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.mapbox.search.ui.view.SearchResultsView
-                        android:id="@+id/searchResult"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_message" />
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
