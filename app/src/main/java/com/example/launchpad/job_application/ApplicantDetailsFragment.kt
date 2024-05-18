@@ -14,6 +14,7 @@ import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentApplicantDetailsBinding
 import com.example.launchpad.util.JobApplicationState
+import com.example.launchpad.util.dialog
 import com.example.launchpad.util.displayPostTime
 import com.example.launchpad.util.snackbar
 import com.example.launchpad.util.toBitmap
@@ -105,16 +106,23 @@ class ApplicantDetailsFragment : Fragment() {
             }
 
             binding.btnAccept.setOnClickListener {
-                jobAppVM.updateStatus(
-                    JobApplicationState.ACCEPTED,
-                    jobAppID
-                )
+                dialog("Accept Applicant", "Are you sure to ACCEPT ${jobApp.user.name} ?",
+                    onPositiveClick = { _, _ ->
+                        jobAppVM.updateStatus(
+                            JobApplicationState.ACCEPTED,
+                            jobAppID
+                        )
+                    })
             }
             binding.btnReject.setOnClickListener {
-                jobAppVM.updateStatus(
-                    JobApplicationState.REJECTED,
-                    jobAppID
-                )
+                dialog("Reject Applicant", "Are you sure to REJECT ${jobApp.user.name} ?",
+                    onPositiveClick = { _, _ ->
+                        jobAppVM.updateStatus(
+                            JobApplicationState.REJECTED,
+                            jobAppID
+                        )
+                    })
+
             }
 
 

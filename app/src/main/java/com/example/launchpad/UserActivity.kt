@@ -31,7 +31,7 @@ class UserActivity : AppCompatActivity() {
         userVM.init()
         companyVM.init()
 
-
+        window.setSoftInputMode(android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
 
         super.onCreate(savedInstanceState)
         binding = ActivityUserBinding.inflate(layoutInflater)
