@@ -81,9 +81,7 @@ class ApplyJobFragment : Fragment() {
 
         jobAppVM.isSuccess.observe(viewLifecycleOwner) {
             if (it) {
-                nav.popBackStack()
-                nav.popBackStack()
-                nav.navigate(R.id.eventFragment)
+                nav.popBackStack(R.id.homeFragment, false)
                 snackbar("Job Applied Successfully")
             }
         }

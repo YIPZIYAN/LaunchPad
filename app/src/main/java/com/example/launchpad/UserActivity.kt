@@ -58,6 +58,7 @@ class UserActivity : AppCompatActivity() {
                 R.id.signUpEnterpriseFragment,
                 R.id.emailVerificationFragment,
                 R.id.profileUpdateFragment,
+                R.id.pdfViewerFragment,
             )
 
             val isBottomNavVisible = !hideBottomNavDestinations.contains(destination.id)
