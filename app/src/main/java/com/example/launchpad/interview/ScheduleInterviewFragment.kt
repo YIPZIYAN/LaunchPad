@@ -22,6 +22,7 @@ import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentScheduleInterviewBinding
 import com.example.launchpad.job.viewmodel.JobViewModel
+import com.example.launchpad.util.JobApplicationState
 import com.example.launchpad.util.dialog
 import com.example.launchpad.util.snackbar
 import com.example.launchpad.util.toBitmap
@@ -69,9 +70,9 @@ class ScheduleInterviewFragment : Fragment() {
         mapbox()
         fetchUserData()
         setupDateTimePicker()
-        interviewVM.isSuccess.observe(viewLifecycleOwner){
-            if (it){
-                nav.popBackStack(R.id.homeFragment,true)
+        interviewVM.isSuccess.observe(viewLifecycleOwner) {
+            if (it) {
+                nav.popBackStack(R.id.homeFragment, false)
                 snackbar("Interview Scheduled Successfully!")
             }
         }
@@ -109,7 +110,10 @@ class ScheduleInterviewFragment : Fragment() {
 
         dialog("Schedule Interview", "Are you sure to schedule interview?",
             onPositiveClick = { _, _ ->
-                lifecycleScope.launch { interviewVM.set(interview) }
+                lifecycleScope.launch {
+                    interviewVM.set(interview)
+                    jobAppVM.updateStatus(JobApplicationState.SCHEDULED, jobAppID)
+                }
             })
     }
 

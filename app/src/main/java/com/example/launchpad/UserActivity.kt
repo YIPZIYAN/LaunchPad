@@ -39,10 +39,6 @@ class UserActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    fun updateBottomNav(id: Int) {
-        binding.bottomNavigation.selectedItemId = id
-    }
-
     private fun setupNav() {
         nav.addOnDestinationChangedListener { _, destination, _ ->
 

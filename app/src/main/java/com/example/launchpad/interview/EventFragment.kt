@@ -1,4 +1,4 @@
-package com.example.launchpad.view
+package com.example.launchpad.interview
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,6 +11,8 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.example.launchpad.viewmodel.EventViewModel
 import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentEventBinding
+import com.example.launchpad.job_application.TabApplicantFragment
+import com.example.launchpad.util.JobApplicationState
 
 class EventFragment : Fragment() {
 
@@ -36,13 +38,14 @@ class EventFragment : Fragment() {
         binding.tab.setupWithViewPager(binding.tabContent)
     }
 
-    class MyPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+    class MyPagerAdapter(fm: FragmentManager) :
+        FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         override fun getItem(position: Int): Fragment {
             return when (position) {
-                0 -> TabPendingInterviewFragment()
+                0 -> TabApplicantFragment("all", JobApplicationState.ACCEPTED)
                 1 -> TabUpcomingInterviewFragment()
-                2 -> TabPendingInterviewFragment()
+                2 -> TabHistoryInterviewFragment()
                 else -> throw Exception()
             }
         }

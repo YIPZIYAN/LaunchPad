@@ -21,7 +21,6 @@ class ViewApplicantFragment : Fragment() {
         fun newInstance() = ViewApplicantFragment()
     }
 
-    private val viewModel: ViewApplicantViewModel by viewModels()
     private lateinit var binding: FragmentViewApplicantBinding
     private val jobID by lazy { arguments?.getString("jobID") ?: "" }
 

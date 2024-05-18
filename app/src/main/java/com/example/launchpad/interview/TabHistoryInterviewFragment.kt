@@ -1,4 +1,4 @@
-package com.example.launchpad.view
+package com.example.launchpad.interview
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -9,17 +9,18 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
-import com.example.launchpad.databinding.FragmentTabPendingInterviewBinding
+import com.example.launchpad.databinding.FragmentTabHistoryInterviewBinding
+
 import com.example.launchpad.viewmodel.TabPendingInterviewViewModel
 
-class TabPendingInterviewFragment : Fragment() {
+class TabHistoryInterviewFragment : Fragment() {
 
     companion object {
-        fun newInstance() = TabPendingInterviewFragment()
+        fun newInstance() = TabHistoryInterviewFragment()
     }
 
     private val viewModel: TabPendingInterviewViewModel by viewModels()
-    private lateinit var binding: FragmentTabPendingInterviewBinding
+    private lateinit var binding: FragmentTabHistoryInterviewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,10 +33,8 @@ class TabPendingInterviewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_tab_pending_interview, container, false)
-        binding.applicant.setOnClickListener {
-            findNavController().navigate(R.id.action_eventFragment_to_scheduleInterviewFragment)
-        }
+            FragmentTabHistoryInterviewBinding.inflate(inflater, container, false)
+
 
         return binding.root
     }
