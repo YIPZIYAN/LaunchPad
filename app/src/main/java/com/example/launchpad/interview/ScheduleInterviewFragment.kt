@@ -14,10 +14,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.launchpad.R
+import com.example.launchpad.UserActivity
+import com.example.launchpad.data.Interview
+import com.example.launchpad.data.Time
+import com.example.launchpad.data.viewmodel.InterviewViewModel
 import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentScheduleInterviewBinding
 import com.example.launchpad.job.viewmodel.JobViewModel
+import com.example.launchpad.util.dialog
+import com.example.launchpad.util.snackbar
 import com.example.launchpad.util.toBitmap
 import com.example.launchpad.util.toast
 import com.google.android.material.datepicker.CalendarConstraints
@@ -30,6 +36,8 @@ import com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion
 import com.mapbox.search.ui.adapter.autocomplete.PlaceAutocompleteUiAdapter
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.SearchResultsView
+import kotlinx.coroutines.launch
+import okhttp3.internal.format
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -41,11 +49,16 @@ class ScheduleInterviewFragment : Fragment() {
     }
 
     private val userVM: UserViewModel by activityViewModels()
-    private val jobAppVM: JobApplicationViewModel by viewModels()
+    private val jobAppVM: JobApplicationViewModel by activityViewModels()
     private val jobVM: JobViewModel by activityViewModels()
+    private val interviewVM: InterviewViewModel by viewModels()
     private lateinit var binding: FragmentScheduleInterviewBinding
     private val nav by lazy { findNavController() }
     private val jobAppID by lazy { arguments?.getString("jobAppID") ?: "" }
+
+    private var date: Long = 0
+    private var startTime: Time = Time()
+    private var endTime: Time = Time()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,7 +68,52 @@ class ScheduleInterviewFragment : Fragment() {
         binding.topAppBar.setOnClickListener { nav.navigateUp() }
         mapbox()
         fetchUserData()
+        setupDateTimePicker()
+        interviewVM.isSuccess.observe(viewLifecycleOwner){
+            if (it){
+                nav.popBackStack(R.id.homeFragment,true)
+                snackbar("Interview Scheduled Successfully!")
+            }
+        }
 
+        binding.btnApply.setOnClickListener { submit() }
+
+
+        return binding.root
+    }
+
+    private fun submit() {
+        val location = binding.edtLocation.text.toString().trim()
+        val video = binding.edtVideo.text.toString().trim()
+        val remark = binding.edtRemark.text.toString().trim()
+
+        if (location == "" && video == "") {
+            toast("Please fill in location or video conferencing link.")
+            return
+        }
+
+        if (date == 0L || startTime == Time() || endTime == Time()) {
+            toast("Please select date and time.")
+            return
+        }
+
+        val interview = Interview(
+            jobAppID = jobAppID,
+            location = location,
+            video = video,
+            remark = remark,
+            startTime = startTime,
+            endTime = endTime,
+            date = date
+        )
+
+        dialog("Schedule Interview", "Are you sure to schedule interview?",
+            onPositiveClick = { _, _ ->
+                lifecycleScope.launch { interviewVM.set(interview) }
+            })
+    }
+
+    private fun setupDateTimePicker() {
         val constraint =
             CalendarConstraints.Builder().setValidator(DateValidatorPointForward.now()).build()
 
@@ -96,18 +154,21 @@ class ScheduleInterviewFragment : Fragment() {
         datePicker.addOnPositiveButtonClickListener {
             val format = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
             binding.chipDate.text = format.format(Date(it))
+            date = it
         }
 
         startTimePicker.addOnPositiveButtonClickListener {
-            binding.chipStartTime.text = "${startTimePicker.hour} : ${startTimePicker.minute}"
+            binding.chipStartTime.text =
+                "${format("%02d : %02d", startTimePicker.hour, startTimePicker.minute)}"
+            startTime = Time(startTimePicker.hour, startTimePicker.minute)
         }
 
         endTimePicker.addOnPositiveButtonClickListener {
-            binding.chipEndTime.text = "${endTimePicker.hour} : ${endTimePicker.minute} $endTimePicker"
+            binding.chipEndTime.text =
+                "${format("%02d : %02d", endTimePicker.hour, endTimePicker.minute)}"
+            endTime = Time(endTimePicker.hour, endTimePicker.minute)
+
         }
-
-
-        return binding.root
     }
 
     private fun fetchUserData() {
