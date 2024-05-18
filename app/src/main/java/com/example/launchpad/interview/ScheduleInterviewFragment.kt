@@ -2,6 +2,7 @@ package com.example.launchpad.interview
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.data.viewmodel.JobApplicationViewModel
@@ -40,6 +42,30 @@ class ScheduleInterviewFragment : Fragment() {
 
         val key = getString(R.string.mapbox_access_token)
         val placeAutocomplete = PlaceAutocomplete.create(key)
+//        lifecycleScope.launchWhenCreated {
+//            val response = placeAutocomplete.suggestions(
+//                query = binding.edtLocation.text.toString(),
+//            )
+//
+//            if (response.isValue) {
+//                val suggestions = requireNotNull(response.value)
+//
+//
+//                if (suggestions.isNotEmpty()) {
+//                    // Supposing that a user has selected (clicked in UI) the first suggestion
+//                    val selectedSuggestion = suggestions.first()
+//                    val selectionResponse = placeAutocomplete.select(selectedSuggestion)
+//                    selectionResponse.onValue { result ->
+//                        Log.i("SearchApiExample", "Place Autocomplete result: $result")
+//                    }.onError { e ->
+//                        Log.i("SearchApiExample", "An error occurred during selection", e)
+//                    }
+//                }
+//            } else {
+//                Log.i("SearchApiExample", "Place Autocomplete error", response.error)
+//            }
+//        }
+
 
         val startDatePicker =
             MaterialDatePicker.Builder.datePicker()
