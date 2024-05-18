@@ -1,13 +1,17 @@
 package com.example.launchpad.community.adapter
 
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.launchpad.R
 import com.example.launchpad.data.PostComments
 import com.example.launchpad.databinding.ItemPostBinding
 import com.example.launchpad.databinding.ItemPostCommentBinding
+import com.example.launchpad.util.isBlobEmpty
 import com.example.launchpad.util.setImageBlob
 
 class CommentAdapter (
@@ -27,6 +31,14 @@ class CommentAdapter (
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val postComment = getItem(position)
             val time = displayPostTime(postComment.createdAt)
+            if (isBlobEmpty(postComment.user.avatar)) {
+                val avatarDrawableRes = R.drawable.round_account_circle_24
+
+                val avatarDrawable: Drawable? = ContextCompat.getDrawable(holder.itemView.context, avatarDrawableRes)
+                holder.binding.imgViewProfile.setImageDrawable(avatarDrawable)
+            }else{
+                holder.binding.imgViewProfile.setImageBlob(postComment.user.avatar)
+            }
 
             holder.binding.txtComment.text = postComment.comment
             holder.binding.txtUsername.text = postComment.user.name
