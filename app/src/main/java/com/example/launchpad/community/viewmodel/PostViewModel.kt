@@ -7,6 +7,7 @@ import android.widget.ImageView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.launchpad.R
+import com.example.launchpad.data.Job
 import com.example.launchpad.data.Post
 import com.example.launchpad.util.toBlob
 import com.google.android.material.textfield.TextInputLayout
@@ -25,6 +26,7 @@ class PostViewModel(val app: Application) : AndroidViewModel(app){
     init {
         listener = POSTS.addSnapshotListener { snap, _ ->
             _postLD.value = snap?.toObjects()
+            updateResult()
         }
     }
 
@@ -82,6 +84,29 @@ class PostViewModel(val app: Application) : AndroidViewModel(app){
         return isValid
     }
 
+    private val resultLD = MutableLiveData<List<Post>>()
+    private var search = ""
+
+    fun getResultLD() = resultLD
+
+    fun clearSearch() {
+        search = ""
+        updateResult()
+    }
+
+    fun search(search: String) {
+        this.search = search
+        updateResult()
+    }
+    fun updateResult() {
+        var list = getAll()
+
+        list = list.filter {
+            it.description.contains(search, true) || it.user.name.contains(search, true)
+        }
+
+        resultLD.value = list
+    }
 
 
 

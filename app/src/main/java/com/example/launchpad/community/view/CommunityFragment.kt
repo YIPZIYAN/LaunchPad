@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.viewmodel.CommunityViewModel
@@ -23,6 +24,9 @@ import com.example.launchpad.data.PostLikes
 import com.example.launchpad.data.User
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentCommunityBinding
+import com.google.android.material.search.SearchView
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 
 
 class CommunityFragment : Fragment() {
@@ -37,6 +41,7 @@ class CommunityFragment : Fragment() {
     private val userVM: UserViewModel by activityViewModels()
     private lateinit var viewModel: CommunityViewModel
     private lateinit var binding: FragmentCommunityBinding
+    private var isSearching = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,7 +54,50 @@ class CommunityFragment : Fragment() {
             findNavController().navigate(R.id.action_communityFragment_to_addPostFragment)
         }
 
+        binding.btnSearch.setOnClickListener {
+            if(binding.edtSearch.text.toString().trim() !=""){
 
+                postVM.search(binding.edtSearch.text.toString().trim())
+                postVM.getResultLD().observe(viewLifecycleOwner) { postList ->
+                    userVM.getUserLLD().observe(viewLifecycleOwner) { user ->
+                        postList.forEach{ post ->
+                            post.user = userVM.get(post.userID) ?: User()
+                        }
+                    }
+                    val sortedPostList = postList.sortedByDescending { it.createdAt }
+
+                    adapter.submitList(sortedPostList)
+
+                    val handler = Handler(Looper.getMainLooper())
+                    handler.postDelayed({
+                        adapter.notifyDataSetChanged()
+                    }, 100)
+
+                }
+
+
+
+            }else{
+                postVM.getPostLD().observe(viewLifecycleOwner) { postList ->
+                    userVM.getUserLLD().observe(viewLifecycleOwner) { user ->
+                        postList.forEach{ post ->
+                            post.user = userVM.get(post.userID) ?: User()
+                        }
+                    }
+                    val sortedPostList = postList.sortedByDescending { it.createdAt }
+
+                    adapter.submitList(sortedPostList)
+
+                    val handler = Handler(Looper.getMainLooper())
+                    handler.postDelayed({
+                        adapter.notifyDataSetChanged()
+                    }, 100)
+
+                }
+
+
+            }
+        }
 
         adapter = PostAdapter { holder, post ->
             holder.binding.imgViewProfile.setOnClickListener {
@@ -96,13 +144,30 @@ class CommunityFragment : Fragment() {
         }
 
 
+        // Refresh
+        binding.refresh.setOnRefreshListener {
+            postVM.getPostLD().observe(viewLifecycleOwner) { postList ->
+                userVM.getUserLLD().observe(viewLifecycleOwner) { user ->
+                    postList.forEach{ post ->
+                        post.user = userVM.get(post.userID) ?: User()
+                    }
+                }
+                val sortedPostList = postList.sortedByDescending { it.createdAt }
 
-            //-----------------------------------------------------------
-    // Refresh
-    binding.refresh.setOnRefreshListener {
-        adapter.notifyDataSetChanged()
-        binding.refresh.isRefreshing = false
-    }
+                adapter.submitList(sortedPostList)
+
+                val handler = Handler(Looper.getMainLooper())
+                handler.postDelayed({
+                    adapter.notifyDataSetChanged()
+                }, 100)
+
+            }
+
+             adapter.notifyDataSetChanged()
+            binding.refresh.isRefreshing = false
+        }
+
+
 
 
         return binding.root
@@ -184,5 +249,7 @@ class CommunityFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(CommunityViewModel::class.java)
         // TODO: Use the ViewModel
     }
+
+
 
 }
