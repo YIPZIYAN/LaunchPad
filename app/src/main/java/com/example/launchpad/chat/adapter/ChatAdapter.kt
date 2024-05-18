@@ -15,6 +15,8 @@ import com.example.launchpad.data.Job
 import com.example.launchpad.databinding.ItemChatBinding
 import com.example.launchpad.databinding.ItemJobCardBinding
 import com.example.launchpad.job.adapter.JobAdapter
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class ChatAdapter(
     val fn: (ViewHolder, Chat) -> Unit = { _, _ -> }
@@ -35,18 +37,17 @@ class ChatAdapter(
 
 //      holder.binding.companyAvatar.setImageBlob(job.company.avatar)
         holder.binding.chatName.text = chat.receiverID
+        holder.binding.chatContent.text = chat.latestMessage.message
+        holder.binding.chatTime.text = displaySendTime(chat.latestMessage.sendTime)
+
         fn(holder, chat)
     }
 
 
 
-    private fun displayPostTime(postTime: Long): String {
-        return DateUtils.getRelativeTimeSpanString(
-            postTime,
-            System.currentTimeMillis(),
-            DateUtils.MINUTE_IN_MILLIS,
-            DateUtils.FORMAT_ABBREV_RELATIVE
-        ).toString()
+    private fun displaySendTime(sendTime: Long): String {
+        val sdf = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        return sdf.format(sendTime)
     }
 
 }
