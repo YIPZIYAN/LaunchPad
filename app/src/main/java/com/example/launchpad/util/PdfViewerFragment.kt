@@ -1,10 +1,14 @@
 package com.example.launchpad.util
 
+import android.app.DownloadManager
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.getSystemService
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
@@ -12,6 +16,7 @@ import com.example.launchpad.databinding.FragmentPdfViewerBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 import java.net.URL
 
 class PdfViewerFragment : Fragment() {
@@ -20,6 +25,7 @@ class PdfViewerFragment : Fragment() {
     val nav by lazy { findNavController() }
     private val fileName by lazy { arguments?.getString("fileName") ?: "" }
     private val url by lazy { arguments?.getString("url") ?: "" }
+    lateinit var  downloadManager: DownloadManager
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,6 +35,10 @@ class PdfViewerFragment : Fragment() {
         binding.topAppBar.setOnClickListener {
             nav.popBackStack()
         }
+
+        downloadManager =
+            requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+
         lifecycleScope.launch(Dispatchers.IO) {
             val inputStream = URL(url).openStream()
             withContext(Dispatchers.Main) {
@@ -39,7 +49,23 @@ class PdfViewerFragment : Fragment() {
                 }.load()
             }
         }
+
+        binding.floatingActionButton.setOnClickListener { download() }
         return binding.root
+    }
+
+    private fun download() {
+        try {
+            val request = DownloadManager.Request(Uri.parse(url))
+                .setTitle(fileName)
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                .setAllowedOverMetered(true)
+                .setMimeType("application/pdf")
+
+            downloadManager.enqueue(request)
+        } catch (e: Exception) {
+            toast(e.message.toString())
+        }
     }
 
 
