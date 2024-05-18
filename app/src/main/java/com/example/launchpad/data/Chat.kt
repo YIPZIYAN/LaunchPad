@@ -1,8 +1,11 @@
 package com.example.launchpad.data
 
+import com.google.firebase.firestore.Blob
+
 data class Chat(
     val id: String = "",
-    val receiverID: String = "",
-    val latestMessage: ChatMessage = ChatMessage(),
+    val receiverName: String = "",
+    val avatar: Blob = Blob.fromBytes(ByteArray(0)),
+    var latestMessage: ChatMessage = ChatMessage(),
     val numOfUnreadMsg: Int = 0,
 )

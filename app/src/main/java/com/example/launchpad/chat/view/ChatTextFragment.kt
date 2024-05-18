@@ -8,14 +8,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.launchpad.R
 import com.example.launchpad.chat.adapter.MessageAdapter
 import com.example.launchpad.data.ChatMessage
+import com.example.launchpad.data.User
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentChatTextBinding
+import com.example.launchpad.util.toBitmap
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import io.getstream.avatarview.coil.loadImage
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType
@@ -51,15 +55,32 @@ class ChatTextFragment : Fragment() {
     ): View {
         binding = FragmentChatTextBinding.inflate(inflater, container, false)
 
-        binding.topAppBar.setOnClickListener {
-            nav.navigateUp()
-        }
-        adapter = MessageAdapter(userVM.getAuth().uid)
+        val userIDs = chatRoomId.split("_")
+
+        val otherUser =
+            if (userIDs[0] == userVM.getAuth().uid) {
+                userVM.get(userIDs[1])!!
+            } else {
+                userVM.get(userIDs[0])!!
+            }
+
+        binding.topAppBar.title = otherUser.name
+        val avatar =
+            if (otherUser.avatar.toBytes().isEmpty())
+                R.drawable.round_account_circle_24
+            else
+                otherUser.avatar.toBitmap()
+
+        adapter = MessageAdapter(userVM.getAuth().uid, avatar)
         binding.rvMessages.adapter = adapter
         adapter.submitList(msgList)
         displayMessage(chatRoomId)
 
         binding.btnSend.setOnClickListener { sendMessage() }
+
+        binding.topAppBar.setOnClickListener {
+            nav.navigateUp()
+        }
 
         return binding.root
     }
@@ -86,7 +107,7 @@ class ChatTextFragment : Fragment() {
 
     }
 
-    fun sendPushNotification(message:String) {
+    fun sendPushNotification(message: String) {
         val jsonObject = JSONObject()
 
         val notificationObj = JSONObject()
@@ -98,7 +119,10 @@ class ChatTextFragment : Fragment() {
 
         jsonObject.put("notification", notificationObj)
         jsonObject.put("data", dataObj)
-        jsonObject.put("to", "eZn3vU0LSFCEjVaWNwxb3y:APA91bH__LKio3qwRFPhP-E9yn9SJHkJc4eWS12Eo1hW4nnBuyUoHdJyJ5obwHi5hz-CJuXii-5Y-WIWGlcO79-_j3rZ2M2fv8hHAGFCfaBKLd453uLmfyspEgHYGWw3Zbp1e0LMbXIY")
+        jsonObject.put(
+            "to",
+            "eZn3vU0LSFCEjVaWNwxb3y:APA91bH__LKio3qwRFPhP-E9yn9SJHkJc4eWS12Eo1hW4nnBuyUoHdJyJ5obwHi5hz-CJuXii-5Y-WIWGlcO79-_j3rZ2M2fv8hHAGFCfaBKLd453uLmfyspEgHYGWw3Zbp1e0LMbXIY"
+        )
 
         callApi(jsonObject)
     }
@@ -111,9 +135,12 @@ class ChatTextFragment : Fragment() {
         val request = Request.Builder()
             .url(url)
             .post(body)
-            .header("Authorization", "Bearer AAAAXcttPyk:APA91bGKCDLn2aO98ksp1j0vFskVqfdNKQAihmxM_UMY3Axib2R4czrUq1zYb4ZKsp1T60G_9Nj0Knwf5mHkg0ksrJQNDpPZK1ooME0CSX1RSN2CZisjlLru0hk3FYiTEsnAXSWsDlzt")
+            .header(
+                "Authorization",
+                "Bearer AAAAXcttPyk:APA91bGKCDLn2aO98ksp1j0vFskVqfdNKQAihmxM_UMY3Axib2R4czrUq1zYb4ZKsp1T60G_9Nj0Knwf5mHkg0ksrJQNDpPZK1ooME0CSX1RSN2CZisjlLru0hk3FYiTEsnAXSWsDlzt"
+            )
             .build()
-        client.newCall(request).enqueue(object: Callback{
+        client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 Log.e("ERROR", e.toString())
             }
