@@ -12,6 +12,7 @@ import com.example.launchpad.R
 import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentApplicantDetailsBinding
+import com.example.launchpad.util.JobApplicationState
 import com.example.launchpad.util.toBitmap
 import com.example.launchpad.util.toast
 import com.example.launchpad.viewmodel.ApplicantDetailsViewModel
@@ -48,6 +49,13 @@ class ApplicantDetailsFragment : Fragment() {
 
             jobApp.user = userVM.get(jobApp.userId)!!
 
+            /*
+            * Load Applicant Data
+            *
+            * Load Applicant Data
+            * =======================================
+            *
+            * */
             binding.applicantName.text = jobApp.user.name
             binding.avatarView.loadImage(jobApp.user.avatar.toBitmap())
             binding.fileName.text = jobApp.file.name
@@ -61,6 +69,32 @@ class ApplicantDetailsFragment : Fragment() {
                     )
                 )
             }
+
+            /*
+            * Button Function
+            * =======================================
+            * */
+            when (jobApp.status) {
+                JobApplicationState.ACCEPTED.toString() -> {
+                    binding.btnAccept.let {
+                        it.isClickable = false
+                        it.isEnabled = false
+                        it.text = jobApp.status
+                    }
+                    binding.btnReject.visibility = View.GONE
+                }
+
+                JobApplicationState.REJECTED.toString() -> {
+                    binding.btnReject.let {
+                        it.isClickable = false
+                        it.isEnabled = false
+                        it.text = jobApp.status
+                    }
+                    binding.btnReject.visibility = View.GONE
+                }
+            }
+
+
 
 
             //TODO chat

@@ -77,50 +77,60 @@
                 tools:text="Applied 3d ago" />
 
 
-            <Button
-                android:id="@+id/btn_accept"
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/accept"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/applicant_name"
-                app:layout_constraintTop_toBottomOf="@id/applied_date"
-                app:strokeColor="@color/m3_text_button_foreground_color_selector" />
+                app:layout_constraintStart_toStartOf="@+id/applied_date"
+                app:layout_constraintTop_toBottomOf="@+id/applied_date">
 
-            <Button
-                android:id="@+id/btn_reject"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="12dp"
-                android:text="@string/reject"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@id/btn_accept"
-                app:layout_constraintTop_toBottomOf="@id/applied_date"
-                app:strokeColor="@color/m3_text_button_foreground_color_selector" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_message"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/message"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@id/btn_reject"
-                app:layout_constraintTop_toBottomOf="@id/applied_date"
-                app:strokeColor="@color/m3_text_button_foreground_color_selector"/>
+                    <Button
+                        android:id="@+id/btn_accept"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/accept"
+                        android:textSize="16sp"
+                        app:strokeColor="@color/m3_text_button_foreground_color_selector" />
+
+                    <Button
+                        android:id="@+id/btn_reject"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/reject"
+                        android:textSize="16sp"
+                        app:strokeColor="@color/m3_text_button_foreground_color_selector" />
+
+                    <Button
+                        android:id="@+id/btn_message"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/message"
+                        android:textSize="16sp"
+                        app:icon="@drawable/round_comment_24"
+                        app:strokeColor="@color/m3_text_button_foreground_color_selector" />
+                </LinearLayout>
+            </HorizontalScrollView>
 
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/materialDivider2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_accept" />
+                app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
 
             <TextView
                 android:id="@+id/resume_title"
