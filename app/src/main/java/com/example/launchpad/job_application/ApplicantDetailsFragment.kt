@@ -67,7 +67,7 @@ class ApplicantDetailsFragment : Fragment() {
             binding.avatarView.loadImage(jobApp.user.avatar.toBitmap())
             binding.fileName.text = jobApp.file.name
             binding.information.text = if (jobApp.info == "") "-" else jobApp.info
-            binding.appliedDate.text = displayPostTime(jobApp.createdAt)
+            binding.appliedDate.text = "Applied " + displayPostTime(jobApp.createdAt)
 
             binding.file.setOnClickListener {
                 nav.navigate(
