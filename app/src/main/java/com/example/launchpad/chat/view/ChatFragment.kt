@@ -65,7 +65,7 @@ class ChatFragment : Fragment() {
 
         chatList.clear()
 
-        binding.btnPostJob.setOnClickListener { createChatroom("BIQY4hjJBbOtA61eBWVpC3ykB5f2_64guPgKSSlPgbaxMkEAwZrK4cqG2") }
+        //binding.btnPostJob.setOnClickListener { createChatroom("BIQY4hjJBbOtA61eBWVpC3ykB5f2_64guPgKSSlPgbaxMkEAwZrK4cqG2") }
 
         adapter = ChatAdapter { holder, chat ->
             holder.binding.chat.setOnClickListener { message(chat.id) }
@@ -73,15 +73,6 @@ class ChatFragment : Fragment() {
         binding.rvChat.adapter = adapter
         displayChatList(userVM.getAuth().uid)
         return binding.root
-    }
-
-    fun createChatroom(chatRoomId: String) {
-        val chatRoomsRef = FirebaseDatabase.getInstance().getReference("chatRooms")
-        chatRoomsRef.child(chatRoomId).get().addOnSuccessListener { snapshot ->
-            if (!snapshot.exists()) {
-                chatRoomsRef.child(chatRoomId).setValue(true)
-            }
-        }
     }
 
     fun displayChatList(userID: String) {
