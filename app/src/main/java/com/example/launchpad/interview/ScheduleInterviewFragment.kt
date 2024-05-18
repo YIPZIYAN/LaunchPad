@@ -1,7 +1,10 @@
 package com.example.launchpad.interview
 
+import android.opengl.Visibility
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -21,6 +24,9 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.mapbox.search.autocomplete.PlaceAutocomplete
+import com.mapbox.search.ui.adapter.autocomplete.PlaceAutocompleteUiAdapter
+import com.mapbox.search.ui.view.CommonSearchViewConfiguration
+import com.mapbox.search.ui.view.SearchResultsView
 
 class ScheduleInterviewFragment : Fragment() {
 
@@ -42,29 +48,38 @@ class ScheduleInterviewFragment : Fragment() {
 
         val key = getString(R.string.mapbox_access_token)
         val placeAutocomplete = PlaceAutocomplete.create(key)
-//        lifecycleScope.launchWhenCreated {
-//            val response = placeAutocomplete.suggestions(
-//                query = binding.edtLocation.text.toString(),
-//            )
-//
-//            if (response.isValue) {
-//                val suggestions = requireNotNull(response.value)
-//
-//
-//                if (suggestions.isNotEmpty()) {
-//                    // Supposing that a user has selected (clicked in UI) the first suggestion
-//                    val selectedSuggestion = suggestions.first()
-//                    val selectionResponse = placeAutocomplete.select(selectedSuggestion)
-//                    selectionResponse.onValue { result ->
-//                        Log.i("SearchApiExample", "Place Autocomplete result: $result")
-//                    }.onError { e ->
-//                        Log.i("SearchApiExample", "An error occurred during selection", e)
-//                    }
-//                }
-//            } else {
-//                Log.i("SearchApiExample", "Place Autocomplete error", response.error)
-//            }
-//        }
+
+
+        val placeAutocompleteUiAdapter = PlaceAutocompleteUiAdapter(
+            view = binding.searchResult,
+            placeAutocomplete = placeAutocomplete
+        )
+
+        binding.searchResult.initialize(
+            SearchResultsView.Configuration(
+                commonConfiguration = CommonSearchViewConfiguration()
+            )
+        )
+
+        binding.edtLocation.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
+                lifecycleScope.launchWhenStarted {
+                    placeAutocompleteUiAdapter.search(text.toString())
+                    if (text.isNotEmpty())
+                        binding.searchResult.visibility = View.VISIBLE
+                    else
+                        binding.searchResult.visibility = View.INVISIBLE
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                // Nothing to do
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                // Nothing to do
+            }
+        })
 
 
         val startDatePicker =
@@ -86,15 +101,18 @@ class ScheduleInterviewFragment : Fragment() {
                 .setMinute(30)
                 .setTitleText("Start Time")
                 .build()
-        binding.txtStart.setOnClickListener {
-            startDatePicker.show(childFragmentManager, "startDatePicker")
-        }
-        binding.txtStartTime.setOnClickListener {
-            startTimePicker.show(childFragmentManager, "startTimePicker")
-        }
-        binding.txtEndTime.setOnClickListener {
-            endTimePicker.show(childFragmentManager, "endTimePicker")
-        }
+//        binding.txtStart.setOnClickListener
+//        {
+//            startDatePicker.show(childFragmentManager, "startDatePicker")
+//        }
+//        binding.txtStartTime.setOnClickListener
+//        {
+//            startTimePicker.show(childFragmentManager, "startTimePicker")
+//        }
+//        binding.txtEndTime.setOnClickListener
+//        {
+//            endTimePicker.show(childFragmentManager, "endTimePicker")
+//        }
 
         return binding.root
     }
