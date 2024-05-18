@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
 import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -136,7 +137,6 @@ class ApplyJobFragment : Fragment() {
             val file = uri.let { DocumentFile.fromSingleUri(requireActivity(), it) }!!
             binding.fileName.text = file.name.toString()
             binding.fileSize.text = showFileSize(file.length())
-
 
         }
 

@@ -252,5 +252,10 @@
         android:id="@+id/postCommentFragment"
         android:name="com.example.launchpad.community.view.PostCommentFragment"
         android:label="PostCommentFragment" />
+    <fragment
+        android:id="@+id/pdfViewerFragment"
+        android:name="com.example.launchpad.util.PdfViewerFragment"
+        android:label="fragment_pdf_viewer"
+        tools:layout="@layout/fragment_pdf_viewer" />
 
 </navigation>

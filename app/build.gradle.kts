@@ -75,6 +75,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.activity:activity:1.8.0")
 
+    //PDF viewer
+    implementation("com.github.barteksc:android-pdf-viewer:2.8.2")
+
 //    implementation("com.mapbox.maps:android:11.3.1")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.google.firebase:firebase-database-ktx")
