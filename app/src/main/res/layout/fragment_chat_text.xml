@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.ChatTextFragment">
+        tools:context=".chat.view.ChatTextFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBar"
@@ -32,113 +32,19 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <ScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_messages"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="12dp"
             app:layout_constraintBottom_toTopOf="@id/txt_message"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appBar">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/my"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/txt_my_message"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="12dp"
-                        android:background="@drawable/my_message_bubble"
-                        android:paddingHorizontal="14dp"
-                        android:paddingVertical="8dp"
-                        android:text="Hi, my message"
-                        android:maxWidth="280dp"
-                        android:textColor="@color/md_theme_dark_background"
-                        android:textSize="17sp"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/txt_my_message_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="4dp"
-                        android:text="12:00 PM"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        app:layout_constraintTop_toBottomOf="@id/txt_my_message"
-                        app:layout_constraintEnd_toEndOf="@id/txt_my_message"/>
+            app:layout_constraintTop_toBottomOf="@id/appBar"
+            android:scrollbars="vertical"
+            app:layoutManager="LinearLayoutManager"
+            />
 
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/other"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="12dp"
-                    app:layout_constraintTop_toBottomOf="@id/my">
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/chat_avatar_container"
-                        android:layout_width="43dp"
-                        android:layout_height="43dp"
-                        android:layout_marginStart="16dp"
-                        app:cardCornerRadius="23dp"
-                        app:cardElevation="0dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <ImageView
-                            android:id="@+id/chat_avatar"
-                            android:layout_width="43dp"
-                            android:layout_height="43dp"
-                            android:contentDescription="sample"
-                            android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/ic_launcher_background" />
-                    </androidx.cardview.widget.CardView>
-
-                    <TextView
-                        android:id="@+id/txt_other_message"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxWidth="280dp"
-                        android:layout_marginStart="12dp"
-                        android:background="@drawable/other_message_bubble"
-                        android:paddingHorizontal="14dp"
-                        android:paddingVertical="8dp"
-                        android:text="Hi, yesterday I sent you the file which is related to xxx."
-                        android:textColor="@color/md_theme_dark_inverseSurface"
-                        android:textSize="17sp"
-                        app:layout_constraintStart_toEndOf="@id/chat_avatar_container"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/txt_other_message_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginStart="4dp"
-                        android:text="1:56 PM"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        app:layout_constraintTop_toBottomOf="@id/txt_other_message"
-                        app:layout_constraintStart_toStartOf="@id/txt_other_message"/>
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        </ScrollView>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txt_message"
@@ -160,6 +66,7 @@
             app:placeholderText="Type your message...">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

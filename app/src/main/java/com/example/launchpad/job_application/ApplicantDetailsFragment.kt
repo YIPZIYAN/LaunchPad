@@ -16,6 +16,7 @@ import com.example.launchpad.util.JobApplicationState
 import com.example.launchpad.util.toBitmap
 import com.example.launchpad.util.toast
 import com.example.launchpad.viewmodel.ApplicantDetailsViewModel
+import com.google.firebase.database.FirebaseDatabase
 import io.getstream.avatarview.coil.loadImage
 
 class ApplicantDetailsFragment : Fragment() {
@@ -100,16 +101,32 @@ class ApplicantDetailsFragment : Fragment() {
             //TODO chat
             binding.btnMessage.setOnClickListener {
                 //the ids
-                userVM.getAuth().uid
-                jobApp.userId
+                val chatRoomId = userVM.getAuth().uid + "_" + jobApp.userId
+                createChatroom(chatRoomId)
+                message(chatRoomId)
             }
 
 
         }
 
 
-
-
         return binding.root
+    }
+
+    fun createChatroom(chatRoomId: String) {
+        val chatRoomsRef = FirebaseDatabase.getInstance().getReference("chatRooms")
+        chatRoomsRef.child(chatRoomId).get().addOnSuccessListener { snapshot ->
+            if (!snapshot.exists()) {
+                chatRoomsRef.child(chatRoomId).setValue(true)
+            }
+        }
+    }
+
+    private fun message(chatRoomId: String) {
+        nav.navigate(
+            R.id.chatTextFragment, bundleOf(
+                "chatRoomId" to chatRoomId
+            )
+        )
     }
 }
