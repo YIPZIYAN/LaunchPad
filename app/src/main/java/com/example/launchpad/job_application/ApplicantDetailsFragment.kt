@@ -100,7 +100,10 @@ class ApplicantDetailsFragment : Fragment() {
                         it.text = jobApp.status
                     }
                     binding.btnInterview.visibility = View.VISIBLE
-                    binding.btnInterview.setOnClickListener { nav.navigate(R.id.scheduleInterviewFragment) }
+                    binding.btnInterview.setOnClickListener { nav.navigate(R.id.scheduleInterviewFragment,
+                        bundleOf(
+                            "jobAppID" to jobAppID
+                        )) }
                     binding.btnReject.visibility = View.GONE
                 }
 
@@ -135,7 +138,6 @@ class ApplicantDetailsFragment : Fragment() {
             }
 
 
-            //TODO chat
             binding.btnMessage.setOnClickListener {
                 //the ids
                 val chatRoomId = userVM.getAuth().uid + "_" + jobApp.userId

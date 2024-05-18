@@ -1,4 +1,4 @@
-package com.example.launchpad.view
+package com.example.launchpad.interview
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -6,13 +6,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
+import com.example.launchpad.data.viewmodel.JobApplicationViewModel
+import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.viewmodel.ScheduleInterviewViewModel
 import com.example.launchpad.databinding.FragmentScheduleInterviewBinding
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import com.mapbox.search.autocomplete.PlaceAutocomplete
 
 class ScheduleInterviewFragment : Fragment() {
 
@@ -20,21 +26,21 @@ class ScheduleInterviewFragment : Fragment() {
         fun newInstance() = ScheduleInterviewFragment()
     }
 
-    private val viewModel: ScheduleInterviewViewModel by viewModels()
+    private val userVM: UserViewModel by activityViewModels()
+    private val jobAppVM: JobApplicationViewModel by viewModels()
     private lateinit var binding: FragmentScheduleInterviewBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
+    private val nav by lazy { findNavController() }
+    private val jobAppID by lazy { arguments?.getString("jobAppID") ?: "" }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_schedule_interview, container, false)
+        binding = FragmentScheduleInterviewBinding.inflate(inflater, container, false)
+
+        val key = getString(R.string.mapbox_access_token)
+        val placeAutocomplete = PlaceAutocomplete.create(key)
+
         val startDatePicker =
             MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Start Date")

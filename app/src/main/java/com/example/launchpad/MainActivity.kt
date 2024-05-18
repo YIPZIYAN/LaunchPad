@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             viewModel.getCurrentUser()
         }
-        window.setSoftInputMode(android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
+        window.setSoftInputMode(android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
         //auto login
         if (viewModel.isLoggedIn()) {
