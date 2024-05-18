@@ -68,7 +68,7 @@ fun Fragment.loadingDialog(): Dialog {
     return dialog
 }
 
-fun Fragment.dialogCompanyNotRegister(status :Boolean,nav:NavController) {
+fun Fragment.dialogCompanyNotRegister(status: Boolean, nav: NavController) {
     if (status) {
         dialog(
             getString(R.string.register_your_company),
@@ -100,6 +100,16 @@ fun Context.intentWithoutBackstack(
         intent.putExtras(it)
     }
     context.startActivity(intent)
+}
+
+fun Fragment.showFileSize(l: Long): String {
+    var size = l / 1024.0
+    var unit = "KB"
+    if (size > 1024){
+        size /= 1024.0
+        unit = "MB"
+    }
+    return String.format("%.2f %s", size, unit)
 }
 // ----------------------------------------------------------------------------
 // Bitmap Extensions

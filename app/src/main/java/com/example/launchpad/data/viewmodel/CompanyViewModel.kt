@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.launchpad.data.Company
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.Blob
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObjects
@@ -47,6 +48,11 @@ class CompanyViewModel : ViewModel() {
             COMPANIES.document(company.id).set(company).addOnCompleteListener {
                 isSuccess.value = it.isSuccessful
             }.await()
+    }
+
+    suspend fun syncAvatar(companyID: String?, b: Blob) {
+        if (companyID != null)
+            COMPANIES.document(companyID).update("avatar",b).await()
     }
 
 }

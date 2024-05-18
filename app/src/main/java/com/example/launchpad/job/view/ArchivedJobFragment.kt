@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.data.Company
 import com.example.launchpad.data.viewmodel.CompanyViewModel
+import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentArchivedJobBinding
 import com.example.launchpad.job.adapter.ArchivedJobAdapter
 import com.example.launchpad.job.viewmodel.JobViewModel
@@ -23,6 +24,7 @@ class ArchivedJobFragment : Fragment() {
 
     private val jobVM: JobViewModel by activityViewModels()
     private val companyVM: CompanyViewModel by activityViewModels()
+    private val userVM: UserViewModel by activityViewModels()
     private val nav by lazy { findNavController() }
     private lateinit var binding: FragmentArchivedJobBinding
 
@@ -41,11 +43,14 @@ class ArchivedJobFragment : Fragment() {
         jobVM.updateArchived()
 
         jobVM.getArchivedLD().observe(viewLifecycleOwner) {
-            if (it.isEmpty()) {
+            var archivedJobList = it.filter { it.companyID == userVM.getUserLD().value?.company_id }
+
+            if (archivedJobList.isEmpty()) {
                 binding.noArchivedJob.visibility = View.VISIBLE
+                return@observe
             }
-            it.forEach { it.company = companyVM.get(it.companyID) ?: Company() }
-            adapter.submitList(it.sortedByDescending { it.deletedAt })
+            archivedJobList.forEach { it.company = companyVM.get(it.companyID) ?: Company() }
+            adapter.submitList(archivedJobList.sortedByDescending { it.deletedAt })
         }
 
         binding.topAppBar.setNavigationOnClickListener { nav.navigateUp() }

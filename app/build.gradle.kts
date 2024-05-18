@@ -34,6 +34,10 @@ android {
         jvmTarget = "1.8"
     }
 
+    packaging {
+        resources.excludes.add("META-INF/androidx.cardview_cardview.version")
+    }
+
     buildFeatures {
         dataBinding = true
 
@@ -63,6 +67,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.android.gms:play-services-auth:21.1.0")
     implementation("com.google.firebase:firebase-firestore:24.11.0")
+    implementation("com.google.firebase:firebase-storage")
 
     //DateTime
     implementation("joda-time:joda-time:2.12.7")
@@ -73,4 +78,5 @@ dependencies {
 //    implementation("com.mapbox.maps:android:11.3.1")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.google.firebase:firebase-database-ktx")
+    implementation("com.android.support:cardview-v7:28.0.0")
 }

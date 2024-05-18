@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.TabRejectedApplicantFragment">
+        tools:context=".job_application.tab.TabRejectedApplicantFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/tab_no_reject_applicant"
