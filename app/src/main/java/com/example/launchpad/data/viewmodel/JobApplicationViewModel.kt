@@ -70,7 +70,8 @@ class JobApplicationViewModel : ViewModel() {
      fun updateStatus(status:JobApplicationState,jobID: String){
         JOBAPP.document(jobID).update("status",status.toString()).addOnCompleteListener {
             isSuccess.value = it.isSuccessful
-            response.value = it.exception.toString()
+        }.addOnFailureListener {
+            response.value = it.toString()
         }
     }
 
