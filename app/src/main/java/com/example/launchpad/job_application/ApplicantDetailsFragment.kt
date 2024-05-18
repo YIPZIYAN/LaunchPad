@@ -1,5 +1,7 @@
 package com.example.launchpad.job_application
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -69,6 +71,13 @@ class ApplicantDetailsFragment : Fragment() {
             binding.fileName.text = jobApp.file.name
             binding.information.text = if (jobApp.info == "") "-" else jobApp.info
             binding.appliedDate.text = "Applied " + displayPostTime(jobApp.createdAt)
+            binding.chip.text = jobApp.user.email
+
+            binding.chip.setOnClickListener {
+                val uri = Uri.parse("mailto:${jobApp.user.email}")
+                val i = Intent(Intent.ACTION_SENDTO, uri)
+                startActivity(i)
+            }
 
             binding.file.setOnClickListener {
                 nav.navigate(

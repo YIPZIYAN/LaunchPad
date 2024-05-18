@@ -38,9 +38,7 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/materialDivider"
-
-            >
+            app:layout_constraintTop_toBottomOf="@id/materialDivider">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -66,14 +64,23 @@
                     app:layout_constraintTop_toBottomOf="@id/avatarView"
                     tools:text="JASON" />
 
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    app:chipIcon="@drawable/round_attach_email_24"
+                    app:layout_constraintStart_toStartOf="@+id/applicant_name"
+                    app:layout_constraintTop_toBottomOf="@+id/applicant_name" />
+
                 <TextView
                     android:id="@+id/applied_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:textAppearance="?attr/textAppearanceBodySmall"
-                    app:layout_constraintStart_toStartOf="@id/applicant_name"
-                    app:layout_constraintTop_toBottomOf="@id/applicant_name"
+                    app:layout_constraintStart_toStartOf="@id/chip"
+                    app:layout_constraintTop_toBottomOf="@id/chip"
                     tools:text="Applied 3d ago" />
 
 
@@ -130,9 +137,9 @@
                             style="@style/Widget.Material3.Button.OutlinedButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
                             android:text="@string/message"
                             android:textSize="16sp"
-                            android:layout_marginEnd="16dp"
                             app:icon="@drawable/round_comment_24"
                             app:strokeColor="@color/m3_text_button_foreground_color_selector" />
 
