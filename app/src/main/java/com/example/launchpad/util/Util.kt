@@ -9,6 +9,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.graphics.drawable.toBitmapOrNull
@@ -100,6 +101,15 @@ fun Context.intentWithoutBackstack(
         intent.putExtras(it)
     }
     context.startActivity(intent)
+}
+
+fun displayPostTime(postTime: Long): String {
+    return DateUtils.getRelativeTimeSpanString(
+        postTime,
+        System.currentTimeMillis(),
+        DateUtils.MINUTE_IN_MILLIS,
+        DateUtils.FORMAT_ABBREV_RELATIVE
+    ).toString()
 }
 
 fun Fragment.showFileSize(l: Long): String {

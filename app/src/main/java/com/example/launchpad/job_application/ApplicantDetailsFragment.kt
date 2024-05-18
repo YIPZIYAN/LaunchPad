@@ -14,6 +14,7 @@ import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentApplicantDetailsBinding
 import com.example.launchpad.util.JobApplicationState
+import com.example.launchpad.util.displayPostTime
 import com.example.launchpad.util.snackbar
 import com.example.launchpad.util.toBitmap
 import com.example.launchpad.util.toast
@@ -41,7 +42,7 @@ class ApplicantDetailsFragment : Fragment() {
         binding = FragmentApplicantDetailsBinding.inflate(inflater, container, false)
 
         jobAppVM.response.observe(viewLifecycleOwner) { if (it != null) toast(it) }
-        jobAppVM.isSuccess.observe(viewLifecycleOwner) { if (it) snackbar("Job Application Status Updated!")}
+        jobAppVM.isSuccess.observe(viewLifecycleOwner) { if (it) snackbar("Job Application Status Updated!") }
 
         binding.topAppBar.setNavigationOnClickListener { nav.navigateUp() }
 
@@ -66,6 +67,7 @@ class ApplicantDetailsFragment : Fragment() {
             binding.avatarView.loadImage(jobApp.user.avatar.toBitmap())
             binding.fileName.text = jobApp.file.name
             binding.information.text = if (jobApp.info == "") "-" else jobApp.info
+            binding.appliedDate.text = displayPostTime(jobApp.createdAt)
 
             binding.file.setOnClickListener {
                 nav.navigate(
