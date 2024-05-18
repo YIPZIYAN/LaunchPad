@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentApplicantDetailsBinding
 import com.example.launchpad.util.JobApplicationState
+import com.example.launchpad.util.snackbar
 import com.example.launchpad.util.toBitmap
 import com.example.launchpad.util.toast
 import com.example.launchpad.viewmodel.ApplicantDetailsViewModel
@@ -26,7 +28,7 @@ class ApplicantDetailsFragment : Fragment() {
     }
 
     private val userVM: UserViewModel by activityViewModels()
-    private val jobAppVM: JobApplicationViewModel by activityViewModels()
+    private val jobAppVM: JobApplicationViewModel by viewModels()
     private lateinit var binding: FragmentApplicantDetailsBinding
     private val nav by lazy { findNavController() }
     private val jobAppID by lazy { arguments?.getString("jobAppID") ?: "" }
@@ -37,6 +39,9 @@ class ApplicantDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentApplicantDetailsBinding.inflate(inflater, container, false)
+
+        jobAppVM.response.observe(viewLifecycleOwner) { if (it != null) toast(it) }
+        jobAppVM.isSuccess.observe(viewLifecycleOwner) { if (it) snackbar("Job Application Status Updated!")}
 
         binding.topAppBar.setNavigationOnClickListener { nav.navigateUp() }
 
@@ -82,6 +87,8 @@ class ApplicantDetailsFragment : Fragment() {
                         it.isEnabled = false
                         it.text = jobApp.status
                     }
+                    binding.btnInterview.visibility = View.VISIBLE
+                    binding.btnInterview.setOnClickListener { nav.navigate(R.id.scheduleInterviewFragment) }
                     binding.btnReject.visibility = View.GONE
                 }
 
@@ -91,11 +98,22 @@ class ApplicantDetailsFragment : Fragment() {
                         it.isEnabled = false
                         it.text = jobApp.status
                     }
-                    binding.btnReject.visibility = View.GONE
+                    binding.btnAccept.visibility = View.GONE
                 }
             }
 
-
+            binding.btnAccept.setOnClickListener {
+                jobAppVM.updateStatus(
+                    JobApplicationState.ACCEPTED,
+                    jobAppID
+                )
+            }
+            binding.btnReject.setOnClickListener {
+                jobAppVM.updateStatus(
+                    JobApplicationState.REJECTED,
+                    jobAppID
+                )
+            }
 
 
             //TODO chat

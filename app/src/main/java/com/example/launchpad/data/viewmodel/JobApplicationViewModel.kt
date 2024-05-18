@@ -67,11 +67,11 @@ class JobApplicationViewModel : ViewModel() {
         }.await()
     }
 
-    suspend fun updateStatus(status:JobApplicationState,jobID: String){
+     fun updateStatus(status:JobApplicationState,jobID: String){
         JOBAPP.document(jobID).update("status",status.toString()).addOnCompleteListener {
             isSuccess.value = it.isSuccessful
             response.value = it.exception.toString()
-        }.await()
+        }
     }
 
 
