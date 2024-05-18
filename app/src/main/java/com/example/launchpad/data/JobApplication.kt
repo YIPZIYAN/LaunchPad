@@ -18,7 +18,7 @@ data class JobApplication(
     var user: User = User()
 
     @get:Exclude
-    val job: Job = Job()
+    var job: Job = Job()
 
     @get:Exclude
     val count = 0

@@ -60,7 +60,6 @@ class ApplicantDetailsFragment : Fragment() {
             jobApp.user = userVM.get(jobApp.userId)!!
 
             /*
-            * Load Applicant Data
             *
             * Load Applicant Data
             * =======================================

@@ -53,36 +53,25 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/applicant_avatar_container"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
+                    <io.getstream.avatarview.AvatarView
+                        android:id="@+id/avatarView"
+                        android:layout_width="58dp"
+                        android:layout_height="58dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="12dp"
-                        app:cardCornerRadius="28dp"
-                        app:cardElevation="0dp"
+                        android:layout_marginTop="16dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <ImageView
-                            android:id="@+id/applicant_avatar"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:contentDescription="sample"
-                            android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/ic_launcher_background" />
-                    </androidx.cardview.widget.CardView>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/applicant_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="16dp"
                         android:text="GOH CHUN YEN"
                         android:textAppearance="?attr/textAppearanceBodyLarge"
                         android:textSize="18sp"
-                        app:layout_constraintStart_toEndOf="@id/applicant_avatar_container"
+                        app:layout_constraintStart_toEndOf="@id/avatarView"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
@@ -106,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/applicant_avatar_container" />
+                        app:layout_constraintTop_toBottomOf="@id/avatarView" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/job_box"
@@ -131,7 +120,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:text="Software Engineer"
                             android:textAppearance="?attr/textAppearanceBodyLarge"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="@+id/ic_job"
@@ -157,51 +145,70 @@
 
 
                         <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/start_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:id="@+id/lblDate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginBottom="16dp"
+                                android:text="Date"
+                                android:textAppearance="?attr/textAppearanceBodyLarge"
+                                android:textSize="18sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipDate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="24dp"
+                                android:text="Set Date"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/start_time"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
+                            app:layout_constraintTop_toBottomOf="@id/start_date">
 
                             <TextView
                                 android:id="@+id/lbl_start"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
-                                android:layout_marginTop="18dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginBottom="16dp"
                                 android:text="Start Time"
                                 android:textAppearance="?attr/textAppearanceBodyLarge"
                                 android:textSize="18sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
-                            <TextView
-                                android:id="@+id/txt_start"
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipStartTime"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginTop="8dp"
-                                android:layout_marginBottom="16dp"
-                                android:text="Sun, Apr 7, 2024"
-                                android:textAppearance="?attr/textAppearanceBodyMedium"
-                                android:textSize="18sp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/lbl_start" />
-
-                            <TextView
-                                android:id="@+id/txt_start_time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
                                 android:layout_marginEnd="24dp"
-                                android:layout_marginBottom="16dp"
-                                android:text="4:00 PM"
-                                android:textAppearance="?attr/textAppearanceBodyMedium"
-                                android:textSize="18sp"
+                                android:text="Set Time"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/lbl_start" />
+                                app:layout_constraintTop_toTopOf="parent" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -209,6 +216,7 @@
                             android:id="@+id/end_time"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/start_time">
 
@@ -217,40 +225,24 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
-                                android:layout_marginTop="12dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginBottom="16dp"
                                 android:text="End Time"
                                 android:textAppearance="?attr/textAppearanceBodyLarge"
                                 android:textSize="18sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
-                            <TextView
-                                android:id="@+id/txt_end"
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipEndTime"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginTop="8dp"
-                                android:layout_marginBottom="24dp"
-                                android:text="Sun, Apr 7, 2024"
-                                android:textAppearance="?attr/textAppearanceBodyMedium"
-                                android:textSize="18sp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/lbl_end" />
-
-                            <TextView
-                                android:id="@+id/txt_end_time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
                                 android:layout_marginEnd="24dp"
-                                android:layout_marginBottom="16dp"
-                                android:text="5:00 PM"
-                                android:textAppearance="?attr/textAppearanceBodyMedium"
-                                android:textSize="18sp"
+                                android:text="Set Time"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/lbl_end" />
+                                app:layout_constraintTop_toTopOf="parent" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
