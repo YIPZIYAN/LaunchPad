@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentApplicantDetailsBinding
 import com.example.launchpad.viewmodel.ApplicantDetailsViewModel
 
@@ -17,6 +18,7 @@ class ApplicantDetailsFragment : Fragment() {
 
     private lateinit var viewModel: ApplicantDetailsViewModel
     private lateinit var binding: FragmentApplicantDetailsBinding
+    private val nav by lazy { findNavController() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,8 +27,10 @@ class ApplicantDetailsFragment : Fragment() {
         binding = FragmentApplicantDetailsBinding.inflate(inflater, container, false)
 
         binding.topAppBar.setNavigationOnClickListener {
-            findNavController().navigateUp()
+           nav.navigateUp()
         }
+
+        binding.file.setOnClickListener { nav.navigate(R.id.pdfViewerFragment) }
 
         return binding.root
     }
