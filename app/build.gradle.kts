@@ -80,5 +80,9 @@ dependencies {
 
 //    implementation("com.mapbox.maps:android:11.3.1")
     implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.google.firebase:firebase-database-ktx")
     implementation("com.android.support:cardview-v7:28.0.0")
+    implementation("com.google.firebase:firebase-messaging-ktx")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
 }

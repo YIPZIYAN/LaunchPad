@@ -109,7 +109,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
             }
             binding.rvJobCard.adapter = adapter
 
-            svAdapter = JobAdapter() { holder, job ->
+            svAdapter = JobAdapter { holder, job ->
                 holder.binding.root.setOnClickListener { detail(job.jobID) }
             }
             binding.rvSearchResult.adapter = svAdapter

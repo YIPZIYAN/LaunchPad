@@ -81,7 +81,7 @@
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
-        android:name="com.example.launchpad.view.ChatFragment"
+        android:name="com.example.launchpad.chat.view.ChatFragment"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" >
         <action
@@ -211,7 +211,7 @@
         tools:layout="@layout/fragment_applicant_details"/>
     <fragment
         android:id="@+id/chatTextFragment"
-        android:name="com.example.launchpad.view.ChatTextFragment"
+        android:name="com.example.launchpad.chat.view.ChatTextFragment"
         android:label="ChatTextFragment"
         tools:layout="@layout/fragment_chat_text"/>
     <fragment
