@@ -96,7 +96,7 @@ class ChatFragment : Fragment() {
                             avatar = receiver.avatar,
                             latestMessage = getLatestMessage(chatRoomId)
                         )
-                        displayMessage(chatRoomId)
+                        latestMessageListener(chatRoomId)
                         withContext(Dispatchers.Main) {
                             chatList.add(chat)
                             adapter.submitList(chatList.sortedByDescending { it.latestMessage.sendTime })
@@ -120,20 +120,26 @@ class ChatFragment : Fragment() {
         })
     }
 
-    suspend fun displayMessage(chatRoomId: String) {
+    private val messageListeners = mutableSetOf<String>()
+
+    suspend fun latestMessageListener(chatRoomId: String) {
+        if (messageListeners.contains(chatRoomId)) return
+        messageListeners.add(chatRoomId)
         withContext(Dispatchers.IO) {
             val database = FirebaseDatabase.getInstance()
             val messageRef = database.getReference("chatRooms").child(chatRoomId).child("messages")
             var latestMessage = ChatMessage()
 
-            messageRef.addChildEventListener(object : ChildEventListener {
+            val latestMessageQuery = messageRef.orderByChild("sendTime").limitToLast(1)
+
+            latestMessageQuery.addChildEventListener(object : ChildEventListener {
                 override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                     val message = snapshot.getValue(ChatMessage::class.java)
                     message?.let {
                         latestMessage = it
                         Log.d("LOOP", latestMessage.message)
                         // REFRESH THE CHAT LIST HERE
-                        val updateChat = chatList.find {it.id == chatRoomId}
+                        val updateChat = chatList.find { it.id == chatRoomId }
                         updateChat?.latestMessage = latestMessage
                         adapter.notifyDataSetChanged()
                         adapter.submitList(chatList.sortedByDescending { it.latestMessage.sendTime })

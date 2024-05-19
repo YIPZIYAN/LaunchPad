@@ -2,6 +2,7 @@ package com.example.launchpad.chat.adapter
 
 import android.text.format.DateUtils
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -66,28 +67,48 @@ class MessageAdapter(
         when (holder) {
             is ViewHolderMyMessage -> {
                 holder.binding.txtMyMessage.text = message.message
-                holder.binding.txtMyMessageTime.text = displaySendTime(message.sendTime, previousMessage?.sendTime)
+                holder.binding.txtMyMessageTime.text = displaySendTime(message.sendTime)
+                val date = displayDate(message.sendTime, previousMessage?.sendTime)
+                if (date != "") {
+                    holder.binding.txtDate.visibility = View.VISIBLE
+                    holder.binding.txtDate.text = date
+                }
+                else {
+                    holder.binding.txtDate.visibility = View.GONE
+                }
             }
 
             is ViewHolderOtherMessage -> {
                 holder.binding.txtOtherMessage.text = message.message
-                holder.binding.txtOtherMessageTime.text = displaySendTime(message.sendTime, previousMessage?.sendTime)
+                holder.binding.txtOtherMessageTime.text = displaySendTime(message.sendTime)
                 holder.binding.avatarView.loadImage(avatar)
+                val date = displayDate(message.sendTime, previousMessage?.sendTime)
+                if (date != "") {
+                    holder.binding.txtDate.visibility = View.VISIBLE
+                    holder.binding.txtDate.text = date
+                }
+                else {
+                    holder.binding.txtDate.visibility = View.GONE
+                }
             }
         }
 
         fn(holder, message)
     }
 
-    private fun displaySendTime(sendTime: Long, previousTime: Long?): String {
-        val sdfDateTime = SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault())
-        val sdfDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    private fun displaySendTime(sendTime: Long): String {
         val sdfTimeOnly = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        return sdfTimeOnly.format(sendTime)
+    }
+
+    private fun displayDate(sendTime: Long, previousTime: Long?): String {
+        val sdfDateHuman = SimpleDateFormat("d MMMM yyyy", Locale.getDefault())
+        val sdfDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
         return if (previousTime == null || sdfDate.format(sendTime) != sdfDate.format(previousTime)) {
-            sdfDateTime.format(sendTime)
-        } else { // If the dates are the same, display time only
-            sdfTimeOnly.format(sendTime)
+            sdfDateHuman.format(sendTime)
+        } else { // If the dates are the same, display nothing
+            ""
         }
     }
 
