@@ -56,8 +56,9 @@ class TabUpcomingInterviewFragment : Fragment() {
                 }
 
             if (interviewList.isEmpty()) {
-//                binding.tabApplicant.visibility = View.INVISIBLE
-//                binding.tabNoApplicant.visibility = View.VISIBLE
+                binding.tabApplicant.visibility = View.INVISIBLE
+                binding.tabNoApplicant.visibility = View.VISIBLE
+
                 return@observe
             }
 
@@ -69,7 +70,7 @@ class TabUpcomingInterviewFragment : Fragment() {
 
             binding.numApplicant.text = interviewList.size.toString() + " applicant(s)"
             binding.tabApplicant.visibility = View.VISIBLE
-//            binding.tabNoApplicant.visibility = View.GONE
+            binding.tabNoApplicant.visibility = View.GONE
 
             val sortedList = interviewList.sortedWith(compareBy {
                 combineDateTime(

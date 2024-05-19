@@ -60,8 +60,8 @@ class TabHistoryInterviewFragment : Fragment() {
                 }
             Log.d("TAG", "onCreateView: $interviewHistoryList")
             if (interviewHistoryList.isEmpty()) {
-//                binding.tabApplicant.visibility = View.INVISIBLE
-//                binding.tabNoApplicant.visibility = View.VISIBLE
+                binding.tabApplicant.visibility = View.INVISIBLE
+                binding.tabNoApplicant.visibility = View.VISIBLE
                 return@observe
             }
 
@@ -72,7 +72,7 @@ class TabHistoryInterviewFragment : Fragment() {
 
             binding.numApplicant.text = interviewHistoryList.size.toString() + " applicant(s)"
             binding.tabApplicant.visibility = View.VISIBLE
-//            binding.tabNoApplicant.visibility = View.GONE
+            binding.tabNoApplicant.visibility = View.GONE
 
 
             adapter.submitList(interviewHistoryList.sortedByDescending { it.date })
