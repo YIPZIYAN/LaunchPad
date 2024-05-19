@@ -18,6 +18,7 @@ import com.example.launchpad.databinding.FragmentTabUpcomingInterviewBinding
 import com.example.launchpad.interview.adapter.InterviewAdapter
 import com.example.launchpad.interview.adapter.InterviewHistoryAdapter
 import com.example.launchpad.job.viewmodel.JobViewModel
+import com.example.launchpad.util.combineDateTime
 import com.example.launchpad.viewmodel.TabUpcomingInterviewViewModel
 import org.joda.time.DateTime
 
@@ -26,6 +27,7 @@ class TabUpcomingInterviewFragment : Fragment() {
     companion object {
         fun newInstance() = TabUpcomingInterviewFragment()
     }
+
     private val jobAppVM: JobApplicationViewModel by activityViewModels()
     private val interviewVM: InterviewViewModel by activityViewModels()
     private val userVM: UserViewModel by activityViewModels()
@@ -50,17 +52,15 @@ class TabUpcomingInterviewFragment : Fragment() {
         interviewVM.getInterviewLD().observe(viewLifecycleOwner) { list ->
             val interviewList =
                 list.filter {
-                    it.date >= DateTime.now().millis
+                    it.date >= DateTime.now().withTime(0, 0, 0, 0).millis
                 }
-            Log.d("TAG", "onCreateView: $interviewList")
+
             if (interviewList.isEmpty()) {
 //                binding.tabApplicant.visibility = View.INVISIBLE
 //                binding.tabNoApplicant.visibility = View.VISIBLE
-                Log.d("return", "onCreateView: return")
                 return@observe
             }
 
-            Log.d("LIST", "onCreateView: $interviewList")
 
             interviewList.forEach { it.jobApp = jobAppVM.get(it.jobAppID)!! }
             interviewList.forEach { it.jobApp.user = userVM.get(it.jobApp.userId)!! }
@@ -71,7 +71,16 @@ class TabUpcomingInterviewFragment : Fragment() {
             binding.tabApplicant.visibility = View.VISIBLE
 //            binding.tabNoApplicant.visibility = View.GONE
 
-            adapter.submitList(interviewList.sortedBy { it.date })
+            val sortedList = interviewList.sortedWith(compareBy {
+                combineDateTime(
+                    it.date,
+                    it.startTime.hour,
+                    it.startTime.minutes
+                )
+            })
+
+            adapter.submitList(sortedList)
+
 
         }
 
