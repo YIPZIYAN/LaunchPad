@@ -1,13 +1,11 @@
 package com.example.launchpad.util
 
-import android.app.Application
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.text.format.DateUtils
 import android.util.Log
@@ -16,8 +14,8 @@ import android.widget.Toast
 import androidx.core.graphics.drawable.toBitmapOrNull
 import androidx.core.graphics.scale
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import com.example.launchpad.R
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -31,8 +29,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-fun Fragment.getToken(): String {
-    var token = ""
+fun getToken(): MutableLiveData<String> {
+    val tokenLive = MutableLiveData<String>()
     FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
         if (!task.isSuccessful) {
             Log.w("TOKEN", "Fetching FCM registration token failed", task.exception)
@@ -40,11 +38,10 @@ fun Fragment.getToken(): String {
         }
 
         // Get new FCM registration token
-        token = task.result
-        Log.d("TOKEN", token)
-
+        val token = task.result
+        tokenLive.value = token ?: ""
     })
-    return token
+    return tokenLive
 }
 
 fun Fragment.toast(text: String) {

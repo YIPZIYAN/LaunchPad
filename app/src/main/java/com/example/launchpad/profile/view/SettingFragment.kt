@@ -56,6 +56,10 @@ class SettingFragment : Fragment() {
 
     private fun signOut() {
 
+        lifecycleScope.launch {
+            userVM.setToken("")
+        }
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.client_id))
             .requestEmail()
@@ -67,9 +71,7 @@ class SettingFragment : Fragment() {
 
         googleSignInClient.signOut().addOnSuccessListener {
             Log.d("UI", "signOut: navigate to login")
-            lifecycleScope.launch {
-                userVM.setToken("")
-            }
+
             requireContext().intentWithoutBackstack(requireContext(), MainActivity::class.java)
         }
     }

@@ -15,7 +15,6 @@ import com.example.launchpad.auth.viewmodel.SignUpViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentSignUpBinding
 import com.example.launchpad.util.displayErrorHelper
-import com.example.launchpad.util.getToken
 import com.example.launchpad.util.intentWithoutBackstack
 import com.example.launchpad.util.toast
 import kotlinx.coroutines.launch
@@ -54,7 +53,6 @@ class SignUpFragment : Fragment() {
                     val user = userVM.getAuth()
                     user.isEnterprise = isEnterprise
                     userVM.set(user)
-                    userVM.setToken(getToken())
                 }
                 requireContext().intentWithoutBackstack(
                     requireActivity(),
