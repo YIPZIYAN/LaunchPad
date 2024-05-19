@@ -71,6 +71,16 @@ class TabUpcomingInterviewFragment : Fragment() {
                     toast(e.message.toString())
                 }
             }
+            h.binding.root.setOnClickListener {
+                if (userVM.isEnterprise())
+                    nav.navigate(
+                        R.id.scheduleInterviewFragment, bundleOf(
+                            "jobAppID" to f.jobApp.id,
+                            "interviewID" to f.id,
+                            "action" to "EDIT"
+                        )
+                    )
+            }
         }
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(

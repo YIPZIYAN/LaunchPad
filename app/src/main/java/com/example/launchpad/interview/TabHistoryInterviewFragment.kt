@@ -51,6 +51,15 @@ class TabHistoryInterviewFragment : Fragment() {
                     )
                 )
             }
+            h.binding.root.setOnClickListener {
+                nav.navigate(
+                    R.id.scheduleInterviewFragment, bundleOf(
+                        "jobAppID" to f.jobApp.id,
+                        "interviewID" to f.id,
+                        "action" to "VIEW"
+                    )
+                )
+            }
         }
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(

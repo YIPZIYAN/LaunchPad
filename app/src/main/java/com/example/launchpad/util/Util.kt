@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.text.format.DateUtils
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.graphics.drawable.toBitmapOrNull
@@ -118,6 +119,10 @@ fun displayPostTime(postTime: Long): String {
     ).toString()
 }
 
+fun View.disable() {
+    isEnabled = false
+    isClickable = false
+}
 fun displayDate(postTime: Long): String {
     val format = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
    return format.format(Date(postTime))
