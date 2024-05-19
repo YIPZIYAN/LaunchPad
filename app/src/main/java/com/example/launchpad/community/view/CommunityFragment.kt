@@ -101,9 +101,11 @@ class CommunityFragment : Fragment() {
 
         adapter = PostAdapter { holder, post ->
             holder.binding.avatarView.setOnClickListener {
-                findNavController().navigate(R.id.action_communityFragment_to_userProfileFragment, bundleOf(
-                    "userID" to post.userID
-                ))
+                    findNavController().navigate(
+                        R.id.action_communityFragment_to_userProfileFragment, bundleOf(
+                            "userID" to post.userID
+                        )
+                    )
             }
             holder.binding.btnLike.setOnClickListener {
                 toggleLike(post)

@@ -54,20 +54,23 @@
                     android:id="@+id/avatarView"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:layout_marginStart="24dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
+                    app:avatarViewIndicatorDrawable="@drawable/ic_verified"
+                    app:avatarViewIndicatorEnabled="false"
+                    app:avatarViewIndicatorPosition="bottomRight"
+                    app:avatarViewIndicatorSizeCriteria="3"
                     app:avatarViewPlaceholder="@drawable/launchpadlogo_whitebg"
                     app:avatarViewShape="circle"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/round_account_circle_24"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    tools:srcCompat="@drawable/launchpadlogo_whitebg" />
 
                 <TextView
                     android:id="@+id/txtName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="24dp"
                     android:text="Username123"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -75,57 +78,26 @@
                     app:layout_constraintStart_toEndOf="@+id/avatarView"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
-                    android:id="@+id/btnFollower"
-                    style="@style/Widget.Material3.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="100 Followers"
-                    app:layout_constraintStart_toEndOf="@+id/avatarView"
-                    app:layout_constraintTop_toBottomOf="@+id/txtName" />
-
-                <Button
-                    android:id="@+id/btnFollowing"
-                    style="@style/Widget.Material3.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="99 Following"
-                    app:layout_constraintStart_toEndOf="@+id/btnFollower"
-                    app:layout_constraintTop_toBottomOf="@+id/txtName" />
-
                 <LinearLayout
                     android:id="@+id/profile_action"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/btnFollower"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="16dp"
                     android:layout_marginHorizontal="16dp"
-                    >
-
-                    <Button
-                        android:id="@+id/btn_follow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Follow"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:shapeAppearance="?attr/shapeAppearanceSmallComponent" />
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/avatarView">
 
                     <Button
                         android:id="@+id/btn_message"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
                         android:layout_weight="1"
                         android:text="Message"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:layout_marginStart="8dp"
                         app:shapeAppearance="?attr/shapeAppearanceSmallComponent" />
 
                 </LinearLayout>
@@ -156,14 +128,14 @@
                 </com.google.android.material.tabs.TabLayout>
 
                 <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPager"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
 
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-  />
+                    app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>

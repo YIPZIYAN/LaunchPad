@@ -251,7 +251,15 @@
     <fragment
         android:id="@+id/postCommentFragment"
         android:name="com.example.launchpad.community.view.PostCommentFragment"
-        android:label="PostCommentFragment" />
+        android:label="PostCommentFragment" >
+        <action
+            android:id="@+id/action_postCommentFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit" />
+    </fragment>
     <fragment
         android:id="@+id/pdfViewerFragment"
         android:name="com.example.launchpad.util.PdfViewerFragment"

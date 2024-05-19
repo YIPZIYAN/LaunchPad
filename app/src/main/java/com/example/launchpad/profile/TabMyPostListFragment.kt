@@ -28,5 +28,7 @@ class TabMyPostListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         return inflater.inflate(R.layout.fragment_tab_my_post_list, container, false)
+
+
     }
 }
