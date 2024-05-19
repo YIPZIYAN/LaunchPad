@@ -75,9 +75,25 @@ class ApplyJobFragment : Fragment() {
 
         jobAppVM.progress.observe(viewLifecycleOwner) {
             binding.progressBar.progress = it
+
+            binding.btnSubmit.isEnabled = false
+            binding.btnSubmit.isClickable = false
+
+            binding.btnUploadResume.isClickable = false
+            binding.btnUploadResume.isClickable = false
         }
 
-        jobAppVM.response.observe(viewLifecycleOwner) { if (it != null) toast(it) }
+        jobAppVM.response.observe(viewLifecycleOwner) {
+            if (it != null) {
+                toast(it)
+                binding.progressBar.progress = 0
+                binding.btnSubmit.isEnabled = true
+                binding.btnSubmit.isClickable = true
+
+                binding.btnUploadResume.isClickable = true
+                binding.btnUploadResume.isClickable = true
+            }
+        }
 
         jobAppVM.isSuccess.observe(viewLifecycleOwner) {
             if (it) {
