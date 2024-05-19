@@ -55,9 +55,9 @@ class HomeFragment : Fragment(), BottomSheetListener {
                 return@observe
             }
 
-            if (userVM.getAuth().token.isNullOrEmpty()) {
-                getToken().observe(viewLifecycleOwner) { token ->
-                    lifecycleScope.launch {
+            getToken().observe(viewLifecycleOwner) { token ->
+                lifecycleScope.launch {
+                    if (userVM.getAuth().token != token) {
                         userVM.setToken(token)
                     }
                 }
