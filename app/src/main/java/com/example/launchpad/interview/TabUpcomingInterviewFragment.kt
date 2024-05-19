@@ -82,6 +82,7 @@ class TabUpcomingInterviewFragment : Fragment() {
                     )
             }
         }
+
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(
             DividerItemDecoration(

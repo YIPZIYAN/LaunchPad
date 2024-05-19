@@ -156,4 +156,5 @@
     <string name="dialog_company_not_register">Please complete your company profile to access full features!</string>
     <string name="remind_me_later">Remind Me Later</string>
     <string name="register_now">Register Now</string>
+    <string name="delete">Delete</string>
 </resources>
