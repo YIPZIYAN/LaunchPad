@@ -38,7 +38,6 @@ class UserActivity : AppCompatActivity() {
         jobAppVM.init()
         interviewVM.init()
 
-        window.setSoftInputMode(android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
         super.onCreate(savedInstanceState)
         binding = ActivityUserBinding.inflate(layoutInflater)
