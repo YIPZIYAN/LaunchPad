@@ -56,18 +56,6 @@ class ChatFragment : Fragment() {
     ): View? {
         binding = FragmentChatBinding.inflate(inflater, container, false)
 
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w("TOKEN", "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
-
-            // Get new FCM registration token
-            val token = task.result
-            Log.d("TOKEN", token)
-
-        })
-
         chatList.clear()
 
         adapter = ChatAdapter { holder, chat ->
