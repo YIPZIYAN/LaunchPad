@@ -51,10 +51,18 @@ class HomeFragment : Fragment(), BottomSheetListener {
             if (it == null) {
                 lifecycleScope.launch {
                     userVM.set(userVM.getAuth())
-                    userVM.setToken(getToken())
                 }
                 return@observe
             }
+
+            if (userVM.getAuth().token.isNullOrEmpty()) {
+                getToken().observe(viewLifecycleOwner) { token ->
+                    lifecycleScope.launch {
+                        userVM.setToken(token)
+                    }
+                }
+            }
+
             binding.username.text = it.name
             //-----------------------------------------------------------
             // Company
