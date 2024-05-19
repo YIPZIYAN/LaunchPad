@@ -70,6 +70,10 @@ class TabHistoryInterviewFragment : Fragment() {
             )
         )
 
+        jobVM.getJobsLD().observe(viewLifecycleOwner) {
+            interviewVM.updateInterviewList()
+        }
+
         interviewVM.getInterviewLD().observe(viewLifecycleOwner) { list ->
             val interviewHistoryList =
                 list.filter {

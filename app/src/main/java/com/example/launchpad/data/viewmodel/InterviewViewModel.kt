@@ -54,5 +54,9 @@ class InterviewViewModel : ViewModel() {
             isSuccess.value = it.isSuccessful
         }.await()
     }
+
+    fun updateInterviewList() {
+        _interviewLD.value = getAll()
+    }
 }
 
