@@ -8,6 +8,8 @@ import com.example.launchpad.data.JobApplication
 import com.example.launchpad.data.Pdf
 import com.example.launchpad.util.JobApplicationState
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObjects
@@ -15,12 +17,11 @@ import com.google.firebase.storage.storage
 import kotlinx.coroutines.tasks.await
 import org.joda.time.DateTime
 
-class InterviewViewModel:ViewModel() {
+class InterviewViewModel : ViewModel() {
     private val INTERVIEW = Firebase.firestore.collection("job_interview")
     private val _interviewLD = MutableLiveData<List<Interview>>()
     val isSuccess = MutableLiveData<Boolean>()
     val response = MutableLiveData<String>()
-
 
 
     private var listener: ListenerRegistration? = null
@@ -44,9 +45,18 @@ class InterviewViewModel:ViewModel() {
     fun get(interviewId: String) = getAll().find { it.id == interviewId }
 
     suspend fun set(interview: Interview) {
-        INTERVIEW.document().set(interview).addOnCompleteListener {
+        val ref: DocumentReference = if (interview.id.isEmpty()) {
+            INTERVIEW.document()
+        } else {
+            INTERVIEW.document(interview.id)
+        }
+        ref.set(interview).addOnCompleteListener {
             isSuccess.value = it.isSuccessful
         }.await()
     }
 
+    fun updateInterviewList() {
+        _interviewLD.value = getAll()
+    }
 }
+

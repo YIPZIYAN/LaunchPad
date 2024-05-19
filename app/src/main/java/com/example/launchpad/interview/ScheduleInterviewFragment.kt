@@ -24,6 +24,8 @@ import com.example.launchpad.databinding.FragmentScheduleInterviewBinding
 import com.example.launchpad.job.viewmodel.JobViewModel
 import com.example.launchpad.util.JobApplicationState
 import com.example.launchpad.util.dialog
+import com.example.launchpad.util.disable
+import com.example.launchpad.util.displayDate
 import com.example.launchpad.util.snackbar
 import com.example.launchpad.util.toBitmap
 import com.example.launchpad.util.toast
@@ -36,6 +38,7 @@ import com.mapbox.search.autocomplete.PlaceAutocomplete
 import com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion
 import com.mapbox.search.ui.adapter.autocomplete.PlaceAutocompleteUiAdapter
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
+import com.mapbox.search.ui.view.DistanceUnitType
 import com.mapbox.search.ui.view.SearchResultsView
 import kotlinx.coroutines.launch
 import okhttp3.internal.format
@@ -56,6 +59,8 @@ class ScheduleInterviewFragment : Fragment() {
     private lateinit var binding: FragmentScheduleInterviewBinding
     private val nav by lazy { findNavController() }
     private val jobAppID by lazy { arguments?.getString("jobAppID") ?: "" }
+    private val interviewID by lazy { arguments?.getString("interviewID") ?: "" }
+    private val action by lazy { arguments?.getString("action") ?: "" }
 
     private var date: Long = 0
     private var startTime: Time = Time()
@@ -67,9 +72,10 @@ class ScheduleInterviewFragment : Fragment() {
     ): View {
         binding = FragmentScheduleInterviewBinding.inflate(inflater, container, false)
         binding.topAppBar.setOnClickListener { nav.navigateUp() }
-        mapbox()
+
         fetchUserData()
-        setupDateTimePicker()
+
+
         interviewVM.isSuccess.observe(viewLifecycleOwner) {
             if (it) {
                 nav.popBackStack(R.id.homeFragment, false)
@@ -79,8 +85,66 @@ class ScheduleInterviewFragment : Fragment() {
 
         binding.btnApply.setOnClickListener { submit() }
 
+        when (action) {
+            "VIEW" -> {
+                viewModeUI()
+                fetchInterviewDate()
+            }
+
+            "EDIT" -> {
+                binding.topAppBar.title = "Edit Interview"
+                binding.btnApply.text = "EDIT"
+                fetchInterviewDate()
+                mapbox()
+                setupDateTimePicker()
+            }
+
+            else -> {
+                mapbox()
+                setupDateTimePicker()
+            }
+        }
 
         return binding.root
+    }
+
+    private fun viewModeUI() {
+        binding.apply {
+            btnApply.disable()
+            topAppBar.title = "Interview History"
+            btnApply.text = "VIEW ONLY"
+            chipEndTime.disable()
+            chipStartTime.disable()
+            chipDate.disable()
+            edtLocation.disable()
+            edtRemark.disable()
+            edtVideo.disable()
+        }
+    }
+
+    private fun fetchInterviewDate() {
+        interviewVM.getInterviewLD().observe(viewLifecycleOwner) {
+            val interview = interviewVM.get(interviewID)
+            if (interview == null) {
+                nav.navigateUp()
+                toast("Interview Data Is Empty!")
+                return@observe
+            }
+
+            binding.edtLocation.setText(interview.location)
+            binding.edtRemark.setText(interview.remark)
+            binding.edtVideo.setText(interview.video)
+
+            binding.chipDate.text = displayDate(interview.date)
+            binding.chipStartTime.text =
+                format("%02d : %02d", interview.startTime.hour, interview.startTime.minutes)
+            binding.chipEndTime.text =
+                format("%02d : %02d", interview.endTime.hour, interview.endTime.minutes)
+
+            date = interview.date
+            startTime = interview.startTime
+            endTime = interview.endTime
+        }
     }
 
     private fun submit() {
@@ -99,6 +163,7 @@ class ScheduleInterviewFragment : Fragment() {
         }
 
         val interview = Interview(
+            id = interviewID,
             jobAppID = jobAppID,
             location = location,
             video = video,
@@ -108,7 +173,8 @@ class ScheduleInterviewFragment : Fragment() {
             date = date
         )
 
-        dialog("Schedule Interview", "Are you sure to schedule interview?",
+        val title = if (action == "EDIT") "Edit Interview" else "Schedule Interview"
+        dialog(title, "Are you sure to ${title.lowercase()}?",
             onPositiveClick = { _, _ ->
                 lifecycleScope.launch {
                     interviewVM.set(interview)
@@ -162,13 +228,13 @@ class ScheduleInterviewFragment : Fragment() {
 
         startTimePicker.addOnPositiveButtonClickListener {
             binding.chipStartTime.text =
-                "${format("%02d : %02d", startTimePicker.hour, startTimePicker.minute)}"
+                format("%02d : %02d", startTimePicker.hour, startTimePicker.minute)
             startTime = Time(startTimePicker.hour, startTimePicker.minute)
         }
 
         endTimePicker.addOnPositiveButtonClickListener {
             binding.chipEndTime.text =
-                "${format("%02d : %02d", endTimePicker.hour, endTimePicker.minute)}"
+                format("%02d : %02d", endTimePicker.hour, endTimePicker.minute)
             endTime = Time(endTimePicker.hour, endTimePicker.minute)
 
         }

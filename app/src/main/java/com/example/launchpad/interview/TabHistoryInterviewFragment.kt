@@ -35,7 +35,7 @@ class TabHistoryInterviewFragment : Fragment() {
     private val userVM: UserViewModel by activityViewModels()
     private val jobVM: JobViewModel by activityViewModels()
     private lateinit var binding: FragmentTabHistoryInterviewBinding
-
+    private val nav by lazy { findNavController() }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,7 +43,25 @@ class TabHistoryInterviewFragment : Fragment() {
         binding =
             FragmentTabHistoryInterviewBinding.inflate(inflater, container, false)
 
-        val adapter = InterviewHistoryAdapter()
+        val adapter = InterviewHistoryAdapter { h, f ->
+            h.binding.appliedJob.setOnClickListener {
+                nav.navigate(
+                    R.id.jobDetailsFragment, bundleOf(
+                        "jobID" to f.jobApp.job.jobID
+                    )
+                )
+            }
+            h.binding.root.setOnClickListener {
+                if (userVM.isEnterprise())
+                    nav.navigate(
+                        R.id.scheduleInterviewFragment, bundleOf(
+                            "jobAppID" to f.jobApp.id,
+                            "interviewID" to f.id,
+                            "action" to "VIEW"
+                        )
+                    )
+            }
+        }
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(
             DividerItemDecoration(
@@ -52,27 +70,45 @@ class TabHistoryInterviewFragment : Fragment() {
             )
         )
 
+        jobVM.getJobsLD().observe(viewLifecycleOwner) {
+            interviewVM.updateInterviewList()
+        }
+
         interviewVM.getInterviewLD().observe(viewLifecycleOwner) { list ->
             val interviewHistoryList =
-                list.filter { it.date < DateTime.now().millis}
-            Log.d("TAG", "onCreateView: $interviewHistoryList")
-            if (interviewHistoryList.isEmpty()) {
-//                binding.tabApplicant.visibility = View.INVISIBLE
-//                binding.tabNoApplicant.visibility = View.VISIBLE
-                return@observe
-            }
+                list.filter {
+                    it.date < DateTime.now().minusDays(1)
+                        .withTime(23, 59, 59, 999).millis
+                }
+
 
             interviewHistoryList.forEach { it.jobApp = jobAppVM.get(it.jobAppID)!! }
             interviewHistoryList.forEach { it.jobApp.user = userVM.get(it.jobApp.userId)!! }
             interviewHistoryList.forEach { it.jobApp.job = jobVM.get(it.jobApp.jobId)!! }
-            interviewHistoryList.sortedByDescending { it.date }
 
-            binding.numApplicant.text = interviewHistoryList.size.toString() + " applicant(s)"
+            //filter for the particular user only
+            val personalInterviewList = interviewHistoryList.filter {
+                if (userVM.isEnterprise())
+                    it.jobApp.job.companyID == userVM.getUserLD().value!!.company_id
+                else
+                    it.jobApp.userId == userVM.getAuth().uid
+            }.filter {
+                it.jobApp.job.deletedAt == 0L
+            }
+
+            if (personalInterviewList.isEmpty()) {
+                binding.tabApplicant.visibility = View.INVISIBLE
+                binding.tabNoApplicant.visibility = View.VISIBLE
+                return@observe
+            }
+
+
+            binding.numApplicant.text = personalInterviewList.size.toString() + " interview(s)"
             binding.tabApplicant.visibility = View.VISIBLE
-//            binding.tabNoApplicant.visibility = View.GONE
+            binding.tabNoApplicant.visibility = View.GONE
 
 
-            adapter.submitList(interviewHistoryList)
+            adapter.submitList(personalInterviewList.sortedByDescending { it.date })
 
         }
 

@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.format.DateUtils
+import android.view.View
 import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
@@ -24,6 +25,9 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.firestore.Blob
 import com.google.firebase.messaging.FirebaseMessaging
 import io.getstream.avatarview.AvatarView
+import org.joda.time.DateTime
+import org.joda.time.LocalTime
+import org.joda.time.format.DateTimeFormat
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -131,9 +135,26 @@ fun displayPostTime(postTime: Long): String {
     ).toString()
 }
 
+fun View.disable() {
+    isEnabled = false
+    isClickable = false
+}
 fun displayDate(postTime: Long): String {
     val format = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
    return format.format(Date(postTime))
+}
+
+
+fun combineDateTime(date: Long, hour: Int, minute: Int): DateTime {
+    val dateTime = DateTime(date)
+    val time = LocalTime(hour, minute)
+    return dateTime.withTime(time)
+}
+
+fun formatTime(hour: Int, minute: Int): String {
+    val dateTime = DateTime.now().withTime(hour, minute, 0, 0)
+    val formatter = DateTimeFormat.forPattern("hh:mm a")
+    return dateTime.toString(formatter)
 }
 
 
