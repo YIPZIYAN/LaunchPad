@@ -106,6 +106,8 @@ class TabUpcomingInterviewFragment : Fragment() {
                     it.jobApp.job.companyID == userVM.getUserLD().value!!.company_id
                 else
                     it.jobApp.userId == userVM.getAuth().uid
+            }.filter {
+                it.jobApp.job.deletedAt == 0L
             }
 
             if (personalInterviewList.isEmpty()) {
@@ -115,7 +117,7 @@ class TabUpcomingInterviewFragment : Fragment() {
                 return@observe
             }
 
-            binding.numApplicant.text = personalInterviewList.size.toString() + " applicant(s)"
+            binding.numApplicant.text = personalInterviewList.size.toString() + " interview(s)"
             binding.tabApplicant.visibility = View.VISIBLE
             binding.tabNoApplicant.visibility = View.GONE
 

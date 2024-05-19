@@ -52,13 +52,14 @@ class TabHistoryInterviewFragment : Fragment() {
                 )
             }
             h.binding.root.setOnClickListener {
-                nav.navigate(
-                    R.id.scheduleInterviewFragment, bundleOf(
-                        "jobAppID" to f.jobApp.id,
-                        "interviewID" to f.id,
-                        "action" to "VIEW"
+                if (userVM.isEnterprise())
+                    nav.navigate(
+                        R.id.scheduleInterviewFragment, bundleOf(
+                            "jobAppID" to f.jobApp.id,
+                            "interviewID" to f.id,
+                            "action" to "VIEW"
+                        )
                     )
-                )
             }
         }
         binding.recyclerView.adapter = adapter
@@ -87,6 +88,8 @@ class TabHistoryInterviewFragment : Fragment() {
                     it.jobApp.job.companyID == userVM.getUserLD().value!!.company_id
                 else
                     it.jobApp.userId == userVM.getAuth().uid
+            }.filter {
+                it.jobApp.job.deletedAt == 0L
             }
 
             if (personalInterviewList.isEmpty()) {
@@ -96,7 +99,7 @@ class TabHistoryInterviewFragment : Fragment() {
             }
 
 
-            binding.numApplicant.text = personalInterviewList.size.toString() + " applicant(s)"
+            binding.numApplicant.text = personalInterviewList.size.toString() + " interview(s)"
             binding.tabApplicant.visibility = View.VISIBLE
             binding.tabNoApplicant.visibility = View.GONE
 

@@ -137,7 +137,7 @@ fun combineDateTime(date: Long, hour: Int, minute: Int): DateTime {
 
 fun formatTime(hour: Int, minute: Int): String {
     val dateTime = DateTime.now().withTime(hour, minute, 0, 0)
-    val formatter = DateTimeFormat.forPattern("h:mm a")
+    val formatter = DateTimeFormat.forPattern("hh:mm a")
     return dateTime.toString(formatter)
 }
 

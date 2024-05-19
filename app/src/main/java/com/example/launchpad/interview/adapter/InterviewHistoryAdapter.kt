@@ -36,7 +36,7 @@ class InterviewHistoryAdapter(
         holder.binding.avatarView.loadImage(interview.jobApp.user.avatar.toBitmap())
         holder.binding.applicantName.text = interview.jobApp.user.name
         holder.binding.appliedJob.text = interview.jobApp.job.jobName
-        holder.binding.lblDay.text = "Interview on ${displayDate(interview.date)}"
+        holder.binding.lblDay.text = "Interviewed on ${displayDate(interview.date)}"
         fn(holder, interview)
     }
 

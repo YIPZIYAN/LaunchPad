@@ -38,6 +38,7 @@ import com.mapbox.search.autocomplete.PlaceAutocomplete
 import com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion
 import com.mapbox.search.ui.adapter.autocomplete.PlaceAutocompleteUiAdapter
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
+import com.mapbox.search.ui.view.DistanceUnitType
 import com.mapbox.search.ui.view.SearchResultsView
 import kotlinx.coroutines.launch
 import okhttp3.internal.format
@@ -71,9 +72,10 @@ class ScheduleInterviewFragment : Fragment() {
     ): View {
         binding = FragmentScheduleInterviewBinding.inflate(inflater, container, false)
         binding.topAppBar.setOnClickListener { nav.navigateUp() }
-        mapbox()
+
         fetchUserData()
-        setupDateTimePicker()
+
+
         interviewVM.isSuccess.observe(viewLifecycleOwner) {
             if (it) {
                 nav.popBackStack(R.id.homeFragment, false)
@@ -93,6 +95,13 @@ class ScheduleInterviewFragment : Fragment() {
                 binding.topAppBar.title = "Edit Interview"
                 binding.btnApply.text = "EDIT"
                 fetchInterviewDate()
+                mapbox()
+                setupDateTimePicker()
+            }
+
+            else -> {
+                mapbox()
+                setupDateTimePicker()
             }
         }
 
