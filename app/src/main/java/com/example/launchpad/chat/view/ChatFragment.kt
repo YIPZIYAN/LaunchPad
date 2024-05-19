@@ -18,6 +18,7 @@ import com.example.launchpad.data.ChatMessage
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentChatBinding
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -30,8 +31,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 
 
 class ChatFragment : Fragment() {
@@ -60,12 +64,11 @@ class ChatFragment : Fragment() {
 
             // Get new FCM registration token
             val token = task.result
+            Log.d("TOKEN", token)
 
         })
 
         chatList.clear()
-
-        //binding.btnPostJob.setOnClickListener { createChatroom("BIQY4hjJBbOtA61eBWVpC3ykB5f2_64guPgKSSlPgbaxMkEAwZrK4cqG2") }
 
         adapter = ChatAdapter { holder, chat ->
             holder.binding.chat.setOnClickListener { message(chat.id) }
@@ -76,64 +79,108 @@ class ChatFragment : Fragment() {
     }
 
     fun displayChatList(userID: String) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val chatRoomsRef = FirebaseDatabase.getInstance().getReference("chatRooms")
-            val dataSnapshot = withContext(Dispatchers.Default) {
-                chatRoomsRef.get().await()
-            }
+        val chatRoomsRef = FirebaseDatabase.getInstance().getReference("chatRooms")
 
-            val deferredList = mutableListOf<Deferred<Boolean>>()
-
-            dataSnapshot.children.forEach {
-                val chatRoomId = it.key
+        chatRoomsRef.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
+                val chatRoomId = dataSnapshot.key
                 if (chatRoomId != null && chatRoomId.contains(userID)) {
-                    val deferred = async(Dispatchers.IO) {
+                    CoroutineScope(Dispatchers.IO).launch {
                         val userIDs = chatRoomId.split("_")
+                        val receiver = withContext(Dispatchers.IO) {
+                            if (userIDs[0] == userID) userVM.get(userIDs[1]) else userVM.get(userIDs[0])
+                        }
                         val chat = Chat(
                             id = chatRoomId,
-                            receiverID = if (userIDs[0] == userID) userIDs[1] else userIDs[0],
+                            receiverName = receiver!!.name,
+                            avatar = receiver.avatar,
                             latestMessage = getLatestMessage(chatRoomId)
                         )
+                        latestMessageListener(chatRoomId)
                         withContext(Dispatchers.Main) {
                             chatList.add(chat)
+                            adapter.submitList(chatList.sortedByDescending { it.latestMessage.sendTime })
                         }
                     }
-                    deferredList.add(deferred)
-
                 }
             }
 
-            deferredList.awaitAll()
-
-            withContext(Dispatchers.Main) {
-                adapter.submitList(chatList)
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
             }
-        }
 
+            override fun onChildRemoved(p0: DataSnapshot) {
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+        })
+    }
+
+    private val messageListeners = mutableSetOf<String>()
+
+    suspend fun latestMessageListener(chatRoomId: String) {
+        if (messageListeners.contains(chatRoomId)) return
+        messageListeners.add(chatRoomId)
+        withContext(Dispatchers.IO) {
+            val database = FirebaseDatabase.getInstance()
+            val messageRef = database.getReference("chatRooms").child(chatRoomId).child("messages")
+            var latestMessage = ChatMessage()
+
+            val latestMessageQuery = messageRef.orderByChild("sendTime").limitToLast(1)
+
+            latestMessageQuery.addChildEventListener(object : ChildEventListener {
+                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                    val message = snapshot.getValue(ChatMessage::class.java)
+                    message?.let {
+                        latestMessage = it
+                        Log.d("LOOP", latestMessage.message)
+                        // REFRESH THE CHAT LIST HERE
+                        val updateChat = chatList.find { it.id == chatRoomId }
+                        updateChat?.latestMessage = latestMessage
+                        adapter.notifyDataSetChanged()
+                        adapter.submitList(chatList.sortedByDescending { it.latestMessage.sendTime })
+                    }
+                }
+
+                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                }
+
+                override fun onChildRemoved(p0: DataSnapshot) {
+                }
+
+                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                }
+
+                override fun onCancelled(p0: DatabaseError) {
+                }
+
+            })
+        }
     }
 
     suspend fun getLatestMessage(chatRoomId: String): ChatMessage {
         return withContext(Dispatchers.IO) {
             var latestMessage = ChatMessage()
 
-                val messageRef =
-                    FirebaseDatabase.getInstance().getReference("chatRooms/$chatRoomId/messages")
-                val dataSnapshot = withContext(Dispatchers.Default) {
-                    messageRef.orderByChild("sendTime").limitToLast(1).get().await()
-                }
+            val messageRef =
+                FirebaseDatabase.getInstance().getReference("chatRooms/$chatRoomId/messages")
 
-                if (dataSnapshot.exists()) {
-                    Log.d("SNAPSHOT", dataSnapshot.toString())
-                }
+            val dataSnapshot = withContext(Dispatchers.Default) {
+                messageRef.orderByChild("sendTime").limitToLast(1).get().await()
+            }
 
-                dataSnapshot.children.forEach {
-                    latestMessage = ChatMessage(
-                        id = it.child("id").getValue(String::class.java)!!,
-                        message = it.child("message").getValue(String::class.java)!!,
-                        sendTime = it.child("sendTime").getValue(Long::class.java)!!,
-                        senderID = it.child("senderID").getValue(String::class.java)!!
-                    )
-                }
+            dataSnapshot.children.forEach {
+                latestMessage = ChatMessage(
+                    id = it.child("id").getValue(String::class.java)!!,
+                    message = it.child("message").getValue(String::class.java)!!,
+                    sendTime = it.child("sendTime").getValue(Long::class.java)!!,
+                    senderID = it.child("senderID").getValue(String::class.java)!!
+                )
+            }
 
             latestMessage
         }

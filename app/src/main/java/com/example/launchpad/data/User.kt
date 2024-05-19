@@ -16,4 +16,5 @@ data class User(
     val provider: String = "",
     val company_id: String = "",
     var isEnterprise: Boolean = false,
+    val token: String = "",
 )
