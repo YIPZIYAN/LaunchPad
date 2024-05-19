@@ -35,9 +35,9 @@ class CommentAdapter (
                 val avatarDrawableRes = R.drawable.round_account_circle_24
 
                 val avatarDrawable: Drawable? = ContextCompat.getDrawable(holder.itemView.context, avatarDrawableRes)
-                holder.binding.imgViewProfile.setImageDrawable(avatarDrawable)
+                holder.binding.avatarView.setImageDrawable(avatarDrawable)
             }else{
-                holder.binding.imgViewProfile.setImageBlob(postComment.user.avatar)
+                holder.binding.avatarView.setImageBlob(postComment.user.avatar)
             }
 
             holder.binding.txtComment.text = postComment.comment
