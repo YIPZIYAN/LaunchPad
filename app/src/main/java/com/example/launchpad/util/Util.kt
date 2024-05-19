@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.text.format.DateUtils
+import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.graphics.drawable.toBitmapOrNull
@@ -18,15 +19,33 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.launchpad.R
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.firestore.Blob
+import com.google.firebase.messaging.FirebaseMessaging
 import io.getstream.avatarview.AvatarView
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+
+fun Fragment.getToken(): String {
+    var token = ""
+    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+        if (!task.isSuccessful) {
+            Log.w("TOKEN", "Fetching FCM registration token failed", task.exception)
+            return@OnCompleteListener
+        }
+
+        // Get new FCM registration token
+        token = task.result
+        Log.d("TOKEN", token)
+
+    })
+    return token
+}
 
 fun Fragment.toast(text: String) {
     Toast.makeText(context, text, Toast.LENGTH_SHORT).show()

@@ -1,10 +1,8 @@
 package com.example.launchpad.data.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.example.launchpad.data.User
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -12,7 +10,6 @@ import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
 import com.google.firebase.firestore.toObjects
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class UserViewModel(val app: Application) : AndroidViewModel(app) {
@@ -40,12 +37,15 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
 
     fun getUserLD() = _userLD
 
-
     fun getUserLLD() = _userLLD
 
     suspend fun set(user: User) {
         USERS.document(user.uid).set(user).addOnCompleteListener {
         }.await()
+    }
+
+    suspend fun setToken(token: String) {
+        USERS.document(getAuth().uid).update("token", token).await()
     }
 
     suspend fun update(user: User) {

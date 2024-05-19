@@ -19,7 +19,6 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import io.getstream.avatarview.coil.loadImage
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType
@@ -41,7 +40,10 @@ class ChatTextFragment : Fragment() {
     private var msgList = mutableListOf<ChatMessage>()
 
     private val chatRoomId by lazy { arguments?.getString("chatRoomId") ?: "" }
+    private lateinit var currentUser: User
+    private lateinit var otherUser: User
 
+    private val SERVER_KEY = "AAAAXcttPyk:APA91bGKCDLn2aO98ksp1j0vFskVqfdNKQAihmxM_UMY3Axib2R4czrUq1zYb4ZKsp1T60G_9Nj0Knwf5mHkg0ksrJQNDpPZK1ooME0CSX1RSN2CZisjlLru0hk3FYiTEsnAXSWsDlzt"
 
     companion object {
         fun newInstance() = ChatTextFragment()
@@ -57,7 +59,9 @@ class ChatTextFragment : Fragment() {
 
         val userIDs = chatRoomId.split("_")
 
-        val otherUser =
+        currentUser = userVM.getAuth()
+
+        otherUser =
             if (userIDs[0] == userVM.getAuth().uid) {
                 userVM.get(userIDs[1])!!
             } else {
@@ -71,7 +75,7 @@ class ChatTextFragment : Fragment() {
             else
                 otherUser.avatar.toBitmap()
 
-        adapter = MessageAdapter(userVM.getAuth().uid, avatar)
+        adapter = MessageAdapter(currentUser.uid, avatar)
         binding.rvMessages.adapter = adapter
         adapter.submitList(msgList)
         displayMessage(chatRoomId)
@@ -95,7 +99,7 @@ class ChatTextFragment : Fragment() {
         val messageId = messageRef.push().key ?: return
         val message = ChatMessage(
             id = messageId,
-            senderID = userVM.getAuth().uid,
+            senderID = currentUser.uid,
             message = messageText,
             sendTime = DateTime.now().millis
         )
@@ -111,18 +115,15 @@ class ChatTextFragment : Fragment() {
         val jsonObject = JSONObject()
 
         val notificationObj = JSONObject()
-        notificationObj.put("title", "title")
+        notificationObj.put("title", currentUser.name)
         notificationObj.put("body", message)
 
         val dataObj = JSONObject()
-        dataObj.put("userId", userVM.getAuth().uid)
+        dataObj.put("userId", currentUser.uid)
 
         jsonObject.put("notification", notificationObj)
         jsonObject.put("data", dataObj)
-        jsonObject.put(
-            "to",
-            "eZn3vU0LSFCEjVaWNwxb3y:APA91bH__LKio3qwRFPhP-E9yn9SJHkJc4eWS12Eo1hW4nnBuyUoHdJyJ5obwHi5hz-CJuXii-5Y-WIWGlcO79-_j3rZ2M2fv8hHAGFCfaBKLd453uLmfyspEgHYGWw3Zbp1e0LMbXIY"
-        )
+        jsonObject.put("to", otherUser.token)
 
         callApi(jsonObject)
     }
@@ -137,7 +138,7 @@ class ChatTextFragment : Fragment() {
             .post(body)
             .header(
                 "Authorization",
-                "Bearer AAAAXcttPyk:APA91bGKCDLn2aO98ksp1j0vFskVqfdNKQAihmxM_UMY3Axib2R4czrUq1zYb4ZKsp1T60G_9Nj0Knwf5mHkg0ksrJQNDpPZK1ooME0CSX1RSN2CZisjlLru0hk3FYiTEsnAXSWsDlzt"
+                "Bearer $SERVER_KEY"
             )
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -147,7 +148,6 @@ class ChatTextFragment : Fragment() {
 
             override fun onResponse(call: Call, response: Response) {
                 Log.e("SUCCESS", response.toString())
-
             }
 
         })
