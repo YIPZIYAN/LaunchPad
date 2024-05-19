@@ -13,7 +13,6 @@ import com.example.launchpad.MainActivity
 import com.example.launchpad.R
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentSettingBinding
-import com.example.launchpad.util.getToken
 import com.example.launchpad.util.intentWithoutBackstack
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -58,34 +57,23 @@ class SettingFragment : Fragment() {
     private fun signOut() {
 
         lifecycleScope.launch {
-            val tokenList = userVM.getTokenList(userVM.getAuth().uid)
-            Log.d("TOKENLIST", tokenList.toString())
-            getToken().observe(viewLifecycleOwner) { token ->
-                lifecycleScope.launch {
-                    if (tokenList.contains(token)) {
-                        tokenList.remove(token)
-                        userVM.setToken(tokenList)
-                        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                            .requestIdToken(getString(R.string.client_id))
-                            .requestEmail()
-                            .build()
-
-                        val googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-
-                        auth.signOut()
-
-                        googleSignInClient.signOut().addOnSuccessListener {
-                            Log.d("UI", "signOut: navigate to login")
-
-                            requireContext().intentWithoutBackstack(requireContext(), MainActivity::class.java)
-                        }
-                    }
-                }
-            }
+            userVM.setToken("")
         }
 
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.client_id))
+            .requestEmail()
+            .build()
 
+        val googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
 
+        auth.signOut()
+
+        googleSignInClient.signOut().addOnSuccessListener {
+            Log.d("UI", "signOut: navigate to login")
+
+            requireContext().intentWithoutBackstack(requireContext(), MainActivity::class.java)
+        }
     }
 
 }

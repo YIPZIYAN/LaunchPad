@@ -12,5 +12,5 @@ data class User(
     val provider: String = "",
     val company_id: String = "",
     var isEnterprise: Boolean = false,
-    var token: MutableList<String> = mutableListOf(),
+    val token: String = "",
 )
