@@ -23,6 +23,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.firestore.Blob
 import io.getstream.avatarview.AvatarView
+import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -118,6 +120,12 @@ fun displayPostTime(postTime: Long): String {
 fun displayDate(postTime: Long): String {
     val format = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
    return format.format(Date(postTime))
+}
+
+fun formatTime(hour: Int, minute: Int): String {
+    val dateTime = DateTime.now().withTime(hour, minute, 0, 0)
+    val formatter = DateTimeFormat.forPattern("h:mm a")
+    return dateTime.toString(formatter)
 }
 
 

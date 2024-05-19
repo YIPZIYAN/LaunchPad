@@ -68,14 +68,14 @@ class TabHistoryInterviewFragment : Fragment() {
             interviewHistoryList.forEach { it.jobApp = jobAppVM.get(it.jobAppID)!! }
             interviewHistoryList.forEach { it.jobApp.user = userVM.get(it.jobApp.userId)!! }
             interviewHistoryList.forEach { it.jobApp.job = jobVM.get(it.jobApp.jobId)!! }
-            interviewHistoryList.sortedByDescending { it.date }
+
 
             binding.numApplicant.text = interviewHistoryList.size.toString() + " applicant(s)"
             binding.tabApplicant.visibility = View.VISIBLE
 //            binding.tabNoApplicant.visibility = View.GONE
 
 
-            adapter.submitList(interviewHistoryList)
+            adapter.submitList(interviewHistoryList.sortedByDescending { it.date })
 
         }
 

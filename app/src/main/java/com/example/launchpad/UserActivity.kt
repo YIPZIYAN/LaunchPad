@@ -12,6 +12,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.launchpad.data.viewmodel.CompanyViewModel
+import com.example.launchpad.data.viewmodel.InterviewViewModel
 import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.ActivityUserBinding
@@ -28,12 +29,14 @@ class UserActivity : AppCompatActivity() {
     private val jobAppVM: JobApplicationViewModel by viewModels()
     private val companyVM: CompanyViewModel by viewModels()
     private val userVM: UserViewModel by viewModels()
+    private val interviewVM: InterviewViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //Early data loading
         userVM.init()
         companyVM.init()
         jobAppVM.init()
+        interviewVM.init()
 
         window.setSoftInputMode(android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
