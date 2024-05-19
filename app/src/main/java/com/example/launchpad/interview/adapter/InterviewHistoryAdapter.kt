@@ -1,6 +1,7 @@
 package com.example.launchpad.interview.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -35,6 +36,19 @@ class InterviewHistoryAdapter(
         holder.binding.avatarView.loadImage(interview.jobApp.user.avatar.toBitmap())
         holder.binding.applicantName.text = interview.jobApp.user.name
         holder.binding.appliedJob.text = interview.jobApp.job.jobName
+
+        if (interview.location == "") {
+            holder.binding.location.visibility = View.GONE
+        }
+
+        if (interview.video == "") {
+            holder.binding.video.visibility = View.GONE
+        }
+
+        if (interview.remark == "") {
+            holder.binding.remark.visibility = View.GONE
+        }
+
         holder.binding.location.text = interview.location
         holder.binding.remark.text = interview.remark
         holder.binding.lblDay.text = "Interview on ${displayDate(interview.date)}"
