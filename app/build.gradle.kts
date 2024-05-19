@@ -67,6 +67,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.android.gms:play-services-auth:21.1.0")
     implementation("com.google.firebase:firebase-firestore:24.11.0")
+    implementation("com.google.firebase:firebase-storage")
 
     //DateTime
     implementation("joda-time:joda-time:2.12.7")
@@ -74,7 +75,17 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.activity:activity:1.8.0")
 
-//    implementation("com.mapbox.maps:android:11.3.1")
+    //PDF viewer
+    implementation("com.github.barteksc:android-pdf-viewer:2.8.2")
+
+    //mapbox
+    implementation("com.mapbox.search:mapbox-search-android-ui:1.2.0")
+
+
     implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.google.firebase:firebase-database-ktx")
     implementation("com.android.support:cardview-v7:28.0.0")
+    implementation("com.google.firebase:firebase-messaging-ktx")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
 }

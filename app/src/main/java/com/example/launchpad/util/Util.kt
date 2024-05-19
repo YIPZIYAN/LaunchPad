@@ -1,28 +1,52 @@
 package com.example.launchpad.util
 
-import android.app.Application
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.text.format.DateUtils
+import android.view.View
+import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.graphics.drawable.toBitmapOrNull
 import androidx.core.graphics.scale
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import com.example.launchpad.R
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.firestore.Blob
+import com.google.firebase.messaging.FirebaseMessaging
 import io.getstream.avatarview.AvatarView
+import org.joda.time.DateTime
+import org.joda.time.LocalTime
+import org.joda.time.format.DateTimeFormat
 import java.io.ByteArrayOutputStream
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
+fun getToken(): MutableLiveData<String> {
+    val tokenLive = MutableLiveData<String>()
+    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+        if (!task.isSuccessful) {
+            Log.w("TOKEN", "Fetching FCM registration token failed", task.exception)
+            return@OnCompleteListener
+        }
+
+        // Get new FCM registration token
+        val token = task.result
+        tokenLive.value = token ?: ""
+    })
+    return tokenLive
+}
 
 fun Fragment.toast(text: String) {
     Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
@@ -68,7 +92,7 @@ fun Fragment.loadingDialog(): Dialog {
     return dialog
 }
 
-fun Fragment.dialogCompanyNotRegister(status :Boolean,nav:NavController) {
+fun Fragment.dialogCompanyNotRegister(status: Boolean, nav: NavController) {
     if (status) {
         dialog(
             getString(R.string.register_your_company),
@@ -100,6 +124,48 @@ fun Context.intentWithoutBackstack(
         intent.putExtras(it)
     }
     context.startActivity(intent)
+}
+
+fun displayPostTime(postTime: Long): String {
+    return DateUtils.getRelativeTimeSpanString(
+        postTime,
+        System.currentTimeMillis(),
+        DateUtils.MINUTE_IN_MILLIS,
+        DateUtils.FORMAT_ABBREV_RELATIVE
+    ).toString()
+}
+
+fun View.disable() {
+    isEnabled = false
+    isClickable = false
+}
+fun displayDate(postTime: Long): String {
+    val format = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+   return format.format(Date(postTime))
+}
+
+
+fun combineDateTime(date: Long, hour: Int, minute: Int): DateTime {
+    val dateTime = DateTime(date)
+    val time = LocalTime(hour, minute)
+    return dateTime.withTime(time)
+}
+
+fun formatTime(hour: Int, minute: Int): String {
+    val dateTime = DateTime.now().withTime(hour, minute, 0, 0)
+    val formatter = DateTimeFormat.forPattern("hh:mm a")
+    return dateTime.toString(formatter)
+}
+
+
+fun Fragment.showFileSize(l: Long): String {
+    var size = l / 1024.0
+    var unit = "KB"
+    if (size > 1024){
+        size /= 1024.0
+        unit = "MB"
+    }
+    return String.format("%.2f %s", size, unit)
 }
 // ----------------------------------------------------------------------------
 // Bitmap Extensions

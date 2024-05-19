@@ -1,7 +1,6 @@
 package com.example.launchpad.profile.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +14,8 @@ import com.example.launchpad.R
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentMyProfileBinding
 import com.example.launchpad.util.toBitmap
-import com.example.launchpad.view.TabMyJobFragment
+import com.example.launchpad.profile.TabMyJobFragment
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.firebase.firestore.Blob
 import io.getstream.avatarview.coil.loadImage
 
 class MyProfileFragment : Fragment() {

@@ -46,7 +46,7 @@
                     app:avatarViewIndicatorDrawable="@drawable/round_edit_24"
                     app:avatarViewIndicatorEnabled="true"
                     app:avatarViewIndicatorPosition="bottomRight"
-                    app:avatarViewIndicatorSizeCriteria="3"
+                    app:avatarViewIndicatorSizeCriteria="2.5"
                     app:avatarViewShape="circle"
                     android:layout_width="64dp"
                     android:layout_height="64dp"

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.launchpad.data.Job
 import com.example.launchpad.databinding.ItemJobCardBinding
+import com.example.launchpad.util.setImageBlob
 
 class JobAdapter(
     val fn: (ViewHolder, Job) -> Unit = { _, _ -> }
@@ -26,7 +27,7 @@ class JobAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val job = getItem(position)
 
-//        holder.binding.companyAvatar.setImageBlob(job.company.avatar)
+        holder.binding.companyAvatar.setImageBlob(job.company.avatar)
         holder.binding.companyName.text = job.company.name
         holder.binding.companyLocation.text = job.company.location
         holder.binding.jobName.text = job.jobName

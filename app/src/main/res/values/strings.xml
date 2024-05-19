@@ -80,7 +80,7 @@
     <string name="EDIT">EDIT</string>
     <string name="SAVE">SAVE</string>
     <string name="resume">Resume</string>
-    <string name="resume_hint">Be sure to include an updated resume with PDF, DOC or DOCX*</string>
+    <string name="resume_hint">Be sure to include an updated resume with PDF*</string>
     <string name="Upload_Resume">Upload Resume</string>
     <string name="information">Information</string>
     <string name="apply_job_hint">* Your profile information will be sent to the company.</string>
@@ -156,4 +156,5 @@
     <string name="dialog_company_not_register">Please complete your company profile to access full features!</string>
     <string name="remind_me_later">Remind Me Later</string>
     <string name="register_now">Register Now</string>
+    <string name="delete">Delete</string>
 </resources>

@@ -28,7 +28,7 @@ class SavedJobAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val savedJob = getItem(position)
 
-//        holder.binding.companyAvatar.setImageBlob(savedJob.job.company.avatar)
+        holder.binding.companyAvatar.setImageBlob(savedJob.job.company.avatar)
         holder.binding.companyName.text = savedJob.job.company.name
         holder.binding.companyLocation.text = savedJob.job.company.location
         holder.binding.jobName.text = savedJob.job.jobName

@@ -6,12 +6,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.TabApplicantFragment">
+        tools:context=".job_application.TabApplicantFragment">
 
         <ScrollView
             android:id="@+id/tabApplicant"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -36,191 +40,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/num_applicant" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/applicant"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:layoutManager="LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/materialDivider"
-                   >
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/applicant_avatar_container"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginStart="16dp"
-                        app:cardCornerRadius="28dp"
-                        app:cardElevation="0dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        >
-
-                        <ImageView
-                            android:id="@+id/applicant_avatar"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:contentDescription="sample"
-                            android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/ic_launcher_background" />
-                    </androidx.cardview.widget.CardView>
-
-                    <TextView
-                        android:id="@+id/applicant_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="12dp"
-                        android:text="GOH CHUN YEN"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        app:layout_constraintStart_toEndOf="@id/applicant_avatar_container"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/education"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="16dp"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="Bachelor of Information Technology (Honours), Software System Development"
-                        android:textAppearance="?attr/textAppearanceBodySmall"
-                        app:layout_constraintStart_toStartOf="@id/applicant_name"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/applicant_name" />
-
-                    <TextView
-                        android:id="@+id/experience"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginEnd="16dp"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="Software Developer Internship at Msoft Marketing"
-                        android:textAppearance="?attr/textAppearanceBodySmall"
-                        app:layout_constraintStart_toStartOf="@id/applicant_name"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/education" />
-
-                    <TextView
-                        android:id="@+id/applied_date"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="16dp"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="Applied 3d ago"
-                        android:textAppearance="?attr/textAppearanceBodySmall"
-                        app:layout_constraintStart_toStartOf="@id/applicant_name"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/experience"
-                        />
-
-                    <com.google.android.material.divider.MaterialDivider
-                        android:id="@+id/materialDivider2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/applied_date" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/applicant2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/applicant"
-                    >
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/applicant_avatar_container2"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginStart="16dp"
-                        app:cardCornerRadius="28dp"
-                        app:cardElevation="0dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <ImageView
-                            android:id="@+id/applicant_avatar2"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:contentDescription="sample"
-                            android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/ic_launcher_background" />
-                    </androidx.cardview.widget.CardView>
-
-                    <TextView
-                        android:id="@+id/applicant_name2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="12dp"
-                        android:text="GOH CHUN YEN"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        app:layout_constraintStart_toEndOf="@id/applicant_avatar_container2"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/education2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="16dp"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="Bachelor of Information Technology (Honours), Software System"
-                        android:textAppearance="?attr/textAppearanceBodySmall"
-                        app:layout_constraintStart_toStartOf="@id/applicant_name2"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/applicant_name2" />
-
-                    <TextView
-                        android:id="@+id/experience2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginEnd="16dp"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="Software Developer Internship at Msoft Marketing"
-                        android:textAppearance="?attr/textAppearanceBodySmall"
-                        app:layout_constraintStart_toStartOf="@id/applicant_name2"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/education2" />
-
-                    <TextView
-                        android:id="@+id/applied_date2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="16dp"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="Applied 3d ago"
-                        android:textAppearance="?attr/textAppearanceBodySmall"
-                        app:layout_constraintStart_toStartOf="@id/applicant_name2"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/experience2" />
-
-                    <com.google.android.material.divider.MaterialDivider
-                        android:id="@+id/materialDivider3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        app:layout_constraintTop_toBottomOf="@id/applied_date2"
-                        app:layout_constraintStart_toStartOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+                    app:layout_constraintTop_toBottomOf="@+id/materialDivider"
+                    tools:listitem="@layout/item_applicant" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -230,7 +59,13 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/tab_no_applicant"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
@@ -256,7 +91,7 @@
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="32dp"
-                    android:text="@string/no_applicant"
+                    android:text="Interview list is empty."
                     android:textAlignment="center"
                     android:textAppearance="?attr/textAppearanceTitleLarge"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -268,4 +103,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

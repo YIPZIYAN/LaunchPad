@@ -68,7 +68,7 @@
     </fragment>
     <fragment
         android:id="@+id/eventFragment"
-        android:name="com.example.launchpad.view.EventFragment"
+        android:name="com.example.launchpad.interview.EventFragment"
         android:label="fragment_event"
         tools:layout="@layout/fragment_event" >
         <action
@@ -81,7 +81,7 @@
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
-        android:name="com.example.launchpad.view.ChatFragment"
+        android:name="com.example.launchpad.chat.view.ChatFragment"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" >
         <action
@@ -168,9 +168,15 @@
     </fragment>
     <fragment
         android:id="@+id/applyJobFragment"
-        android:name="com.example.launchpad.view.ApplyJobFragment"
+        android:name="com.example.launchpad.job_application.ApplyJobFragment"
         android:label="fragment_apply_job"
-        tools:layout="@layout/fragment_apply_job" />
+        tools:layout="@layout/fragment_apply_job" >
+        <action
+            android:id="@+id/action_applyJobFragment_to_eventFragment"
+            app:destination="@id/eventFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit" />
+    </fragment>
     <fragment
         android:id="@+id/postJobFragment"
         android:name="com.example.launchpad.job.view.PostJobFragment"
@@ -187,7 +193,7 @@
     </fragment>
     <fragment
         android:id="@+id/viewApplicantFragment"
-        android:name="com.example.launchpad.view.ViewApplicantFragment"
+        android:name="com.example.launchpad.job_application.ViewApplicantFragment"
         android:label="ViewApplicantFragment"
         tools:layout="@layout/fragment_view_applicant">
         <action
@@ -200,17 +206,17 @@
     </fragment>
     <fragment
         android:id="@+id/applicantDetailsFragment"
-        android:name="com.example.launchpad.view.ApplicantDetailsFragment"
+        android:name="com.example.launchpad.job_application.ApplicantDetailsFragment"
         android:label="ApplicantDetailsFragment"
         tools:layout="@layout/fragment_applicant_details"/>
     <fragment
         android:id="@+id/chatTextFragment"
-        android:name="com.example.launchpad.view.ChatTextFragment"
+        android:name="com.example.launchpad.chat.view.ChatTextFragment"
         android:label="ChatTextFragment"
         tools:layout="@layout/fragment_chat_text"/>
     <fragment
         android:id="@+id/scheduleInterviewFragment"
-        android:name="com.example.launchpad.view.ScheduleInterviewFragment"
+        android:name="com.example.launchpad.interview.ScheduleInterviewFragment"
         android:label="ScheduleInterviewFragment"
         tools:layout="@layout/fragment_schedule_interview"/>
     <activity
@@ -246,5 +252,10 @@
         android:id="@+id/postCommentFragment"
         android:name="com.example.launchpad.community.view.PostCommentFragment"
         android:label="PostCommentFragment" />
+    <fragment
+        android:id="@+id/pdfViewerFragment"
+        android:name="com.example.launchpad.util.PdfViewerFragment"
+        android:label="fragment_pdf_viewer"
+        tools:layout="@layout/fragment_pdf_viewer" />
 
 </navigation>

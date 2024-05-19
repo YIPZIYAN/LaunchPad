@@ -6,11 +6,14 @@ import android.os.Looper
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.launchpad.data.viewmodel.CompanyViewModel
+import com.example.launchpad.data.viewmodel.InterviewViewModel
+import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.ActivityUserBinding
 import com.example.launchpad.job.viewmodel.JobViewModel
@@ -23,15 +26,19 @@ class UserActivity : AppCompatActivity() {
         supportFragmentManager.findFragmentById(R.id.user_nav_host)!!.findNavController()
     }
     private val jobVM: JobViewModel by viewModels()
+    private val jobAppVM: JobApplicationViewModel by viewModels()
     private val companyVM: CompanyViewModel by viewModels()
     private val userVM: UserViewModel by viewModels()
+    private val interviewVM: InterviewViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //Early data loading
         userVM.init()
         companyVM.init()
+        jobAppVM.init()
+        interviewVM.init()
 
-
+        window.setSoftInputMode(android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
         super.onCreate(savedInstanceState)
         binding = ActivityUserBinding.inflate(layoutInflater)
@@ -58,6 +65,7 @@ class UserActivity : AppCompatActivity() {
                 R.id.signUpEnterpriseFragment,
                 R.id.emailVerificationFragment,
                 R.id.profileUpdateFragment,
+                R.id.pdfViewerFragment,
             )
 
             val isBottomNavVisible = !hideBottomNavDestinations.contains(destination.id)
