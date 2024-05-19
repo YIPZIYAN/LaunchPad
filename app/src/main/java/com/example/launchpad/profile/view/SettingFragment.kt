@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.MainActivity
 import com.example.launchpad.R
@@ -17,6 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import kotlinx.coroutines.launch
 
 class SettingFragment : Fragment() {
 
@@ -54,6 +56,10 @@ class SettingFragment : Fragment() {
 
     private fun signOut() {
 
+        lifecycleScope.launch {
+            userVM.setToken("")
+        }
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.client_id))
             .requestEmail()
@@ -65,6 +71,7 @@ class SettingFragment : Fragment() {
 
         googleSignInClient.signOut().addOnSuccessListener {
             Log.d("UI", "signOut: navigate to login")
+
             requireContext().intentWithoutBackstack(requireContext(), MainActivity::class.java)
         }
     }

@@ -19,6 +19,7 @@ import com.example.launchpad.databinding.FragmentHomeBinding
 import com.example.launchpad.job.adapter.JobAdapter
 import com.example.launchpad.job.viewmodel.JobViewModel
 import com.example.launchpad.util.dialogCompanyNotRegister
+import com.example.launchpad.util.getToken
 import com.google.android.material.search.SearchView
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
@@ -53,6 +54,15 @@ class HomeFragment : Fragment(), BottomSheetListener {
                 }
                 return@observe
             }
+
+            if (userVM.getAuth().token.isNullOrEmpty()) {
+                getToken().observe(viewLifecycleOwner) { token ->
+                    lifecycleScope.launch {
+                        userVM.setToken(token)
+                    }
+                }
+            }
+
             binding.username.text = it.name
             //-----------------------------------------------------------
             // Company
