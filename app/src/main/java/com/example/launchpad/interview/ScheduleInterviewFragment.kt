@@ -88,7 +88,8 @@ class ScheduleInterviewFragment : Fragment() {
                 viewModeUI()
                 fetchInterviewDate()
             }
-            "EDIT" ->{
+
+            "EDIT" -> {
                 binding.topAppBar.title = "Edit Interview"
                 binding.btnApply.text = "EDIT"
                 fetchInterviewDate()
@@ -163,7 +164,8 @@ class ScheduleInterviewFragment : Fragment() {
             date = date
         )
 
-        dialog("Schedule Interview", "Are you sure to schedule interview?",
+        val title = if (action == "EDIT") "Edit Interview" else "Schedule Interview"
+        dialog(title, "Are you sure to ${title.lowercase()}?",
             onPositiveClick = { _, _ ->
                 lifecycleScope.launch {
                     interviewVM.set(interview)
