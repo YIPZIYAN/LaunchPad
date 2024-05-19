@@ -55,10 +55,14 @@ class HomeFragment : Fragment(), BottomSheetListener {
                 return@observe
             }
 
-            if (userVM.getAuth().token.isNullOrEmpty()) {
-                getToken().observe(viewLifecycleOwner) { token ->
+            //TODO: Change token to list of string for multiple devices
+            val tokenList = userVM.getAuth().token
+            getToken().observe(viewLifecycleOwner) { token ->
+                val isTokenExist = tokenList.contains(token)
+                if (!isTokenExist) {
                     lifecycleScope.launch {
-                        userVM.setToken(token)
+                        tokenList.add(token)
+                        userVM.setToken(tokenList)
                     }
                 }
             }
