@@ -44,11 +44,9 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
         }.await()
     }
 
-    suspend fun setToken(token: List<String>) {
+    suspend fun setToken(token: String) {
         USERS.document(auth.currentUser!!.uid).update("token", token).await()
     }
-
-    suspend fun getTokenList(userID: String) = get(userID)!!.token
 
     suspend fun update(user: User) {
         USERS.document(auth.currentUser!!.uid)

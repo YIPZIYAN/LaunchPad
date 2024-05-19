@@ -1,5 +1,9 @@
 package com.example.launchpad.data
 
+import android.app.Application
+import android.graphics.BitmapFactory
+import com.example.launchpad.R
+import com.example.launchpad.util.toBlob
 import com.google.firebase.firestore.Blob
 import com.google.firebase.firestore.DocumentId
 
@@ -12,5 +16,5 @@ data class User(
     val provider: String = "",
     val company_id: String = "",
     var isEnterprise: Boolean = false,
-    var token: MutableList<String> = mutableListOf(),
+    val token: String = "",
 )
