@@ -78,7 +78,10 @@ dependencies {
     //PDF viewer
     implementation("com.github.barteksc:android-pdf-viewer:2.8.2")
 
-//    implementation("com.mapbox.maps:android:11.3.1")
+    //mapbox
+    implementation("com.mapbox.search:mapbox-search-android-ui:1.2.0")
+
+
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.google.firebase:firebase-database-ktx")
     implementation("com.android.support:cardview-v7:28.0.0")

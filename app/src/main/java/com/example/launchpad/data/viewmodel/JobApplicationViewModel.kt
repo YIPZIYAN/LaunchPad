@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.launchpad.data.JobApplication
 import com.example.launchpad.data.Pdf
+import com.example.launchpad.util.JobApplicationState
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.firestore
@@ -64,6 +65,14 @@ class JobApplicationViewModel : ViewModel() {
         JOBAPP.document().set(jobApp).addOnCompleteListener {
             isSuccess.value = it.isSuccessful
         }.await()
+    }
+
+     fun updateStatus(status:JobApplicationState,jobID: String){
+        JOBAPP.document(jobID).update("status",status.toString()).addOnCompleteListener {
+            isSuccess.value = it.isSuccessful
+        }.addOnFailureListener {
+            response.value = it.toString()
+        }
     }
 
 

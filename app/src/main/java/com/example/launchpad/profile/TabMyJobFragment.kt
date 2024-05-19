@@ -1,4 +1,4 @@
-package com.example.launchpad.view
+package com.example.launchpad.profile
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle

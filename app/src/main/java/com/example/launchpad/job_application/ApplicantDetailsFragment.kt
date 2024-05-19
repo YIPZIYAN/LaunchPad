@@ -1,5 +1,7 @@
 package com.example.launchpad.job_application
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,11 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentApplicantDetailsBinding
+import com.example.launchpad.util.JobApplicationState
+import com.example.launchpad.util.dialog
+import com.example.launchpad.util.displayPostTime
+import com.example.launchpad.util.snackbar
 import com.example.launchpad.util.toBitmap
 import com.example.launchpad.util.toast
 import com.example.launchpad.viewmodel.ApplicantDetailsViewModel
@@ -25,7 +32,7 @@ class ApplicantDetailsFragment : Fragment() {
     }
 
     private val userVM: UserViewModel by activityViewModels()
-    private val jobAppVM: JobApplicationViewModel by activityViewModels()
+    private val jobAppVM: JobApplicationViewModel by viewModels()
     private lateinit var binding: FragmentApplicantDetailsBinding
     private val nav by lazy { findNavController() }
     private val jobAppID by lazy { arguments?.getString("jobAppID") ?: "" }
@@ -36,6 +43,9 @@ class ApplicantDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentApplicantDetailsBinding.inflate(inflater, container, false)
+
+        jobAppVM.response.observe(viewLifecycleOwner) { if (it != null) toast(it) }
+        jobAppVM.isSuccess.observe(viewLifecycleOwner) { if (it) snackbar("Job Application Status Updated!") }
 
         binding.topAppBar.setNavigationOnClickListener { nav.navigateUp() }
 
@@ -49,10 +59,24 @@ class ApplicantDetailsFragment : Fragment() {
 
             jobApp.user = userVM.get(jobApp.userId)!!
 
+            /*
+            *
+            * Load Applicant Data
+            * =======================================
+            *
+            * */
             binding.applicantName.text = jobApp.user.name
             binding.avatarView.loadImage(jobApp.user.avatar.toBitmap())
             binding.fileName.text = jobApp.file.name
             binding.information.text = if (jobApp.info == "") "-" else jobApp.info
+            binding.appliedDate.text = "Applied " + displayPostTime(jobApp.createdAt)
+            binding.chip.text = jobApp.user.email
+
+            binding.chip.setOnClickListener {
+                val uri = Uri.parse("mailto:${jobApp.user.email}")
+                val i = Intent(Intent.ACTION_SENDTO, uri)
+                startActivity(i)
+            }
 
             binding.file.setOnClickListener {
                 nav.navigate(
@@ -63,8 +87,56 @@ class ApplicantDetailsFragment : Fragment() {
                 )
             }
 
+            /*
+            * Button Function
+            * =======================================
+            * */
+            when (jobApp.status) {
+                JobApplicationState.ACCEPTED.toString() -> {
+                    binding.btnAccept.let {
+                        it.isClickable = false
+                        it.isEnabled = false
+                        it.text = jobApp.status
+                    }
+                    binding.btnInterview.visibility = View.VISIBLE
+                    binding.btnInterview.setOnClickListener { nav.navigate(R.id.scheduleInterviewFragment,
+                        bundleOf(
+                            "jobAppID" to jobAppID
+                        )) }
+                    binding.btnReject.visibility = View.GONE
+                }
 
-            //TODO chat
+                JobApplicationState.REJECTED.toString() -> {
+                    binding.btnReject.let {
+                        it.isClickable = false
+                        it.isEnabled = false
+                        it.text = jobApp.status
+                    }
+                    binding.btnAccept.visibility = View.GONE
+                }
+            }
+
+            binding.btnAccept.setOnClickListener {
+                dialog("Accept Applicant", "Are you sure to ACCEPT ${jobApp.user.name} ?",
+                    onPositiveClick = { _, _ ->
+                        jobAppVM.updateStatus(
+                            JobApplicationState.ACCEPTED,
+                            jobAppID
+                        )
+                    })
+            }
+            binding.btnReject.setOnClickListener {
+                dialog("Reject Applicant", "Are you sure to REJECT ${jobApp.user.name} ?",
+                    onPositiveClick = { _, _ ->
+                        jobAppVM.updateStatus(
+                            JobApplicationState.REJECTED,
+                            jobAppID
+                        )
+                    })
+
+            }
+
+
             binding.btnMessage.setOnClickListener {
                 //the ids
                 val chatRoomId = userVM.getAuth().uid + "_" + jobApp.userId

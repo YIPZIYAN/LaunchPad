@@ -2,6 +2,7 @@ package com.example.launchpad.data
 
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.Exclude
+import org.joda.time.DateTime
 
 data class JobApplication(
     @DocumentId
@@ -10,12 +11,15 @@ data class JobApplication(
     val jobId: String = "",
     val file: Pdf = Pdf(),
     val info: String = "",
-    val status: String = ""
+    val status: String = "",
+    val createdAt: Long = DateTime.now().millis
 ) {
     @get:Exclude
     var user: User = User()
+
     @get:Exclude
-    val job: Job = Job()
+    var job: Job = Job()
+
     @get:Exclude
     val count = 0
 }

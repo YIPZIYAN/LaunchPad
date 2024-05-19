@@ -68,7 +68,7 @@
     </fragment>
     <fragment
         android:id="@+id/eventFragment"
-        android:name="com.example.launchpad.view.EventFragment"
+        android:name="com.example.launchpad.interview.EventFragment"
         android:label="fragment_event"
         tools:layout="@layout/fragment_event" >
         <action
@@ -216,7 +216,7 @@
         tools:layout="@layout/fragment_chat_text"/>
     <fragment
         android:id="@+id/scheduleInterviewFragment"
-        android:name="com.example.launchpad.view.ScheduleInterviewFragment"
+        android:name="com.example.launchpad.interview.ScheduleInterviewFragment"
         android:label="ScheduleInterviewFragment"
         tools:layout="@layout/fragment_schedule_interview"/>
     <activity

@@ -1,5 +1,6 @@
 package com.example.launchpad.job_application.adapter
 
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.launchpad.data.JobApplication
 import com.example.launchpad.databinding.ItemApplicantBinding
+import com.example.launchpad.util.displayPostTime
 import com.example.launchpad.util.toBitmap
 import io.getstream.avatarview.coil.loadImage
 
@@ -30,6 +32,7 @@ class ApplicantAdapter(
         holder.binding.avatarView.loadImage(jobApp.user.avatar.toBitmap())
         holder.binding.applicantName.text = jobApp.user.name
         holder.binding.lblInfo.text = jobApp.info
+        holder.binding.lblPostTime.text = displayPostTime(jobApp.createdAt)
 
 
         fn(holder, jobApp)

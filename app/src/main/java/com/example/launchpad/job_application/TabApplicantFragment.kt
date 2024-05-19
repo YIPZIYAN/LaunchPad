@@ -35,7 +35,7 @@ class TabApplicantFragment(val jobID: String, val state: JobApplicationState) : 
                 binding.lblNoApplicant.text = getString(R.string.no_applicant)
             }
 
-            JobApplicationState.ACCEPTED -> {
+            JobApplicationState.ACCEPTED-> {
                 binding.imgNoApplicant.setImageResource(R.drawable.no_accept_applicant)
                 binding.lblNoApplicant.text = getString(R.string.no_accept_applicant)
             }
@@ -75,6 +75,7 @@ class TabApplicantFragment(val jobID: String, val state: JobApplicationState) : 
             }
 
             applicantList.forEach { it.user = userVM.get(it.userId)!! }
+            applicantList.sortedByDescending { it.createdAt }
 
             binding.numApplicant.text = applicantList.size.toString() + " applicant(s)"
             binding.tabApplicant.visibility = View.VISIBLE

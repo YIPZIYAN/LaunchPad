@@ -9,6 +9,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.graphics.drawable.toBitmapOrNull
@@ -23,6 +24,9 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.firestore.Blob
 import io.getstream.avatarview.AvatarView
 import java.io.ByteArrayOutputStream
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 fun Fragment.toast(text: String) {
     Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
@@ -101,6 +105,21 @@ fun Context.intentWithoutBackstack(
     }
     context.startActivity(intent)
 }
+
+fun displayPostTime(postTime: Long): String {
+    return DateUtils.getRelativeTimeSpanString(
+        postTime,
+        System.currentTimeMillis(),
+        DateUtils.MINUTE_IN_MILLIS,
+        DateUtils.FORMAT_ABBREV_RELATIVE
+    ).toString()
+}
+
+fun displayDate(postTime: Long): String {
+    val format = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+   return format.format(Date(postTime))
+}
+
 
 fun Fragment.showFileSize(l: Long): String {
     var size = l / 1024.0
