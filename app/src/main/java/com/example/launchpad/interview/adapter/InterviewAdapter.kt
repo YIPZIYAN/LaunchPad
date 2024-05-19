@@ -50,7 +50,7 @@ class InterviewAdapter(
         }
 
         if (interview.remark == "") {
-            holder.binding.remark.visibility = View.GONE
+            holder.binding.remark.visibility = View.INVISIBLE
         }
 
         holder.binding.remark.text = interview.remark
