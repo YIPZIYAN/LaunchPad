@@ -28,7 +28,7 @@ class MyProfileFragment : Fragment() {
     private val userVM: UserViewModel by activityViewModels()
     private lateinit var binding: FragmentMyProfileBinding
     private var tabItems = arrayOf(
-        "Applied Job",
+        "My Job",
         "My Post"
     )
 
@@ -103,7 +103,7 @@ class MyProfileFragment : Fragment() {
 
         override fun createFragment(position: Int): Fragment {
             return when (items[position]) {
-                "Applied Job" -> TabMyJobFragment()
+                "My Job" -> TabMyJobFragment()
                 "My Post" -> TabMyPostListFragment.newInstance(userID, true)
                 else -> throw IllegalArgumentException("Invalid tab item: ${items[position]}")
             }
