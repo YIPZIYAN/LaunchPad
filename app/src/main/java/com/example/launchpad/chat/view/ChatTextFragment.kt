@@ -59,7 +59,8 @@ class ChatTextFragment : Fragment() {
 
         val userIDs = chatRoomId.split("_")
 
-        currentUser = userVM.getAuth()
+        //TO SOLVE DISPLAY NAME ISSUE
+        currentUser = userVM.get(userVM.getAuth().uid)!!
 
         otherUser =
             if (userIDs[0] == userVM.getAuth().uid) {
@@ -121,7 +122,7 @@ class ChatTextFragment : Fragment() {
         notificationObj.put("body", message)
 
         val dataObj = JSONObject()
-        dataObj.put("userId", currentUser.uid)
+        dataObj.put("chatRoomId", chatRoomId)
 
         jsonObject.put("notification", notificationObj)
         jsonObject.put("data", dataObj)
