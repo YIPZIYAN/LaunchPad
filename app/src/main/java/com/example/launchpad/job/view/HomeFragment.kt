@@ -94,11 +94,11 @@ class HomeFragment : Fragment(), BottomSheetListener {
 
             var sortedJobList = jobList.sortedByDescending { job ->
                 job.createdAt
-            }
+            } .filter { it.deletedAt == 0L }
             if (userVM.isEnterprise()) {
                 sortedJobList =
                     sortedJobList.filter { it.companyID == userVM.getUserLD().value!!.company_id }
-                        .filter { it.deletedAt == 0L }
+
             }
 
             adapter.submitList(sortedJobList)
