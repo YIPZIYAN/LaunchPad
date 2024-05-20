@@ -1,10 +1,8 @@
-package com.example.launchpad.job.viewmodel
+package com.example.launchpad.data.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.launchpad.data.Job
 import com.example.launchpad.data.SaveJob
 import com.google.android.material.textfield.TextInputLayout
@@ -13,8 +11,6 @@ import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObjects
 import com.google.firebase.Firebase
 import kotlinx.coroutines.tasks.await
-import java.util.Objects
-import kotlin.math.min
 
 class JobViewModel(val app: Application) : AndroidViewModel(app) {
     private val JOBS = Firebase.firestore.collection("job")
@@ -30,7 +26,6 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
             jobsLD.value = snap?.toObjects()
             updateResult()
             updateArchived()
-            getJobByCompany()
         }
         listener2 = SAVE_JOBS.addSnapshotListener{ snap, _ ->
             saveJobsLD.value = snap?.toObjects()
@@ -72,16 +67,6 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
         }
 
         saveJobsLD.value = list
-
-        return list
-    }
-
-    fun getSaveJobByJobID(jobID: String): List<SaveJob> {
-        var list = getAllSaveJob()
-
-        list = list.filter {
-            it.jobID == jobID
-        }
 
         return list
     }
@@ -138,23 +123,12 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
 
     }
 
-    private var companyID = ""
-
-    fun filterJobByCompany(companyID: String) {
-        this.companyID = companyID
-        getJobByCompany()
-    }
-
-    fun getJobByCompany() {
+    fun getJobByCompany(companyID:String) {
         var list = getAll()
 
         list = list.filter {
             it.companyID == companyID
         }
-        list = list.filter {
-            it.deletedAt == 0.toLong()
-        }
-
         list = list.filter {
             it.deletedAt == 0.toLong()
         }

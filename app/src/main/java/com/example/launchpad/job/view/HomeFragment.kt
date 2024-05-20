@@ -13,11 +13,12 @@ import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.data.Company
 import com.example.launchpad.data.SaveJob
+import com.example.launchpad.data.User
 import com.example.launchpad.data.viewmodel.CompanyViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentHomeBinding
 import com.example.launchpad.job.adapter.JobAdapter
-import com.example.launchpad.job.viewmodel.JobViewModel
+import com.example.launchpad.data.viewmodel.JobViewModel
 import com.example.launchpad.util.dialogCompanyNotRegister
 import com.example.launchpad.util.getToken
 import com.google.android.material.search.SearchView
@@ -66,74 +67,47 @@ class HomeFragment : Fragment(), BottomSheetListener {
             binding.username.text = it.name
             //-----------------------------------------------------------
             // Company
-            if (userVM.isEnterprise()) {
-                binding.homeTitle.text = resources.getString(R.string.your_posted_job)
-                binding.btnSavedJob.text = resources.getString(R.string.Archived)
-                binding.btnSavedJob.setOnClickListener {
-                    nav.navigate(R.id.action_homeFragment_to_archivedJobFragment)
-                }
-                binding.btnPostJob.visibility = View.VISIBLE
-                binding.btnPostJob.setOnClickListener {
-                    if (!userVM.isCompanyRegistered()) {
-                        dialogCompanyNotRegister(
-                            userVM.isEnterprise() && !userVM.isCompanyRegistered(),
-                            nav
-                        )
-                        return@setOnClickListener
-                    }
-                    nav.navigate(R.id.action_homeFragment_to_postJobFragment)
-                }
-            } else {
-                binding.homeTitle.text = resources.getString(R.string.recent_job_list)
-                binding.btnSavedJob.text = resources.getString(R.string.saved_job)
-                binding.btnSavedJob.setOnClickListener {
-                    nav.navigate(R.id.action_homeFragment_to_savedJobFragment)
-                }
-            }
+            updateUI()
 
             //-----------------------------------------------------------
             // Show Job List & Save Job
-            adapter = JobAdapter { holder, job ->
-                holder.binding.root.setOnClickListener { detail(job.jobID) }
-                if (!userVM.isEnterprise()) {
-                    holder.binding.bookmark.visibility = View.VISIBLE
-                    val saveJob = jobVM.getSaveJobByUser(it.uid)
-                    saveJob.forEach { jobs ->
-                        if (jobs.jobID == job.jobID) {
-                            holder.binding.bookmark.isChecked = true
-                        }
-                    }
-                    holder.binding.bookmark.setOnCheckedChangeListener { _, _ ->
-                        val saveJob = SaveJob(
-                            id = it.uid + "_" + job.jobID,
-                            userID = it.uid,
-                            jobID = job.jobID,
-                        )
-                        if (holder.binding.bookmark.isChecked) {
-                            jobVM.saveJob(saveJob)
-                        } else {
-                            jobVM.unsaveJob(saveJob.id)
-                        }
-                    }
-                }
-            }
-            binding.rvJobCard.adapter = adapter
+            adapter = setAdapter(it)
+            svAdapter = setAdapter(it)
 
-            svAdapter = JobAdapter { holder, job ->
-                holder.binding.root.setOnClickListener { detail(job.jobID) }
-            }
+            binding.rvJobCard.adapter = adapter
             binding.rvSearchResult.adapter = svAdapter
 
-            if (userVM.isEnterprise()) {
-                jobVM.filterJobByCompany(userVM.getUserLD().value!!.company_id)
-            } else {
-                jobVM.updateResult()
+            jobVM.updateResult()
+        }
+
+        jobVM.getJobsLD().observe(viewLifecycleOwner) { jobList ->
+            if (userVM.getUserLD().value == null) return@observe
+            if (jobList.isEmpty()) return@observe
+
+            companyVM.getCompaniesLD().observe(viewLifecycleOwner) { company ->
+                if (company != null)
+                    jobList.forEach { job ->
+                        job.company = companyVM.get(job.companyID) ?: Company()
+                    }
             }
+
+
+            var sortedJobList = jobList.sortedByDescending { job ->
+                job.createdAt
+            } .filter { it.deletedAt == 0L }
+            if (userVM.isEnterprise()) {
+                sortedJobList =
+                    sortedJobList.filter { it.companyID == userVM.getUserLD().value!!.company_id }
+
+            }
+
+            adapter.submitList(sortedJobList)
         }
 
         jobVM.getResultLD().observe(viewLifecycleOwner) { jobList ->
             if (userVM.getUserLD().value == null) return@observe
-            if (!userVM.isEnterprise() && jobList.isEmpty() && !isSearching) return@observe
+            if (jobList.isEmpty() && !isSearching) return@observe
+
             companyVM.getCompaniesLD().observe(viewLifecycleOwner) { company ->
                 if (company != null)
                     jobList.forEach { job ->
@@ -145,8 +119,11 @@ class HomeFragment : Fragment(), BottomSheetListener {
             var sortedJobList = jobList.sortedByDescending { job ->
                 job.createdAt
             }
+            if (userVM.isEnterprise()) {
+                sortedJobList =
+                    sortedJobList.filter { it.companyID == userVM.getUserLD().value!!.company_id }
+            }
 
-            adapter.submitList(sortedJobList)
             svAdapter.submitList(sortedJobList)
         }
 
@@ -183,6 +160,60 @@ class HomeFragment : Fragment(), BottomSheetListener {
         binding.chipSalary.setOnClickListener { chipSalary() }
 
         return binding.root
+    }
+
+    private fun setAdapter(it: User): JobAdapter {
+        return JobAdapter { holder, job ->
+            holder.binding.root.setOnClickListener { detail(job.jobID) }
+            if (!userVM.isEnterprise()) {
+                holder.binding.bookmark.visibility = View.VISIBLE
+                val saveJob = jobVM.getSaveJobByUser(it.uid)
+                saveJob.forEach { jobs ->
+                    if (jobs.jobID == job.jobID) {
+                        holder.binding.bookmark.isChecked = true
+                    }
+                }
+                holder.binding.bookmark.setOnCheckedChangeListener { _, _ ->
+                    val saveJob = SaveJob(
+                        id = it.uid + "_" + job.jobID,
+                        userID = it.uid,
+                        jobID = job.jobID,
+                    )
+                    if (holder.binding.bookmark.isChecked) {
+                        jobVM.saveJob(saveJob)
+                    } else {
+                        jobVM.unsaveJob(saveJob.id)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun updateUI() {
+        if (userVM.isEnterprise()) {
+            binding.homeTitle.text = resources.getString(R.string.your_posted_job)
+            binding.btnSavedJob.text = resources.getString(R.string.Archived)
+            binding.btnSavedJob.setOnClickListener {
+                nav.navigate(R.id.action_homeFragment_to_archivedJobFragment)
+            }
+            binding.btnPostJob.visibility = View.VISIBLE
+            binding.btnPostJob.setOnClickListener {
+                if (!userVM.isCompanyRegistered()) {
+                    dialogCompanyNotRegister(
+                        userVM.isEnterprise() && !userVM.isCompanyRegistered(),
+                        nav
+                    )
+                    return@setOnClickListener
+                }
+                nav.navigate(R.id.action_homeFragment_to_postJobFragment)
+            }
+        } else {
+            binding.homeTitle.text = resources.getString(R.string.recent_job_list)
+            binding.btnSavedJob.text = resources.getString(R.string.saved_job)
+            binding.btnSavedJob.setOnClickListener {
+                nav.navigate(R.id.action_homeFragment_to_savedJobFragment)
+            }
+        }
     }
 
 

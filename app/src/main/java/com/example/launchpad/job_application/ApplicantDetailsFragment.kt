@@ -132,6 +132,7 @@ class ApplicantDetailsFragment : Fragment() {
                             JobApplicationState.ACCEPTED,
                             jobAppID
                         )
+                        //TODO
                     })
             }
             binding.btnReject.setOnClickListener {
@@ -141,6 +142,7 @@ class ApplicantDetailsFragment : Fragment() {
                             JobApplicationState.REJECTED,
                             jobAppID
                         )
+                        //TODO
                     })
 
             }

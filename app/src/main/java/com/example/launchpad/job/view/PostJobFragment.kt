@@ -1,14 +1,11 @@
 package com.example.launchpad.job.view
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import com.example.launchpad.util.*
 import androidx.fragment.app.activityViewModels
@@ -18,8 +15,7 @@ import com.example.launchpad.R
 import com.example.launchpad.data.Job
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentPostJobBinding
-import com.example.launchpad.job.viewmodel.JobViewModel
-import com.google.android.material.snackbar.Snackbar
+import com.example.launchpad.data.viewmodel.JobViewModel
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
 

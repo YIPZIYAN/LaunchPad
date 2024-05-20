@@ -13,7 +13,9 @@ import com.example.launchpad.data.viewmodel.InterviewViewModel
 import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.ActivityUserBinding
-import com.example.launchpad.job.viewmodel.JobViewModel
+
+import com.example.launchpad.data.viewmodel.JobViewModel
+
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -26,7 +28,7 @@ class UserActivity : AppCompatActivity() {
     private val nav by lazy {
         supportFragmentManager.findFragmentById(R.id.user_nav_host)!!.findNavController()
     }
-    private val jobVM: JobViewModel by viewModels()
+//    private val jobVM: JobViewModel by viewModels()
     private val jobAppVM: JobApplicationViewModel by viewModels()
     private val companyVM: CompanyViewModel by viewModels()
     private val userVM: UserViewModel by viewModels()

@@ -8,10 +8,8 @@ import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import com.example.launchpad.databinding.FragmentSalaryBottomSheetBinding
-import com.example.launchpad.job.viewmodel.JobViewModel
+import com.example.launchpad.data.viewmodel.JobViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlin.math.max
-import kotlin.math.min
 
 
 class SalaryBottomSheetFragment(checkedState: MutableList<String>) : BottomSheetDialogFragment() {
