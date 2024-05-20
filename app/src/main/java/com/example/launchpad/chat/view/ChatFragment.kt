@@ -62,6 +62,7 @@ class ChatFragment : Fragment() {
 
         adapter = ChatAdapter { holder, chat ->
             holder.binding.chat.setOnClickListener { message(chat.id) }
+            holder.binding.avatarView.setOnClickListener { profile(chat.receiverId) }
         }
         binding.rvChat.adapter = adapter
         displayChatList(userVM.getAuth().uid)
@@ -82,7 +83,8 @@ class ChatFragment : Fragment() {
                         }
                         val chat = Chat(
                             id = chatRoomId,
-                            receiverName = receiver!!.name,
+                            receiverId = receiver!!.uid,
+                            receiverName = receiver.name,
                             avatar = receiver.avatar,
                             latestMessage = getLatestMessage(chatRoomId),
                             numOfUnreadMsg = calculateUnreadMessages(chatRoomId, userID),
@@ -176,7 +178,7 @@ class ChatFragment : Fragment() {
 
                     if (chatList.isNotEmpty()) {
                         val updateChat = chatList.find { it.id == chatRoomId }
-                        updateChat!!.isReceiverOnline = isOnline
+                        updateChat?.isReceiverOnline = isOnline
                         adapter.notifyDataSetChanged()
                         adapter.submitList(chatList.sortedByDescending { it.latestMessage.sendTime })
                     }
@@ -249,5 +251,12 @@ class ChatFragment : Fragment() {
         )
     }
 
+    private fun profile(userID: String) {
+        nav.navigate(
+            R.id.userProfileFragment, bundleOf(
+                "userID" to userID
+            )
+        )
+    }
 
 }

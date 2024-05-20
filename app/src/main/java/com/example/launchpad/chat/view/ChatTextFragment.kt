@@ -15,6 +15,7 @@ import com.example.launchpad.data.ChatMessage
 import com.example.launchpad.data.User
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentChatTextBinding
+import com.example.launchpad.util.sendPushNotification
 import com.example.launchpad.util.toBitmap
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -53,9 +54,6 @@ class ChatTextFragment : Fragment() {
     private val chatRoomId by lazy { arguments?.getString("chatRoomId") ?: "" }
     private lateinit var currentUser: User
     private lateinit var otherUser: User
-
-    private val SERVER_KEY =
-        "AAAAXcttPyk:APA91bGKCDLn2aO98ksp1j0vFskVqfdNKQAihmxM_UMY3Axib2R4czrUq1zYb4ZKsp1T60G_9Nj0Knwf5mHkg0ksrJQNDpPZK1ooME0CSX1RSN2CZisjlLru0hk3FYiTEsnAXSWsDlzt"
 
     companion object {
         fun newInstance() = ChatTextFragment()
@@ -122,51 +120,9 @@ class ChatTextFragment : Fragment() {
 
         messageRef.child(messageId).setValue(message).addOnSuccessListener {
             binding.edtMessage.text?.clear()
-            sendPushNotification(messageText)
+            sendPushNotification(currentUser.name, messageText, otherUser.token)
         }
 
-    }
-
-    fun sendPushNotification(message: String) {
-        val jsonObject = JSONObject()
-
-        val notificationObj = JSONObject()
-        notificationObj.put("title", currentUser.name)
-        notificationObj.put("body", message)
-
-        val dataObj = JSONObject()
-        dataObj.put("chatRoomId", chatRoomId)
-
-        jsonObject.put("notification", notificationObj)
-        jsonObject.put("data", dataObj)
-        jsonObject.put("to", otherUser.token)
-
-        callApi(jsonObject)
-    }
-
-    fun callApi(jsonObject: JSONObject) {
-        val JSON: MediaType = "application/json".toMediaType()
-        val client = OkHttpClient()
-        val url = "https://fcm.googleapis.com/fcm/send"
-        val body = RequestBody.create(JSON, jsonObject.toString())
-        val request = Request.Builder()
-            .url(url)
-            .post(body)
-            .header(
-                "Authorization",
-                "Bearer $SERVER_KEY"
-            )
-            .build()
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.e("ERROR", e.toString())
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                Log.e("SUCCESS", response.toString())
-            }
-
-        })
     }
 
     fun displayMessage(chatRoomId: String) {

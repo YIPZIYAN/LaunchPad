@@ -25,13 +25,68 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.firestore.Blob
 import com.google.firebase.messaging.FirebaseMessaging
 import io.getstream.avatarview.AvatarView
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.Response
 import org.joda.time.DateTime
 import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
+import org.json.JSONObject
 import java.io.ByteArrayOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+
+private val SERVER_KEY =
+    "AAAAXcttPyk:APA91bGKCDLn2aO98ksp1j0vFskVqfdNKQAihmxM_UMY3Axib2R4czrUq1zYb4ZKsp1T60G_9Nj0Knwf5mHkg0ksrJQNDpPZK1ooME0CSX1RSN2CZisjlLru0hk3FYiTEsnAXSWsDlzt"
+
+fun sendPushNotification(title: String, message: String, receiverToken: String) {
+    val jsonObject = JSONObject()
+
+    val notificationObj = JSONObject()
+    notificationObj.put("title", title)
+    notificationObj.put("body", message)
+
+    // For future used
+    //val dataObj = JSONObject()
+    //dataObj.put("chatRoomId", chatRoomId)
+
+    jsonObject.put("notification", notificationObj)
+    //jsonObject.put("data", dataObj)
+    jsonObject.put("to", receiverToken)
+
+    callApi(jsonObject)
+}
+
+fun callApi(jsonObject: JSONObject) {
+    val JSON: MediaType = "application/json".toMediaType()
+    val client = OkHttpClient()
+    val url = "https://fcm.googleapis.com/fcm/send"
+    val body = RequestBody.create(JSON, jsonObject.toString())
+    val request = Request.Builder()
+        .url(url)
+        .post(body)
+        .header(
+            "Authorization",
+            "Bearer $SERVER_KEY"
+        )
+        .build()
+    client.newCall(request).enqueue(object : Callback {
+        override fun onFailure(call: Call, e: IOException) {
+            Log.e("ERROR", e.toString())
+        }
+
+        override fun onResponse(call: Call, response: Response) {
+            Log.e("SUCCESS", response.toString())
+        }
+    })
+}
 
 fun getToken(): MutableLiveData<String> {
     val tokenLive = MutableLiveData<String>()

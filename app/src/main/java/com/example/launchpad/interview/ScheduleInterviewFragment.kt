@@ -23,6 +23,7 @@ import com.example.launchpad.data.viewmodel.JobViewModel
 import com.example.launchpad.util.dialog
 import com.example.launchpad.util.disable
 import com.example.launchpad.util.displayDate
+import com.example.launchpad.util.sendPushNotification
 import com.example.launchpad.util.snackbar
 import com.example.launchpad.util.toBitmap
 import com.example.launchpad.util.toast
@@ -169,6 +170,10 @@ class ScheduleInterviewFragment : Fragment() {
             date = date
         )
 
+        interview.jobApp = jobAppVM.get(interview.jobAppID)!!
+        interview.jobApp.job = jobVM.get(interview.jobApp.jobId)!!
+        interview.jobApp.user = userVM.get(interview.jobApp.userId)!!
+
         val title = if (action == "EDIT") "Edit Interview" else "Schedule Interview"
         dialog(title, "Are you sure to ${title.lowercase()}?",
             onPositiveClick = { _, _ ->
@@ -176,6 +181,12 @@ class ScheduleInterviewFragment : Fragment() {
                     interviewVM.set(interview)
                 }
                 //TODO if action EDIT notification change to blablalba else NEw interview scheduled
+                sendPushNotification(
+                    if (action == "EDIT") "INTERVIEW UPDATED !" else "NEW INTERVIEW SCHEDULED !",
+                    if (action == "EDIT") "Interview of ${interview.jobApp.job.jobName} has been updated to ${displayDate(interview.date)}."
+                    else "Interview of ${interview.jobApp.job.jobName} has been scheduled on ${displayDate(interview.date)}.",
+                    interview.jobApp.user.token
+                )
             })
     }
 
@@ -315,4 +326,6 @@ class ScheduleInterviewFragment : Fragment() {
             }
         })
     }
+
+
 }
