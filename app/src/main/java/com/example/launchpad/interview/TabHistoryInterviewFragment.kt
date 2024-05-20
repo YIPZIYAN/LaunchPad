@@ -1,14 +1,11 @@
 package com.example.launchpad.interview
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -18,10 +15,8 @@ import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentTabHistoryInterviewBinding
 import com.example.launchpad.interview.adapter.InterviewHistoryAdapter
-import com.example.launchpad.job.viewmodel.JobViewModel
-import com.example.launchpad.job_application.adapter.ApplicantAdapter
+import com.example.launchpad.data.viewmodel.JobViewModel
 
-import com.example.launchpad.viewmodel.TabPendingInterviewViewModel
 import org.joda.time.DateTime
 
 class TabHistoryInterviewFragment : Fragment() {

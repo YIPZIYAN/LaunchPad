@@ -1,10 +1,8 @@
-package com.example.launchpad.job.viewmodel
+package com.example.launchpad.data.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.launchpad.data.Job
 import com.example.launchpad.data.SaveJob
 import com.google.android.material.textfield.TextInputLayout
@@ -13,8 +11,6 @@ import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObjects
 import com.google.firebase.Firebase
 import kotlinx.coroutines.tasks.await
-import java.util.Objects
-import kotlin.math.min
 
 class JobViewModel(val app: Application) : AndroidViewModel(app) {
     private val JOBS = Firebase.firestore.collection("job")

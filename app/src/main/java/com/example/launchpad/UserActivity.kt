@@ -6,9 +6,6 @@ import android.os.Looper
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.launchpad.data.viewmodel.CompanyViewModel
@@ -16,8 +13,7 @@ import com.example.launchpad.data.viewmodel.InterviewViewModel
 import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.ActivityUserBinding
-import com.example.launchpad.job.viewmodel.JobViewModel
-import kotlinx.coroutines.launch
+import com.example.launchpad.data.viewmodel.JobViewModel
 
 class UserActivity : AppCompatActivity() {
 

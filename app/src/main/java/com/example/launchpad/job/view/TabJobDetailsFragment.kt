@@ -9,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.launchpad.data.Company
 import com.example.launchpad.data.viewmodel.CompanyViewModel
 import com.example.launchpad.databinding.FragmentTabJobDetailsBinding
-import com.example.launchpad.job.viewmodel.JobViewModel
+import com.example.launchpad.data.viewmodel.JobViewModel
 
 
 class TabJobDetailsFragment : Fragment() {

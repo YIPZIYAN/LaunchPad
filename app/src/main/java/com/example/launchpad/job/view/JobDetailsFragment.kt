@@ -14,11 +14,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentJobDetailsBinding
 import com.example.launchpad.data.Company
-import com.example.launchpad.data.JobApplication
 import com.example.launchpad.data.viewmodel.CompanyViewModel
 import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
-import com.example.launchpad.job.viewmodel.JobViewModel
+import com.example.launchpad.data.viewmodel.JobViewModel
 import com.example.launchpad.util.dialog
 import com.example.launchpad.util.setImageBlob
 import com.example.launchpad.util.snackbar

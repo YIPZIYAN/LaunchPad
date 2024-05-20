@@ -7,9 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.example.launchpad.auth.viewmodel.LoginViewModel
-import com.example.launchpad.data.viewmodel.CompanyViewModel
-import com.example.launchpad.data.viewmodel.UserViewModel
-import com.example.launchpad.job.viewmodel.JobViewModel
 import com.example.launchpad.util.intentWithoutBackstack
 import kotlinx.coroutines.launch
 

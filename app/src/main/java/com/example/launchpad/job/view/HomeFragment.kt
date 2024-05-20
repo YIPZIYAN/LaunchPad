@@ -17,7 +17,7 @@ import com.example.launchpad.data.viewmodel.CompanyViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentHomeBinding
 import com.example.launchpad.job.adapter.JobAdapter
-import com.example.launchpad.job.viewmodel.JobViewModel
+import com.example.launchpad.data.viewmodel.JobViewModel
 import com.example.launchpad.util.dialogCompanyNotRegister
 import com.example.launchpad.util.getToken
 import com.google.android.material.search.SearchView

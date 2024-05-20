@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.os.bundleOf
 import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -22,15 +21,13 @@ import com.example.launchpad.data.viewmodel.CompanyViewModel
 import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentApplyJobBinding
-import com.example.launchpad.job.viewmodel.JobViewModel
+import com.example.launchpad.data.viewmodel.JobViewModel
 import com.example.launchpad.util.JobApplicationState
 import com.example.launchpad.util.dialog
 import com.example.launchpad.util.showFileSize
 import com.example.launchpad.util.snackbar
 import com.example.launchpad.util.toast
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import java.util.Date
 
 class ApplyJobFragment : Fragment() {
 

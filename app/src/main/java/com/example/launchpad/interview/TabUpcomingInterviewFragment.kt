@@ -2,9 +2,7 @@ package com.example.launchpad.interview
 
 import android.content.Intent
 import android.net.Uri
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,14 +15,11 @@ import com.example.launchpad.R
 import com.example.launchpad.data.viewmodel.InterviewViewModel
 import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
-import com.example.launchpad.databinding.FragmentTabHistoryInterviewBinding
 import com.example.launchpad.databinding.FragmentTabUpcomingInterviewBinding
 import com.example.launchpad.interview.adapter.InterviewAdapter
-import com.example.launchpad.interview.adapter.InterviewHistoryAdapter
-import com.example.launchpad.job.viewmodel.JobViewModel
+import com.example.launchpad.data.viewmodel.JobViewModel
 import com.example.launchpad.util.combineDateTime
 import com.example.launchpad.util.toast
-import com.example.launchpad.viewmodel.TabUpcomingInterviewViewModel
 import org.joda.time.DateTime
 import java.lang.Exception
 
