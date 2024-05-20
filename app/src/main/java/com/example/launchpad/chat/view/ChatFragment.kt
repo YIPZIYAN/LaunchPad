@@ -85,7 +85,8 @@ class ChatFragment : Fragment() {
                             receiverName = receiver!!.name,
                             avatar = receiver.avatar,
                             latestMessage = getLatestMessage(chatRoomId),
-                            numOfUnreadMsg = calculateUnreadMessages(chatRoomId, userID)
+                            numOfUnreadMsg = calculateUnreadMessages(chatRoomId, userID),
+                            isReceiverOnline = onlineStatusListener(receiver.uid, chatRoomId)
                         )
                         latestMessageListener(chatRoomId)
                         withContext(Dispatchers.Main) {
@@ -134,7 +135,8 @@ class ChatFragment : Fragment() {
                         updateChat?.latestMessage = latestMessage
 
                         CoroutineScope(Dispatchers.Main).launch {
-                            updateChat?.numOfUnreadMsg = calculateUnreadMessages(chatRoomId, userVM.getAuth().uid)
+                            updateChat?.numOfUnreadMsg =
+                                calculateUnreadMessages(chatRoomId, userVM.getAuth().uid)
                             adapter.notifyDataSetChanged()
                             adapter.submitList(chatList.sortedByDescending { it.latestMessage.sendTime })
                         }
@@ -157,6 +159,39 @@ class ChatFragment : Fragment() {
             })
         }
     }
+
+    fun onlineStatusListener(userId: String, chatRoomId: String): Boolean {
+        var isReceiverOnline = false
+
+        val onlineStatusRef =
+            FirebaseDatabase.getInstance().getReference("onlineStatus").child(userId)
+        onlineStatusRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val isOnline = dataSnapshot.getValue(Boolean::class.java)
+                isOnline?.let {
+
+                    if (isOnline) {
+                        isReceiverOnline = true
+                    }
+
+                    if (chatList.isNotEmpty()) {
+                        val updateChat = chatList.find { it.id == chatRoomId }
+                        updateChat!!.isReceiverOnline = isOnline
+                        adapter.notifyDataSetChanged()
+                        adapter.submitList(chatList.sortedByDescending { it.latestMessage.sendTime })
+                    }
+
+                }
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+        return isReceiverOnline
+    }
+
 
     suspend fun getLatestMessage(chatRoomId: String): ChatMessage {
         return withContext(Dispatchers.IO) {

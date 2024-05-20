@@ -6,9 +6,6 @@ import android.os.Looper
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.launchpad.data.viewmodel.CompanyViewModel
@@ -17,7 +14,11 @@ import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.ActivityUserBinding
 import com.example.launchpad.job.viewmodel.JobViewModel
-import kotlinx.coroutines.launch
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ServerValue
+import com.google.firebase.database.ValueEventListener
 
 class UserActivity : AppCompatActivity() {
 
@@ -30,6 +31,7 @@ class UserActivity : AppCompatActivity() {
     private val companyVM: CompanyViewModel by viewModels()
     private val userVM: UserViewModel by viewModels()
     private val interviewVM: InterviewViewModel by viewModels()
+    private lateinit var userId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //Early data loading
@@ -43,6 +45,10 @@ class UserActivity : AppCompatActivity() {
         binding = ActivityUserBinding.inflate(layoutInflater)
         setupNav()
         setContentView(binding.root)
+
+        // To prevent logout null pointer exception when onPause
+        userId = userVM.getAuth().uid
+        setOnlineStatus(userId, true)
     }
 
     private fun setupNav() {
@@ -80,4 +86,29 @@ class UserActivity : AppCompatActivity() {
         binding.bottomNavigation.setupWithNavController(nav)
 
     }
+
+    fun setOnlineStatus(userId: String, isOnline: Boolean) {
+        val onlineStatusRef = FirebaseDatabase.getInstance().getReference("onlineStatus")
+        onlineStatusRef.child(userId).get().addOnSuccessListener { snapshot ->
+            if (isOnline) {
+                onlineStatusRef.child(userId).setValue(true)
+            }
+            else {
+                onlineStatusRef.child(userId).setValue(false)
+            }
+        }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        setOnlineStatus(userId, true)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        setOnlineStatus(userId, false)
+    }
+
+
 }
