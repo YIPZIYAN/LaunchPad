@@ -1,6 +1,5 @@
 package com.example.launchpad.profile.view
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,12 +11,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.launchpad.R
-import com.example.launchpad.data.viewmodel.CompanyViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
-import com.example.launchpad.databinding.FragmentMyProfileBinding
 import com.example.launchpad.databinding.FragmentUserProfileBinding
-import com.example.launchpad.profile.TabMyJobFragment
-import com.example.launchpad.profile.TabMyPostListFragment
+import com.example.launchpad.profile.tab.TabMyPostListFragment
 import com.example.launchpad.util.toBitmap
 import com.google.android.material.tabs.TabLayoutMediator
 import io.getstream.avatarview.coil.loadImage
@@ -31,16 +27,10 @@ class UserProfileFragment : Fragment() {
     private val userVM: UserViewModel by activityViewModels()
     private lateinit var binding: FragmentUserProfileBinding
     private val tabItems = arrayOf(
-        "Job",
         "Post"
     )
     private val userID by lazy { requireArguments().getString("userID", "") }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,13 +76,12 @@ class UserProfileFragment : Fragment() {
         FragmentStateAdapter(fragmentManager, lifecycle) {
 
         override fun getItemCount(): Int {
-            return 2
+            return 1
         }
 
         override fun createFragment(position: Int): Fragment {
             when (position) {
-                0 -> return TabMyJobFragment()
-                1 -> return TabMyPostListFragment.newInstance(userID,false)
+                0 -> return TabMyPostListFragment(userID)
                 else -> throw Exception()
             }
         }
