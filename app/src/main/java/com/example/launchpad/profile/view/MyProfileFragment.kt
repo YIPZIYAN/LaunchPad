@@ -14,8 +14,8 @@ import com.example.launchpad.R
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentMyProfileBinding
 import com.example.launchpad.util.toBitmap
-import com.example.launchpad.profile.TabMyJobFragment
-import com.example.launchpad.profile.TabMyPostListFragment
+import com.example.launchpad.profile.tab.TabMyJobFragment
+import com.example.launchpad.profile.tab.TabMyPostListFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import io.getstream.avatarview.coil.loadImage
 
@@ -27,9 +27,9 @@ class MyProfileFragment : Fragment() {
 
     private val userVM: UserViewModel by activityViewModels()
     private lateinit var binding: FragmentMyProfileBinding
-    private val tabItems = arrayOf(
-        "Job",
-        "Post"
+    private var tabItems = arrayOf(
+        "My Job",
+        "My Post"
     )
 
     override fun onCreateView(
@@ -55,6 +55,20 @@ class MyProfileFragment : Fragment() {
             } else {
                 binding.btnVerify.visibility = View.VISIBLE
             }
+
+            if (userVM.isEnterprise()) tabItems = tabItems.drop(1).toTypedArray()
+
+            val adapter =
+                ViewPagerAdapter(
+                    requireActivity().supportFragmentManager,
+                    lifecycle,
+                    tabItems
+                )
+            binding.viewPager.adapter = adapter
+
+            TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+                tab.text = tabItems[position]
+            }.attach()
         }
 
         binding.btnVerify.setOnClickListener { findNavController().navigate(R.id.action_profileFragment_to_emailVerificationFragment) }
@@ -70,28 +84,26 @@ class MyProfileFragment : Fragment() {
             }
         }
 
-        val adapter = ViewPagerAdapter(requireActivity().supportFragmentManager, lifecycle,userVM.getUserLD().value!!.uid)
-        binding.viewPager.adapter = adapter
 
-
-        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            tab.text = tabItems[position]
-        }.attach()
         return binding.root
     }
 
-    class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle,private val userID: String) :
+    class ViewPagerAdapter(
+        fragmentManager: FragmentManager,
+        lifecycle: Lifecycle,
+        private val items: Array<String>
+    ) :
         FragmentStateAdapter(fragmentManager, lifecycle) {
 
         override fun getItemCount(): Int {
-            return 2
+            return items.size
         }
 
         override fun createFragment(position: Int): Fragment {
-            when (position) {
-                0 -> return TabMyJobFragment()
-                1 -> return TabMyPostListFragment.newInstance(userID,true)
-                else -> throw Exception()
+            return when (items[position]) {
+                "My Job" -> TabMyJobFragment()
+                "My Post" -> TabMyPostListFragment()
+                else -> throw IllegalArgumentException("Invalid tab item: ${items[position]}")
             }
         }
     }

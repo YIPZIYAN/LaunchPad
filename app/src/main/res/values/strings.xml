@@ -157,4 +157,5 @@
     <string name="remind_me_later">Remind Me Later</string>
     <string name="register_now">Register Now</string>
     <string name="delete">Delete</string>
+    <string name="you_haven_t_apply_any_job_yet">You haven\'t apply any job yet.</string>
 </resources>
