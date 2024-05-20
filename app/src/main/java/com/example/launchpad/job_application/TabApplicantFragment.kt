@@ -75,14 +75,13 @@ class TabApplicantFragment(val jobID: String, val state: JobApplicationState) : 
             }
 
             applicantList.forEach { it.user = userVM.get(it.userId)!! }
-            applicantList.sortedByDescending { it.createdAt }
 
             binding.numApplicant.text = applicantList.size.toString() + " applicant(s)"
             binding.tabApplicant.visibility = View.VISIBLE
             binding.tabNoApplicant.visibility = View.GONE
 
 
-            adapter.submitList(applicantList)
+            adapter.submitList(applicantList.sortedByDescending { it.createdAt })
 
         }
 
