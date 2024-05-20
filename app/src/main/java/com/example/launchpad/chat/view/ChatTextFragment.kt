@@ -86,6 +86,8 @@ class ChatTextFragment : Fragment() {
             nav.navigateUp()
         }
 
+        updateLastSeenTime(chatRoomId, currentUser.uid)
+
         return binding.root
     }
 
@@ -179,6 +181,25 @@ class ChatTextFragment : Fragment() {
             }
 
         })
+    }
+
+    fun updateLastSeenTime(chatRoomId: String, userId: String) {
+        val lastReadRef = FirebaseDatabase.getInstance().getReference("chatRooms")
+            .child(chatRoomId).child("lastSeen").child(userId)
+
+        Log.d("LASTSEENUSERID", userId)
+
+        lastReadRef.setValue(DateTime.now().millis)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        updateLastSeenTime(chatRoomId, currentUser.uid)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateLastSeenTime(chatRoomId, currentUser.uid)
     }
 
 }
