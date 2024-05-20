@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.chat.adapter.MessageAdapter
@@ -19,6 +20,12 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ServerValue
+import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType
@@ -30,6 +37,10 @@ import okhttp3.Response
 import org.joda.time.DateTime
 import org.json.JSONObject
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Locale
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 
 class ChatTextFragment : Fragment() {
@@ -43,7 +54,8 @@ class ChatTextFragment : Fragment() {
     private lateinit var currentUser: User
     private lateinit var otherUser: User
 
-    private val SERVER_KEY = "AAAAXcttPyk:APA91bGKCDLn2aO98ksp1j0vFskVqfdNKQAihmxM_UMY3Axib2R4czrUq1zYb4ZKsp1T60G_9Nj0Knwf5mHkg0ksrJQNDpPZK1ooME0CSX1RSN2CZisjlLru0hk3FYiTEsnAXSWsDlzt"
+    private val SERVER_KEY =
+        "AAAAXcttPyk:APA91bGKCDLn2aO98ksp1j0vFskVqfdNKQAihmxM_UMY3Axib2R4czrUq1zYb4ZKsp1T60G_9Nj0Knwf5mHkg0ksrJQNDpPZK1ooME0CSX1RSN2CZisjlLru0hk3FYiTEsnAXSWsDlzt"
 
     companion object {
         fun newInstance() = ChatTextFragment()
@@ -87,6 +99,7 @@ class ChatTextFragment : Fragment() {
             nav.navigateUp()
         }
 
+        onlineStatusListener(otherUser.uid)
         updateLastSeenTime(chatRoomId, currentUser.uid)
 
         return binding.root
@@ -185,12 +198,68 @@ class ChatTextFragment : Fragment() {
     }
 
     fun updateLastSeenTime(chatRoomId: String, userId: String) {
-        val lastReadRef = FirebaseDatabase.getInstance().getReference("chatRooms")
+        val lastSeenRef = FirebaseDatabase.getInstance().getReference("chatRooms")
             .child(chatRoomId).child("lastSeen").child(userId)
 
         Log.d("LASTSEENUSERID", userId)
 
-        lastReadRef.setValue(DateTime.now().millis)
+        lastSeenRef.setValue(ServerValue.TIMESTAMP)
+    }
+
+    suspend fun getLastSeenTime(chatRoomId: String, userId: String): Long {
+
+        return suspendCoroutine { cont ->
+            val lastSeenRef = FirebaseDatabase.getInstance().getReference("chatRooms")
+                .child(chatRoomId).child("lastSeen").child(userId)
+            val listener = object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val lastSeenTime = dataSnapshot.getValue(Long::class.java)
+                    Log.d("LASTSEENTIME", lastSeenTime.toString())
+                    cont.resume(lastSeenTime ?: 0L)
+                    lastSeenRef.removeEventListener(this) // Remove the listener
+
+
+                }
+
+                override fun onCancelled(p0: DatabaseError) {
+                    cont.resume(0L)
+                }
+            }
+            lastSeenRef.addValueEventListener(listener)
+        }
+
+    }
+
+    fun onlineStatusListener(userId: String) {
+        val onlineStatusRef =
+            FirebaseDatabase.getInstance().getReference("onlineStatus").child(userId)
+        onlineStatusRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val isOnline = dataSnapshot.getValue(Boolean::class.java)
+                isOnline?.let {
+                    if (isOnline) {
+                        binding.topAppBar.subtitle = "Online"
+                    } else {
+                        lifecycleScope.launch {
+                            binding.topAppBar.subtitle =
+                                displayLastSeenTime(getLastSeenTime(chatRoomId, otherUser.uid))
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+
+        })
+
+    }
+
+    fun displayLastSeenTime(lastSeenTime: Long): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd hh:mm a", Locale.getDefault())
+        return "Last Seen: " + sdf.format(lastSeenTime)
     }
 
     override fun onPause() {
