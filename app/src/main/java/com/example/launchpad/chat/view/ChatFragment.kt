@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.viewmodel.ChatViewModel
 import com.example.launchpad.R
@@ -49,6 +50,7 @@ class ChatFragment : Fragment() {
     private lateinit var adapter: ChatAdapter
     private val userVM: UserViewModel by activityViewModels()
     private var chatList = mutableListOf<Chat>()
+    private var lastSeen = 0L
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -82,7 +84,8 @@ class ChatFragment : Fragment() {
                             id = chatRoomId,
                             receiverName = receiver!!.name,
                             avatar = receiver.avatar,
-                            latestMessage = getLatestMessage(chatRoomId)
+                            latestMessage = getLatestMessage(chatRoomId),
+                            numOfUnreadMsg = calculateUnreadMessages(chatRoomId, userID)
                         )
                         latestMessageListener(chatRoomId)
                         withContext(Dispatchers.Main) {
@@ -125,12 +128,17 @@ class ChatFragment : Fragment() {
                     val message = snapshot.getValue(ChatMessage::class.java)
                     message?.let {
                         latestMessage = it
-                        Log.d("LOOP", latestMessage.message)
                         // REFRESH THE CHAT LIST HERE
+                        Log.d("LOOP", latestMessage.message)
                         val updateChat = chatList.find { it.id == chatRoomId }
                         updateChat?.latestMessage = latestMessage
-                        adapter.notifyDataSetChanged()
-                        adapter.submitList(chatList.sortedByDescending { it.latestMessage.sendTime })
+
+                        CoroutineScope(Dispatchers.Main).launch {
+                            updateChat?.numOfUnreadMsg = calculateUnreadMessages(chatRoomId, userVM.getAuth().uid)
+                            adapter.notifyDataSetChanged()
+                            adapter.submitList(chatList.sortedByDescending { it.latestMessage.sendTime })
+                        }
+
                     }
                 }
 
@@ -171,6 +179,29 @@ class ChatFragment : Fragment() {
             }
 
             latestMessage
+        }
+
+    }
+
+    suspend fun calculateUnreadMessages(chatRoomId: String, userId: String): Int {
+        return withContext(Dispatchers.IO) {
+            var unreadMessage = 0
+
+            val database = FirebaseDatabase.getInstance()
+            val messageRef = database.getReference("chatRooms/$chatRoomId/messages")
+            val lastSeenRef = database.getReference("chatRooms/$chatRoomId/lastSeen/$userId")
+
+            lastSeen = withContext(Dispatchers.Default) {
+                lastSeenRef.get().await().getValue(Long::class.java) ?: 0L
+            }
+
+            val dataSnapshot = withContext(Dispatchers.Default) {
+                messageRef.orderByChild("sendTime").startAt(lastSeen.toDouble()).get().await()
+            }
+
+            unreadMessage = dataSnapshot.children.count()
+
+            unreadMessage
         }
 
     }
