@@ -78,6 +78,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
             binding.rvSearchResult.adapter = svAdapter
 
             jobVM.updateResult()
+            jobVM.reloadJob()
         }
 
         jobVM.getJobsLD().observe(viewLifecycleOwner) { jobList ->

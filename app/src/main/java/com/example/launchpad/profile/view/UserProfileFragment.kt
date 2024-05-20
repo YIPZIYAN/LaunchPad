@@ -61,8 +61,7 @@ class UserProfileFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        val adapter =
-            UserProfileFragment.ViewPagerAdapter(requireActivity().supportFragmentManager, lifecycle,userID)
+        val adapter = ViewPagerAdapter(requireActivity().supportFragmentManager, lifecycle,userID)
         binding.viewPager.adapter = adapter
 
 

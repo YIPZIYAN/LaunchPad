@@ -47,6 +47,8 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
 
     fun getJobLive(jobList: List<Job>, jobID: String) = jobList.find { it.jobID == jobID }!!
 
+    fun reloadJob() {jobsLD.value = getAll()}
+
     fun set(job: Job) {
         JOBS.document().set(job)
     }
