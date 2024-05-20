@@ -18,4 +18,6 @@ data class Interview(
     var jobApp: JobApplication = JobApplication()
 }
 
-data class Time(val hour: Int = 0, val minutes: Int = 0)
+data class Time(val hour: Int = 0, val minutes: Int = 0) {
+    val combinedTime = hour * 100 + minutes
+}

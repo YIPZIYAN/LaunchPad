@@ -159,6 +159,11 @@ class ScheduleInterviewFragment : Fragment() {
             return
         }
 
+        if (startTime.combinedTime > endTime.combinedTime){
+            toast("Start time must before the end time.")
+            return
+        }
+
         val interview = Interview(
             id = interviewID,
             jobAppID = jobAppID,
