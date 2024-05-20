@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.community.adapter.PostAdapter
@@ -25,8 +26,12 @@ import com.example.launchpad.data.User
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentCommunityBinding
 import com.example.launchpad.databinding.FragmentTabMyPostListBinding
+import com.example.launchpad.util.dialog
+import com.example.launchpad.util.snackbar
 import com.example.launchpad.viewmodel.CommunityViewModel
 import com.example.launchpad.viewmodel.TabMyPostListViewModel
+import kotlinx.coroutines.launch
+import org.joda.time.DateTime
 import kotlin.properties.Delegates
 
 class TabMyPostListFragment : Fragment() {
@@ -86,7 +91,7 @@ class TabMyPostListFragment : Fragment() {
                     ))
                 }
                 holder.binding.btnMoreOptions.setOnClickListener{
-                    showPopupMenu(holder.binding.btnMoreOptions)
+                    showPopupMenu(holder.binding.btnMoreOptions, post.postID)
                 }
 
             }else{
@@ -110,7 +115,7 @@ class TabMyPostListFragment : Fragment() {
         binding.rv.adapter = adapter
 
         postVM.getPostLD().observe(viewLifecycleOwner) { postList ->
-            val userPosts = postList.filter { it.userID == userID }
+            val userPosts = postList.filter { it.userID == userID && it.deletedAt == 0L } // Filter out posts with deletedAt != 0
             userVM.getUserLLD().observe(viewLifecycleOwner) { userList ->
                 userPosts.forEach { post ->
                     val user = userList.find { it.uid == post.userID } ?: User()
@@ -208,7 +213,7 @@ class TabMyPostListFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
-    fun showPopupMenu(view: View) {
+    fun showPopupMenu(view: View,postID: String) {
         val popupMenu = PopupMenu(requireContext(), view)
         popupMenu.inflate(R.menu.post_menu)
 
@@ -216,11 +221,23 @@ class TabMyPostListFragment : Fragment() {
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_edit -> {
-                    // Handle edit action
+                    findNavController().navigate(R.id.action_profileFragment_to_addPostFragment, bundleOf(
+                        "postID" to postID
+                    ))
                     true
                 }
                 R.id.menu_delete -> {
-                    // Handle delete action
+                    val oriPost = postVM.get(postID)
+                    if(oriPost!=null){
+                        val updatedPost = oriPost.copy(deletedAt = DateTime.now().millis)
+                        dialog("Delete Post", "Are you sure want to delete this post ?",
+                            onPositiveClick = { _, _ ->
+                                lifecycleScope.launch {
+                                    postVM.update(updatedPost)
+                                }
+                                snackbar("Post Deleted Successfully.")
+                            })
+                    }
                     true
                 }
                 else -> false

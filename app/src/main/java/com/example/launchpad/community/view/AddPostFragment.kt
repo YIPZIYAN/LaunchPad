@@ -18,6 +18,7 @@ import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentAddPostBinding
 import com.example.launchpad.util.cropToBlob
 import com.example.launchpad.util.dialog
+import com.example.launchpad.util.setImageBlob
 import com.example.launchpad.util.snackbar
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
@@ -47,8 +48,22 @@ class AddPostFragment : Fragment() {
         binding = FragmentAddPostBinding.inflate(inflater, container, false)
 
         validateOnTextChanged()
+
         binding.btnUploadImage.setOnClickListener { select()}
-        binding.btnPost.setOnClickListener { post() }
+
+        if(postID != ""){
+            var post = postVM.get(postID)
+            binding.topAppBar.title ="Edit Post"
+            if (post != null) {
+                binding.edtImage.setImageBlob(post.image)
+                binding.edtDescription.setText(post.description)
+                binding.createdAt.text = post.createdAt.toString()
+                binding.btnPost.setOnClickListener { post(true,post) }
+            }
+
+        }else{
+            binding.btnPost.setOnClickListener { post(false,null) }
+        }
 
         binding.topAppBar.setOnClickListener{
             findNavController().navigateUp()
@@ -85,33 +100,45 @@ class AddPostFragment : Fragment() {
         getContent.launch("image/*")
     }
 
-    private fun post() {
-        val post = createPostObject(false)
+    private fun post(isEditing: Boolean,EditPost:Post?) {
+        if(!isImageValid()){
+            snackbar("Please Add a picture.")
+            return
+        }
+
+        val post = createPostObject(isEditing,EditPost)
 
         if (!isPostValid(post)) {
             snackbar("Please fulfill the requirement.")
             return
         }
 
-        if(!isImageValid()){
-            snackbar("Please Add a picture.")
-            return
-        }
+        if(isEditing == true){
+            dialog("Edit Post", "Are you sure want to submit this edit ?",
+                onPositiveClick = { _, _ ->
+                    lifecycleScope.launch {
+                        postVM.update(post)
+                    }
 
-        dialog("Create Post", "Are you sure want to submit this post ?",
-            onPositiveClick = { _, _ ->
-                lifecycleScope.launch {
-                    postVM.set(post)
-                }
+                    snackbar("Post Edited Successfully.")
+                    nav.navigateUp()
 
-                snackbar("Post Submitted Successfully.")
-                nav.navigateUp()
+                })
+        }else{
+            dialog("Add Post", "Are you sure want to submit this post ?",
+                onPositiveClick = { _, _ ->
+                    lifecycleScope.launch {
+                        postVM.set(post)
+                    }
 
-            }
-        )
-    }
+                    snackbar("Post Submitted Successfully.")
+                    nav.navigateUp()
+                })
 
-    private fun createPostObject(isEditing: Boolean): Post {
+
+        }}
+
+    private fun createPostObject(isEditing: Boolean,post: Post?): Post {
         return Post(
             postID = if (isEditing) postID else "",
             description = binding.edtDescription.text.toString().trim(),
@@ -119,8 +146,10 @@ class AddPostFragment : Fragment() {
                 .toLong() else DateTime.now().millis,
             image = binding.edtImage.cropToBlob(binding.edtImage.getDrawable().getIntrinsicWidth(),binding.edtImage.getDrawable().getIntrinsicHeight()),
             userID = userVM.getUserLD().value!!.uid,
-            comments = 0,
-            likes = 0
+            comments = if (isEditing && post?.comments !=null) post.comments else 0,
+            likes =  if (isEditing && post?.likes !=null) post.likes else 0,
+            updatedAt = if (isEditing) DateTime.now().millis else 0,
+            deletedAt = 0
         )
 
     }

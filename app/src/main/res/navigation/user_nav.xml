@@ -116,6 +116,13 @@
             app:exitAnim="@anim/exit"
             app:popEnterAnim="@anim/pop_enter"
             app:popExitAnim="@anim/pop_exit" />
+        <action
+            android:id="@+id/action_profileFragment_to_addPostFragment"
+            app:destination="@id/addPostFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -280,5 +287,16 @@
         android:name="com.example.launchpad.util.PdfViewerFragment"
         android:label="fragment_pdf_viewer"
         tools:layout="@layout/fragment_pdf_viewer" />
+    <fragment
+        android:id="@+id/postDetailsFragment"
+        android:name="com.example.launchpad.community.view.PostDetailsFragment"
+        android:label="PostDetailsFragment">
+        <argument
+            android:name="postID"
+            app:argType="string" />
+        <deepLink
+            android:id="@+id/deepLink2"
+            app:uri="launchpad.co/community/postdetails/{postID}" />
+    </fragment>
 
 </navigation>

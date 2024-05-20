@@ -13,6 +13,8 @@ data class Post(
     val userID: String = "",
     val comments: Long = 0,
     val likes: Long = 0,
+    val updatedAt: Long = 0,
+    val deletedAt: Long = 0,
 ) {
     @get:Exclude
     var user: User = User()
