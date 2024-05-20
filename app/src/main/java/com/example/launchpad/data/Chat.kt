@@ -7,5 +7,5 @@ data class Chat(
     val receiverName: String = "",
     val avatar: Blob = Blob.fromBytes(ByteArray(0)),
     var latestMessage: ChatMessage = ChatMessage(),
-    val numOfUnreadMsg: Int = 0,
+    var numOfUnreadMsg: Int = 0,
 )
