@@ -53,7 +53,7 @@ class TabMyJobFragment : Fragment() {
                 .sortedByDescending { it.createdAt }
 
             binding.tabNoApplicant.visibility = View.GONE
-            binding.rv.visibility = View.INVISIBLE
+            binding.rv.visibility = View.VISIBLE
 
             adapter.submitList(myJobAppList)
         }
