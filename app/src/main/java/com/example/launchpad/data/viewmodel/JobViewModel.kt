@@ -26,7 +26,6 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
             jobsLD.value = snap?.toObjects()
             updateResult()
             updateArchived()
-            getJobByCompany()
         }
         listener2 = SAVE_JOBS.addSnapshotListener{ snap, _ ->
             saveJobsLD.value = snap?.toObjects()
@@ -68,16 +67,6 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
         }
 
         saveJobsLD.value = list
-
-        return list
-    }
-
-    fun getSaveJobByJobID(jobID: String): List<SaveJob> {
-        var list = getAllSaveJob()
-
-        list = list.filter {
-            it.jobID == jobID
-        }
 
         return list
     }
@@ -134,23 +123,12 @@ class JobViewModel(val app: Application) : AndroidViewModel(app) {
 
     }
 
-    private var companyID = ""
-
-    fun filterJobByCompany(companyID: String) {
-        this.companyID = companyID
-        getJobByCompany()
-    }
-
-    fun getJobByCompany() {
+    fun getJobByCompany(companyID:String) {
         var list = getAll()
 
         list = list.filter {
             it.companyID == companyID
         }
-        list = list.filter {
-            it.deletedAt == 0.toLong()
-        }
-
         list = list.filter {
             it.deletedAt == 0.toLong()
         }

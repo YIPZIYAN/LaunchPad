@@ -66,30 +66,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
             binding.username.text = it.name
             //-----------------------------------------------------------
             // Company
-            if (userVM.isEnterprise()) {
-                binding.homeTitle.text = resources.getString(R.string.your_posted_job)
-                binding.btnSavedJob.text = resources.getString(R.string.Archived)
-                binding.btnSavedJob.setOnClickListener {
-                    nav.navigate(R.id.action_homeFragment_to_archivedJobFragment)
-                }
-                binding.btnPostJob.visibility = View.VISIBLE
-                binding.btnPostJob.setOnClickListener {
-                    if (!userVM.isCompanyRegistered()) {
-                        dialogCompanyNotRegister(
-                            userVM.isEnterprise() && !userVM.isCompanyRegistered(),
-                            nav
-                        )
-                        return@setOnClickListener
-                    }
-                    nav.navigate(R.id.action_homeFragment_to_postJobFragment)
-                }
-            } else {
-                binding.homeTitle.text = resources.getString(R.string.recent_job_list)
-                binding.btnSavedJob.text = resources.getString(R.string.saved_job)
-                binding.btnSavedJob.setOnClickListener {
-                    nav.navigate(R.id.action_homeFragment_to_savedJobFragment)
-                }
-            }
+            updateUI()
 
             //-----------------------------------------------------------
             // Show Job List & Save Job
@@ -124,16 +101,15 @@ class HomeFragment : Fragment(), BottomSheetListener {
             }
             binding.rvSearchResult.adapter = svAdapter
 
-            if (userVM.isEnterprise()) {
-                jobVM.filterJobByCompany(userVM.getUserLD().value!!.company_id)
-            } else {
-                jobVM.updateResult()
-            }
+
+            jobVM.updateResult()
+
         }
 
         jobVM.getResultLD().observe(viewLifecycleOwner) { jobList ->
             if (userVM.getUserLD().value == null) return@observe
             if (!userVM.isEnterprise() && jobList.isEmpty() && !isSearching) return@observe
+
             companyVM.getCompaniesLD().observe(viewLifecycleOwner) { company ->
                 if (company != null)
                     jobList.forEach { job ->
@@ -144,6 +120,10 @@ class HomeFragment : Fragment(), BottomSheetListener {
 
             var sortedJobList = jobList.sortedByDescending { job ->
                 job.createdAt
+            }
+            if (userVM.isEnterprise()) {
+                sortedJobList =
+                    sortedJobList.filter { it.companyID == userVM.getUserLD().value!!.company_id }
             }
 
             adapter.submitList(sortedJobList)
@@ -183,6 +163,33 @@ class HomeFragment : Fragment(), BottomSheetListener {
         binding.chipSalary.setOnClickListener { chipSalary() }
 
         return binding.root
+    }
+
+    private fun updateUI() {
+        if (userVM.isEnterprise()) {
+            binding.homeTitle.text = resources.getString(R.string.your_posted_job)
+            binding.btnSavedJob.text = resources.getString(R.string.Archived)
+            binding.btnSavedJob.setOnClickListener {
+                nav.navigate(R.id.action_homeFragment_to_archivedJobFragment)
+            }
+            binding.btnPostJob.visibility = View.VISIBLE
+            binding.btnPostJob.setOnClickListener {
+                if (!userVM.isCompanyRegistered()) {
+                    dialogCompanyNotRegister(
+                        userVM.isEnterprise() && !userVM.isCompanyRegistered(),
+                        nav
+                    )
+                    return@setOnClickListener
+                }
+                nav.navigate(R.id.action_homeFragment_to_postJobFragment)
+            }
+        } else {
+            binding.homeTitle.text = resources.getString(R.string.recent_job_list)
+            binding.btnSavedJob.text = resources.getString(R.string.saved_job)
+            binding.btnSavedJob.setOnClickListener {
+                nav.navigate(R.id.action_homeFragment_to_savedJobFragment)
+            }
+        }
     }
 
 
