@@ -8,4 +8,5 @@ data class Chat(
     val avatar: Blob = Blob.fromBytes(ByteArray(0)),
     var latestMessage: ChatMessage = ChatMessage(),
     var numOfUnreadMsg: Int = 0,
+    var isReceiverOnline: Boolean = false,
 )

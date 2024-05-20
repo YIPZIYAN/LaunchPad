@@ -22,7 +22,7 @@
                 android:minHeight="?attr/actionBarSize"
                 app:navigationIcon="@drawable/round_arrow_back_24"
                 app:navigationIconTint="?attr/colorControlNormal"
-                app:subtitle="Online"
+                app:subtitle=""
                 app:title="GOH CHUN YEN" />
 
             <com.google.android.material.divider.MaterialDivider
