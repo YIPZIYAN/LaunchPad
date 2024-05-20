@@ -109,6 +109,13 @@
             app:destination="@id/emailVerificationFragment"
             app:enterAnim="@anim/enter"
             app:exitAnim="@anim/exit" />
+        <action
+            android:id="@+id/action_profileFragment_to_postCommentFragment"
+            app:destination="@id/postCommentFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -138,7 +145,15 @@
         android:id="@+id/userProfileFragment"
         android:name="com.example.launchpad.profile.view.UserProfileFragment"
         android:label="UserProfileFragment"
-        tools:layout="@layout/fragment_user_profile"/>
+        tools:layout="@layout/fragment_user_profile">
+        <action
+            android:id="@+id/action_userProfileFragment_to_postCommentFragment"
+            app:destination="@id/postCommentFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit" />
+    </fragment>
     <fragment
         android:id="@+id/jobDetailsFragment"
         android:name="com.example.launchpad.job.view.JobDetailsFragment"
@@ -251,7 +266,15 @@
     <fragment
         android:id="@+id/postCommentFragment"
         android:name="com.example.launchpad.community.view.PostCommentFragment"
-        android:label="PostCommentFragment" />
+        android:label="PostCommentFragment" >
+        <action
+            android:id="@+id/action_postCommentFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit" />
+    </fragment>
     <fragment
         android:id="@+id/pdfViewerFragment"
         android:name="com.example.launchpad.util.PdfViewerFragment"
