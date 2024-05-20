@@ -21,7 +21,7 @@ class UserActivity : AppCompatActivity() {
     private val nav by lazy {
         supportFragmentManager.findFragmentById(R.id.user_nav_host)!!.findNavController()
     }
-    private val jobVM: JobViewModel by viewModels()
+//    private val jobVM: JobViewModel by viewModels()
     private val jobAppVM: JobApplicationViewModel by viewModels()
     private val companyVM: CompanyViewModel by viewModels()
     private val userVM: UserViewModel by viewModels()
