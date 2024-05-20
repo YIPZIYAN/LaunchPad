@@ -7,6 +7,7 @@ import android.widget.ImageView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.launchpad.R
+import com.example.launchpad.data.Job
 import com.example.launchpad.data.Post
 import com.example.launchpad.util.toBlob
 import com.google.android.material.textfield.TextInputLayout
@@ -25,6 +26,7 @@ class PostViewModel(val app: Application) : AndroidViewModel(app){
     init {
         listener = POSTS.addSnapshotListener { snap, _ ->
             _postLD.value = snap?.toObjects()
+            updateResult()
         }
     }
 
@@ -35,6 +37,7 @@ class PostViewModel(val app: Application) : AndroidViewModel(app){
     fun getAll() = _postLD.value ?: emptyList()
 
     fun get(postID: String) = getAll().find { it.postID == postID }
+    fun getByUser(userID: String) = getAll().find { it.userID == userID }
 
     fun getPostLive(postList: List<Post>, postID: String) = postList.find { it.postID == postID }!!
 
@@ -44,24 +47,6 @@ class PostViewModel(val app: Application) : AndroidViewModel(app){
 
     fun update(post: Post) {
         POSTS.document(post.postID).set(post)
-    }
-
-    fun restore() {
-        POSTS.get().addOnSuccessListener {
-            // (1) DELETE users
-            it.documents.forEach { it.reference.delete() }
-            // (2) ADD users
-            val user1 = Post(
-                description    = "1@gmail.com",
-                createdAt = 12345,
-                userID    = "Bae Suzy",
-                image    = BitmapFactory.decodeResource(app.resources, R.drawable.tarumt).toBlob(),
-
-
-            )
-            POSTS.document(user1.description).set(user1)
-
-        }
     }
 
     fun getPostByUser(userID: String): List<Post> {
@@ -82,6 +67,29 @@ class PostViewModel(val app: Application) : AndroidViewModel(app){
         return isValid
     }
 
+    private val resultLD = MutableLiveData<List<Post>>()
+    private var search = ""
+
+    fun getResultLD() = resultLD
+
+    fun clearSearch() {
+        search = ""
+        updateResult()
+    }
+
+    fun search(search: String) {
+        this.search = search
+        updateResult()
+    }
+    fun updateResult() {
+        var list = getAll()
+
+        list = list.filter {
+            it.description.contains(search, true) || it.user.name.contains(search, true)
+        }
+
+        resultLD.value = list
+    }
 
 
 

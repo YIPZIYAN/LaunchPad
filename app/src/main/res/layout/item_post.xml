@@ -24,92 +24,71 @@
                 android:layout_marginTop="16dp">
 
 
-                <ImageView
-                    android:id="@+id/imgViewProfile"
-                    tools:src="@drawable/round_account_circle_24"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="12dp"
-                    android:clickable="true"
-                    android:contentDescription="Profile Picture"
+                <io.getstream.avatarview.AvatarView
+                    android:id="@+id/avatarView"
+                    android:layout_width="55dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="4dp"
+                    app:avatarViewIndicatorDrawable="@drawable/ic_verified"
+                    app:avatarViewIndicatorEnabled="false"
+                    app:avatarViewIndicatorPosition="bottomRight"
+                    app:avatarViewIndicatorSizeCriteria="3"
+                    app:avatarViewPlaceholder="@drawable/launchpadlogo_whitebg"
+                    app:avatarViewShape="circle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.032"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/round_account_circle_24" />
+                    tools:srcCompat="@drawable/launchpadlogo_whitebg" />
 
                 <TextView
                     android:id="@+id/txtUsername"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="11dp"
                     android:text="Carolyn Ting"
                     android:textSize="15sp"
-                    app:layout_constraintStart_toEndOf="@+id/imgViewProfile"
+                    app:layout_constraintStart_toEndOf="@+id/avatarView"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/txtTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="11dp"
                     android:layout_marginTop="4dp"
                     android:text="1d"
                     android:textSize="11sp"
-                    app:layout_constraintStart_toEndOf="@+id/imgViewProfile"
+                    app:layout_constraintStart_toEndOf="@+id/avatarView"
                     app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
 
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="5dp"
-                    android:layout_height="12dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="1dp"
-                    android:text="•"
-                    app:layout_constraintStart_toEndOf="@+id/txtTime"
-                    app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
+                <ImageButton
+                    android:id="@+id/btnMoreOptions"
+                    android:layout_width="52dp"
+                    android:layout_height="38dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="options"
 
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="4dp"
-                    android:text="Edited"
-                    android:textSize="11sp"
-                    app:layout_constraintStart_toEndOf="@+id/textView9"
-                    app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
-
-                <TextView
-                    android:id="@+id/textView11"
-                    android:layout_width="5dp"
-                    android:layout_height="12dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="1dp"
-                    android:text="•"
-                    app:layout_constraintStart_toEndOf="@+id/textView10"
-                    app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
-
-                <ImageView
-                    android:id="@+id/imagePublic"
-                    android:layout_width="16dp"
-                    android:layout_height="14dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="4dp"
-                    app:layout_constraintStart_toEndOf="@+id/textView11"
-                    app:layout_constraintTop_toBottomOf="@+id/txtUsername"
-                    app:srcCompat="@drawable/baseline_public_24"
-                    app:tint="?attr/colorControlNormal" />
+                    android:onClick="showPopupMenu"
+                    android:rotation="90"
+                    android:src="@drawable/baseline_more_horiz_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/txtUsername"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/txtDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="12dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="8dp"
                     android:text="Feeling great to be teaching again, it is a good action to enhae your self confidence."
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imgViewProfile" />
-
+                    app:layout_constraintTop_toBottomOf="@+id/avatarView" />
 
                 <ImageView
                     android:id="@+id/postImageView"

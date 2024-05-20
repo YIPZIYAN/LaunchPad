@@ -63,8 +63,13 @@ class PostCommentFragment : Fragment() {
         }
 
         adapter = CommentAdapter { holder, post ->
-            holder.binding.imgViewProfile.setOnClickListener {
-                findNavController().navigate(R.id.action_communityFragment_to_userProfileFragment)
+            holder.binding.avatarView.setOnClickListener {
+                    findNavController().navigate(
+                        R.id.action_postCommentFragment_to_userProfileFragment, bundleOf(
+                            "userID" to post.userID
+                        )
+                    )
+
             }
 
         }
