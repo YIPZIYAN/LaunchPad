@@ -49,24 +49,6 @@ class PostViewModel(val app: Application) : AndroidViewModel(app){
         POSTS.document(post.postID).set(post)
     }
 
-    fun restore() {
-        POSTS.get().addOnSuccessListener {
-            // (1) DELETE users
-            it.documents.forEach { it.reference.delete() }
-            // (2) ADD users
-            val user1 = Post(
-                description    = "1@gmail.com",
-                createdAt = 12345,
-                userID    = "Bae Suzy",
-                image    = BitmapFactory.decodeResource(app.resources, R.drawable.tarumt).toBlob(),
-
-
-            )
-            POSTS.document(user1.description).set(user1)
-
-        }
-    }
-
     fun getPostByUser(userID: String): List<Post> {
         var list = getAll()
 
