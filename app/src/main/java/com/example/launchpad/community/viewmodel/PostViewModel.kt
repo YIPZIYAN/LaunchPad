@@ -37,6 +37,7 @@ class PostViewModel(val app: Application) : AndroidViewModel(app){
     fun getAll() = _postLD.value ?: emptyList()
 
     fun get(postID: String) = getAll().find { it.postID == postID }
+    fun getByUser(userID: String) = getAll().find { it.userID == userID }
 
     fun getPostLive(postList: List<Post>, postID: String) = postList.find { it.postID == postID }!!
 
