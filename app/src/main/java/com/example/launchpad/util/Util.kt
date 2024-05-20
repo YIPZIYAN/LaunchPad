@@ -239,3 +239,7 @@ fun ImageView.cropToBlob(width: Int, height: Int): Blob {
 fun ImageView.setImageBlob(blob: Blob) {
     setImageBitmap(blob.toBitmap())
 }
+
+fun isBlobEmpty(blob: Blob): Boolean {
+    return blob.toBytes().isEmpty()
+}

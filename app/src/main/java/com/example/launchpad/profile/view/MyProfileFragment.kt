@@ -15,6 +15,7 @@ import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentMyProfileBinding
 import com.example.launchpad.util.toBitmap
 import com.example.launchpad.profile.TabMyJobFragment
+import com.example.launchpad.profile.TabMyPostListFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import io.getstream.avatarview.coil.loadImage
 
@@ -73,7 +74,7 @@ class MyProfileFragment : Fragment() {
             }
         }
 
-        val adapter = ViewPagerAdapter(requireActivity().supportFragmentManager, lifecycle)
+        val adapter = ViewPagerAdapter(requireActivity().supportFragmentManager, lifecycle,userVM.getUserLD().value!!.uid)
         binding.viewPager.adapter = adapter
 
 
@@ -83,7 +84,7 @@ class MyProfileFragment : Fragment() {
         return binding.root
     }
 
-    class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
+    class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle,private val userID: String) :
         FragmentStateAdapter(fragmentManager, lifecycle) {
 
         override fun getItemCount(): Int {
@@ -93,7 +94,7 @@ class MyProfileFragment : Fragment() {
         override fun createFragment(position: Int): Fragment {
             when (position) {
                 0 -> return TabMyJobFragment()
-                1 -> return TabMyJobFragment()
+                1 -> return TabMyPostListFragment.newInstance(userID,true)
                 else -> throw Exception()
             }
         }
