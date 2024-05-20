@@ -55,6 +55,7 @@ class ChatAdapter(
             visibility = if (chat.numOfUnreadMsg > 0) View.VISIBLE else View.GONE
             text = if (chat.numOfUnreadMsg > 9) "9+" else chat.numOfUnreadMsg.toString()
         }
+        holder.binding.avatarView.indicatorEnabled = chat.isReceiverOnline
         fn(holder, chat)
     }
 

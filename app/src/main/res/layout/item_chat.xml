@@ -34,7 +34,11 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/round_account_circle_24"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    tools:srcCompat="@tools:sample/avatars"
+                    app:avatarViewIndicatorDrawable="@drawable/ic_online"
+                    app:avatarViewIndicatorEnabled="false"
+                    app:avatarViewIndicatorPosition="bottomRight"
+                    app:avatarViewIndicatorSizeCriteria="4"/>
 
                 <TextView
                     android:id="@+id/chat_name"
