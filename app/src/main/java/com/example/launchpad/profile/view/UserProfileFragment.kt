@@ -31,16 +31,10 @@ class UserProfileFragment : Fragment() {
     private val userVM: UserViewModel by activityViewModels()
     private lateinit var binding: FragmentUserProfileBinding
     private val tabItems = arrayOf(
-        "Job",
         "Post"
     )
     private val userID by lazy { requireArguments().getString("userID", "") }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,13 +80,12 @@ class UserProfileFragment : Fragment() {
         FragmentStateAdapter(fragmentManager, lifecycle) {
 
         override fun getItemCount(): Int {
-            return 2
+            return 1
         }
 
         override fun createFragment(position: Int): Fragment {
             when (position) {
-                0 -> return TabMyJobFragment()
-                1 -> return TabMyPostListFragment.newInstance(userID,false)
+                0 -> return TabMyPostListFragment.newInstance(userID,false)
                 else -> throw Exception()
             }
         }

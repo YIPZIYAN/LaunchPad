@@ -24,6 +24,7 @@ import com.example.launchpad.databinding.FragmentApplyJobBinding
 import com.example.launchpad.data.viewmodel.JobViewModel
 import com.example.launchpad.util.JobApplicationState
 import com.example.launchpad.util.dialog
+import com.example.launchpad.util.disable
 import com.example.launchpad.util.showFileSize
 import com.example.launchpad.util.snackbar
 import com.example.launchpad.util.toast
@@ -73,11 +74,10 @@ class ApplyJobFragment : Fragment() {
         jobAppVM.progress.observe(viewLifecycleOwner) {
             binding.progressBar.progress = it
 
-            binding.btnSubmit.isEnabled = false
-            binding.btnSubmit.isClickable = false
-
-            binding.btnUploadResume.isClickable = false
-            binding.btnUploadResume.isClickable = false
+            binding.apply {
+                btnSubmit.disable()
+                btnUploadResume.disable()
+            }
         }
 
         jobAppVM.response.observe(viewLifecycleOwner) {
