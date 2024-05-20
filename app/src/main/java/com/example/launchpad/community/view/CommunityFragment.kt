@@ -122,6 +122,7 @@ class CommunityFragment : Fragment() {
                 )
                 )
             }
+            holder.binding.btnMoreOptions.visibility = View.INVISIBLE
             updateThumbUpDrawable(holder, post)
         }
 

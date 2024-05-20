@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
@@ -67,6 +68,7 @@ class TabMyPostListFragment : Fragment() {
     ): View {
         binding = FragmentTabMyPostListBinding.inflate(inflater, container, false)
 
+
         adapter = PostAdapter { holder, post ->
 
             holder.binding.btnLike.setOnClickListener {
@@ -83,6 +85,9 @@ class TabMyPostListFragment : Fragment() {
                         "postID" to post.postID
                     ))
                 }
+                holder.binding.btnMoreOptions.setOnClickListener{
+                    showPopupMenu(holder.binding.btnMoreOptions)
+                }
 
             }else{
                 holder.binding.txtComments.setOnClickListener {
@@ -95,6 +100,7 @@ class TabMyPostListFragment : Fragment() {
                         "postID" to post.postID
                     ))
                 }
+                holder.binding.btnMoreOptions.visibility = View.INVISIBLE
             }
 
 
@@ -200,5 +206,28 @@ class TabMyPostListFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(CommunityViewModel::class.java)
         // TODO: Use the ViewModel
+    }
+
+    fun showPopupMenu(view: View) {
+        val popupMenu = PopupMenu(requireContext(), view)
+        popupMenu.inflate(R.menu.post_menu)
+
+        // Set up a listener for menu item clicks
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_edit -> {
+                    // Handle edit action
+                    true
+                }
+                R.id.menu_delete -> {
+                    // Handle delete action
+                    true
+                }
+                else -> false
+            }
+        }
+
+        // Show the popup menu
+        popupMenu.show()
     }
 }
