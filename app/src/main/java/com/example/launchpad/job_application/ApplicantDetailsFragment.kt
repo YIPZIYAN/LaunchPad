@@ -46,8 +46,8 @@ class ApplicantDetailsFragment : Fragment() {
 
     private val userVM: UserViewModel by activityViewModels()
     private val jobAppVM: JobApplicationViewModel by viewModels()
-    private val jobVM: JobViewModel by viewModels()
-    private val companyVM: CompanyViewModel by viewModels()
+    private val jobVM: JobViewModel by activityViewModels()
+    private val companyVM: CompanyViewModel by activityViewModels()
     private lateinit var binding: FragmentApplicantDetailsBinding
     private val nav by lazy { findNavController() }
     private val jobAppID by lazy { arguments?.getString("jobAppID") ?: "" }
@@ -72,9 +72,8 @@ class ApplicantDetailsFragment : Fragment() {
             }
 
             jobApp.user = userVM.get(jobApp.userId)!!
-            val job = jobVM.get(jobApp.jobId)
-            Log.d("JOB", job.toString())
-            //jobApp.job.company = companyVM.get(jobApp.job.companyID)!!
+            jobApp.job = jobVM.get(jobApp.jobId)!!
+            jobApp.job.company = companyVM.get(jobApp.job.companyID)!!
 
             /*
             *
@@ -142,8 +141,8 @@ class ApplicantDetailsFragment : Fragment() {
                         )
                         //TODO
                         sendPushNotification(
-                            "JOB ACCEPTED BY !",
-                            "Your applied job  has been accepted.",
+                            "JOB ACCEPTED BY ${jobApp.job.company.name} !",
+                            "Your applied job ${jobApp.job.jobName} has been accepted.",
                             jobApp.user.token)
                     })
             }

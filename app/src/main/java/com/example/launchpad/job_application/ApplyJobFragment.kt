@@ -119,7 +119,7 @@ class ApplyJobFragment : Fragment() {
                 sendPushNotification(
                     "NEW JOB APPLICATION",
                     // TO SOLVE DISPLAY NAME ISSUE
-                    "${userVM.get(userVM.getAuth().uid)?.name} has applied your job ${job.jobName}",
+                    "${userVM.get(userVM.getAuth().uid)?.name} has applied your job ${job.jobName}.",
                     userVM.getByCompanyID(job.companyID)!!.token)
             })
 
