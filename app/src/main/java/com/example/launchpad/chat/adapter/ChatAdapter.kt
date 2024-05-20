@@ -2,6 +2,7 @@ package com.example.launchpad.chat.adapter
 
 import android.text.format.DateUtils
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
@@ -17,7 +18,10 @@ import com.example.launchpad.databinding.ItemJobCardBinding
 import com.example.launchpad.job.adapter.JobAdapter
 import com.example.launchpad.util.toBitmap
 import io.getstream.avatarview.coil.loadImage
+import org.joda.time.DateTime
+import org.joda.time.LocalDate
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class ChatAdapter(
@@ -47,11 +51,21 @@ class ChatAdapter(
             else
                 chat.avatar.toBitmap()
         holder.binding.avatarView.loadImage(avatar)
+        with(holder.binding.chatMessagesNumber) {
+            visibility = if (chat.numOfUnreadMsg > 0) View.VISIBLE else View.GONE
+            text = if (chat.numOfUnreadMsg > 9) "9+" else chat.numOfUnreadMsg.toString()
+        }
         fn(holder, chat)
     }
 
     private fun displaySendTime(sendTime: Long): String {
-        val sdf = SimpleDateFormat("hh:mm a", Locale.getDefault())
+
+        val sdf =
+            if (sendTime < DateTime.now().withTimeAtStartOfDay().millis)
+                SimpleDateFormat("M/d/yyyy", Locale.getDefault())
+            else
+                SimpleDateFormat("hh:mm a", Locale.getDefault())
+
         return sdf.format(sendTime)
     }
 

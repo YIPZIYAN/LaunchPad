@@ -59,7 +59,8 @@ class ChatTextFragment : Fragment() {
 
         val userIDs = chatRoomId.split("_")
 
-        currentUser = userVM.getAuth()
+        //TO SOLVE DISPLAY NAME ISSUE
+        currentUser = userVM.get(userVM.getAuth().uid)!!
 
         otherUser =
             if (userIDs[0] == userVM.getAuth().uid) {
@@ -85,6 +86,8 @@ class ChatTextFragment : Fragment() {
         binding.topAppBar.setOnClickListener {
             nav.navigateUp()
         }
+
+        updateLastSeenTime(chatRoomId, currentUser.uid)
 
         return binding.root
     }
@@ -119,7 +122,7 @@ class ChatTextFragment : Fragment() {
         notificationObj.put("body", message)
 
         val dataObj = JSONObject()
-        dataObj.put("userId", currentUser.uid)
+        dataObj.put("chatRoomId", chatRoomId)
 
         jsonObject.put("notification", notificationObj)
         jsonObject.put("data", dataObj)
@@ -179,6 +182,25 @@ class ChatTextFragment : Fragment() {
             }
 
         })
+    }
+
+    fun updateLastSeenTime(chatRoomId: String, userId: String) {
+        val lastReadRef = FirebaseDatabase.getInstance().getReference("chatRooms")
+            .child(chatRoomId).child("lastSeen").child(userId)
+
+        Log.d("LASTSEENUSERID", userId)
+
+        lastReadRef.setValue(DateTime.now().millis)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        updateLastSeenTime(chatRoomId, currentUser.uid)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateLastSeenTime(chatRoomId, currentUser.uid)
     }
 
 }

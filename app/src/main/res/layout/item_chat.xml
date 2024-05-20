@@ -87,6 +87,7 @@
                     android:textColor="@color/md_theme_light_onPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/chat_content"
+                    android:visibility="gone"
                     />
 
                 <com.google.android.material.divider.MaterialDivider
