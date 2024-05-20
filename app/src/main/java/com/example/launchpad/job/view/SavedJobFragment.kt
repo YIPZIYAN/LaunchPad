@@ -16,7 +16,7 @@ import com.example.launchpad.data.viewmodel.CompanyViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentSavedJobBinding
 import com.example.launchpad.job.adapter.SavedJobAdapter
-import com.example.launchpad.job.viewmodel.JobViewModel
+import com.example.launchpad.data.viewmodel.JobViewModel
 
 class SavedJobFragment : Fragment() {
 
