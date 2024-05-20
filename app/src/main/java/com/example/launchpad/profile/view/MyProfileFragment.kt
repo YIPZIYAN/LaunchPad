@@ -51,12 +51,8 @@ class MyProfileFragment : Fragment() {
                 binding.avatarView.indicatorEnabled = true
             }
             if (userVM.isVerified()) {
-                binding.cardViewFollowing.visibility = View.VISIBLE
-                binding.cardViewFollower.visibility = View.VISIBLE
                 binding.btnVerify.visibility = View.GONE
             } else {
-                binding.cardViewFollowing.visibility = View.INVISIBLE
-                binding.cardViewFollower.visibility = View.INVISIBLE
                 binding.btnVerify.visibility = View.VISIBLE
             }
         }
