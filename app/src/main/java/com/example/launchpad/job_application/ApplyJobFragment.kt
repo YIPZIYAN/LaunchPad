@@ -111,6 +111,7 @@ class ApplyJobFragment : Fragment() {
         dialog("Apply Job", "Are you sure to apply this job?",
             onPositiveClick = { _, _ ->
                 upload()
+                //TODO push notification
             })
 
     }

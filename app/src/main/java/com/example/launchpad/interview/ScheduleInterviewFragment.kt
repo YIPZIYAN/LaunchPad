@@ -175,6 +175,7 @@ class ScheduleInterviewFragment : Fragment() {
                 lifecycleScope.launch {
                     interviewVM.set(interview)
                 }
+                //TODO if action EDIT notification change to blablalba else NEw interview scheduled
             })
     }
 
