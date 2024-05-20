@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.data.Company
+import com.example.launchpad.data.Job
 import com.example.launchpad.data.JobApplication
 import com.example.launchpad.data.Pdf
 import com.example.launchpad.data.viewmodel.CompanyViewModel
@@ -24,6 +25,7 @@ import com.example.launchpad.databinding.FragmentApplyJobBinding
 import com.example.launchpad.data.viewmodel.JobViewModel
 import com.example.launchpad.util.JobApplicationState
 import com.example.launchpad.util.dialog
+import com.example.launchpad.util.sendPushNotification
 import com.example.launchpad.util.showFileSize
 import com.example.launchpad.util.snackbar
 import com.example.launchpad.util.toast
@@ -45,10 +47,12 @@ class ApplyJobFragment : Fragment() {
     private var fileUri: Uri? = null
     private val nav by lazy { findNavController() }
 
+    private lateinit var job: Job
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         jobVM.getJobsLD().observe(this) {
-            var job = jobVM.get(jobID) ?: return@observe
+            job = jobVM.get(jobID) ?: return@observe
             job.company = companyVM.get(job.companyID) ?: Company()
             binding.topAppBar.title = "Apply To ${job.company.name}"
         }
@@ -112,6 +116,11 @@ class ApplyJobFragment : Fragment() {
             onPositiveClick = { _, _ ->
                 upload()
                 //TODO push notification
+                sendPushNotification(
+                    "NEW JOB APPLICATION",
+                    // TO SOLVE DISPLAY NAME ISSUE
+                    "${userVM.get(userVM.getAuth().uid)?.name} has applied your job ${job.jobName}",
+                    userVM.getByCompanyID(job.companyID)!!.token)
             })
 
     }
@@ -137,6 +146,7 @@ class ApplyJobFragment : Fragment() {
                 jobAppVM.set(jobApp)
             }
         }
+
     }
 
     private val getContent =

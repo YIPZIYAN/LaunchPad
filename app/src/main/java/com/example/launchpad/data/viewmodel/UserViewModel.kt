@@ -69,6 +69,7 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
 
     fun getAll() = _userLLD.value ?: emptyList()
     fun get(userID: String) = getAll().find { it.uid == userID }
+    fun getByCompanyID(companyID: String) = getAll().find { it.company_id == companyID }
 
     fun isEnterprise() = _userLD.value!!.isEnterprise
     fun isCompanyRegistered() = _userLD.value?.company_id != ""

@@ -3,6 +3,7 @@ package com.example.launchpad.job_application
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +14,15 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.data.Chat
+import com.example.launchpad.data.viewmodel.CompanyViewModel
 import com.example.launchpad.data.viewmodel.JobApplicationViewModel
+import com.example.launchpad.data.viewmodel.JobViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentApplicantDetailsBinding
 import com.example.launchpad.util.JobApplicationState
 import com.example.launchpad.util.dialog
 import com.example.launchpad.util.displayPostTime
+import com.example.launchpad.util.sendPushNotification
 import com.example.launchpad.util.snackbar
 import com.example.launchpad.util.toBitmap
 import com.example.launchpad.util.toast
@@ -42,10 +46,11 @@ class ApplicantDetailsFragment : Fragment() {
 
     private val userVM: UserViewModel by activityViewModels()
     private val jobAppVM: JobApplicationViewModel by viewModels()
+    private val jobVM: JobViewModel by viewModels()
+    private val companyVM: CompanyViewModel by viewModels()
     private lateinit var binding: FragmentApplicantDetailsBinding
     private val nav by lazy { findNavController() }
     private val jobAppID by lazy { arguments?.getString("jobAppID") ?: "" }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,6 +72,9 @@ class ApplicantDetailsFragment : Fragment() {
             }
 
             jobApp.user = userVM.get(jobApp.userId)!!
+            val job = jobVM.get(jobApp.jobId)
+            Log.d("JOB", job.toString())
+            //jobApp.job.company = companyVM.get(jobApp.job.companyID)!!
 
             /*
             *
@@ -133,6 +141,10 @@ class ApplicantDetailsFragment : Fragment() {
                             jobAppID
                         )
                         //TODO
+                        sendPushNotification(
+                            "JOB ACCEPTED BY !",
+                            "Your applied job  has been accepted.",
+                            jobApp.user.token)
                     })
             }
             binding.btnReject.setOnClickListener {
@@ -143,6 +155,10 @@ class ApplicantDetailsFragment : Fragment() {
                             jobAppID
                         )
                         //TODO
+                        sendPushNotification(
+                            "Opps... JOB REJECTED BY ${jobApp.job.company.name}.",
+                            "Your applied job ${jobApp.job.jobName} has been rejected.",
+                            jobApp.user.token)
                     })
 
             }
