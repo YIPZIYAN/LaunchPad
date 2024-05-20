@@ -1,7 +1,7 @@
 package com.example.launchpad.community.view
 
 import android.graphics.drawable.Drawable
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,10 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.launchpad.viewmodel.CommunityViewModel
+import androidx.navigation.fragment.navArgs
 import com.example.launchpad.R
 import com.example.launchpad.community.adapter.PostAdapter
 import com.example.launchpad.community.viewmodel.PostLikesViewModel
@@ -24,86 +24,46 @@ import com.example.launchpad.data.PostLikes
 import com.example.launchpad.data.User
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentCommunityBinding
-import com.google.android.material.search.SearchView
-import android.content.Context
-import android.view.inputmethod.InputMethodManager
+import com.example.launchpad.viewmodel.CommunityViewModel
+import com.example.launchpad.viewmodel.PostDetailsViewModel
 
-
-class CommunityFragment : Fragment() {
+class PostDetailsFragment : Fragment() {
 
     companion object {
-        fun newInstance() = CommunityFragment()
+        fun newInstance() = PostDetailsFragment()
     }
+
 
     private lateinit var adapter: PostAdapter
     private val postVM: PostViewModel by activityViewModels()
     private val postLikesVM: PostLikesViewModel by activityViewModels()
     private val userVM: UserViewModel by activityViewModels()
-    private lateinit var viewModel: CommunityViewModel
+    private lateinit var viewModel: PostDetailsViewModel
     private lateinit var binding: FragmentCommunityBinding
-    private var isSearching = false
+/*    private val args: PostDetailsFragmentArgs by navArgs()
+    private var postID = ""*/
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // TODO: Use the ViewModel
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentCommunityBinding.inflate(inflater, container, false)
 
-
-        binding.btnAddPost.setOnClickListener{
-            findNavController().navigate(R.id.action_communityFragment_to_addPostFragment, bundleOf(
-                "postID" to ""
-            ))
-        }
-
-        binding.btnSearch.setOnClickListener {
-            if (binding.edtSearch.text.toString().trim() != "") {
-                postVM.search(binding.edtSearch.text.toString().trim())
-                postVM.getResultLD().observe(viewLifecycleOwner) { postList ->
-                    userVM.getUserLLD().observe(viewLifecycleOwner) { user ->
-                        val filteredPostList = postList.filter { it.deletedAt == 0L } // Filter out posts with deletedAt != 0
-                        filteredPostList.forEach { post ->
-                            post.user = userVM.get(post.userID) ?: User()
-                        }
-                        val sortedPostList = filteredPostList.sortedByDescending { it.createdAt }
-
-                        adapter.submitList(sortedPostList)
-
-                        val handler = Handler(Looper.getMainLooper())
-                        handler.postDelayed({
-                            adapter.notifyDataSetChanged()
-                        }, 100)
-                    }
-                }
-            }else{
-                postVM.getPostLD().observe(viewLifecycleOwner) { postList ->
-                    userVM.getUserLLD().observe(viewLifecycleOwner) { user ->
-                        val filteredPostList = postList.filter { it.deletedAt == 0L } // Filter out posts with deletedAt != 0
-                        filteredPostList.forEach { post ->
-                            post.user = userVM.get(post.userID) ?: User()
-                        }
-                        val sortedPostList = filteredPostList.sortedByDescending { it.createdAt }
-
-                        adapter.submitList(sortedPostList)
-
-                        val handler = Handler(Looper.getMainLooper())
-                        handler.postDelayed({
-                            adapter.notifyDataSetChanged()
-                        }, 100)
-                    }
-                }
-
-
-            }
-        }
+   /*     postID = args.postID*/
 
         adapter = PostAdapter { holder, post ->
             holder.binding.avatarView.setOnClickListener {
-                    findNavController().navigate(
-                        R.id.action_communityFragment_to_userProfileFragment, bundleOf(
-                            "userID" to post.userID
-                        )
+                findNavController().navigate(
+                    R.id.action_communityFragment_to_userProfileFragment, bundleOf(
+                        "userID" to post.userID
                     )
+                )
             }
             holder.binding.btnLike.setOnClickListener {
                 toggleLike(post)
@@ -129,10 +89,15 @@ class CommunityFragment : Fragment() {
 
         postVM.getPostLD().observe(viewLifecycleOwner) { postList ->
             userVM.getUserLLD().observe(viewLifecycleOwner) { user ->
-                val filteredPostList = postList.filter { it.deletedAt == 0L } // Filter out posts with deletedAt != 0
+
+             /*   val targetPostID = postID*/
+
+                val filteredPostList = postList.filter { /*it.postID == targetPostID && */it.deletedAt == 0L }
+
                 filteredPostList.forEach { post ->
                     post.user = userVM.get(post.userID) ?: User()
                 }
+
                 val sortedPostList = filteredPostList.sortedByDescending { it.createdAt }
 
                 adapter.submitList(sortedPostList)
@@ -144,36 +109,9 @@ class CommunityFragment : Fragment() {
             }
         }
 
-
-        // Refresh
-        binding.refresh.setOnRefreshListener {
-            postVM.getPostLD().observe(viewLifecycleOwner) { postList ->
-                userVM.getUserLLD().observe(viewLifecycleOwner) { user ->
-                    val filteredPostList = postList.filter { it.deletedAt == 0L } // Filter out posts with deletedAt != 0
-                    filteredPostList.forEach { post ->
-                        post.user = userVM.get(post.userID) ?: User()
-                    }
-                    val sortedPostList = filteredPostList.sortedByDescending { it.createdAt }
-
-                    adapter.submitList(sortedPostList)
-
-                    val handler = Handler(Looper.getMainLooper())
-                    handler.postDelayed({
-                        adapter.notifyDataSetChanged()
-                    }, 100)
-
-                }
-
-                adapter.notifyDataSetChanged()
-                binding.refresh.isRefreshing = false
-            }
-        }
-
-
-
-
         return binding.root
     }
+
     private fun toggleLike(post: Post) {
         val userId = userVM.getUserLD().value!!.uid
         if (postLikesVM.get(post.postID, userId) != null) {
@@ -246,6 +184,9 @@ class CommunityFragment : Fragment() {
     }
 
 
-
-
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(PostDetailsViewModel::class.java)
+        // TODO: Use the ViewModel
+    }
 }
