@@ -12,31 +12,29 @@
             style="?attr/materialCardViewElevatedStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
 
+            android:layout_marginTop="16dp"
             app:cardCornerRadius="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
+                android:layout_height="match_parent">
 
 
                 <io.getstream.avatarview.AvatarView
                     android:id="@+id/avatarView"
-                    android:layout_width="55dp"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
                     app:avatarViewIndicatorDrawable="@drawable/ic_verified"
                     app:avatarViewIndicatorEnabled="false"
                     app:avatarViewIndicatorPosition="bottomRight"
                     app:avatarViewIndicatorSizeCriteria="3"
                     app:avatarViewPlaceholder="@drawable/launchpadlogo_whitebg"
                     app:avatarViewShape="circle"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.032"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:srcCompat="@drawable/launchpadlogo_whitebg" />
@@ -45,17 +43,17 @@
                     android:id="@+id/txtUsername"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="11dp"
+                    android:layout_marginStart="16dp"
                     android:text="Carolyn Ting"
                     android:textSize="15sp"
                     app:layout_constraintStart_toEndOf="@+id/avatarView"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@+id/avatarView" />
 
                 <TextView
                     android:id="@+id/txtTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="11dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="4dp"
                     android:text="1d"
                     android:textSize="11sp"
@@ -64,27 +62,27 @@
 
                 <ImageButton
                     android:id="@+id/btnMoreOptions"
-                    android:layout_width="52dp"
-                    android:layout_height="38dp"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
+
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="options"
-
                     android:onClick="showPopupMenu"
                     android:rotation="90"
                     android:src="@drawable/baseline_more_horiz_24"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/txtUsername"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/txtDescription"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="12dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
                     android:text="Feeling great to be teaching again, it is a good action to enhae your self confidence."
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
