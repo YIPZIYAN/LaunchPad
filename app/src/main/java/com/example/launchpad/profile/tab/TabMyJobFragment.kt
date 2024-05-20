@@ -1,6 +1,5 @@
-package com.example.launchpad.profile
+package com.example.launchpad.profile.tab
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,10 +15,7 @@ import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.JobViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentTabMyJobBinding
-import com.example.launchpad.databinding.ItemMyAppliedJobBinding
-import com.example.launchpad.job_application.adapter.ApplicantAdapter
 import com.example.launchpad.profile.adapter.MyJobAdapter
-import com.example.launchpad.viewmodel.TabMyJobViewModel
 
 class TabMyJobFragment : Fragment() {
 

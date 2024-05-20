@@ -14,8 +14,8 @@ import com.example.launchpad.R
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentMyProfileBinding
 import com.example.launchpad.util.toBitmap
-import com.example.launchpad.profile.TabMyJobFragment
-import com.example.launchpad.profile.TabMyPostListFragment
+import com.example.launchpad.profile.tab.TabMyJobFragment
+import com.example.launchpad.profile.tab.TabMyPostListFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import io.getstream.avatarview.coil.loadImage
 
@@ -62,7 +62,6 @@ class MyProfileFragment : Fragment() {
                 ViewPagerAdapter(
                     requireActivity().supportFragmentManager,
                     lifecycle,
-                    user.uid,
                     tabItems
                 )
             binding.viewPager.adapter = adapter
@@ -92,7 +91,6 @@ class MyProfileFragment : Fragment() {
     class ViewPagerAdapter(
         fragmentManager: FragmentManager,
         lifecycle: Lifecycle,
-        private val userID: String,
         private val items: Array<String>
     ) :
         FragmentStateAdapter(fragmentManager, lifecycle) {
@@ -104,7 +102,7 @@ class MyProfileFragment : Fragment() {
         override fun createFragment(position: Int): Fragment {
             return when (items[position]) {
                 "My Job" -> TabMyJobFragment()
-                "My Post" -> TabMyPostListFragment.newInstance(userID, true)
+                "My Post" -> TabMyPostListFragment()
                 else -> throw IllegalArgumentException("Invalid tab item: ${items[position]}")
             }
         }

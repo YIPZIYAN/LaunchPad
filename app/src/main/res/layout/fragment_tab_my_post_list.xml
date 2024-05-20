@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".profile.TabMyJobFragment">
+    tools:context=".profile.tab.TabMyJobFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout2"
@@ -16,12 +16,13 @@
             android:layout_height="0dp"
             android:padding="4dp"
             android:scrollbars="vertical"
-            app:layoutManager="LinearLayoutManager"
+            app:layoutManager="GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/item_post" />
+            app:spanCount="3"
+            tools:listitem="@layout/item_post_photo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
