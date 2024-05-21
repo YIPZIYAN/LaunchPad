@@ -2,6 +2,7 @@ package com.example.launchpad.auth.view
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,10 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.auth.viewmodel.ForgotPasswordViewModel
 import com.example.launchpad.databinding.FragmentForgotPasswordBinding
+import com.example.launchpad.util.displayErrorHelper
+import com.example.launchpad.util.hideErrorHelper
+import com.example.launchpad.util.toast
+import com.google.firebase.auth.FirebaseAuth
 
 class ForgotPasswordFragment : Fragment() {
 
@@ -16,14 +21,7 @@ class ForgotPasswordFragment : Fragment() {
         fun newInstance() = ForgotPasswordFragment()
     }
 
-    private val viewModel: ForgotPasswordViewModel by viewModels()
     private lateinit var binding: FragmentForgotPasswordBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +33,37 @@ class ForgotPasswordFragment : Fragment() {
             findNavController().navigateUp()
         }
 
+        binding.resetBtn.setOnClickListener { resetPassword() }
+
         return binding.root
+    }
+
+    fun resetPassword() {
+        val email = binding.edtEmail.text.toString().trim()
+        if (!isValid(email)) {
+            return
+        }
+        FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    toast("Reset password link has been sent to your email.")
+                } else {
+                    toast(task.exception.toString())
+                }
+            }
+    }
+
+    fun isValid(email: String): Boolean {
+        when {
+            email == "" || !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                displayErrorHelper(binding.txtEmail, "Invalid email address.")
+                return false
+            }
+
+            else -> {
+                hideErrorHelper(binding.txtEmail)
+                return true
+            }
+        }
     }
 }
