@@ -113,7 +113,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/home_title"
                         app:strokeColor="@color/m3_text_button_foreground_color_selector"
-                        tools:text="Saved/Post"/>
+                        tools:text="Saved/Post" />
 
                     <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
 
@@ -128,6 +128,26 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/home_title"
                         tools:listitem="@layout/item_job_card" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/loadingLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/rv_job_card">
+
+                        <com.google.android.material.progressindicator.CircularProgressIndicator
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:indeterminate="true"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -148,10 +168,10 @@
                             android:id="@+id/chip_scroll"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:scrollbars="none"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:scrollbars="none">
+                            app:layout_constraintTop_toTopOf="parent">
 
                             <com.google.android.material.chip.ChipGroup
                                 android:id="@+id/filter_chips"

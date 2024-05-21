@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         installSplashScreen()
-        setContentView(R.layout.activity_main) //change accordingly for testing
         lifecycleScope.launch {
             viewModel.getCurrentUser()
         }
@@ -27,6 +26,8 @@ class MainActivity : AppCompatActivity() {
         if (viewModel.isLoggedIn()) {
             Log.d("status", "onCreateView: logged in and verified")
             intentWithoutBackstack(this, UserActivity::class.java)
+        } else {
+            setContentView(R.layout.activity_main) //change accordingly for testing
         }
 
 
