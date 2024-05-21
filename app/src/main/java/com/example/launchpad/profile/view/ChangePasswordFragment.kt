@@ -9,12 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.launchpad.MainActivity
 import com.example.launchpad.R
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentChangePasswordBinding
 import com.example.launchpad.databinding.FragmentLoginBinding
 import com.example.launchpad.profile.viewmodel.ChangePasswordViewModel
+import com.example.launchpad.util.dialog
 import com.example.launchpad.util.displayErrorHelper
+import com.example.launchpad.util.intentWithoutBackstack
 import com.example.launchpad.util.snackbar
 import com.example.launchpad.util.toast
 import com.google.firebase.auth.EmailAuthProvider
@@ -25,7 +28,7 @@ class ChangePasswordFragment : Fragment() {
     private val nav by lazy { findNavController() }
 
     private lateinit var binding: FragmentChangePasswordBinding
-    private val viewModel: ChangePasswordViewModel by activityViewModels()
+    private val viewModel: ChangePasswordViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,8 +43,17 @@ class ChangePasswordFragment : Fragment() {
         viewModel.response.observe(viewLifecycleOwner) { if (it != null) toast(it) }
         viewModel.isSuccess.observe(viewLifecycleOwner) {
             if (it) {
-                nav.navigateUp()
-                snackbar("Password Changed Successfully!")
+                dialog(
+                    "Change Password",
+                    getString(R.string.change_password_confirmation),
+                    onPositiveClick = { _, _ ->
+                        requireContext().intentWithoutBackstack(
+                            requireContext(),
+                            MainActivity::class.java
+                        )
+                        snackbar("Password Changed Successfully!")
+                    }
+                )
             }
         }
 
