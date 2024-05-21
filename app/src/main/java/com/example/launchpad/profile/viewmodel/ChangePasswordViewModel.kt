@@ -13,7 +13,7 @@ class ChangePasswordViewModel : ViewModel() {
     val isSuccess = MutableLiveData<Boolean>()
     val response = MutableLiveData<String>()
 
-    fun isCurrentPasswordValid(password: String) {
+    fun isCurrentPasswordValid(password: String = "") {
         if (user == null) {
             response.value = "Something went wrong."
             return
@@ -27,7 +27,7 @@ class ChangePasswordViewModel : ViewModel() {
         }
     }
 
-    fun resetPassword(newPassword: String) {
+    fun resetPassword(newPassword: String = "") {
         if (user == null) {
             response.value = "Something went wrong."
             return
@@ -39,5 +39,9 @@ class ChangePasswordViewModel : ViewModel() {
             response.value = it.toString()
         }
     }
+
+    fun isPasswordLogin(): Boolean =
+        user?.providerData!!.any { it.providerId == EmailAuthProvider.PROVIDER_ID }
+
 
 }
