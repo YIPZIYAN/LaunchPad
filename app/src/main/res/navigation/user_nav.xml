@@ -123,6 +123,13 @@
             app:exitAnim="@anim/exit"
             app:popEnterAnim="@anim/pop_enter"
             app:popExitAnim="@anim/pop_exit" />
+        <action
+            android:id="@+id/action_profileFragment_to_postDetailsFragment"
+            app:destination="@id/postDetailsFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -273,7 +280,7 @@
     <fragment
         android:id="@+id/postCommentFragment"
         android:name="com.example.launchpad.community.view.PostCommentFragment"
-        android:label="PostCommentFragment" >
+        android:label="PostCommentFragment">
         <action
             android:id="@+id/action_postCommentFragment_to_userProfileFragment"
             app:destination="@id/userProfileFragment"
@@ -291,12 +298,13 @@
         android:id="@+id/postDetailsFragment"
         android:name="com.example.launchpad.community.view.PostDetailsFragment"
         android:label="PostDetailsFragment">
-        <argument
-            android:name="postID"
-            app:argType="string" />
-        <deepLink
-            android:id="@+id/deepLink2"
-            app:uri="launchpad.co/community/postdetails/{postID}" />
+        <action
+            android:id="@+id/action_postDetailsFragment_to_addPostFragment"
+            app:destination="@id/addPostFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit" />
     </fragment>
 
 </navigation>

@@ -9,14 +9,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.launchpad.R
+import com.example.launchpad.community.adapter.CommentAdapter
 import com.example.launchpad.community.adapter.PostAdapter
+import com.example.launchpad.community.viewmodel.PostCommentViewModel
 import com.example.launchpad.community.viewmodel.PostLikesViewModel
 import com.example.launchpad.community.viewmodel.PostViewModel
 import com.example.launchpad.data.Post
@@ -24,8 +28,13 @@ import com.example.launchpad.data.PostLikes
 import com.example.launchpad.data.User
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentCommunityBinding
+import com.example.launchpad.databinding.FragmentPostDetailsBinding
+import com.example.launchpad.util.dialog
+import com.example.launchpad.util.snackbar
 import com.example.launchpad.viewmodel.CommunityViewModel
 import com.example.launchpad.viewmodel.PostDetailsViewModel
+import kotlinx.coroutines.launch
+import org.joda.time.DateTime
 
 class PostDetailsFragment : Fragment() {
 
@@ -35,13 +44,15 @@ class PostDetailsFragment : Fragment() {
 
 
     private lateinit var adapter: PostAdapter
+    private lateinit var adapterComment: CommentAdapter
     private val postVM: PostViewModel by activityViewModels()
     private val postLikesVM: PostLikesViewModel by activityViewModels()
+    private val postCommentsVM: PostCommentViewModel by activityViewModels()
     private val userVM: UserViewModel by activityViewModels()
     private lateinit var viewModel: PostDetailsViewModel
-    private lateinit var binding: FragmentCommunityBinding
-/*    private val args: PostDetailsFragmentArgs by navArgs()
-    private var postID = ""*/
+    private lateinit var binding: FragmentPostDetailsBinding
+    private val postID by lazy { requireArguments().getString("postID", "") }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,9 +64,23 @@ class PostDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentCommunityBinding.inflate(inflater, container, false)
+        binding = FragmentPostDetailsBinding.inflate(inflater, container, false)
 
-   /*     postID = args.postID*/
+        binding.topAppBar.setOnClickListener{
+            findNavController().navigateUp()
+        }
+
+        adapterComment = CommentAdapter { holder, post ->
+            holder.binding.avatarView.setOnClickListener {
+                findNavController().navigate(
+                    R.id.action_postCommentFragment_to_userProfileFragment, bundleOf(
+                        "userID" to post.userID
+                    )
+                )
+
+            }
+
+        }
 
         adapter = PostAdapter { holder, post ->
             holder.binding.avatarView.setOnClickListener {
@@ -80,19 +105,26 @@ class PostDetailsFragment : Fragment() {
                 )
                 )
             }
-            holder.binding.btnMoreOptions.visibility = View.INVISIBLE
+            if(post.user.uid != userVM.getUserLD().value!!.uid){
+                holder.binding.btnMoreOptions.visibility = View.INVISIBLE
+            }
+
+            holder.binding.btnMoreOptions.setOnClickListener {
+                showPopupMenu(holder.binding.btnMoreOptions, post.postID) }
+
             updateThumbUpDrawable(holder, post)
         }
 
         binding.postResult.adapter = adapter
+        binding.commentResult.adapter = adapterComment
 
 
         postVM.getPostLD().observe(viewLifecycleOwner) { postList ->
             userVM.getUserLLD().observe(viewLifecycleOwner) { user ->
 
-             /*   val targetPostID = postID*/
+            val targetPostID = postID
 
-                val filteredPostList = postList.filter { /*it.postID == targetPostID && */it.deletedAt == 0L }
+                val filteredPostList = postList.filter { it.postID == targetPostID && it.deletedAt == 0L }
 
                 filteredPostList.forEach { post ->
                     post.user = userVM.get(post.userID) ?: User()
@@ -108,6 +140,31 @@ class PostDetailsFragment : Fragment() {
                 }, 100)
             }
         }
+
+        postCommentsVM.getCommentsByPostID(postID).observe(viewLifecycleOwner) { commentList ->
+            userVM.getUserLLD().observe(viewLifecycleOwner) { user ->
+                commentList.forEach{ comment ->
+                    comment.user = userVM.get(comment.userID) ?: User()
+                }
+            }
+            val sortedCommentList = commentList.sortedByDescending { it.createdAt }
+
+            adapterComment.submitList(sortedCommentList)
+
+            val handler = Handler(Looper.getMainLooper())
+            handler.postDelayed({
+                adapterComment.notifyDataSetChanged()
+            }, 100)
+
+        }
+
+        // Refresh
+        binding.refresh.setOnRefreshListener {
+                adapter.notifyDataSetChanged()
+                adapterComment.notifyDataSetChanged()
+                binding.refresh.isRefreshing = false
+            }
+
 
         return binding.root
     }
@@ -182,6 +239,43 @@ class PostDetailsFragment : Fragment() {
         val thumbUpDrawable: Drawable? = ContextCompat.getDrawable(holder.itemView.context, thumbUpDrawableRes)
         holder.binding.imageThumbUp.setImageDrawable(thumbUpDrawable)
     }
+
+    fun showPopupMenu(view: View,postID: String) {
+        val popupMenu = PopupMenu(requireContext(), view)
+        popupMenu.inflate(R.menu.post_menu)
+
+        // Set up a listener for menu item clicks
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_edit -> {
+                    // Handle edit action
+                    findNavController().navigate(R.id.action_postDetailsFragment_to_addPostFragment, bundleOf(
+                        "postID" to postID
+                    ))
+                    true
+                }
+                R.id.menu_delete -> {
+                    // Handle delete action
+                    val oriPost = postVM.get(postID)
+                    if(oriPost!=null){
+                        val updatedPost = oriPost.copy(deletedAt = DateTime.now().millis)
+                        dialog("Delete Post", "Are you sure want to delete this post ?",
+                            onPositiveClick = { _, _ ->
+                                lifecycleScope.launch {
+                                    postVM.update(updatedPost)
+                                }
+                                snackbar("Post Deleted Successfully.")
+                            })
+                    }
+                    true
+                }
+                else -> false
+            }
+        }
+        // Show the popup menu
+        popupMenu.show()
+    }
+
 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
