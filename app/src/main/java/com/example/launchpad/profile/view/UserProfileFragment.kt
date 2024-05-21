@@ -14,6 +14,9 @@ import com.example.launchpad.R
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentUserProfileBinding
 import com.example.launchpad.profile.tab.TabMyPostListFragment
+import com.example.launchpad.util.createChatroom
+import com.example.launchpad.util.isChatRoomExist
+import com.example.launchpad.util.message
 import com.example.launchpad.util.toBitmap
 import com.google.android.material.tabs.TabLayoutMediator
 import io.getstream.avatarview.coil.loadImage
@@ -30,7 +33,7 @@ class UserProfileFragment : Fragment() {
         "Post"
     )
     private val userID by lazy { requireArguments().getString("userID", "") }
-
+    private val nav by lazy { findNavController() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +42,7 @@ class UserProfileFragment : Fragment() {
         binding = FragmentUserProfileBinding.inflate(inflater, container, false)
 
         userVM.getUserLLD().observe(viewLifecycleOwner) { userList ->
-            val user = userList.find { it.uid == userID }
+            val user = userList.find { it.uid == userID } ?: return@observe
             user?.let {
                 val avatar =
                     if (it.avatar.toBytes().isEmpty())
@@ -51,17 +54,27 @@ class UserProfileFragment : Fragment() {
                 binding.avatarView.loadImage(avatar)
 
             }
-        }
-        if (userVM.getUserLD().value!!.uid == userID) {
-            binding.btnMessage.visibility = View.INVISIBLE
+
+            binding.btnMessage.setOnClickListener {
+                val userId = userVM.getAuth().uid
+                val otherId = user.uid
+
+                val chatRoomId = userVM.getAuth().uid + "_" + otherId
+                if (!isChatRoomExist(userId, otherId)) {
+                    createChatroom(chatRoomId)
+                }
+                message(chatRoomId, nav)
+            }
         }
 
 
-        binding.topAppBar.setOnClickListener{
+
+
+        binding.topAppBar.setOnClickListener {
             findNavController().navigateUp()
         }
 
-        val adapter = ViewPagerAdapter(requireActivity().supportFragmentManager, lifecycle,userID)
+        val adapter = ViewPagerAdapter(requireActivity().supportFragmentManager, lifecycle, userID)
         binding.viewPager.adapter = adapter
 
 
@@ -71,7 +84,11 @@ class UserProfileFragment : Fragment() {
         return binding.root
     }
 
-    class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle,private val userID: String) :
+    class ViewPagerAdapter(
+        fragmentManager: FragmentManager,
+        lifecycle: Lifecycle,
+        private val userID: String
+    ) :
         FragmentStateAdapter(fragmentManager, lifecycle) {
 
         override fun getItemCount(): Int {
@@ -84,5 +101,5 @@ class UserProfileFragment : Fragment() {
                 else -> throw Exception()
             }
         }
-}
+    }
 }
