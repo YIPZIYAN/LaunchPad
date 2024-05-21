@@ -22,6 +22,7 @@ import com.example.launchpad.util.snackbar
 import com.example.launchpad.util.toast
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 class ChangePasswordFragment : Fragment() {
 
@@ -29,6 +30,7 @@ class ChangePasswordFragment : Fragment() {
 
     private lateinit var binding: FragmentChangePasswordBinding
     private val viewModel: ChangePasswordViewModel by viewModels()
+    private var newPassword = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,19 +43,21 @@ class ChangePasswordFragment : Fragment() {
         binding.btnChangePassword.setOnClickListener { changePassword() }
 
         viewModel.response.observe(viewLifecycleOwner) { if (it != null) toast(it) }
-        viewModel.isSuccess.observe(viewLifecycleOwner) {
+        viewModel.isCorrectPassword.observe(viewLifecycleOwner) {
             if (it) {
                 dialog(
                     "Change Password",
                     getString(R.string.change_password_confirmation),
                     onPositiveClick = { _, _ ->
-                        requireContext().intentWithoutBackstack(
-                            requireContext(),
-                            MainActivity::class.java
-                        )
-                        snackbar("Password Changed Successfully!")
+                        viewModel.resetPassword(newPassword)
                     }
                 )
+            }
+        }
+        viewModel.isSuccess.observe(viewLifecycleOwner) {
+            if (it) {
+                snackbar("Password Changed Successfully!")
+                nav.navigateUp()
             }
         }
 
@@ -63,7 +67,7 @@ class ChangePasswordFragment : Fragment() {
 
     private fun changePassword() {
         val currentPassword = binding.edtCurrentPassword.text.toString()
-        val newPassword = binding.edtPassword.text.toString()
+        newPassword = binding.edtPassword.text.toString()
         val confirmPassword = binding.edtPasswordConfirmation.text.toString()
 
 
@@ -72,11 +76,6 @@ class ChangePasswordFragment : Fragment() {
         }
 
         viewModel.isCurrentPasswordValid(currentPassword)
-        viewModel.isCorrectPassword.observe(viewLifecycleOwner) {
-            if (it) viewModel.resetPassword(
-                newPassword
-            )
-        }
 
     }
 

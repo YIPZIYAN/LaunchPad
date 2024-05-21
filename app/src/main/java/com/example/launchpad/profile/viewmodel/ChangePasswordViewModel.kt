@@ -19,6 +19,7 @@ class ChangePasswordViewModel : ViewModel() {
             return
         }
         val result = EmailAuthProvider.getCredential(user.email!!, password)
+        Log.d("SIGN IN METHID", "isCurrentPasswordValid: ${result.signInMethod}")
         user.reauthenticate(result).addOnCompleteListener {
             isCorrectPassword.value = it.isSuccessful
         }.addOnFailureListener {
