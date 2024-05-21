@@ -13,20 +13,19 @@ import com.example.launchpad.R
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentChangePasswordBinding
 import com.example.launchpad.databinding.FragmentLoginBinding
+import com.example.launchpad.profile.viewmodel.ChangePasswordViewModel
 import com.example.launchpad.util.displayErrorHelper
+import com.example.launchpad.util.snackbar
 import com.example.launchpad.util.toast
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 
 class ChangePasswordFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ChangePasswordFragment()
-    }
-
     private val nav by lazy { findNavController() }
 
     private lateinit var binding: FragmentChangePasswordBinding
+    private val viewModel: ChangePasswordViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +37,14 @@ class ChangePasswordFragment : Fragment() {
 
         binding.btnChangePassword.setOnClickListener { changePassword() }
 
+        viewModel.response.observe(viewLifecycleOwner) { if (it != null) toast(it) }
+        viewModel.isSuccess.observe(viewLifecycleOwner) {
+            if (it) {
+                nav.navigateUp()
+                snackbar("Password Changed Successfully!")
+            }
+        }
+
         return binding.root
 
     }
@@ -47,49 +54,20 @@ class ChangePasswordFragment : Fragment() {
         val newPassword = binding.edtPassword.text.toString()
         val confirmPassword = binding.edtPasswordConfirmation.text.toString()
 
-        if (!isCurrentPasswordValid(currentPassword)) {
-            displayErrorHelper(
-                binding.lblCurrentPassword,
-                FirebaseAuth.getInstance().currentUser?.email.toString()
-            )
-            return
-        }
 
         if (!isValid(newPassword, confirmPassword)) {
             return
         }
 
-        updatePassword(newPassword)
-
-    }
-
-    private fun updatePassword(newPassword: String) {
-        val user = FirebaseAuth.getInstance().currentUser
-        user?.updatePassword(newPassword)
-            ?.addOnCompleteListener { task ->
-                if(task.isSuccessful) {
-                    toast("Password successfully updated. Please login again.")
-
-                }
-            }
-    }
-
-    private fun isCurrentPasswordValid(currentPassword: String): Boolean {
-        var isValid = false
-
-        if (currentPassword.isNullOrEmpty())
-            return isValid
-
-        val user = FirebaseAuth.getInstance().currentUser
-        if (user != null) {
-            val credential = EmailAuthProvider.getCredential(user.email!!, currentPassword)
-            user.reauthenticate(credential)
-                .addOnCompleteListener { task ->
-                    isValid = task.isSuccessful
-                }
+        viewModel.isCurrentPasswordValid(currentPassword)
+        viewModel.isCorrectPassword.observe(viewLifecycleOwner) {
+            if (it) viewModel.resetPassword(
+                newPassword
+            )
         }
-        return isValid
+
     }
+
 
     private fun isValid(password: String, passwordConfirmation: String): Boolean {
         when {
