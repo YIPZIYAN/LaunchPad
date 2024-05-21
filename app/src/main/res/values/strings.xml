@@ -159,4 +159,5 @@
     <string name="delete">Delete</string>
     <string name="you_haven_t_apply_any_job_yet">You haven\'t apply any job yet.</string>
     <string name="click_to_view_this_resume">Click to view this resume.</string>
+    <string name="please_verify_your_email">Please Verify Your Email.</string>
 </resources>
