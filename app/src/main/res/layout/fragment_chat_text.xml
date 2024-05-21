@@ -36,51 +36,38 @@
             android:id="@+id/rv_messages"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="12dp"
-            app:layout_constraintBottom_toTopOf="@id/txt_message"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appBar"
             android:scrollbars="vertical"
             app:layoutManager="LinearLayoutManager"
-            />
-
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txt_message"
-            style="?attr/textInputFilledStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="12dp"
-            app:boxCornerRadiusBottomEnd="8dp"
-            app:boxCornerRadiusBottomStart="8dp"
-            app:boxCornerRadiusTopEnd="8dp"
-            app:boxCornerRadiusTopStart="8dp"
-            app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_send"
+            app:layout_constraintBottom_toTopOf="@+id/edtMessage"
             app:layout_constraintStart_toStartOf="parent"
-            app:placeholderText="Type your message...">
+            app:layout_constraintTop_toBottomOf="@id/appBar" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_message"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btn_send"
             style="?attr/materialIconButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             app:icon="@drawable/ic_send"
-            app:layout_constraintBottom_toBottomOf="@id/txt_message"
+            app:layout_constraintBottom_toBottomOf="@+id/edtMessage"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txt_message" />
+            app:layout_constraintTop_toTopOf="@+id/edtMessage" />
+
+        <EditText
+            android:id="@+id/edtMessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:ems="10"
+            android:inputType="text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_send"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_messages" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
