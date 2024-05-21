@@ -214,10 +214,18 @@
                             android:text="Resume.pdf"
                             android:textAppearance="?attr/textAppearanceBodyMedium"
                             android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/file_logo"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="@+id/file_logo" />
+
+                        <TextView
+                            android:id="@+id/lblViewResume"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/click_to_view_this_resume"
+                            android:textStyle="italic"
+                            app:layout_constraintBottom_toBottomOf="@+id/file_logo"
+                            app:layout_constraintStart_toStartOf="@+id/file_name" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
