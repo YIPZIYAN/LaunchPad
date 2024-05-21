@@ -35,7 +35,6 @@ class TabMyJobFragment : Fragment() {
 
         initAdapter()
 
-
         jobAppVM.getJobAppLD().observe(viewLifecycleOwner) { jobAppList ->
             if (jobAppList.isEmpty()) {
                 binding.tabNoApplicant.visibility = View.VISIBLE

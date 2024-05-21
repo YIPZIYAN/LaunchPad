@@ -13,6 +13,7 @@ import com.example.launchpad.community.viewmodel.PostViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentTabMyPostListBinding
 import com.example.launchpad.profile.adapter.PostPhotoAdapter
+
 class TabMyPostListFragment(val userID: String = "") : Fragment() {
 
     private lateinit var adapter: PostPhotoAdapter
@@ -26,7 +27,7 @@ class TabMyPostListFragment(val userID: String = "") : Fragment() {
     ): View {
         binding = FragmentTabMyPostListBinding.inflate(inflater, container, false)
 
-        adapter = PostPhotoAdapter{holder, post ->
+        adapter = PostPhotoAdapter { holder, post ->
             holder.binding.imageView.setOnClickListener {
                 findNavController().navigate(
                     R.id.postDetailsFragment, bundleOf(
@@ -39,22 +40,26 @@ class TabMyPostListFragment(val userID: String = "") : Fragment() {
 
         postVM.getPostLD().observe(viewLifecycleOwner) { postList ->
             if (postList.isEmpty()) {
+                binding.noPost.visibility = View.VISIBLE
+                binding.rv.visibility = View.GONE
                 return@observe
             }
 
             // if no id pass in (My Post), use own id
             val uid = if (userID == "") userVM.getAuth().uid else userID
 
-            var sortedPostList =
-                postList.filter { it.deletedAt == 0L }
-                    .filter { it.userID == uid }
-                    .sortedByDescending { it.createdAt }
+            val sortedPostList = postList.filter { it.deletedAt == 0L && it.userID == uid }
 
-            if (sortedPostList.isEmpty()){
+            if (sortedPostList.isEmpty()) {
+                binding.noPost.visibility = View.VISIBLE
+                binding.rv.visibility = View.GONE
                 return@observe
             }
 
-            adapter.submitList(sortedPostList)
+            binding.noPost.visibility = View.GONE
+            binding.rv.visibility = View.VISIBLE
+
+            adapter.submitList(sortedPostList.sortedByDescending { it.createdAt })
         }
 
         return binding.root

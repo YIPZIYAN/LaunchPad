@@ -222,6 +222,7 @@ class PostDetailsFragment : Fragment() {
                                 lifecycleScope.launch {
                                     postVM.update(updatedPost)
                                 }
+                                findNavController().navigateUp()
                                 snackbar("Post Deleted Successfully.")
                             })
                     }
