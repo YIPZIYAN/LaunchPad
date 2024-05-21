@@ -55,7 +55,7 @@ fun sendPushNotification(title: String, message: String, receiverToken: String) 
 
     // For future used
     //val dataObj = JSONObject()
-    //dataObj.put("chatRoomId", chatRoomId)
+    //dataObj.put("fragment", fragment)
 
     jsonObject.put("notification", notificationObj)
     //jsonObject.put("data", dataObj)
@@ -302,3 +302,47 @@ fun ImageView.setImageBlob(blob: Blob) {
 fun isBlobEmpty(blob: Blob): Boolean {
     return blob.toBytes().isEmpty()
 }
+
+//future improvement used
+/*
+fun createNotificationChannel(context: Context) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val name = "Launchpad"
+        val descriptionText = "Launchpad Notification"
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel("CHANNEL_ID", name, importance).apply {
+            description = descriptionText
+        }
+        val notificationManager: NotificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+    }
+}
+
+fun sendNotificationWithIntent(context: Context, title: String, message: String, fragment: String, bundle: String) {
+    val intent = Intent(context, UserActivity::class.java)
+    intent.putExtra(fragment,bundle)
+    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+    val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+
+    val builder = NotificationCompat.Builder(context, "CHANNEL_ID")
+        .setSmallIcon(R.drawable.ic_launcher_foreground)
+        .setContentTitle(title)
+        .setContentText(message)
+        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        .setContentIntent(pendingIntent)
+        .setAutoCancel(true)
+
+    with(NotificationManagerCompat.from(context)) {
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return@with
+        }
+        notify(Random.nextInt(10000, 100000), builder.build())
+    }
+}
+*/
