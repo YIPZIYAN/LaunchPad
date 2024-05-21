@@ -124,6 +124,7 @@ class PostCommentFragment : Fragment() {
                 snackbar("Commented Successfully.")
                 nav.navigateUp()
 
+
             }
         )
     }

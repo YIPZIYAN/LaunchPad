@@ -24,6 +24,7 @@ import com.example.launchpad.community.viewmodel.PostCommentViewModel
 import com.example.launchpad.community.viewmodel.PostLikesViewModel
 import com.example.launchpad.community.viewmodel.PostViewModel
 import com.example.launchpad.data.Post
+import com.example.launchpad.data.PostComments
 import com.example.launchpad.data.PostLikes
 import com.example.launchpad.data.User
 import com.example.launchpad.data.viewmodel.UserViewModel
@@ -62,10 +63,15 @@ class PostDetailsFragment : Fragment() {
             findNavController().navigateUp()
         }
 
+
+        binding.btnSend.setOnClickListener {
+            togglePost(postID)
+        }
+
         adapterComment = CommentAdapter { holder, post ->
             holder.binding.avatarView.setOnClickListener {
                 findNavController().navigate(
-                    R.id.action_postCommentFragment_to_userProfileFragment, bundleOf(
+                    R.id.action_postDetailsFragment_to_userProfileFragment, bundleOf(
                         "userID" to post.userID
                     )
                 )
@@ -241,6 +247,70 @@ class PostDetailsFragment : Fragment() {
         }
         // Show the popup menu
         popupMenu.show()
+    }
+
+    private fun togglePost(postID: String){
+        postComment()
+        addCommentsTotaltoPost(postID)
+    }
+    private fun postComment(){
+        val comment = createCommentObject()
+
+        if (!isPostValid(comment)) {
+            snackbar("Please fulfill the requirement.")
+            return
+        }
+
+
+
+        dialog("Comment", "Are you sure want to post this comment ?",
+            onPositiveClick = { _, _ ->
+                lifecycleScope.launch {
+                    postCommentsVM.set(comment)
+
+                }
+
+                snackbar("Commented Successfully.")
+                binding.edtComment.setText("");
+
+            }
+        )
+    }
+
+    private fun createCommentObject(): PostComments {
+        return PostComments(
+            postID = postID ,
+            createdAt = DateTime.now().millis,
+            userID = userVM.getUserLD().value!!.uid,
+            comment = binding.edtComment.text.toString().trim()
+        )
+
+    }
+
+    private fun addCommentsTotaltoPost(postID : String){
+        val tempPost = postVM.get(postID)
+        val f = tempPost?.let {
+            Post(
+                postID= it.postID,
+                description= it.description,
+                image= it.image,
+                createdAt= it.createdAt,
+                userID= it.userID,
+                comments= it.comments+1,
+                likes= it.likes
+            )
+        }
+
+        if (f != null) {
+            postVM.update(f)
+        }
+    }
+
+    private fun isPostValid(comments: PostComments): Boolean {
+
+        val validation = postCommentsVM.validateInput(binding.txtCommenting,comments.comment )
+
+        return validation
     }
 
 }

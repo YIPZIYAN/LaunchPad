@@ -179,41 +179,21 @@
                                 app:layout_constraintStart_toEndOf="@+id/imageThumbUp"
                                 app:layout_constraintTop_toTopOf="@+id/imageThumbUp" />
 
+
+                            <!-- Title, secondary and supporting text -->
+
+
                             <TextView
                                 android:id="@+id/txtComments"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="5dp"
+                                android:layout_marginEnd="16dp"
                                 android:clickable="false"
                                 android:text="111 Comments"
                                 android:textSize="13sp"
                                 app:layout_constraintBottom_toBottomOf="@id/imageThumbUp"
-                                app:layout_constraintEnd_toStartOf="@id/textView15"
-                                app:layout_constraintTop_toTopOf="@+id/imageThumbUp" />
-
-                            <TextView
-                                android:id="@+id/textView15"
-                                android:layout_width="5dp"
-                                android:layout_height="12dp"
-                                android:layout_marginEnd="5dp"
-                                android:text="•"
-                                app:layout_constraintEnd_toStartOf="@id/textView16"
-                                app:layout_constraintTop_toTopOf="@id/txtComments" />
-
-                            <TextView
-                                android:id="@+id/textView16"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:text="1 Share"
-                                android:textSize="13sp"
-                                app:layout_constraintBottom_toBottomOf="@id/imageThumbUp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="@+id/imageThumbUp" />
-
-
-                            <!-- Title, secondary and supporting text -->
-
 
                             <com.google.android.material.divider.MaterialDivider
                                 android:id="@+id/materialDividerr"
@@ -263,24 +243,6 @@
                                         android:text="@string/comment"
                                         app:icon="@drawable/round_comment_24"
                                         app:iconPadding="8dp"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        app:layout_constraintStart_toStartOf="parent"
-                                        app:layout_constraintTop_toTopOf="parent" />
-
-                                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                                <androidx.constraintlayout.widget.ConstraintLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1">
-
-                                    <Button
-                                        android:id="@+id/btn_share"
-                                        style="@style/Widget.Material3.Button.TextButton"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/share"
-                                        app:icon="@drawable/baseline_share_24"
                                         app:layout_constraintEnd_toEndOf="parent"
                                         app:layout_constraintStart_toStartOf="parent"
                                         app:layout_constraintTop_toTopOf="parent" />
