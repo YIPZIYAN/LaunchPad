@@ -17,7 +17,8 @@ import com.example.launchpad.util.toBitmap
 import io.getstream.avatarview.coil.loadImage
 
 class InterviewHistoryAdapter(
-    val fn: (ViewHolder, Interview) -> Unit = { _, _ -> }
+    val fn: (ViewHolder, Interview) -> Unit = { _, _ -> },
+    val isEnterprise:Boolean
 ) : ListAdapter<Interview, InterviewHistoryAdapter.ViewHolder>(Diff) {
 
     companion object Diff : DiffUtil.ItemCallback<Interview>() {
@@ -33,8 +34,16 @@ class InterviewHistoryAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val interview = getItem(position)
 
-        holder.binding.avatarView.loadImage(interview.jobApp.user.avatar.toBitmap())
-        holder.binding.applicantName.text = interview.jobApp.user.name
+        //show applicant name for enterprise, else show company name
+        if (isEnterprise) {
+            holder.binding.avatarView.loadImage(interview.jobApp.user.avatar.toBitmap())
+            holder.binding.applicantName.text = interview.jobApp.user.name
+        }
+        else{
+            holder.binding.avatarView.loadImage(interview.jobApp.job.company.avatar.toBitmap())
+            holder.binding.applicantName.text = interview.jobApp.job.company.name
+        }
+
         holder.binding.appliedJob.text = interview.jobApp.job.jobName
         holder.binding.lblDay.text = "Interviewed on ${displayDate(interview.date)}"
         fn(holder, interview)

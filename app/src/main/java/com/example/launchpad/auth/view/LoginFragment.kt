@@ -17,10 +17,12 @@ import com.example.launchpad.auth.viewmodel.LoginViewModel
 import com.example.launchpad.databinding.FragmentLoginBinding
 import com.example.launchpad.util.displayErrorHelper
 import com.example.launchpad.util.intentWithoutBackstack
+import com.example.launchpad.util.snackbar
 import com.example.launchpad.util.toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.snackbar.Snackbar
 
 class LoginFragment : Fragment() {
 
@@ -44,7 +46,15 @@ class LoginFragment : Fragment() {
         viewModel.signInResult.observe(viewLifecycleOwner) { success ->
             if (success) {
                 requireContext().intentWithoutBackstack(requireActivity(), UserActivity::class.java)
+                return@observe
             }
+
+            Snackbar.make(requireView(),
+                getString(R.string.please_verify_your_email), Snackbar.LENGTH_LONG)
+                .setAction("RESEND") {
+                    viewModel.sendEmailVerification()
+                }.show()
+
         }
 
         viewModel.response.observe(viewLifecycleOwner) { if (it != null) toast(it) }
@@ -74,11 +84,10 @@ class LoginFragment : Fragment() {
         if (!isValid(email, password)) {
             return
         }
-
         viewModel.firebaseAuthWithEmail(email, password)
 
-
     }
+
 
     private fun isValid(email: String, password: String): Boolean {
         when {

@@ -23,6 +23,7 @@ class SignUpViewModel(val app: Application) : AndroidViewModel(app) {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     _isSignUpSuccess.value = task.isSuccessful
+                    sendEmailVerification()
                 }
             }
             .addOnFailureListener {
@@ -30,7 +31,11 @@ class SignUpViewModel(val app: Application) : AndroidViewModel(app) {
                 Log.d("Error", "signUpWithEmail: " + it.message)
             }
     }
-
+    private fun sendEmailVerification() {
+        auth.currentUser?.sendEmailVerification()?.addOnFailureListener {
+            errorResponseMsg.value = it.message
+        }
+    }
 
 
 }

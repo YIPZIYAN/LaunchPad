@@ -19,6 +19,7 @@ import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.data.viewmodel.JobViewModel
 import com.example.launchpad.util.dialog
+import com.example.launchpad.util.disable
 import com.example.launchpad.util.setImageBlob
 import com.example.launchpad.util.snackbar
 import kotlinx.coroutines.launch
@@ -66,10 +67,7 @@ class JobDetailsFragment : Fragment() {
         } else {
             jobAppVM.getJobAppLD().observe(viewLifecycleOwner) {
                 if (jobAppVM.isApplied(userVM.getAuth().uid, jobID)) {
-                    binding.btnApply.let {
-                        it.isEnabled = false
-                        it.isClickable = false
-                    }
+                    binding.btnApply.disable()
                     return@observe
                 }
 

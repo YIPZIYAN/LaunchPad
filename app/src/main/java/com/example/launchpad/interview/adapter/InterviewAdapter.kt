@@ -16,7 +16,8 @@ import com.example.launchpad.util.toBitmap
 import io.getstream.avatarview.coil.loadImage
 
 class InterviewAdapter(
-    val fn: (ViewHolder, Interview) -> Unit = { _, _ -> }
+    val fn: (ViewHolder, Interview) -> Unit = { _, _ -> },
+    val isEnterprise: Boolean
 ) : ListAdapter<Interview, InterviewAdapter.ViewHolder>(Diff) {
 
     companion object Diff : DiffUtil.ItemCallback<Interview>() {
@@ -34,8 +35,17 @@ class InterviewAdapter(
         Log.d("TAG", "onBindViewHolder: ")
         val prev = if (position > 0) getItem(position - 1) else null
 
-        holder.binding.avatarView.loadImage(interview.jobApp.user.avatar.toBitmap())
-        holder.binding.applicantName.text = interview.jobApp.user.name
+
+        //show applicant name for enterprise, else show company name
+        if (isEnterprise) {
+            holder.binding.avatarView.loadImage(interview.jobApp.user.avatar.toBitmap())
+            holder.binding.applicantName.text = interview.jobApp.user.name
+        }
+        else{
+            holder.binding.avatarView.loadImage(interview.jobApp.job.company.avatar.toBitmap())
+            holder.binding.applicantName.text = interview.jobApp.job.company.name
+        }
+
         holder.binding.appliedJob.text = interview.jobApp.job.jobName
 
         holder.binding.location.text = interview.location

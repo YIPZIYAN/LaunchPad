@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.launchpad.R
+import com.example.launchpad.data.viewmodel.CompanyViewModel
 import com.example.launchpad.data.viewmodel.InterviewViewModel
 import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
@@ -33,6 +34,7 @@ class TabUpcomingInterviewFragment : Fragment() {
     private val interviewVM: InterviewViewModel by activityViewModels()
     private val userVM: UserViewModel by activityViewModels()
     private val jobVM: JobViewModel by activityViewModels()
+    private val companyVM: CompanyViewModel by activityViewModels()
     private lateinit var binding: FragmentTabUpcomingInterviewBinding
     private val nav by lazy { findNavController() }
 
@@ -42,7 +44,7 @@ class TabUpcomingInterviewFragment : Fragment() {
     ): View {
         binding = FragmentTabUpcomingInterviewBinding.inflate(inflater, container, false)
 
-        val adapter = InterviewAdapter { h, f ->
+        val adapter = InterviewAdapter({ h, f ->
             h.binding.appliedJob.setOnClickListener {
                 nav.navigate(
                     R.id.jobDetailsFragment, bundleOf(
@@ -76,7 +78,7 @@ class TabUpcomingInterviewFragment : Fragment() {
                         )
                     )
             }
-        }
+        }, userVM.isEnterprise())
 
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(
@@ -87,6 +89,12 @@ class TabUpcomingInterviewFragment : Fragment() {
         )
 
         interviewVM.getInterviewLD().observe(viewLifecycleOwner) { list ->
+            if (list.isEmpty()) {
+                binding.tabApplicant.visibility = View.INVISIBLE
+                binding.tabNoApplicant.visibility = View.VISIBLE
+                return@observe
+            }
+
             val interviewList =
                 list.filter {
                     it.date >= DateTime.now().withTime(0, 0, 0, 0).millis
@@ -95,6 +103,7 @@ class TabUpcomingInterviewFragment : Fragment() {
             interviewList.forEach { it.jobApp = jobAppVM.get(it.jobAppID)!! }
             interviewList.forEach { it.jobApp.user = userVM.get(it.jobApp.userId)!! }
             interviewList.forEach { it.jobApp.job = jobVM.get(it.jobApp.jobId)!! }
+            interviewList.forEach { it.jobApp.job.company = companyVM.get(it.jobApp.job.companyID)!! }
 
             //filter for the particular user only
             val personalInterviewList = interviewList.filter {

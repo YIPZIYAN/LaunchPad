@@ -63,6 +63,8 @@ class ScheduleInterviewFragment : Fragment() {
     private var startTime: Time = Time()
     private var endTime: Time = Time()
 
+    private var isDeleting = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -76,7 +78,11 @@ class ScheduleInterviewFragment : Fragment() {
         interviewVM.isSuccess.observe(viewLifecycleOwner) {
             if (it) {
                 nav.popBackStack(R.id.homeFragment, false)
-                snackbar("Interview Scheduled Successfully!")
+
+                snackbar(
+                    if (isDeleting) "Interview Schedule Deleted Successfully!" else
+                        "Interview Schedule Updated Successfully!"
+                )
             }
         }
 
@@ -85,13 +91,26 @@ class ScheduleInterviewFragment : Fragment() {
         when (action) {
             "VIEW" -> {
                 viewModeUI()
-                fetchInterviewDate()
+                fetchInterviewData()
             }
 
             "EDIT" -> {
                 binding.topAppBar.title = "Edit Interview"
                 binding.btnApply.text = "EDIT"
-                fetchInterviewDate()
+                binding.topAppBar.menu.findItem(R.id.delete).apply {
+                    isVisible = true
+                    setOnMenuItemClickListener {
+                        when (it.itemId) {
+                            R.id.delete -> {
+                                delete()
+                                true
+                            }
+
+                            else -> false
+                        }
+                    }
+                }
+                fetchInterviewData()
                 mapbox()
                 setupDateTimePicker()
             }
@@ -103,6 +122,18 @@ class ScheduleInterviewFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun delete() {
+        dialog(
+            "Delete Interview",
+            "Are you sure to delete this interview?",
+            onPositiveClick = { _, _ ->
+                lifecycleScope.launch {
+                    interviewVM.delete(interviewID)
+                }
+                isDeleting = true
+            })
     }
 
     private fun viewModeUI() {
@@ -119,9 +150,10 @@ class ScheduleInterviewFragment : Fragment() {
         }
     }
 
-    private fun fetchInterviewDate() {
+    private fun fetchInterviewData() {
         interviewVM.getInterviewLD().observe(viewLifecycleOwner) {
             val interview = interviewVM.get(interviewID)
+            if (isDeleting) return@observe
             if (interview == null) {
                 nav.navigateUp()
                 toast("Interview Data Is Empty!")
@@ -159,6 +191,11 @@ class ScheduleInterviewFragment : Fragment() {
             return
         }
 
+        if (startTime.combinedTime > endTime.combinedTime) {
+            toast("Start time must before the end time.")
+            return
+        }
+
         val interview = Interview(
             id = interviewID,
             jobAppID = jobAppID,
@@ -180,11 +217,19 @@ class ScheduleInterviewFragment : Fragment() {
                 lifecycleScope.launch {
                     interviewVM.set(interview)
                 }
-                //TODO if action EDIT notification change to blablalba else NEw interview scheduled
+
                 sendPushNotification(
                     if (action == "EDIT") "INTERVIEW UPDATED !" else "NEW INTERVIEW SCHEDULED !",
-                    if (action == "EDIT") "Interview of ${interview.jobApp.job.jobName} has been updated to ${displayDate(interview.date)}."
-                    else "Interview of ${interview.jobApp.job.jobName} has been scheduled on ${displayDate(interview.date)}.",
+                    if (action == "EDIT") "Interview of ${interview.jobApp.job.jobName} has been updated to ${
+                        displayDate(
+                            interview.date
+                        )
+                    }."
+                    else "Interview of ${interview.jobApp.job.jobName} has been scheduled on ${
+                        displayDate(
+                            interview.date
+                        )
+                    }.",
                     interview.jobApp.user.token
                 )
             })
