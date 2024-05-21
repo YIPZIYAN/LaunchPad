@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.graphics.drawable.toBitmapOrNull
 import androidx.core.graphics.scale
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
@@ -22,9 +23,15 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.Blob
 import com.google.firebase.messaging.FirebaseMessaging
 import io.getstream.avatarview.AvatarView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType
@@ -62,6 +69,46 @@ fun sendPushNotification(title: String, message: String, receiverToken: String) 
     jsonObject.put("to", receiverToken)
 
     callApi(jsonObject)
+}
+
+//create chat room
+fun isChatRoomExist(userId: String, otherId: String): Boolean {
+    var isExist = false
+    CoroutineScope(Dispatchers.IO).launch {
+        val chatRoomsRef = FirebaseDatabase.getInstance().getReference("chatRooms")
+        val dataSnapshot = withContext(Dispatchers.Default) {
+            chatRoomsRef.get().await()
+        }
+
+        dataSnapshot.children.forEach {
+            val chatRoomId = it.key
+            if (chatRoomId!!.contains(userId) && chatRoomId.contains(otherId)) {
+                isExist = true
+                return@forEach
+            }
+        }
+
+    }
+    return isExist
+}
+
+fun message(chatRoomId: String, nav: NavController) {
+    nav.navigate(
+        R.id.chatTextFragment, bundleOf(
+            "chatRoomId" to chatRoomId
+        )
+    )
+}
+
+
+fun createChatroom(chatRoomId: String) {
+    val chatRoomsRef = FirebaseDatabase.getInstance().getReference("chatRooms")
+    chatRoomsRef.child(chatRoomId).get().addOnSuccessListener { snapshot ->
+        if (!snapshot.exists()) {
+            //potential problem: duplicate chat room
+            chatRoomsRef.child(chatRoomId).setValue(true)
+        }
+    }
 }
 
 fun callApi(jsonObject: JSONObject) {
@@ -198,9 +245,10 @@ fun View.disable() {
     isEnabled = false
     isClickable = false
 }
+
 fun displayDate(postTime: Long): String {
     val format = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
-   return format.format(Date(postTime))
+    return format.format(Date(postTime))
 }
 
 
@@ -220,7 +268,7 @@ fun formatTime(hour: Int, minute: Int): String {
 fun Fragment.showFileSize(l: Long): String {
     var size = l / 1024.0
     var unit = "KB"
-    if (size > 1024){
+    if (size > 1024) {
         size /= 1024.0
         unit = "MB"
     }

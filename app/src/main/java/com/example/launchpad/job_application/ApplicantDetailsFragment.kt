@@ -20,8 +20,11 @@ import com.example.launchpad.data.viewmodel.JobViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentApplicantDetailsBinding
 import com.example.launchpad.util.JobApplicationState
+import com.example.launchpad.util.createChatroom
 import com.example.launchpad.util.dialog
 import com.example.launchpad.util.displayPostTime
+import com.example.launchpad.util.isChatRoomExist
+import com.example.launchpad.util.message
 import com.example.launchpad.util.sendPushNotification
 import com.example.launchpad.util.snackbar
 import com.example.launchpad.util.toBitmap
@@ -139,7 +142,7 @@ class ApplicantDetailsFragment : Fragment() {
                             JobApplicationState.ACCEPTED,
                             jobAppID
                         )
-                        //TODO
+
                         sendPushNotification(
                             "JOB ACCEPTED BY ${jobApp.job.company.name} !",
                             "Your applied job ${jobApp.job.jobName} has been accepted.",
@@ -172,7 +175,7 @@ class ApplicantDetailsFragment : Fragment() {
                 if (!isChatRoomExist(userId, otherId)) {
                     createChatroom(chatRoomId)
                 }
-                message(chatRoomId)
+                message(chatRoomId,nav)
             }
 
 
@@ -183,42 +186,7 @@ class ApplicantDetailsFragment : Fragment() {
     }
 
     //TODO: WAIT FOR SEARCH USER FUNCTION TO TEST
-    fun isChatRoomExist(userId: String, otherId: String): Boolean {
-        var isExist = false
-        CoroutineScope(Dispatchers.IO).launch {
-            val chatRoomsRef = FirebaseDatabase.getInstance().getReference("chatRooms")
-            val dataSnapshot = withContext(Dispatchers.Default) {
-                chatRoomsRef.get().await()
-            }
-
-            dataSnapshot.children.forEach {
-                val chatRoomId = it.key
-                if (chatRoomId!!.contains(userId) && chatRoomId.contains(otherId)) {
-                    isExist = true
-                    return@forEach
-                }
-            }
-
-        }
-        return isExist
-    }
 
 
-    fun createChatroom(chatRoomId: String) {
-        val chatRoomsRef = FirebaseDatabase.getInstance().getReference("chatRooms")
-        chatRoomsRef.child(chatRoomId).get().addOnSuccessListener { snapshot ->
-            if (!snapshot.exists()) {
-                //potential problem: duplicate chat room
-                chatRoomsRef.child(chatRoomId).setValue(true)
-            }
-        }
-    }
 
-    private fun message(chatRoomId: String) {
-        nav.navigate(
-            R.id.chatTextFragment, bundleOf(
-                "chatRoomId" to chatRoomId
-            )
-        )
-    }
 }

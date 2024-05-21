@@ -56,13 +56,12 @@ class MyProfileFragment : Fragment() {
                 binding.btnVerify.visibility = View.VISIBLE
             }
 
-            if (userVM.isEnterprise()) tabItems = tabItems.drop(1).toTypedArray()
 
             val adapter =
                 ViewPagerAdapter(
                     requireActivity().supportFragmentManager,
                     lifecycle,
-                    tabItems
+                    if (userVM.isEnterprise()) arrayOf("My Post") else tabItems
                 )
             binding.viewPager.adapter = adapter
 
