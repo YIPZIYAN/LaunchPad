@@ -50,11 +50,11 @@
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/txt_search"
                             style="?attr/textInputFilledStyle"
-                            android:layout_width="333dp"
-                            android:layout_height="56dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="12dp"
-                            android:layout_marginBottom="1dp"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="8dp"
                             android:hint="Search something.."
                             app:boxCornerRadiusBottomEnd="12dp"
                             app:boxCornerRadiusBottomStart="12dp"
@@ -63,6 +63,7 @@
                             app:boxStrokeWidth="0dp"
                             app:boxStrokeWidthFocused="0dp"
                             app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/btn_search"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
 
@@ -76,16 +77,15 @@
                         <Button
                             android:id="@+id/btn_search"
                             style="?attr/materialIconButtonStyle"
-                            android:layout_width="61dp"
-                            android:layout_height="52dp"
-                            android:layout_marginEnd="4dp"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
                             android:textSize="20sp"
                             app:icon="@drawable/baseline_search_24"
-                            app:layout_constraintBottom_toBottomOf="@id/txt_search"
+                            app:layout_constraintBottom_toBottomOf="@+id/txt_search"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/txt_search"
-                            app:layout_constraintVertical_bias="0.0"
-                            tools:text="e" />
+                            app:layout_constraintTop_toTopOf="@+id/txt_search" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </com.google.android.material.appbar.AppBarLayout>
