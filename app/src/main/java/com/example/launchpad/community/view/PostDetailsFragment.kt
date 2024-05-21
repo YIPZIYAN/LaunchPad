@@ -30,6 +30,8 @@ import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentCommunityBinding
 import com.example.launchpad.databinding.FragmentPostDetailsBinding
 import com.example.launchpad.util.dialog
+import com.example.launchpad.util.displayPostTime
+import com.example.launchpad.util.setImageBlob
 import com.example.launchpad.util.snackbar
 import com.example.launchpad.viewmodel.CommunityViewModel
 import com.example.launchpad.viewmodel.PostDetailsViewModel
@@ -82,64 +84,46 @@ class PostDetailsFragment : Fragment() {
 
         }
 
-        adapter = PostAdapter { holder, post ->
-            holder.binding.avatarView.setOnClickListener {
+       var targetPost = postVM.get(postID)
+
+        if (targetPost != null) {
+
+            var targetUser = userVM.get(targetPost.userID)
+            if (targetUser != null) {
+                binding.avatarView.setImageBlob(targetUser.avatar)
+                binding.txtUsername.text = targetUser.name
+            }
+            binding.postImageView.setImageBlob(targetPost.image)
+            binding.txtDescription.text = targetPost.description
+
+            binding.txtTime.text = displayPostTime(targetPost.createdAt)
+            binding.txtLikes.text = targetPost.likes.toString()
+            binding.txtComments.text = targetPost.comments.toString() + " Comments"
+
+            binding.btnLike.setOnClickListener {
+                toggleLike(targetPost)
+            }
+
+            binding.avatarView.setOnClickListener {
                 findNavController().navigate(
                     R.id.action_communityFragment_to_userProfileFragment, bundleOf(
-                        "userID" to post.userID
+                        "userID" to targetPost.userID
                     )
                 )
             }
-            holder.binding.btnLike.setOnClickListener {
-                toggleLike(post)
-            }
-            holder.binding.txtComments.setOnClickListener {
-                findNavController().navigate(R.id.action_communityFragment_to_postCommentFragment, bundleOf(
-                    "postID" to post.postID
-                )
-                )
-            }
-            holder.binding.btnComment.setOnClickListener {
-                findNavController().navigate(R.id.action_communityFragment_to_postCommentFragment, bundleOf(
-                    "postID" to post.postID
-                )
-                )
-            }
-            if(post.user.uid != userVM.getUserLD().value!!.uid){
-                holder.binding.btnMoreOptions.visibility = View.INVISIBLE
+            if(targetPost.userID != userVM.getUserLD().value!!.uid){
+                binding.btnMoreOptions.visibility = View.INVISIBLE
             }
 
-            holder.binding.btnMoreOptions.setOnClickListener {
-                showPopupMenu(holder.binding.btnMoreOptions, post.postID) }
+            binding.btnMoreOptions.setOnClickListener {
+                showPopupMenu(binding.btnMoreOptions, targetPost.postID) }
 
-            updateThumbUpDrawable(holder, post)
+            updateThumbUpDrawable(targetPost)
+
         }
 
-        binding.postResult.adapter = adapter
         binding.commentResult.adapter = adapterComment
 
-
-        postVM.getPostLD().observe(viewLifecycleOwner) { postList ->
-            userVM.getUserLLD().observe(viewLifecycleOwner) { user ->
-
-            val targetPostID = postID
-
-                val filteredPostList = postList.filter { it.postID == targetPostID && it.deletedAt == 0L }
-
-                filteredPostList.forEach { post ->
-                    post.user = userVM.get(post.userID) ?: User()
-                }
-
-                val sortedPostList = filteredPostList.sortedByDescending { it.createdAt }
-
-                adapter.submitList(sortedPostList)
-
-                val handler = Handler(Looper.getMainLooper())
-                handler.postDelayed({
-                    adapter.notifyDataSetChanged()
-                }, 100)
-            }
-        }
 
         postCommentsVM.getCommentsByPostID(postID).observe(viewLifecycleOwner) { commentList ->
             userVM.getUserLLD().observe(viewLifecycleOwner) { user ->
@@ -160,7 +144,7 @@ class PostDetailsFragment : Fragment() {
 
         // Refresh
         binding.refresh.setOnRefreshListener {
-                adapter.notifyDataSetChanged()
+
                 adapterComment.notifyDataSetChanged()
                 binding.refresh.isRefreshing = false
             }
@@ -174,11 +158,10 @@ class PostDetailsFragment : Fragment() {
         if (postLikesVM.get(post.postID, userId) != null) {
             postLikesVM.delete(post.postID, userId)
             removeLikesTotaltoPost(post.postID)
-            adapter.notifyDataSetChanged()
+
         } else {
             postLikesVM.set(addPostlikes(post.postID))
             addLikesTotaltoPost(post.postID)
-            adapter.notifyDataSetChanged()
         }
     }
 
@@ -227,17 +210,16 @@ class PostDetailsFragment : Fragment() {
         }
     }
 
-    private fun updateThumbUpDrawable(holder: PostAdapter.ViewHolder, post: Post) {
+    private fun updateThumbUpDrawable(post: Post) {
         val userId = userVM.getUserLD().value!!.uid
         val isLiked = postLikesVM.get(post.postID, userId) != null
         val thumbUpDrawableRes = if (isLiked) {
             R.drawable.baseline_thumb_up_24_blue
         } else {
-            // Use the default thumb up drawable here
             R.drawable.baseline_thumb_up_off_alt_24_blue
         }
-        val thumbUpDrawable: Drawable? = ContextCompat.getDrawable(holder.itemView.context, thumbUpDrawableRes)
-        holder.binding.imageThumbUp.setImageDrawable(thumbUpDrawable)
+        val drawable = ContextCompat.getDrawable(binding.root.context, thumbUpDrawableRes)
+        binding.imageThumbUp.setImageDrawable(drawable)
     }
 
     fun showPopupMenu(view: View,postID: String) {
