@@ -70,6 +70,11 @@ class TabHistoryInterviewFragment : Fragment() {
         }
 
         interviewVM.getInterviewLD().observe(viewLifecycleOwner) { list ->
+            if (list.isEmpty()) {
+                binding.tabApplicant.visibility = View.INVISIBLE
+                binding.tabNoApplicant.visibility = View.VISIBLE
+                return@observe
+            }
             val interviewHistoryList =
                 list.filter {
                     it.date < DateTime.now().minusDays(1)

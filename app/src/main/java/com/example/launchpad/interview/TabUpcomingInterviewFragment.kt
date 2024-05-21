@@ -87,6 +87,12 @@ class TabUpcomingInterviewFragment : Fragment() {
         )
 
         interviewVM.getInterviewLD().observe(viewLifecycleOwner) { list ->
+            if (list.isEmpty()){
+                binding.tabApplicant.visibility = View.INVISIBLE
+                binding.tabNoApplicant.visibility = View.VISIBLE
+                return@observe
+            }
+
             val interviewList =
                 list.filter {
                     it.date >= DateTime.now().withTime(0, 0, 0, 0).millis
