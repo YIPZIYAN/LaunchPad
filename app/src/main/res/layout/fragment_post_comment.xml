@@ -19,37 +19,26 @@
             style="?attr/materialIconButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             app:icon="@drawable/ic_send"
-            app:layout_constraintBottom_toBottomOf="@id/txt_commenting"
+            app:layout_constraintBottom_toBottomOf="@+id/txtCommenting"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txt_commenting"
-            tools:text="e" />
+            app:layout_constraintTop_toTopOf="@+id/edtComment" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txt_commenting"
-            style="?attr/textInputFilledStyle"
+        <EditText
+            android:id="@+id/edtComment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="12dp"
-            app:boxCornerRadiusBottomEnd="8dp"
-            app:boxCornerRadiusBottomStart="8dp"
-            app:boxCornerRadiusTopEnd="8dp"
-            app:boxCornerRadiusTopStart="8dp"
-            app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:ems="10"
+            android:inputType="text"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_send"
+            app:layout_constraintEnd_toStartOf="@+id/btn_send"
             app:layout_constraintStart_toStartOf="parent"
-            app:placeholderText="Type your message...">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtComment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintTop_toBottomOf="@+id/post_result" />
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/coordinatorLayout2"
@@ -92,11 +81,10 @@
             android:id="@+id/post_result"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="10dp"
             android:clipToPadding="false"
             android:scrollbars="vertical"
             app:layoutManager="LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@+id/txt_commenting"
+            app:layout_constraintBottom_toTopOf="@+id/edtComment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/coordinatorLayout2"

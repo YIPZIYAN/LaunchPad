@@ -42,11 +42,6 @@ class PostCommentFragment : Fragment() {
     private val nav by lazy { findNavController() }
     private lateinit var binding: FragmentPostCommentBinding
     private val postID by lazy { requireArguments().getString("postID", "") }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,7 +50,7 @@ class PostCommentFragment : Fragment() {
         binding = FragmentPostCommentBinding.inflate(inflater, container, false)
 
 
-        binding.topAppBar.setOnClickListener{
+        binding.topAppBar.setOnClickListener {
             findNavController().navigateUp()
         }
         binding.btnSend.setOnClickListener {
@@ -64,11 +59,11 @@ class PostCommentFragment : Fragment() {
 
         adapter = CommentAdapter { holder, post ->
             holder.binding.avatarView.setOnClickListener {
-                    findNavController().navigate(
-                        R.id.action_postCommentFragment_to_userProfileFragment, bundleOf(
-                            "userID" to post.userID
-                        )
+                findNavController().navigate(
+                    R.id.action_postCommentFragment_to_userProfileFragment, bundleOf(
+                        "userID" to post.userID
                     )
+                )
 
             }
 
@@ -78,7 +73,7 @@ class PostCommentFragment : Fragment() {
 
         postCommentsVM.getCommentsByPostID(postID).observe(viewLifecycleOwner) { commentList ->
             userVM.getUserLLD().observe(viewLifecycleOwner) { user ->
-                commentList.forEach{ comment ->
+                commentList.forEach { comment ->
                     comment.user = userVM.get(comment.userID) ?: User()
                 }
             }
@@ -100,15 +95,16 @@ class PostCommentFragment : Fragment() {
         return binding.root
     }
 
-    private fun togglePost(postID: String){
+    private fun togglePost(postID: String) {
         postComment()
         addCommentsTotaltoPost(postID)
     }
-    private fun postComment(){
+
+    private fun postComment() {
         val comment = createCommentObject()
 
-        if (!isPostValid(comment)) {
-            snackbar("Please fulfill the requirement.")
+        if (comment.comment == "") {
+            snackbar("Please fill in the comment.")
             return
         }
 
@@ -131,7 +127,7 @@ class PostCommentFragment : Fragment() {
 
     private fun createCommentObject(): PostComments {
         return PostComments(
-            postID = postID ,
+            postID = postID,
             createdAt = DateTime.now().millis,
             userID = userVM.getUserLD().value!!.uid,
             comment = binding.edtComment.text.toString().trim()
@@ -139,17 +135,17 @@ class PostCommentFragment : Fragment() {
 
     }
 
-    private fun addCommentsTotaltoPost(postID : String){
+    private fun addCommentsTotaltoPost(postID: String) {
         val tempPost = postVM.get(postID)
         val f = tempPost?.let {
             Post(
-                postID= it.postID,
-                description= it.description,
-                image= it.image,
-                createdAt= it.createdAt,
-                userID= it.userID,
-                comments= it.comments+1,
-                likes= it.likes
+                postID = it.postID,
+                description = it.description,
+                image = it.image,
+                createdAt = it.createdAt,
+                userID = it.userID,
+                comments = it.comments + 1,
+                likes = it.likes
             )
         }
 
@@ -158,12 +154,6 @@ class PostCommentFragment : Fragment() {
         }
     }
 
-    private fun isPostValid(comments: PostComments): Boolean {
-
-        val validation = postCommentsVM.validateInput(binding.txtCommenting,comments.comment )
-
-        return validation
-    }
 
 
 }
