@@ -168,6 +168,10 @@ fun Fragment.displayErrorHelper(view: TextInputLayout, errorMsg: String) {
     view.errorIconDrawable = null
 }
 
+fun Fragment.hideErrorHelper(view: TextInputLayout) {
+    view.error = ""
+}
+
 fun Context.intentWithoutBackstack(
     context: Context,
     targetClass: Class<*>,
