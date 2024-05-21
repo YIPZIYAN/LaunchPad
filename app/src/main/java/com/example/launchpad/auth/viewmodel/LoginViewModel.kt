@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
@@ -11,8 +12,7 @@ import kotlinx.coroutines.tasks.await
 
 class LoginViewModel(val app: Application) :
     AndroidViewModel(app) {
-
-    private val auth = Firebase.auth
+        val auth = Firebase.auth
 
     private val _signInResult = MutableLiveData<Boolean>()
     val signInResult = _signInResult
@@ -33,11 +33,18 @@ class LoginViewModel(val app: Application) :
     }
 
     fun firebaseAuthWithEmail(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
-            _signInResult.value = it.isSuccessful
-            _response.value = it.exception?.message
+        auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
+            _signInResult.value = isVerified()
+            if (!isVerified())
+                auth.signOut()
+        }.addOnFailureListener {
+            _response.value = it.message
         }
     }
+     fun sendEmailVerification() {
+        auth.currentUser?.sendEmailVerification()
+    }
+
 
     suspend fun getCurrentUser() {
         auth.currentUser?.reload()?.await()

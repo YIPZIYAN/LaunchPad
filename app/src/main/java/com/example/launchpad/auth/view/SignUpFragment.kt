@@ -16,6 +16,7 @@ import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentSignUpBinding
 import com.example.launchpad.util.displayErrorHelper
 import com.example.launchpad.util.intentWithoutBackstack
+import com.example.launchpad.util.snackbar
 import com.example.launchpad.util.toast
 import kotlinx.coroutines.launch
 
@@ -54,10 +55,8 @@ class SignUpFragment : Fragment() {
                     user.isEnterprise = isEnterprise
                     userVM.set(user)
                 }
-                requireContext().intentWithoutBackstack(
-                    requireActivity(),
-                    UserActivity::class.java
-                )
+                nav.navigateUp()
+                snackbar(getString(R.string.please_verify_your_email))
             }
         }
 
