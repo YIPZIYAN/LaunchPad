@@ -243,10 +243,4 @@ class PostDetailsFragment : Fragment() {
         popupMenu.show()
     }
 
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(PostDetailsViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
 }
