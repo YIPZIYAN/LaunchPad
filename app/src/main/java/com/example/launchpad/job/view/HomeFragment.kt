@@ -1,5 +1,6 @@
 package com.example.launchpad.job.view
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +21,9 @@ import com.example.launchpad.databinding.FragmentHomeBinding
 import com.example.launchpad.job.adapter.JobAdapter
 import com.example.launchpad.data.viewmodel.JobViewModel
 import com.example.launchpad.util.dialogCompanyNotRegister
+import com.example.launchpad.util.disable
 import com.example.launchpad.util.getToken
+import com.example.launchpad.util.loadingDialog
 import com.google.android.material.search.SearchView
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
@@ -45,7 +48,8 @@ class HomeFragment : Fragment(), BottomSheetListener {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-
+        binding.loadingLayout.visibility = View.VISIBLE
+        binding.btnSavedJob.visibility = View.VISIBLE
         getGreeting()
 
         userVM.getUserLD().observe(viewLifecycleOwner) {
@@ -68,6 +72,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
             //-----------------------------------------------------------
             // Company
             updateUI()
+            binding.btnSavedJob.visibility = View.VISIBLE
 
             //-----------------------------------------------------------
             // Show Job List & Save Job
@@ -95,7 +100,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
 
             var sortedJobList = jobList.sortedByDescending { job ->
                 job.createdAt
-            } .filter { it.deletedAt == 0L }
+            }.filter { it.deletedAt == 0L }
             if (userVM.isEnterprise()) {
                 sortedJobList =
                     sortedJobList.filter { it.companyID == userVM.getUserLD().value!!.company_id }
@@ -103,6 +108,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
             }
 
             adapter.submitList(sortedJobList)
+            binding.loadingLayout.visibility = View.GONE
         }
 
         jobVM.getResultLD().observe(viewLifecycleOwner) { jobList ->

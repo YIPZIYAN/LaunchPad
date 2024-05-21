@@ -58,5 +58,13 @@ class InterviewViewModel : ViewModel() {
     fun updateInterviewList() {
         _interviewLD.value = getAll()
     }
+
+    suspend fun delete(id: String) {
+        INTERVIEW.document(id).delete().addOnSuccessListener {
+            isSuccess.value = true
+        }.addOnCompleteListener {
+            response.value = it.exception.toString()
+        }.await()
+    }
 }
 
