@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -68,6 +69,10 @@ class TabMyPostListFragment(val userID: String = "") : Fragment() {
                 postList.filter { it.deletedAt == 0L }
                     .filter { it.userID == uid }
                     .sortedByDescending { it.createdAt }
+
+            if (sortedPostList.isEmpty()){
+                return@observe
+            }
 
             adapter.submitList(sortedPostList)
         }
