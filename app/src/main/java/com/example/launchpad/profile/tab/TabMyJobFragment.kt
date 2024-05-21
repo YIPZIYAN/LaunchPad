@@ -35,7 +35,6 @@ class TabMyJobFragment : Fragment() {
 
         initAdapter()
 
-
         jobAppVM.getJobAppLD().observe(viewLifecycleOwner) { jobAppList ->
             if (jobAppList.isEmpty()) {
                 binding.tabNoApplicant.visibility = View.VISIBLE
@@ -47,6 +46,12 @@ class TabMyJobFragment : Fragment() {
 
             val myJobAppList = jobAppList.filter { it.userId == userVM.getAuth().uid }
                 .sortedByDescending { it.createdAt }
+
+            if (myJobAppList.isEmpty()){
+                binding.tabNoApplicant.visibility = View.VISIBLE
+                binding.rv.visibility = View.GONE
+                return@observe
+            }
 
             binding.tabNoApplicant.visibility = View.GONE
             binding.rv.visibility = View.VISIBLE

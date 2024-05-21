@@ -8,11 +8,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.example.launchpad.viewmodel.EventViewModel
 import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentEventBinding
-import com.example.launchpad.job_application.TabApplicantFragment
-import com.example.launchpad.util.JobApplicationState
 
 class EventFragment : Fragment() {
 
@@ -20,7 +17,6 @@ class EventFragment : Fragment() {
         fun newInstance() = EventFragment()
     }
 
-    private lateinit var viewModel: EventViewModel
     private lateinit var binding: FragmentEventBinding
 
     override fun onCreateView(

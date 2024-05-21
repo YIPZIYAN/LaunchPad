@@ -88,6 +88,7 @@ class HomeFragment : Fragment(), BottomSheetListener {
 
         jobVM.getJobsLD().observe(viewLifecycleOwner) { jobList ->
             if (userVM.getUserLD().value == null) return@observe
+            binding.loadingLayout.visibility = View.GONE
             if (jobList.isEmpty()) return@observe
 
             companyVM.getCompaniesLD().observe(viewLifecycleOwner) { company ->
@@ -108,7 +109,6 @@ class HomeFragment : Fragment(), BottomSheetListener {
             }
 
             adapter.submitList(sortedJobList)
-            binding.loadingLayout.visibility = View.GONE
         }
 
         jobVM.getResultLD().observe(viewLifecycleOwner) { jobList ->
