@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.launchpad.data.Post
 import com.example.launchpad.databinding.ItemPostBinding
 import com.example.launchpad.util.setImageBlob
+import com.example.launchpad.util.toBitmap
+import io.getstream.avatarview.coil.loadImage
 import org.joda.time.DateTime
 
 class PostAdapter (
@@ -29,7 +31,10 @@ class PostAdapter (
             val post = getItem(position)
             val time = displayPostTime(post.createdAt)
 
-            holder.binding.avatarView.setImageBlob(post.user.avatar)
+            holder.binding.avatarView.loadImage(post.user.avatar.toBitmap())
+            if (post.user.isEnterprise && post.user.company_id != "") {
+                holder.binding.avatarView.indicatorEnabled = true
+            }
             holder.binding.postImageView.setImageBlob(post.image)
             holder.binding.txtDescription.text = post.description
             holder.binding.txtUsername.text = post.user.name
