@@ -48,7 +48,6 @@ class PostDetailsFragment : Fragment() {
     private val postLikesVM: PostLikesViewModel by activityViewModels()
     private val postCommentsVM: PostCommentViewModel by activityViewModels()
     private val userVM: UserViewModel by activityViewModels()
-    private lateinit var viewModel: PostDetailsViewModel
     private lateinit var binding: FragmentPostDetailsBinding
     private val postID by lazy { requireArguments().getString("postID", "") }
 
@@ -62,7 +61,6 @@ class PostDetailsFragment : Fragment() {
         binding.topAppBar.setOnClickListener {
             findNavController().navigateUp()
         }
-
 
         binding.btnSend.setOnClickListener {
             togglePost(postID)
@@ -80,36 +78,34 @@ class PostDetailsFragment : Fragment() {
 
         }
 
-        postVM.getPostLD().observe(viewLifecycleOwner){
-            val myPost = postVM.get(postID)
-            if (myPost != null) {
-                var targetUser = userVM.get(myPost.userID)
-                if (targetUser != null) {
-                    binding.avatarView.loadImage(targetUser.avatar.toBitmap())
-                    binding.txtUsername.text = targetUser.name
-                }
-                binding.postImageView.setImageBlob(myPost.image)
-                binding.txtDescription.text = myPost.description
-
-                binding.txtTime.text = displayPostTime(myPost.createdAt)
-                binding.txtLikes.text = myPost.likes.toString()
-                binding.txtComments.text = myPost.comments.toString() + " Comments"
-
-                binding.btnLike.setOnClickListener {
-                    toggleLike(myPost)
-                }
-
-                if (myPost.userID != userVM.getUserLD().value!!.uid) {
-                    binding.btnMoreOptions.visibility = View.INVISIBLE
-                }
-
-                binding.btnMoreOptions.setOnClickListener {
-                    showPopupMenu(binding.btnMoreOptions, myPost.postID)
-                }
-
-                updateThumbUpDrawable(myPost)
-
+        postVM.getPostLD().observe(viewLifecycleOwner) {
+            val myPost = postVM.get(postID) ?: return@observe
+            var targetUser = userVM.get(myPost.userID)
+            if (targetUser != null) {
+                binding.avatarView.loadImage(targetUser.avatar.toBitmap())
+                binding.txtUsername.text = targetUser.name
             }
+            binding.postImageView.setImageBlob(myPost.image)
+            binding.txtDescription.text = myPost.description
+
+            binding.txtTime.text = displayPostTime(myPost.createdAt)
+            binding.txtLikes.text = myPost.likes.toString()
+            binding.txtComments.text = myPost.comments.toString() + " Comments"
+
+            binding.btnLike.setOnClickListener {
+                toggleLike(myPost)
+            }
+
+            if (myPost.userID != userVM.getUserLD().value!!.uid) {
+                binding.btnMoreOptions.visibility = View.INVISIBLE
+            }
+
+            binding.btnMoreOptions.setOnClickListener {
+                showPopupMenu(binding.btnMoreOptions, myPost.postID)
+            }
+
+            updateThumbUpDrawable(myPost)
+
 
         }
 
@@ -249,11 +245,12 @@ class PostDetailsFragment : Fragment() {
         popupMenu.show()
     }
 
-    private fun togglePost(postID: String){
+    private fun togglePost(postID: String) {
         postComment()
         addCommentsTotaltoPost(postID)
     }
-    private fun postComment(){
+
+    private fun postComment() {
         val comment = createCommentObject()
 
         if (!isPostValid(comment)) {
@@ -279,7 +276,7 @@ class PostDetailsFragment : Fragment() {
 
     private fun createCommentObject(): PostComments {
         return PostComments(
-            postID = postID ,
+            postID = postID,
             createdAt = DateTime.now().millis,
             userID = userVM.getUserLD().value!!.uid,
             comment = binding.edtComment.text.toString().trim()
@@ -287,17 +284,17 @@ class PostDetailsFragment : Fragment() {
 
     }
 
-    private fun addCommentsTotaltoPost(postID : String){
+    private fun addCommentsTotaltoPost(postID: String) {
         val tempPost = postVM.get(postID)
         val f = tempPost?.let {
             Post(
-                postID= it.postID,
-                description= it.description,
-                image= it.image,
-                createdAt= it.createdAt,
-                userID= it.userID,
-                comments= it.comments+1,
-                likes= it.likes
+                postID = it.postID,
+                description = it.description,
+                image = it.image,
+                createdAt = it.createdAt,
+                userID = it.userID,
+                comments = it.comments + 1,
+                likes = it.likes
             )
         }
 
@@ -308,7 +305,7 @@ class PostDetailsFragment : Fragment() {
 
     private fun isPostValid(comments: PostComments): Boolean {
 
-        val validation = postCommentsVM.validateInput(binding.txtCommenting,comments.comment )
+        val validation = postCommentsVM.validateInput(binding.txtCommenting, comments.comment)
 
         return validation
     }
