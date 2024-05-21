@@ -66,7 +66,7 @@ class MyProfileFragment : Fragment() {
             binding.viewPager.adapter = adapter
 
             TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-                tab.text = tabItems[position]
+                tab.text = if (userVM.isEnterprise()) "My Post" else tabItems[position]
             }.attach()
         }
 

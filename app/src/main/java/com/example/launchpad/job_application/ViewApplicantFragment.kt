@@ -1,6 +1,5 @@
 package com.example.launchpad.job_application
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
 import com.example.launchpad.databinding.FragmentViewApplicantBinding
 import com.example.launchpad.util.JobApplicationState
-import com.example.launchpad.viewmodel.ViewApplicantViewModel
 
 class ViewApplicantFragment : Fragment() {
 

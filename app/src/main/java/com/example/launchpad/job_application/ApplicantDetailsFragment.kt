@@ -3,7 +3,6 @@ package com.example.launchpad.job_application
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +12,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.launchpad.R
-import com.example.launchpad.data.Chat
 import com.example.launchpad.data.viewmodel.CompanyViewModel
 import com.example.launchpad.data.viewmodel.JobApplicationViewModel
 import com.example.launchpad.data.viewmodel.JobViewModel
@@ -29,17 +27,7 @@ import com.example.launchpad.util.sendPushNotification
 import com.example.launchpad.util.snackbar
 import com.example.launchpad.util.toBitmap
 import com.example.launchpad.util.toast
-import com.example.launchpad.viewmodel.ApplicantDetailsViewModel
-import com.google.firebase.database.FirebaseDatabase
 import io.getstream.avatarview.coil.loadImage
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 
 class ApplicantDetailsFragment : Fragment() {
 

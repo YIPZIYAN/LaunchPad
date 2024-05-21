@@ -1,10 +1,6 @@
 package com.example.launchpad.community.view
 
-import android.graphics.drawable.Drawable
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,13 +9,10 @@ import android.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.launchpad.R
 import com.example.launchpad.community.adapter.CommentAdapter
-import com.example.launchpad.community.adapter.PostAdapter
 import com.example.launchpad.community.viewmodel.PostCommentViewModel
 import com.example.launchpad.community.viewmodel.PostLikesViewModel
 import com.example.launchpad.community.viewmodel.PostViewModel
@@ -28,15 +21,12 @@ import com.example.launchpad.data.PostComments
 import com.example.launchpad.data.PostLikes
 import com.example.launchpad.data.User
 import com.example.launchpad.data.viewmodel.UserViewModel
-import com.example.launchpad.databinding.FragmentCommunityBinding
 import com.example.launchpad.databinding.FragmentPostDetailsBinding
 import com.example.launchpad.util.dialog
 import com.example.launchpad.util.displayPostTime
 import com.example.launchpad.util.setImageBlob
 import com.example.launchpad.util.snackbar
 import com.example.launchpad.util.toBitmap
-import com.example.launchpad.viewmodel.CommunityViewModel
-import com.example.launchpad.viewmodel.PostDetailsViewModel
 import io.getstream.avatarview.coil.loadImage
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
