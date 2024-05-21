@@ -79,9 +79,5 @@ class UserViewModel(val app: Application) : AndroidViewModel(app) {
         USERS.document(getAuth().uid).update("company_id", id)
     }
 
-    fun isGoogleLogin(): Boolean =
-        auth.currentUser?.providerData?.any { it.providerId == "google.com" } ?: false
-
-
     fun init() = Unit
 }
