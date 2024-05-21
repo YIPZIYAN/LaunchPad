@@ -15,6 +15,7 @@ import com.example.launchpad.data.viewmodel.CompanyViewModel
 import com.example.launchpad.data.viewmodel.UserViewModel
 import com.example.launchpad.databinding.FragmentSignUpEnterpriseBinding
 import com.example.launchpad.util.snackbar
+import com.example.launchpad.util.toast
 import com.google.firebase.firestore.Blob
 import kotlinx.coroutines.launch
 
@@ -35,7 +36,7 @@ class SignUpEnterpriseFragment : Fragment() {
         binding.topAppBar.setOnClickListener { nav.navigateUp() }
         companyVM.isSuccess.observe(viewLifecycleOwner) {
             if (it) {
-                nav.popBackStack(R.id.homeFragment,false)
+                nav.popBackStack(R.id.homeFragment, false)
                 snackbar("Company Updated Successfully")
             }
         }
@@ -71,6 +72,10 @@ class SignUpEnterpriseFragment : Fragment() {
 
     private fun submit() {
         val company = getInput()
+        if (company.name == "" || company.description == "" || company.location == "" || company.year < 1000) {
+            toast("Invalid Input.")
+            return
+        }
 
         lifecycleScope.launch {
             val companyId = companyVM.set(company)
