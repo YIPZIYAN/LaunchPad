@@ -202,7 +202,7 @@ class ChatTextFragment : Fragment() {
 
     fun displayLastSeenTime(lastSeenTime: Long): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd hh:mm a", Locale.getDefault())
-        return "Last Seen: " + sdf.format(lastSeenTime)
+        return if (lastSeenTime == 0L) "" else "Last Seen: " + sdf.format(lastSeenTime)
     }
 
     override fun onPause() {

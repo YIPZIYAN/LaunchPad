@@ -118,10 +118,14 @@ class ApplicantDetailsFragment : Fragment() {
                         it.text = jobApp.status
                     }
                     binding.btnInterview.visibility = View.VISIBLE
-                    binding.btnInterview.setOnClickListener { nav.navigate(R.id.scheduleInterviewFragment,
-                        bundleOf(
-                            "jobAppID" to jobAppID
-                        )) }
+                    binding.btnInterview.setOnClickListener {
+                        nav.navigate(
+                            R.id.scheduleInterviewFragment,
+                            bundleOf(
+                                "jobAppID" to jobAppID
+                            )
+                        )
+                    }
                     binding.btnReject.visibility = View.GONE
                 }
 
@@ -146,7 +150,8 @@ class ApplicantDetailsFragment : Fragment() {
                         sendPushNotification(
                             "JOB ACCEPTED BY ${jobApp.job.company.name} !",
                             "Your applied job ${jobApp.job.jobName} has been accepted.",
-                            jobApp.user.token)
+                            jobApp.user.token
+                        )
                     })
             }
             binding.btnReject.setOnClickListener {
@@ -160,7 +165,8 @@ class ApplicantDetailsFragment : Fragment() {
                         sendPushNotification(
                             "Opps... JOB REJECTED BY ${jobApp.job.company.name}.",
                             "Your applied job ${jobApp.job.jobName} has been rejected.",
-                            jobApp.user.token)
+                            jobApp.user.token
+                        )
                     })
 
             }
@@ -170,12 +176,18 @@ class ApplicantDetailsFragment : Fragment() {
                 //the ids
                 val userId = userVM.getAuth().uid
                 val otherId = jobApp.userId
+                var chatRoomId = userId + "_" + otherId
+                CoroutineScope(Dispatchers.Main).launch {
+                    val isExist = withContext(Dispatchers.IO) {
+                        isChatRoomExist(chatRoomId)
+                    }
 
-                val chatRoomId = userVM.getAuth().uid + "_" + jobApp.userId
-                if (!isChatRoomExist(userId, otherId)) {
-                    createChatroom(chatRoomId)
+                    if (!isExist) {
+                        chatRoomId = otherId + "_" + userId
+                        createChatroom(chatRoomId)
+                    }
+                    message(chatRoomId, nav)
                 }
-                message(chatRoomId,nav)
             }
 
 
@@ -186,7 +198,6 @@ class ApplicantDetailsFragment : Fragment() {
     }
 
     //TODO: WAIT FOR SEARCH USER FUNCTION TO TEST
-
 
 
 }
