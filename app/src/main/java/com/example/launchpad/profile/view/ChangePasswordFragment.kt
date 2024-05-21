@@ -16,6 +16,7 @@ import com.example.launchpad.databinding.FragmentChangePasswordBinding
 import com.example.launchpad.databinding.FragmentLoginBinding
 import com.example.launchpad.profile.viewmodel.ChangePasswordViewModel
 import com.example.launchpad.util.dialog
+import com.example.launchpad.util.disable
 import com.example.launchpad.util.displayErrorHelper
 import com.example.launchpad.util.intentWithoutBackstack
 import com.example.launchpad.util.snackbar
@@ -40,6 +41,11 @@ class ChangePasswordFragment : Fragment() {
 
         binding.topAppBar.setOnClickListener { nav.navigateUp() }
 
+        if (!viewModel.isPasswordLogin()){
+            binding.btnChangePassword.disable()
+            binding.form.visibility = View.INVISIBLE
+            binding.google.visibility = View.VISIBLE
+        }
         binding.btnChangePassword.setOnClickListener { changePassword() }
 
         viewModel.response.observe(viewLifecycleOwner) { if (it != null) toast(it) }
@@ -70,6 +76,13 @@ class ChangePasswordFragment : Fragment() {
         newPassword = binding.edtPassword.text.toString()
         val confirmPassword = binding.edtPasswordConfirmation.text.toString()
 
+        if (currentPassword == "") {
+            displayErrorHelper(
+                binding.lblCurrentPassword,
+                "Please enter current password"
+            )
+            return
+        }
 
         if (!isValid(newPassword, confirmPassword)) {
             return
