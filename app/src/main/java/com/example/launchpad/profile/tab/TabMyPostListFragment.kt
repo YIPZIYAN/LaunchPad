@@ -45,7 +45,15 @@ class TabMyPostListFragment(val userID: String = "") : Fragment() {
     ): View {
         binding = FragmentTabMyPostListBinding.inflate(inflater, container, false)
 
-        adapter = PostPhotoAdapter()
+        adapter = PostPhotoAdapter{holder, post ->
+            holder.binding.imageView.setOnClickListener {
+                findNavController().navigate(
+                    R.id.postDetailsFragment, bundleOf(
+                        "postID" to post.postID
+                    )
+                )
+            }
+        }
         binding.rv.adapter = adapter
 
         postVM.getPostLD().observe(viewLifecycleOwner) { postList ->
