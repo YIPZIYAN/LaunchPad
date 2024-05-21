@@ -1,6 +1,7 @@
 package com.example.launchpad.profile.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,10 @@ import com.example.launchpad.util.message
 import com.example.launchpad.util.toBitmap
 import com.google.android.material.tabs.TabLayoutMediator
 import io.getstream.avatarview.coil.loadImage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class UserProfileFragment : Fragment() {
 
@@ -58,13 +63,21 @@ class UserProfileFragment : Fragment() {
             binding.btnMessage.setOnClickListener {
                 val userId = userVM.getAuth().uid
                 val otherId = user.uid
+                var chatRoomId = userId + "_" + otherId
+                CoroutineScope(Dispatchers.Main).launch {
+                    val isExist = withContext(Dispatchers.IO) {
+                        isChatRoomExist(chatRoomId)
+                    }
 
-                val chatRoomId = userVM.getAuth().uid + "_" + otherId
-                if (!isChatRoomExist(userId, otherId)) {
-                    createChatroom(chatRoomId)
+                    if (!isExist) {
+                        chatRoomId = otherId + "_" + userId
+                        createChatroom(chatRoomId)
+                    }
+                    message(chatRoomId, nav)
                 }
-                message(chatRoomId, nav)
+
             }
+
         }
 
 

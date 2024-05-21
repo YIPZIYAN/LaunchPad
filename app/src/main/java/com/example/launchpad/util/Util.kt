@@ -30,6 +30,7 @@ import io.getstream.avatarview.AvatarView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import okhttp3.Call
@@ -72,23 +73,23 @@ fun sendPushNotification(title: String, message: String, receiverToken: String) 
 }
 
 //create chat room
-fun isChatRoomExist(userId: String, otherId: String): Boolean {
-    var isExist = false
-    CoroutineScope(Dispatchers.IO).launch {
-        val chatRoomsRef = FirebaseDatabase.getInstance().getReference("chatRooms")
-        val dataSnapshot = withContext(Dispatchers.Default) {
-            chatRoomsRef.get().await()
-        }
-
-        dataSnapshot.children.forEach {
-            val chatRoomId = it.key
-            if (chatRoomId!!.contains(userId) && chatRoomId.contains(otherId)) {
-                isExist = true
-                return@forEach
-            }
-        }
-
+fun isChatRoomExist(chatRoomId: String): Boolean {
+    val chatRoomsRef = FirebaseDatabase.getInstance().getReference("chatRooms")
+    val dataSnapshot = runBlocking {
+        chatRoomsRef.get().await()
     }
+
+    var isExist = false
+
+    dataSnapshot.children.forEach {
+        val thisChatRoomId = it.key.toString()
+        Log.d("KEY", chatRoomId)
+        if (thisChatRoomId == chatRoomId) {
+            isExist = true
+            return@forEach
+        }
+    }
+    Log.d("RETURN", isExist.toString())
     return isExist
 }
 
